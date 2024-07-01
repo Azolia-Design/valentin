@@ -1,0 +1,70 @@
+---
+const {
+    id = 'header',
+    socials,
+    links,
+    actions
+} = Astro.props;
+---
+<header
+    class="header"
+    {...id ? { id } : {}}
+>
+    <div class="container grid">
+        <div class="header__logo">
+            <p class="header__greating">Good morning!</p>
+            <h2 class="heading h5 header__name"><span class="fw-med cl-txt-title">Valentin</span> <span class="cl-txt-desc">Chavel</span></h2>
+        </div>
+        <div class="header__socials">
+            <p class="cl-txt-title">Socials</p>
+            {socials.map((el) =>
+                <Fragment>/<a href={el.href} class="header__social">{el.text}</a></Fragment>)}
+        </div>
+        <div class="header__menu">
+            {links.map((el, i) =>
+                <Fragment><a href={el.href}>{el.text}</a>{i < (links.length) - 1 && '/'}</Fragment>)}
+        </div>
+        <a href="" class="txt-link header__act">{actions.text}</a>
+    </div>
+</header>
+
+<style lang="scss">
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+
+        width: 100%;
+        padding: 4rem 0;
+
+        display: flex;
+        align-items: center;
+        &__logo {
+            grid-column: 1/4;
+            position: relative;
+            overflow: hidden;
+        }
+        &__name {
+            position: absolute;
+        }
+        &__socials {
+            grid-column: 9/11;
+
+            display: flex;
+            align-items: center;
+            gap: 0 1.2rem;
+        }
+        &__menu {
+            grid-column: 13/16;
+
+            display: flex;
+            align-items: center;
+            gap: 0 1.2rem;
+        }
+        &__act {
+            justify-self: end;
+            margin-left: -2rem;
+        }
+    }
+</style>

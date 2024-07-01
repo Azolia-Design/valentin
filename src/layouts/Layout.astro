@@ -1,8 +1,15 @@
 ---
+import { SEO } from "astro-seo";
+import "~/assets/styles/global.scss";
 interface Props {
 	title: string;
 }
-
+const site = "http://localhost:4321/"
+const canonicalURL = new URL(Astro.url.pathname, site).toString();
+const resolvedImageWithDomain = new URL(
+	"/opengraph.jpg",
+	site
+).toString();
 const { title } = Astro.props;
 ---
 
@@ -14,38 +21,44 @@ const { title } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<SEO
+			title={title}
+			description="Astroship is a starter website template for Astro built with TailwindCSS."
+			canonical={canonicalURL}
+			twitter={{
+				creator: "",
+				site: "",
+			}}
+			openGraph={{
+				basic: {
+				url: canonicalURL,
+				type: "website",
+				title: 'Valentine Chavel Portfolio',
+				image: resolvedImageWithDomain,
+				},
+				image: {
+					alt: "Valentine Chavel Portfolio Homepage Screenshot",
+				},
+			}}
+		/>
+		<link rel="preload" href="/fonts/HelveticaNeue-Light.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/fonts/HelveticaNeue-Roman.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/fonts/HelveticaNeue-Medium.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/fonts/MatterSQ-Regular.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/fonts/MatterSQ-Medium.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/fonts/MatterSQ-Bold.woff2" as="font" type="font/woff2" crossorigin>
 	</head>
 	<body>
 		<slot />
+		<script is:inline>
+		</script>
+		<style is:global>
+			/* Improve Page speed */
+			/* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+			img {
+				content-visibility: auto;
+			}
+		</style>
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
+

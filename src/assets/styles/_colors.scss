@@ -1,0 +1,33 @@
+:root {
+    --cl-dm-bg: #00050f;
+    --cl-lm-bg: #FFFBF9;
+    --cl-lm-txt: #1D1D1D;
+    --cl-dm-title: #fff;
+    --cl-dm-subtitle: rgba(255, 255, 255, .7);
+    --cl-dm-body: rgba(255, 255, 255, .5);
+    --cl-dm-desc: rgba(255, 255, 255, .3);
+    --cl-dm-disable: rgba(255, 255, 255, 0.15);
+
+    --cl-dm-border: rgba(255, 255, 255, 0.10);
+
+    --cl-orange: #FF3D00;
+    --cl-white: #fff;
+}
+
+.cl-txt {
+    &-orange {
+        color: var(--cl-orange);
+    }
+    &-title {
+        color: var(--cl-dm-title);
+    }
+    &-sub {
+        color: var(--cl-dm-subtitle);
+    }
+    &-desc {
+        color: var(--cl-dm-desc);
+    }
+    &-disable {
+        color: var(--cl-dm-disable);
+    }
+}

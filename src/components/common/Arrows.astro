@@ -1,0 +1,35 @@
+---
+import { Icon } from "astro-icon/components";
+const { class: className } = Astro.props;
+
+---
+<div class:list={["ic-arr-wrap", className]}>
+    <Icon name="arrow" class="arr-main" />
+    <Icon name="arrow" class="arr-clone"/>
+</div>
+<style lang="scss" is:global>
+    .ic-arr-wrap {
+        display: grid;
+        overflow: hidden;
+        align-items: center;
+        justify-content: center;
+    }
+    .arr-main,
+    .arr-clone {
+        transition: transform .6s cubic-bezier(.4,0,.1,1);
+        grid-area: 1/1/2/2;
+    }
+    .arr-clone {
+        transform: translate(-100%, 100%);
+    }
+    @media (hover:hover) {
+        .arrow-hover:hover {
+            .arr-main {
+                transform: translate(100%, -100%);
+            }
+            .arr-clone {
+                transform: translate(0);
+            }
+        }
+    }
+</style>
