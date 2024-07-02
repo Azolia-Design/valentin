@@ -40,6 +40,14 @@
 }
 
 @font-face {
+    font-family: 'Matter SQ Semi';
+    src: url('/fonts/MatterSQ-Semi.woff2') format('woff2');
+    font-weight: 600;
+    font-weight: normal;
+    font-display: block;
+}
+
+@font-face {
     font-family: 'Matter SQ Bold';
     src: url('/fonts/MatterSQ-Bold.woff2') format('woff2');
     font-weight: 700;
@@ -48,15 +56,22 @@
 }
 
 html {
-    font-size: calc(0.5787037037vw * 1);
+    font-size: 0.5787037037vw;
+    --vw: 100%;
+    --vh: 100vh;
 
-    // @media screen and (min-width: 991px) {
-    //     @media screen and (min-width: 1728px) {
-    //         font-size: calc(0.5787037037vw * .9);
+    @media screen and (min-device-aspect-ratio: 16/8.5) {
+        @media screen and (min-width: 991px) {
+            font-size: 1.01vh;
+        }
+    }
 
-    //         @media screen and (min-aspect-ratio: 1600 / 800) {
-    //             font-size: 1.1vh;
-    //         }
+    // @media screen and (min-width: 1728px) {
+    //     @media screen and (max-device-aspect-ratio: 16 / 9) {
+    //         font
+    //         // font-size: calc(13 * 1.25vh);
+    //         // max-width: calc(135 * 1.25vh);
+    //         // margin-bottom: calc(3.3 * 1.25vh);
     //     }
     // }
 
@@ -125,9 +140,18 @@ html {
         &-med {
             font-family: 'Matter SQ Med', sans-serif !important;
         }
+        &-semi {
+            font-family: 'Matter SQ Semi', sans-serif !important;
+        }
         &-bold {
             font-family: 'Matter SQ Bold', sans-serif !important;
         }
+    }
+}
+
+.ver-align {
+    &-top {
+        vertical-align: top;
     }
 }
 
@@ -200,6 +224,10 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
 
     &-semi {
         // font-weight: 600;
+        &.heading,
+        .heading {
+            font-family: 'Matter SQ Semi', sans-serif !important;
+        }
     }
 
     &-bold {
@@ -366,4 +394,18 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
 .split-line {
     contain: paint;
     will-change: transform;
+}
+.trans-line {
+    contain: paint;
+    will-change: transform;
+    position: relative;
+    display: grid;
+    &-above,
+    &-under {
+        grid-area: 1/1/2/2;
+        will-change: transform;
+    }
+    &-under {
+        transform: translateY(100%);
+    }
 }

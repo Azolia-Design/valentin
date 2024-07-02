@@ -2,8 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import Arrows from '~/components/common/Arrows.astro';
 import Image from '~/components/common/Image.astro';
-import HeroScript from '~/components/pages/Home/Hero';
-
+import HeroScript from '~/components/pages/Home/Hero/script';
 ---
 <section class="home__hero">
     <HeroScript client:load/>
@@ -35,7 +34,7 @@ import HeroScript from '~/components/pages/Home/Hero';
                     <p class="heading h5 home__hero-name"><span class="fw-med cl-txt-title">Valentin</span> <span class="cl-txt-desc">Chavel</span></p>
                 </div>
                 <h1 class="heading h1 fw-bold upper home__hero-title">
-                    Design <br/>for financial <span class="cl-txt-orange">Products</span>
+                    Design <br/>for financial <div class="cl-txt-orange home__hero-title-slide"><span>Product</span><span>Business</span></div>
                 </h1>
                 <span class="upper">(Scroll down)</span>
             </div>
@@ -53,6 +52,7 @@ import HeroScript from '~/components/pages/Home/Hero';
                 loading="eager"
                 decoding="async"
             />
+            <div class="home__hero-bg-gradient"></div>
         </div>
     </div>
 </section>
@@ -61,7 +61,10 @@ import HeroScript from '~/components/pages/Home/Hero';
     @use '~/assets/styles/mixins' as *;
 
     .home__hero {
+        position: relative;
+
         display: grid;
+        z-index: 3;
         &-main,
         &-bg {
             grid-area: 1/1/2/2;
@@ -69,7 +72,7 @@ import HeroScript from '~/components/pages/Home/Hero';
         &-main {
             position: relative;
             z-index: 2;
-            margin-bottom: 50vh;
+            margin-bottom: 200vh;
 
             @include size(100%, 100vh);
 
@@ -79,12 +82,26 @@ import HeroScript from '~/components/pages/Home/Hero';
         }
         &-bg {
             position: relative;
+            contain: paint;
             z-index: 1;
             &-main {
-                position: absolute;
+                position: sticky;
                 top: 0;
-                left: 0;
                 width: 100%;
+                height: 100vh;
+                will-change: scale;
+                img {
+                    transform-origin: 18vw 25vh;
+                }
+            }
+            &-gradient {
+                position: absolute;
+                bottom: 0;
+                background-image: linear-gradient(to top, rgb(0, 5, 15), rgba(0, 5, 15, 0));
+                @include size(100%);
+                left: 0;
+                z-index: 3;
+                pointer-events: none;
             }
         }
         &-scope-wrap {
@@ -115,7 +132,6 @@ import HeroScript from '~/components/pages/Home/Hero';
                         color: var(--cl-orange);
                     }
                 }
-
             }
         }
 
@@ -135,12 +151,24 @@ import HeroScript from '~/components/pages/Home/Hero';
             line-height: .835em;
 
             margin-bottom: 5rem;
-
-            @media screen and (min-width: 1728px) {
-                @media screen and (max-device-aspect-ratio: 16 / 9) {
-                    font-size: calc(13 * 1.25vh);
-                    max-width: calc(135 * 1.25vh);
-                    margin-bottom: calc(3.3 * 1.25vh);
+            max-width: 135rem;
+            &-slide {
+                position: relative;
+                display: grid;
+                overflow: hidden;
+                @keyframes slide-text {
+                    0% { transform: translateY(100%); opacity: 0 }
+                    50% { transform: translateY(0); opacity: 1 }
+                    100% { transform: translateY(-100%); opacity: 0 }
+                }
+                span {
+                    --anim-dur: 4s;
+                    grid-area: 1/1/2/2;
+                    animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
+                    &:nth-child(2) {
+                        transform: translateY(100%);
+                        animation-delay: calc((var(--anim-dur)/2) * -1);
+                    }
                 }
             }
         }
@@ -165,14 +193,10 @@ import HeroScript from '~/components/pages/Home/Hero';
         &-award {
             @include size(4.4rem);
             opacity: .5;
-            transition: opacity .4s ease-in-out;
+            transition: opacity .4s cubic-bezier(.74, .06, .4, .92);
             &:hover {
                 opacity: 1;
             }
-            // &:hover ~ .home__hero-award,
-            // &:has(~ .home__hero-award:hover) {
-            //     opacity: 1;
-            // }
         }
     }
 </style>

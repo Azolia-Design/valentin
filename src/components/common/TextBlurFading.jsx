@@ -10,7 +10,7 @@ const TextBlurFading = (props) => {
         if (!textRef) return;
         gsap.registerPlugin(ScrollTrigger);
 
-        const splitText = SplitType.create(textRef, { type: 'lines, words', lineClass: 'split-line' });
+        const text = SplitType.create(textRef, { type: 'lines, words', lineClass: 'split-line' });
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: textRef,
@@ -18,21 +18,24 @@ const TextBlurFading = (props) => {
                 ...props.triggerOpts
             }
         });
-            tl.fromTo(splitText.words, {
-                filter: 'blur(4px)',
-                opacity: 0,
-            },
-            {
-                filter: 'blur(0px)',
-                opacity: 1,
-                stagger: .35,
-                duration: 5,
-                ease: 'linear',
-            }, 0)
+        tl.fromTo(text.words, {
+            filter: 'blur(4px)',
+            opacity: 0,
+            stagger: .4,
+            duration: 5.5,
+            ease: 'back.out(2.0)',
+        },
+        {
+            filter: 'blur(0px)',
+            opacity: 1,
+            stagger: .4,
+            duration: 5.5,
+            ease: 'back.out(2.0)',
+        }, 0)
 
         onCleanup(() => {
-            splitText.revert();
             tl.kill();
+            if (text.isSplit) text.revert();
         });
     })
     return <div ref={textRef}>{props.children}</div>

@@ -1,0 +1,24 @@
+---
+---
+<script>
+    import { initLenis, getLenis } from "~/components/core/lenis";
+
+    const onLoad = function () {
+        if (!getLenis()) {
+            initLenis();
+
+        }
+        console.log("on load")
+    }
+    const onPageShow = function () {
+        console.log("on page show")
+    }
+
+    window.onload = onLoad;
+    window.onpageshow = onPageShow;
+
+    // window.swup.hooks.on('page:view', () => {
+    //     onLoad();
+    //     onPageShow();
+    // })
+</script>

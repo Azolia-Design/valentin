@@ -16,7 +16,7 @@
 
 .cl-txt {
     &-orange {
-        color: var(--cl-orange);
+        color: var(--cl-orange) !important;
     }
     &-title {
         color: var(--cl-dm-title);

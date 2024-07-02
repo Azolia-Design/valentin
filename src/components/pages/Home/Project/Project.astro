@@ -1,0 +1,155 @@
+---
+import type { GetStaticPaths } from "astro";
+import TextTransClip from '~/components/common/TextTransClip';
+import ProjectListing from './ProjectListing';
+import Arrows from "~/components/common/Arrows.astro";
+
+let currentYear = new Date().getFullYear() % 100;
+
+const projects = [
+    {
+        link: "#",
+        year: 2018,
+        title: "X21 Digital Leads $3 Million Seed Funding Round",
+        role: ["Design system", "Mobile app design", "Graphic Design"],
+        desc: "Lorem ipsum dolor sit amet consectetur. Sit non risus sed in mauris amet. Venenatis interdum pellentesque pellentesque.",
+        thumbnail: {
+            src: "src/assets/images/project-thumb.jpg",
+            alt: 'mockup iphone'
+        }
+    },
+    {
+        link: "#",
+        year: 2019,
+        title: "DeFi Sells Out Seed Round Allocation",
+        role: ["Website maintenance", "AI Design"],
+        desc: "Lorem ipsum dolor sit amet consectetur. Sit non risus sed in mauris amet. Venenatis interdum pellentesque pellentesque.",
+        thumbnail: {
+            src: "src/assets/images/project-thumb.jpg",
+            alt: 'mockup iphone'
+        }
+    },
+    {
+        link: "#",
+        year: 2020,
+        title: "Bitcoin and Crypto DeFi Wallet",
+        role: ["Brand Identity", "Product Design", "SEO", "Art Direction"],
+        desc: "Lorem ipsum dolor sit amet consectetur. Sit non risus sed in mauris amet. Venenatis interdum pellentesque pellentesque.",
+        thumbnail: {
+            src: "src/assets/images/project-thumb.jpg",
+            alt: 'mockup iphone'
+        }
+    },
+    {
+        link: "#",
+        year: 2021,
+        title: "Unlocking Interoperability Without Wrapped Tokens",
+        role: ["Web-app design", "Website Design", "Art Direction"],
+        desc: "Lorem ipsum dolor sit amet consectetur. Sit non risus sed in mauris amet. Venenatis interdum pellentesque pellentesque.",
+        thumbnail: {
+            src: "src/assets/images/project-thumb.jpg",
+            alt: 'mockup iphone'
+        }
+    }
+]
+---
+<section class="home__project">
+    <div class="container">
+        <h2 class="heading h2 fw-bold upper home__project-title grid">
+            <span class="home__project-title-txt">
+                <TextTransClip
+                    triggerOpts = {{
+                        trigger: '.home__project-title'
+                    }}
+                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Projects I</TextTransClip>
+            </span>
+            <span class="home__project-title-txt">
+                <TextTransClip
+                    triggerOpts = {{
+                        trigger: '.home__project-title'
+                    }}
+                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>worked on</TextTransClip>
+            </span>
+            <span class="cl-txt-disable home__project-title-txt">
+                <TextTransClip
+                    triggerOpts = {{
+                        trigger: '.home__project-title'
+                    }}
+                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>16-{currentYear}<span class="heading h3 fw-semi ver-align-top cl-txt-orange"> ®</span></TextTransClip>
+            </span>
+        </h2>
+        <div class="home__project-main">
+            <ProjectListing data={projects} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                <Arrows slot="arrows" />
+            </ProjectListing>
+        </div>
+    </div>
+</section>
+<style lang="scss" is:global>
+    .home__project {
+        padding-block: 16rem;
+        &-title {
+            line-height: .835em;
+
+            margin-bottom: 16rem;
+            &-txt {
+                &:nth-child(1) {
+                    grid-column: 1/10;
+                    margin-left: 1.8rem;
+                }
+                &:nth-child(2) {
+                    grid-column: 5/15;
+                }
+                &:nth-child(3) {
+                    grid-column: 5/11;
+                }
+            }
+        }
+        &-listing {
+            padding-bottom: 4.5rem;
+        }
+        &-name {
+            grid-column: 1/4;
+            grid-row: 2/3;
+            align-self: end;
+        }
+        &-pagination {
+            padding-block: 2rem;
+            margin-bottom: 4rem;
+
+            border-bottom: .1rem solid var(--cl-dm-border);
+        }
+        &-thumbnail {
+            grid-column: 5/12;
+            grid-row: 1/3;
+        }
+        &-sub-info {
+            grid-column: 13/16;
+        }
+        &-desc {
+            grid-column: 13/17;
+            align-self: end;
+        }
+        &-link {
+            display: flex;
+            align-items: center;
+            column-gap: .6rem;
+
+            margin-top: 14.5rem;
+            margin-bottom: 2.6rem;
+        }
+        &-role {
+            &-listing {
+                display: flex;
+                flex-direction: column;
+                row-gap: 1.2rem;
+            }
+        }
+        &-year {
+            margin-bottom: 10rem;
+        }
+        &-label {
+            margin-bottom: 1rem;
+        }
+    }
+</style>

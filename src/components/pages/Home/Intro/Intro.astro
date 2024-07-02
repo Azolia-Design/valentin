@@ -3,6 +3,8 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import Arrows from '~/components/common/Arrows.astro';
 import TextBlurFading from '~/components/common/TextBlurFading';
+import Marquee from '~/components/common/Marquee';
+import IntroScript  from '~/components/pages/Home/Intro/script';
 const companies = [
     "liquid",
     "gotyme-bank",
@@ -15,14 +17,15 @@ const companies = [
     "diag"
 ]
 const awards = [
-    { link: "#", name: "Red Dot Design award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'red-dot' },
-    { link: "#", name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' },
-    { link: "#", name: "Design for Asia award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'dfa' },
-    { link: "#", name: "Creative Pool", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'red-dot' },
-    { link: "#", name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' }
+    { name: "Red Dot Design award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'red-dot' },
+    { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' },
+    { name: "Design for Asia award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'dfa' },
+    { name: "Creative Pool", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'red-dot' },
+    { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' }
 ]
 ---
 <section class="home__intro">
+    <IntroScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
     <div class="container grid">
         <div class="home__intro-companies">
             <h4 class="heading h5 cl-txt-title home__intro-companies-title">I've helped <br/>over 100 companies including</h4>
@@ -84,56 +87,115 @@ const awards = [
             <div class="home__intro-awards-wrap">
                 <div class="home__intro-awards-listing">
                     {awards.map((award) =>
-                        <a href={award.link} class="home__intro-award">
+                        <div class="home__intro-award">
                             <div class="line"></div>
                             <p class="fs-24 cl-txt-desc home__intro-award-name">{award.name}</p>
                             <p class="cl-txt-disable home__intro-award-year">{award.year}</p>
                             <p class="cl-txt-disable home__intro-award-category">{award.category}</p>
-                        </a>
+                        </div>
                         <div class="home__intro-award-logo">
                             <Icon name={award.logo} />
                         </div>
                     )}
                 </div>
-                <div class="home__intro-awards-logo-wrap">
-                    <!-- {awards.map(({ logo }) =>
-                        <div class="home__intro-awards-logo">
-                            <Icon name={logo} />
-                        </div>
-                    )} -->
-                </div>
             </div>
+        </div>
+    </div>
+    <div class="home__intro-service-wrap">
+        <div class="home__intro-service">
+            <div class="home__intro-service-marquee-wrap black">
+                <Marquee
+                    options = {{
+                        duration: 60,
+                        stopWhenEnter: true,
+                        start: 'right',
+                    }}
+                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                    <div class="home__intro-service-marquee">
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                8 years of experience
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                senior designer
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                Over 100 customers
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                    </div>
+                </Marquee>
+            </div>
+            <div class="home__intro-service-marquee-wrap orange">
+                <Marquee
+                    options = {{
+                        duration: 60,
+                        stopWhenEnter: true,
+                        start: 'left',
+                    }}
+                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                    <div class="home__intro-service-marquee">
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                Product Design
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                Brand design & Strategy
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                Visual design
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                    </div>
+                </Marquee>
+            </div>
+        </div>
+        <div class="home__intro-service-blur">
+            <Image
+                src={'~/assets/images/intro-service-blur.png'}
+                widths={[400, 768, 1024]}
+                width={1511}
+                alt={'a orange blur'}
+                layout="cover"
+                loading="lazy"
+                decoding="async"
+                aspectRatio="1"
+            />
         </div>
     </div>
 </section>
 
-<style lang="scss">
+<style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
-
     .home__intro {
+        --padding-top: 31rem;
+
+        position: relative;
+        z-index: 3;
+
+        padding-top: var(--padding-top);
+        margin-top: calc(-120vh - var(--padding-top));
         &-main {
             grid-column: 9/-1;
 
             color: var(--cl-dm-title);
 
-            // mask: linear-gradient(360deg, transparent, white 100%);
             position: relative;
             overflow: hidden;
-            &::before {
-                content: '';
-                position: absolute;
-                height: 100%;
-                width: 4rem;
-                z-index: 3;
-                top: 2.5rem;
-                left: -1.6rem;
-                pointer-events: none;
-
-                -webkit-backdrop-filter: blur(.2rem);
-                backdrop-filter: blur(.2rem);
-                -webkit-mask: linear-gradient(to right, rgba(255, 255, 255, 0) 12.5%, rgb(255, 255, 255) 37.5%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 62.5%);
-                mask: linear-gradient(to right, rgba(255, 255, 255, 0) 12.5%, rgb(255, 255, 255) 37.5%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 62.5%);
-            }
             &-label {
                 vertical-align: top;
                 margin-right: 13rem;
@@ -159,7 +221,8 @@ const awards = [
             grid-column: 1/7;
             grid-row: 1/4;
 
-            align-self: center;
+            // align-self: center;
+            will-change: transform, opacity;
             &-title {
                 max-width: 29.5rem;
 
@@ -192,7 +255,7 @@ const awards = [
                 height: auto;
                 position: absolute;
                 opacity: .3;
-                transition: opacity 0.4s ease-in-out;
+                transition: opacity 0.4s cubic-bezier(.74, .06, .4, .92);
             }
 
             &:hover {
@@ -241,6 +304,7 @@ const awards = [
         }
         &-awards {
             grid-column: 9/-1;
+            margin-bottom: 16rem;
             &-wrap {
                 position: relative;
             }
@@ -263,14 +327,14 @@ const awards = [
             position: relative;
 
             &-name {
-                transition: color 1.333s var(--spring-easing-2);
+                transition: color 1.333s cubic-bezier(.74, .06, .4, .92);
             }
             &-year {
-                transition: color 1.333s var(--spring-easing-2);
+                transition: color 1.333s cubic-bezier(.74, .06, .4, .92);
             }
             &-category {
                 justify-self: end;
-                transition: color 1.333s var(--spring-easing-2);
+                transition: color 1.333s cubic-bezier(.74, .06, .4, .92);
             }
 
             &-logo {
@@ -355,6 +419,70 @@ const awards = [
                         transform: translateX(var(--line-spacing)) rotate(.01deg)
                     }
                 }
+            }
+        }
+        &-service {
+            height: 53.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            align-items: center;
+            justify-content: center;
+            contain: paint;
+            position: relative;
+            z-index: 2;
+            &-wrap {
+                position: relative;
+            }
+            &-marquee {
+                display: flex;
+                align-items: center;
+                gap: 0 4rem;
+
+                padding: 4rem 2rem;
+
+                &-wrap {
+                    transition: all .8s cubic-bezier(.74, .06, .4, .92);
+                    grid-area: 1/1/2/2;
+                    &.orange {
+                        color: var(--cl-dm-title);
+                        background-color: var(--cl-orange);
+                        transform: rotate(9.139deg);
+                        transform-origin: center;
+                        &:hover {
+                            .home__intro-service-marquee-wrap.black {
+                                filter: blur(.7rem);
+                            }
+                        }
+                    }
+                    &.black {
+                        background-color: black;
+                        color: var(--cl-dm-desc);
+                        transform: rotate(-5.831deg);
+                        transform-origin: center;
+                        filter: blur(.7rem);
+                        &:hover {
+                            filter: blur(0);
+                            color: var(--cl-dm-title);
+                            ~ .home__intro-service-marquee-wrap {
+                                filter: blur(.7rem);
+                            }
+                        }
+                    }
+                }
+                &-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0 4rem;
+                }
+            }
+            &-blur {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                @include size(151.1rem);
+                z-index: 1;
+                pointer-events: none;
             }
         }
     }

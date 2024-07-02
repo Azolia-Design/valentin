@@ -24,7 +24,7 @@ export default defineConfig({
     },
     integrations: [
         solid({ devtools: true }),
-        swup({ theme: false }),
+        swup({ globalInstance: true }),
         icon(),
         ...whenExternalScripts(() =>
             partytown({
