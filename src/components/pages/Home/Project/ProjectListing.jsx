@@ -11,6 +11,7 @@ const ProjectListing = (props) => {
             </div>
             <div class="home__project-thumbnail">
                 <img class="img img-fill" src={props.data[2].thumbnail.src} alt={props.data[0].thumbnail.alt} />
+                {props.blur}
             </div>
             <div class="home__project-sub-info">
                 <div class="home__project-year">

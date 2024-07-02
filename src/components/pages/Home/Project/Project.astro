@@ -1,8 +1,8 @@
 ---
-import type { GetStaticPaths } from "astro";
 import TextTransClip from '~/components/common/TextTransClip';
 import ProjectListing from './ProjectListing';
 import Arrows from "~/components/common/Arrows.astro";
+import Image from "~/components/common/Image.astro";
 
 let currentYear = new Date().getFullYear() % 100;
 
@@ -80,6 +80,18 @@ const projects = [
         </h2>
         <div class="home__project-main">
             <ProjectListing data={projects} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                <Image
+                    src={'~/assets/images/project-blur-thumb.png'}
+                    widths={[400, 768, 1024]}
+                    width={692}
+                    height={903}
+                    alt={'orange blur'}
+                    layout="cover"
+                    loading="lazy"
+                    decoding="async"
+                    slot="blur"
+                    class="home__project-thumbnail-blur"
+                />
                 <Arrows slot="arrows" />
             </ProjectListing>
         </div>
@@ -122,6 +134,13 @@ const projects = [
         &-thumbnail {
             grid-column: 5/12;
             grid-row: 1/3;
+
+            position: relative;
+            overflow: hidden;
+            &-blur {
+                position: absolute;
+                inset: 0;
+            }
         }
         &-sub-info {
             grid-column: 13/16;
