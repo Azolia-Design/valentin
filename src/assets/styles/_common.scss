@@ -341,10 +341,15 @@ button {
     position: absolute;
     inset: 0;
 }
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+}
 
 .marquee {
     display: flex;
-    width: max-content;
+    // width: max-content;
+    width: 100vw;
     &-inner {
         display: flex;
         &-item {
@@ -352,6 +357,7 @@ button {
             will-change: transform;
             display: flex;
             flex: none;
+            // animation: marquee 2s linear 0s infinite;
         }
     }
 }

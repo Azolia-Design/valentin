@@ -10,7 +10,7 @@ const TextBlurFading = (props) => {
         if (!textRef) return;
         gsap.registerPlugin(ScrollTrigger);
 
-        const text = SplitType.create(textRef, { type: 'lines, words', lineClass: 'split-line' });
+        const text = SplitType.create(textRef, { types: 'lines, words', lineClass: 'split-line' });
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: textRef,

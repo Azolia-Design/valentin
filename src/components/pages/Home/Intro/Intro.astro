@@ -4,7 +4,8 @@ import Image from '~/components/common/Image.astro';
 import Arrows from '~/components/common/Arrows.astro';
 import TextBlurFading from '~/components/common/TextBlurFading';
 import Marquee from '~/components/common/Marquee';
-import IntroScript  from '~/components/pages/Home/Intro/script';
+import IntroScript  from './script';
+
 const companies = [
     "liquid",
     "gotyme-bank",
@@ -104,13 +105,7 @@ const awards = [
     <div class="home__intro-service-wrap">
         <div class="home__intro-service">
             <div class="home__intro-service-marquee-wrap black">
-                <Marquee
-                    options = {{
-                        duration: 60,
-                        stopWhenEnter: true,
-                        start: 'right',
-                    }}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                <Marquee start="right" client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
                     <div class="home__intro-service-marquee">
                         <div class="home__intro-service-marquee-item">
                             <h3 class="heading h3 upper">
@@ -132,15 +127,31 @@ const awards = [
                         </div>
                     </div>
                 </Marquee>
+                <!-- <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                    <div class="home__intro-service-marquee">
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                8 years of experience
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                senior designer
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                Over 100 customers
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                    </div>
+                </Marquee> -->
             </div>
             <div class="home__intro-service-marquee-wrap orange">
-                <Marquee
-                    options = {{
-                        duration: 60,
-                        stopWhenEnter: true,
-                        start: 'left',
-                    }}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                <Marquee start="left" client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
                     <div class="home__intro-service-marquee">
                         <div class="home__intro-service-marquee-item">
                             <h3 class="heading h3 upper">
@@ -162,6 +173,28 @@ const awards = [
                         </div>
                     </div>
                 </Marquee>
+                <!-- <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                    <div class="home__intro-service-marquee">
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                Product Design
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                Brand design & Strategy
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                        <div class="home__intro-service-marquee-item">
+                            <h3 class="heading h3 upper">
+                                Visual design
+                            </h3>
+                            <Icon name="asterisk" class="ic-32" />
+                        </div>
+                    </div>
+                </Marquee> -->
             </div>
         </div>
         <div class="home__intro-service-blur">
@@ -443,11 +476,14 @@ const awards = [
                 &-wrap {
                     transition: all .8s cubic-bezier(.74, .06, .4, .92);
                     grid-area: 1/1/2/2;
+                    display: flex;
+                    position: relative;
                     &.orange {
                         color: var(--cl-dm-title);
                         background-color: var(--cl-orange);
                         transform: rotate(9.139deg);
                         transform-origin: center;
+                        z-index: 3;
                         &:hover {
                             .home__intro-service-marquee-wrap.black {
                                 filter: blur(.7rem);
@@ -460,6 +496,7 @@ const awards = [
                         transform: rotate(-5.831deg);
                         transform-origin: center;
                         filter: blur(.7rem);
+                        z-index: 2;
                         &:hover {
                             filter: blur(0);
                             color: var(--cl-dm-title);
