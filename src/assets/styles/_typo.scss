@@ -136,15 +136,19 @@ html {
 
 .heading {
     font-family: 'Matter SQ Reg', sans-serif;
+    font-weight: 400;
     .fw {
         &-med {
             font-family: 'Matter SQ Med', sans-serif !important;
+            font-weight: 500 !important;
         }
         &-semi {
             font-family: 'Matter SQ Semi', sans-serif !important;
+            font-weight: 600 !important;
         }
         &-bold {
             font-family: 'Matter SQ Bold', sans-serif !important;
+            font-weight: 700 !important;
         }
     }
 }
@@ -208,14 +212,17 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
 .fw {
     &-thin {
         font-family: 'Helvetica Neue Thin', sans-serif !important;
+        font-weight: 300;
     }
 
     &-reg {
         font-family: 'Helvetica Neue Reg', sans-serif !important;
+        font-weight: 400;
     }
 
     &-med {
         font-family: 'Helvetica Neue Med', sans-serif !important;
+        font-weight: 500;
         &.heading,
         .heading {
             font-family: 'Matter SQ Med', sans-serif !important;
@@ -223,7 +230,7 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
     }
 
     &-semi {
-        // font-weight: 600;
+        font-weight: 600;
         &.heading,
         .heading {
             font-family: 'Matter SQ Semi', sans-serif !important;
@@ -231,7 +238,7 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
     }
 
     &-bold {
-        // font-weight: 700;
+        font-weight: 700;
         &.heading,
         .heading {
             font-family: 'Matter SQ Bold' !important;
@@ -396,16 +403,18 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
     will-change: transform;
 }
 .trans-line {
-    contain: paint;
+    // contain: paint;
     will-change: transform;
     position: relative;
     display: grid;
+    clip-path: polygon(0 3%,0 99%,100% 99%,100% 3%);
     &-above,
     &-under {
         grid-area: 1/1/2/2;
         will-change: transform;
+        display: inline-block;
     }
-    &-under {
-        transform: translateY(100%);
+    &-above {
+        transform: translateY(-100%);
     }
 }

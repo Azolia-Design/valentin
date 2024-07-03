@@ -19,7 +19,7 @@ const TextTransClip = (props) => {
             }
         });
 
-        tl.fromTo([q('.trans-line-above'), q('.trans-line-under')], { yPercent: 0 }, { yPercent: -100, ease: 'linear', duration: 1 })
+        tl.fromTo([q('.trans-line-above'), q('.trans-line-under')], { yPercent: 0 }, { yPercent: 100, ease: 'linear', duration: 1 })
 
         onCleanup(() => tl.kill());
     })
