@@ -344,7 +344,7 @@ button {
 
 .marquee {
     display: flex;
-    overflow-x: clip;
+    width: max-content;
     &-inner {
         display: flex;
         &-item {

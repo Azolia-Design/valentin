@@ -20,3 +20,15 @@ export const headerData = {
     ],
     actions: { text: 'Let’s talk!', href: '/contact', target: '' }
 };
+
+export const footerData = {
+    socials: [
+        { text: 'Dribbble', href: '#' },
+        { text: 'Linkedin', href: '#' },
+        { text: 'Twitter', href: '#' },
+    ],
+    whatapps: {
+        text: '01-234-567-890',
+        href: '#'
+    },
+}

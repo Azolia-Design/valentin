@@ -1,0 +1,141 @@
+---
+import Image from '~/components/common/Image.astro';
+import Marquee from '~/components/common/Marquee';
+const { id = 'footer', socials, whatapps } = Astro.props;
+---
+<footer class="footer"
+    {...id ? (id) : {}}
+>
+    <div class="container grid">
+        <div class="footer__info">
+            <div class="footer__info-item">
+                <p class="fw-med footer__label">Socials</p>
+                <div class="footer__socials-listing">
+                    {socials.map((social) =>
+                        <a href={social.href} class="fw-med cl-txt-orange footer__link">{social.text}</a>
+                    )}
+                </div>
+            </div>
+            <div class="footer__info-item">
+                <p class="fw-med footer__label">Whatapps</p>
+                <a href={whatapps.href} class="fw-med cl-txt-orange footer__link">{whatapps.text}</a>
+            </div>
+        </div>
+        <div class="footer__cta">
+            <p class="fw-med footer__cta-label">Got a project in mind?</p>
+            <h4 class="fs-24 fw-reg footer__cta-title">Let’s make something happen together</h4>
+        </div>
+        <h3 class="heading h4 fw-reg footer__title">
+            “As a designer and Rotarian, I believe in service above self.
+            <br/><br/>
+            I believe being a designer is being a servant, in the most noble sense of the term, it’s dedicating yourself to finding the right balance between user needs and business goals.
+        </h3>
+        <div class="footer__main-image">
+            <Image src={'~/assets/images/footer-main.png'}
+                widths={[400, 768, 1024, 2040]}
+                width={692}
+                height={874}
+                alt={'a main'}
+                layout="cover"
+                loading="lazy"
+                decoding="async"
+            />
+        </div>
+        <div class="footer__marquee-wrap">
+            <Marquee
+                options = {{
+                    duration: 60
+                }}
+                client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                <h2 class="heading h2 footer__marquee">hello<span class="cl-txt-orange">@</span>valentinechavel.design hello<span class="cl-txt-orange">@</span>valentinechavel.design</h2>
+                <h2 class="heading h2 footer__marquee">hello<span class="cl-txt-orange">@</span>valentinechavel.design hello<span class="cl-txt-orange">@</span>valentinechavel.design</h2>
+            </Marquee>
+        </div>
+    </div>
+    <div class="footer__bg">
+        <Image src={'~/assets/images/footer-bg-gr.png'}
+            widths={[400, 768, 1024, 2040]}
+            width={1728}
+            height={880}
+            alt={'a gradient dark orange'}
+            layout="cover"
+            loading="lazy"
+            decoding="async"
+        />
+    </div>
+</footer>
+<style lang="scss">
+    .footer {
+        position: relative;
+
+        background-color: var(--cl-lm-bg);
+        color: var(--cl-lm-txt);
+        width: 100%;
+        padding-top: 53rem;
+        min-height: 100vh;
+        &__bg {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+        }
+        &__label {
+            margin-bottom: 2rem;
+        }
+        &__info {
+            grid-column: 1/3;
+            &-item {
+                padding-bottom: 7rem;
+            }
+        }
+        &__socials {
+            &-listing {
+                display: flex;
+                flex-direction: column;
+                gap: 1.2rem 0;
+            }
+        }
+        &__cta {
+            grid-column: 1/4;
+            grid-row: 2/3;
+
+            max-width: 24rem;
+            padding-top: 4rem;
+
+            border-top: 1px solid var(--cl-lm-border);
+            &-label {
+                margin-bottom: 1rem;
+
+                color: var(--cl-lm-disable);
+            }
+        }
+        &__title {
+            grid-column: 10/-1;
+            grid-row: 1/3;
+
+            color: var(--cl-lm-desc);
+        }
+        &__main-image {
+            grid-column: 3/10;
+            grid-row: 1/4;
+            align-self: end;
+
+            margin-top: -12.2rem;
+            position: relative;
+            z-index: 3;
+        }
+        &__marquee {
+            &-wrap {
+                grid-column: 1/-1;
+                grid-row: 3/4;
+
+                overflow: hidden;
+
+                padding-top: 2.5rem 0 3.5rem;
+                margin: 0 calc(var(--container-padding) * -1);
+            }
+        }
+    }
+</style>

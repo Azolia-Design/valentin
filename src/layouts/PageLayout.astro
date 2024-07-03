@@ -2,8 +2,8 @@
 import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/global/Header.astro';
 import DebugArea from '~/components/common/DebugArea.astro';
-// import Footer from '~/components/widgets/Footer.astro';
-import { headerData } from '~/navigation';
+import Footer from '~/components/global/Footer.astro';
+import { headerData, footerData } from '~/navigation';
 
 const { metadata } = Astro.props;
 ---
@@ -15,7 +15,7 @@ const { metadata } = Astro.props;
     <main class="transition-fade">
         <slot />
     </main>
-    <!-- <slot name="footer">
-    <Footer {...footerData} />
-    </slot> -->
+    <slot name="footer">
+        <Footer {...footerData} />
+    </slot>
 </Layout>

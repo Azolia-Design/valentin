@@ -37,18 +37,24 @@ const Marquee = (props) => {
                 }
             })
 
+            // tlMarquee.pause();
+
             let cloneAmount = 2;
             const cloneAdditional = Math.floor(window.innerWidth / DOM.item.offsetWidth);
             if (cloneAdditional >= 1) {
                 cloneAmount += cloneAdditional;
             }
-
             new Array(cloneAmount).fill().forEach((_, index) => {
                 let itemClone = DOM.item[0].cloneNode(true);
-                DOM.list[0].append(itemClone);
+                console.log(itemClone)
+                DOM.list[0].appendChild(itemClone);
             })
-
-            tlMarquee.fromTo(DOM.wrap[0], { xPercent: '0' }, { xPercent: direction[start || "left"], duration: DOM.wrap[0].offsetWidth / duration, repeat: -1, ease: 'none' })
+            if (start === 'right') {
+                tlMarquee.fromTo(DOM.wrap[0], { xPercent: 50 }, { xPercent: -100, duration: DOM.wrap[0].offsetWidth / duration, ease: 'none' })
+            }
+            else {
+                tlMarquee.fromTo(DOM.wrap[0], { xPercent: -50 }, { xPercent: 100, duration: DOM.wrap[0].offsetWidth / duration, ease: 'none' })
+            }
 
             if (stopWhenEnter) {
                 DOM.wrap[0].addEventListener("pointerenter", (event) => {
@@ -66,7 +72,7 @@ const Marquee = (props) => {
 
         let tl = marqueeGS(props.options);
         onCleanup(() => {
-            tl.kill();
+            // tl.kill();
             DOM.wrap[0].removeEventListener("pointerenter", null);
             DOM.wrap[0].removeEventListener("pointerleave", null);
         });
@@ -75,9 +81,6 @@ const Marquee = (props) => {
         <div ref={marqueeRef} class={props.class}>
             <div class='marquee'>
                 <div class="marquee-inner">
-                    <div class="marquee-inner-item">
-                        {props.children}
-                    </div>
                     <div class="marquee-inner-item">
                         {props.children}
                     </div>

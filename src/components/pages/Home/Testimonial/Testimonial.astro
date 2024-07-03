@@ -1,5 +1,13 @@
 ---
+import Image from '~/components/common/Image.astro';
 import TextTransClip from '~/components/common/TextTransClip';
+const testimonials = [
+    { name: "Chris Azzopardi", position: "Product Consultant at Bitcoin.com", feedback: "I had the pleasure of working closely with Valentin at bitcoin.com. Throughout our time together, I was consistently impressed by their exceptional design skills, strategic thinking", image: { src: '~/assets/images/testi-pp.jpg', alt: '' } },
+    { name: "Silvano D'Orazio", position: "Group Head of User Experience and Brand", feedback: "As the Head of Design at Tyme Bank, I had the distinct pleasure of working closely with Valentin over the past few years. contributions to a wide range of projects. He played a key role in developing our new mobile banking app, praised for its user-friendly design and intuitive functionality. Valentin was instrumental in creating our new internal branding guidelines, which have helped establish a more cohesive and consistent brand identity across all touchpoints.", image: { src: '~/assets/images/testi-pp.jpg', alt: '' } },
+    { name: "Charles Mandin", position: "Senior PMO @ Nethermind", feedback: "Working with Valentin has always been a pleasure: he is focused and committed to excellence both in terms of quality and in terms of deadline. He showed a unique ability to be", image: { src: '~/assets/images/testi-pp.jpg', alt: '' } },
+    { name: "Hai Van Tran", position: "Product Designer Lead", feedback: "Three things I could say about Valentin are focus, creativity and wisdom. His skillset and industry knowledge inspire those around him. He cuts through noise to focus on what matters", image: { src: '~/assets/images/testi-pp.jpg', alt: '' } },
+    { name: "Andrew Michael Todd", position: "Head Of Marketing and Growth at Bitcoin.com", feedback: "I am delighted to recommend Valentin, a former Lead Designer at Bitcoin.com. During his time with us Valentin showcased exceptional product design and leadership skills", image: { src: '~/assets/images/testi-pp.jpg', alt: '' } }
+]
 ---
 <section class="home__testi">
     <div class="container">
@@ -29,12 +37,51 @@ import TextTransClip from '~/components/common/TextTransClip';
             </span>
             <span class="fs-20 cl-txt-desc fw-reg upper home__testi-title-label">(Testimonials)</span>
         </h2>
+        <div class="home__testi-listing">
+            {testimonials.map((el, idx) => (
+                <div class="home__testi-item grid">
+                    <p class="heading h4 txt-cl-disable fw-thin home__testi-item-order">{(idx + 1).toString().padStart(2, '0')}.</p>
+                    <div class="home__testi-item-info">
+                        <p class="fs-24 fw-med cl-txt-title">{el.name}</p>
+                        <p class="cl-txt-sub">{el.position}</p>
+                    </div>
+                    <div class="fs-24 fw-thin home__testi-item-feedback-wrap">
+                        <div class="home__testi-item-feedback">{el.feedback}</div>
+                    </div>
+                    <div class="home__testi-item-image">
+                        <Image
+                            class="home__testi-item-image-main"
+                            src={el.image.src}
+                            widths={[400, 768, 1024]}
+                            width={90}
+                            aspectRatio="3:4"
+                            alt={el.image.alt}
+                            layout="cover"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <Image
+                            class="home__testi-item-image-blur"
+                            src={'~/assets/images/testi-blur.png'}
+                            widths={[400, 768, 1024]}
+                            width={90}
+                            aspectRatio="3:4"
+                            alt={'gradient orange blur'}
+                            layout="cover"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    </div>
+                </div>
+            ))}
+        </div>
     </div>
 </section>
 
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
     .home__testi {
+        padding-bottom: 5rem;
         &-title {
             position: relative;
             padding-block: 12rem;
@@ -55,6 +102,74 @@ import TextTransClip from '~/components/common/TextTransClip';
                 }
                 &:nth-child(3) {
                     grid-column: 5/16;
+                }
+            }
+        }
+        &-listing {
+
+        }
+        &-item {
+            padding: 6.4rem 0;
+            border-top: 1px solid var(--cl-dm-border);
+            &-order {
+                grid-area: 1/1/2/2;
+
+                opacity: 1;
+                transition: opacity .5s cubic-bezier(.74, .06, .4, .92);
+            }
+            &-info {
+                grid-column: 5/9;
+
+                display: flex;
+                flex-direction: column;
+                gap: 2rem 0;
+
+                opacity: .3;
+                transition: opacity .5s cubic-bezier(.74, .06, .4, .92);
+            }
+            &-feedback-wrap {
+                grid-column: 10/-1;
+
+                opacity: .3;
+                transition: opacity .5s cubic-bezier(.74, .06, .4, .92);
+            }
+            &-image {
+                grid-area: 1/1/2/2;
+                position: relative;
+                @include size(9rem, 12rem);
+                overflow: hidden;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &-main {
+                    opacity: 0;
+                    transform: scale(1.4);
+                    transition: transform .8s cubic-bezier(0.33, 1, 0.68, 1) .15s, opacity 1s cubic-bezier(0.16, 1, 0.3, 1) .15s;
+                }
+                &-blur {
+                    position: absolute;
+                    inset: 0;
+                    opacity: 0;
+                    transition: opacity 1.2s cubic-bezier(.74, .06, .4, .92);
+                }
+            }
+            &:hover {
+                @media (hover:hover) {
+                    .home__testi-item {
+                        &-order {
+                            opacity: 0;
+                            transition-delay: 0;
+                        }
+                        &-image-main {
+                            transform: scale(1);
+                            transition-delay: 0;
+                        }
+                        &-info, &-image-main, &-image-blur, &-feedback-wrap {
+                            opacity: 1;
+                            transition-delay: 0;
+                        }
+                    }
                 }
             }
         }
