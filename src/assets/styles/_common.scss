@@ -96,10 +96,11 @@ body {
         --grid-gap: 1.6rem;
     }
 }
-
-.container {
+:root {
     --container-width: 1728px;
     --container-padding: 6rem;
+}
+.container {
     position: relative;
     z-index: 2;
     width: 100%;

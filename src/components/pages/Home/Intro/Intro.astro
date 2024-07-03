@@ -473,11 +473,13 @@ const awards = [
 
                 padding: 4rem 2rem;
 
+
                 &-wrap {
                     transition: all .8s cubic-bezier(.74, .06, .4, .92);
                     grid-area: 1/1/2/2;
                     display: flex;
                     position: relative;
+                    margin: 0 calc(var(--container-padding) * -1);
                     &.orange {
                         color: var(--cl-dm-title);
                         background-color: var(--cl-orange);

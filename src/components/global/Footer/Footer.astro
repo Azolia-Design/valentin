@@ -44,7 +44,9 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             />
         </div>
         <div class="footer__marquee-wrap">
-            <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+            <Marquee
+                duration="1"
+                client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
                 <h2 class="heading h2 footer__marquee">hello<span class="cl-txt-orange">@</span>valentinechavel.design hello<span class="cl-txt-orange">@</span>valentinechavel.design</h2>
                 <h2 class="heading h2 footer__marquee">hello<span class="cl-txt-orange">@</span>valentinechavel.design hello<span class="cl-txt-orange">@</span>valentinechavel.design</h2>
             </Marquee>
