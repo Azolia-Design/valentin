@@ -4,7 +4,9 @@ let lenis;
 
 function initLenis() {
     console.log('init lenis')
-    lenis = new Lenis()
+    lenis = new Lenis({
+        infinite: true
+    })
 
     function raf(time) {
         lenis.raf(time)

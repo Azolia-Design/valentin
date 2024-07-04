@@ -5,7 +5,9 @@ import Arrows from '~/components/common/Arrows.astro';
 import TextBlurFading from '~/components/common/TextBlurFading';
 import Marquee from '~/components/common/Marquee';
 import IntroScript  from './script';
+import BreakMutipleLine from '~/components/common/BreakMutipleLine.astro';
 
+const { data } = Astro.props;
 const companies = [
     "liquid",
     "gotyme-bank",
@@ -25,192 +27,191 @@ const awards = [
     { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' }
 ]
 ---
-<section class="home__intro">
-    <IntroScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
-    <div class="container grid">
-        <div class="home__intro-companies">
-            <h4 class="heading h5 cl-txt-title home__intro-companies-title">I've helped <br/>over 100 companies including</h4>
-            <div class="home__intro-companies-listing">
-                {companies.map((ic) =>
-                    <div class="home__intro-company">
-                        <Icon name=`company/${ic}` class="home__intro-company-ic" />
-                    </div>
-                )}
-                <div class="home__intro-company">
-                </div>
-            </div>
-        </div>
-        <div class="home__intro-main">
-            <div class="heading h4 home__intro-main-txt">
-                <TextBlurFading
-                    triggerOpts = {{
-                        start: 'top top+=50%',
-                        end: 'bottom top+=50%'
-                    }}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}
-                    >
-                        <span class="fs-24 home__intro-main-label">(intro)</span>
-                        Finance should be a help to user's goal, not a frustration in their lives.Design's is the bridge between your company's financial solution and user needs. Design thinking is key to your financial product's success
-                        <br/> <br/>
-                        My goal is to bridge the gap between complex financial systems and user-friendly design. I helped banks, crypto wallets, exchanges, options and derivatives to cross that bridge hand in hand.
-                        <br/> <br/>
-                        Your product will benefit from my expertise in finance, from banks, fintech, crypto, derivatives and web3 applied through the lense of design thinking, branding, strategic thinking and user centered approach
-                </TextBlurFading>
-            </div>
-            <a href="#" class="btn btn-circle arrow-hover home__intro-btn">
-                <Arrows/>
-            </a>
-        </div>
-        <div class="home__intro-portrait">
-            <Image
-                src={'~/assets/images/intro-portrait.jpg'}
-                widths={[400, 768, 1024]}
-                width={183}
-                alt={'a man'}
-                layout="cover"
-                loading="lazy"
-                decoding="async"
-                aspectRatio="3:4"
-            />
-            <Image
-                src={'~/assets/images/intro-portrait-blur.png'}
-                widths={[400, 768, 1024]}
-                width={183}
-                alt={'a man'}
-                layout="cover"
-                loading="lazy"
-                decoding="async"
-                aspectRatio="3:4"
-            />
-        </div>
-        <div class="home__intro-awards">
-            <h3 class="heading h4 cl-txt-title upper home__intro-awards-title">Awards</h3>
-            <div class="home__intro-awards-wrap">
-                <div class="home__intro-awards-listing">
-                    {awards.map((award) =>
-                        <div class="home__intro-award">
-                            <div class="line"></div>
-                            <p class="fs-24 cl-txt-desc home__intro-award-name">{award.name}</p>
-                            <p class="cl-txt-disable home__intro-award-year">{award.year}</p>
-                            <p class="cl-txt-disable home__intro-award-category">{award.category}</p>
-                        </div>
-                        <div class="home__intro-award-logo">
-                            <Icon name={award.logo} />
+<div class="home__intro-wrap">
+    <section class="home__intro">
+        <IntroScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+        <div class="container grid">
+            <div class="home__intro-companies">
+                <h4 class="heading h5 cl-txt-title home__intro-companies-title">I've helped <br/>over 100 companies including</h4>
+                <div class="home__intro-companies-listing">
+                    {companies.map((ic) =>
+                        <div class="home__intro-company">
+                            <Icon name=`company/${ic}` class="home__intro-company-ic" />
                         </div>
                     )}
+                    <div class="home__intro-company">
+                    </div>
+                </div>
+            </div>
+            <div class="home__intro-main">
+                <div class="heading h4 home__intro-main-txt">
+                    <TextBlurFading
+                        triggerOpts = {{
+                            start: 'top top+=50%',
+                            end: 'bottom top+=50%'
+                        }}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}
+                        >
+                            <span class="fs-24 home__intro-main-label">(intro)</span>
+                            <BreakMutipleLine text={data.title}/>
+                    </TextBlurFading>
+                </div>
+                <a href="#" class="btn btn-circle arrow-hover home__intro-btn">
+                    <Arrows/>
+                </a>
+            </div>
+            <div class="home__intro-portrait">
+                <Image
+                    src={'~/assets/images/intro-portrait.jpg'}
+                    widths={[400, 768, 1024]}
+                    width={183}
+                    alt={'a man'}
+                    layout="cover"
+                    loading="lazy"
+                    decoding="async"
+                    aspectRatio="3:4"
+                />
+                <Image
+                    src={'~/assets/images/intro-portrait-blur.png'}
+                    widths={[400, 768, 1024]}
+                    width={183}
+                    alt={'a man'}
+                    layout="cover"
+                    loading="lazy"
+                    decoding="async"
+                    aspectRatio="3:4"
+                />
+            </div>
+            <div class="home__intro-awards">
+                <h3 class="heading h4 cl-txt-title upper home__intro-awards-title">Awards</h3>
+                <div class="home__intro-awards-wrap">
+                    <div class="home__intro-awards-listing">
+                        {awards.map((award) =>
+                            <div class="home__intro-award">
+                                <div class="line"></div>
+                                <p class="fs-24 cl-txt-desc home__intro-award-name">{award.name}</p>
+                                <p class="cl-txt-disable home__intro-award-year">{award.year}</p>
+                                <p class="cl-txt-disable home__intro-award-category">{award.category}</p>
+                            </div>
+                            <div class="home__intro-award-logo">
+                                <Icon name={award.logo} />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="home__intro-service-wrap">
-        <div class="home__intro-service">
-            <div class="home__intro-service-marquee-wrap black">
-                <Marquee start="right" client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                    <div class="home__intro-service-marquee">
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                8 years of experience
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
+        <div class="home__intro-service-wrap">
+            <div class="home__intro-service">
+                <div class="home__intro-service-marquee-wrap black">
+                    <Marquee start="right" client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                        <div class="home__intro-service-marquee">
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    8 years of experience
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    senior designer
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    Over 100 customers
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
                         </div>
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                senior designer
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
+                    </Marquee>
+                    <!-- <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                        <div class="home__intro-service-marquee">
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    8 years of experience
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    senior designer
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    Over 100 customers
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
                         </div>
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                Over 100 customers
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
+                    </Marquee> -->
+                </div>
+                <div class="home__intro-service-marquee-wrap orange">
+                    <Marquee start="left" client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                        <div class="home__intro-service-marquee">
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    Product Design
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    Brand design & Strategy
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    Visual design
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
                         </div>
-                    </div>
-                </Marquee>
-                <!-- <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                    <div class="home__intro-service-marquee">
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                8 years of experience
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
+                    </Marquee>
+                    <!-- <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                        <div class="home__intro-service-marquee">
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    Product Design
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    Brand design & Strategy
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
+                            <div class="home__intro-service-marquee-item">
+                                <h3 class="heading h3 upper">
+                                    Visual design
+                                </h3>
+                                <Icon name="asterisk" class="ic-32" />
+                            </div>
                         </div>
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                senior designer
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
-                        </div>
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                Over 100 customers
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
-                        </div>
-                    </div>
-                </Marquee> -->
+                    </Marquee> -->
+                </div>
             </div>
-            <div class="home__intro-service-marquee-wrap orange">
-                <Marquee start="left" client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                    <div class="home__intro-service-marquee">
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                Product Design
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
-                        </div>
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                Brand design & Strategy
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
-                        </div>
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                Visual design
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
-                        </div>
-                    </div>
-                </Marquee>
-                <!-- <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                    <div class="home__intro-service-marquee">
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                Product Design
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
-                        </div>
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                Brand design & Strategy
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
-                        </div>
-                        <div class="home__intro-service-marquee-item">
-                            <h3 class="heading h3 upper">
-                                Visual design
-                            </h3>
-                            <Icon name="asterisk" class="ic-32" />
-                        </div>
-                    </div>
-                </Marquee> -->
+            <div class="home__intro-service-blur">
+                <Image
+                    src={'~/assets/images/intro-service-blur.png'}
+                    widths={[400, 768, 1024]}
+                    width={1511}
+                    alt={'a orange blur'}
+                    layout="cover"
+                    loading="lazy"
+                    decoding="async"
+                    aspectRatio="1"
+                />
             </div>
         </div>
-        <div class="home__intro-service-blur">
-            <Image
-                src={'~/assets/images/intro-service-blur.png'}
-                widths={[400, 768, 1024]}
-                width={1511}
-                alt={'a orange blur'}
-                layout="cover"
-                loading="lazy"
-                decoding="async"
-                aspectRatio="1"
-            />
-        </div>
-    </div>
-</section>
+    </section>
+</div>
+
 
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;

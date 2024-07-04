@@ -15,7 +15,7 @@ const FooterScript = () => {
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.footer__title',
-                start: 'start+=50% bottom',
+                start: 'top+=50% bottom',
                 end: 'bottom+=100% bottom',
                 scrub: true
             }
@@ -23,6 +23,17 @@ const FooterScript = () => {
 
         tl.fromTo(splitedText.words, { autoAlpha: 0 }, { autoAlpha: 1, duration: 5.5, stagger: .4, ease: 'linear' })
 
+
+        let tlInfinite = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.footer',
+                start: 'top top+=20%',
+                end: 'bottom bottom',
+                scrub: true
+            }
+        })
+
+        tlInfinite.fromTo('.home__hero-clone-wrap', { autoAlpha: 0, yPercent: 100 }, { autoAlpha: 1, yPercent: 0, ease: 'linear' })
         onCleanup(() => {
             tl.kill();
             if (splitedText.isSplit) splitedText.revert();

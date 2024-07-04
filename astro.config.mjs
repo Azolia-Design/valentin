@@ -6,6 +6,9 @@ import solid from '@astrojs/solid-js';
 import swup from '@swup/astro';
 
 import { defineConfig, squooshImageService } from 'astro/config';
+import keystatic from '@keystatic/astro';
+import react from '@astrojs/react';
+import markdoc from '@astrojs/markdoc';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
@@ -18,11 +21,14 @@ const whenExternalScripts = (items = []) =>
     hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
-    output: 'static',
+    output: 'hybrid',
     devToolbar: {
         enabled: false
     },
     integrations: [
+        react(),
+        markdoc(),
+        keystatic(),
         solid({ devtools: true }),
         swup({ globalInstance: true }),
         icon(),

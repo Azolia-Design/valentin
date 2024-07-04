@@ -2,46 +2,44 @@
 import { Icon } from 'astro-icon/components';
 import Arrows from '~/components/common/Arrows.astro';
 import Image from '~/components/common/Image.astro';
-import HeroScript from './script';
 const { data } = Astro.props;
 ---
-<div class="home__hero-wrap">
-    <section class="home__hero">
-        <HeroScript client:load/>
-        <div class="home__hero-main">
+<div class="home__hero-clone-wrap">
+    <section class="home__hero-clone">
+        <div class="home__hero-clone-main">
             <div class="container grid calc-h">
-                <div class="home__hero-scope-wrap">
-                    <ul class="home__hero-scope">
+                <div class="home__hero-clone-scope-wrap">
+                    <ul class="home__hero-clone-scope">
                         {data.scopes.map((el) => <li>{el}</li>)}
                     </ul>
-                    <a href="#" class="arrow-hover home__hero-scope-cta">
+                    <a href="#" class="arrow-hover home__hero-clone-scope-cta">
                         <span class="txt-link">How can I help?</span>
                         <Arrows class="ic-20"/>
                     </a>
                 </div>
-                <div class="home__hero-intro-wrap">
-                    <p class="home__hero-intro">{data.subtitle}</p>
+                <div class="home__hero-clone-intro-wrap">
+                    <p class="home__hero-clone-intro">{data.subtitle}</p>
                     <span class="line"></span>
-                    <div class="home__hero-awards">
-                        <Icon name="red-dot" class="home__hero-award"/>
-                        <Icon name="ux-design" class="home__hero-award"/>
-                        <Icon name="dfa" class="home__hero-award"/>
+                    <div class="home__hero-clone-awards">
+                        <Icon name="red-dot" class="home__hero-clone-award"/>
+                        <Icon name="ux-design" class="home__hero-clone-award"/>
+                        <Icon name="dfa" class="home__hero-clone-award"/>
                     </div>
                 </div>
-                <div class="home__hero-title-wrap">
-                    <div class="home__hero-greating-wrap">
-                        <p class="home__hero-greating">Hi there! this is</p>
-                        <p class="heading h5 home__hero-name"><span class="fw-med cl-txt-title">Valentin</span> <span class="cl-txt-desc">Chavel</span></p>
+                <div class="home__hero-clone-title-wrap">
+                    <div class="home__hero-clone-greating-wrap">
+                        <p class="home__hero-clone-greating">Hi there! this is</p>
+                        <p class="heading h5 home__hero-clone-name"><span class="fw-med cl-txt-title">Valentin</span> <span class="cl-txt-desc">Chavel</span></p>
                     </div>
-                    <h1 class="heading h1 fw-bold upper home__hero-title">
-                        Design <br/>for financial <div class="cl-txt-orange home__hero-title-slide"><span>Product</span><span>Business</span></div>
+                    <h1 class="heading h1 fw-bold upper home__hero-clone-title">
+                        Design <br/>for financial <div class="cl-txt-orange home__hero-clone-title-slide"><span>Product</span><span>Business</span></div>
                     </h1>
                     <span class="upper">(Scroll down)</span>
                 </div>
             </div>
         </div>
-        <div class="home__hero-bg">
-            <div class="home__hero-bg-main">
+        <div class="home__hero-clone-bg">
+            <div class="home__hero-clone-bg-main">
                 <Image
                     src={'~/assets/images/home-hero.jpg'}
                     widths={[400, 768, 1024, 2040]}
@@ -52,18 +50,22 @@ const { data } = Astro.props;
                     loading="eager"
                     decoding="async"
                 />
-                <div class="home__hero-bg-gradient"></div>
+                <div class="home__hero-clone-bg-gradient"></div>
             </div>
         </div>
     </section>
 </div>
 
-
 <style lang="scss">
     @use '~/assets/styles/mixins' as *;
-    .home__hero-wrap {
+    .home__hero-clone-wrap {
+        position: sticky;
+        bottom: 0;
+        z-index: 1;
+        margin-bottom: -100vh;
+        opacity: 0;
     }
-    .home__hero {
+    .home__hero-clone {
         position: relative;
 
         display: grid;
@@ -75,7 +77,6 @@ const { data } = Astro.props;
         &-main {
             position: relative;
             z-index: 2;
-            margin-bottom: 200vh;
 
             @include size(100%, 100vh);
             & > .container {
@@ -130,11 +131,6 @@ const { data } = Astro.props;
 
                 color: var(--cl-dm-title);
                 transition: color 0.4s ease-in-out;
-                &:hover {
-                    @media (hover:hover) {
-                        color: var(--cl-orange);
-                    }
-                }
             }
         }
 
@@ -197,9 +193,6 @@ const { data } = Astro.props;
             @include size(4.4rem);
             opacity: .5;
             transition: opacity .4s cubic-bezier(.74, .06, .4, .92);
-            &:hover {
-                opacity: 1;
-            }
         }
     }
 </style>

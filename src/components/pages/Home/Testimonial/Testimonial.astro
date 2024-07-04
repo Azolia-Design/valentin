@@ -9,74 +9,76 @@ const testimonials = [
     { name: "Andrew Michael Todd", position: "Head Of Marketing and Growth at Bitcoin.com", feedback: "I am delighted to recommend Valentin, a former Lead Designer at Bitcoin.com. During his time with us Valentin showcased exceptional product design and leadership skills", image: { src: '~/assets/images/testi-pp.jpg', alt: '' } }
 ]
 ---
-<section class="home__testi">
-    <div class="container">
-        <h2 class="upper home__testi-title grid">
-            <span class="heading h2 fw-bold home__testi-title-txt">
-                <TextTransClip
-                    triggerOpts = {{
-                        trigger: '.home__testi-title'
-                    }}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>What</TextTransClip>
-            </span>
-            <span class="heading h2 fw-bold home__testi-title-txt">
-                <TextTransClip
-                    triggerOpts = {{
-                        trigger: '.home__testi-title',
-                        end: 'bottom top+=46%',
-                    }}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>people say</TextTransClip>
-            </span>
-            <span class="heading h2 fw-bold home__testi-title-txt">
-                <TextTransClip
-                    triggerOpts = {{
-                        trigger: '.home__testi-title',
-                        end: 'bottom top+=42%',
-                    }}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}>About<span class="cl-txt-title"> me</span></TextTransClip>
-            </span>
-            <span class="fs-20 cl-txt-desc fw-reg upper home__testi-title-label">(Testimonials)</span>
-        </h2>
-        <div class="home__testi-listing">
-            {testimonials.map((el, idx) => (
-                <div class="home__testi-item grid">
-                    <p class="heading h4 cl-txt-disable fw-thin home__testi-item-order">{(idx + 1).toString().padStart(2, '0')}.</p>
-                    <div class="home__testi-item-info">
-                        <p class="fs-24 fw-med cl-txt-title">{el.name}</p>
-                        <p class="cl-txt-sub">{el.position}</p>
+<div class="home__testi-wrap">
+    <section class="home__testi">
+        <div class="container">
+            <h2 class="upper home__testi-title grid">
+                <span class="heading h2 fw-bold home__testi-title-txt">
+                    <TextTransClip
+                        triggerOpts = {{
+                            trigger: '.home__testi-title'
+                        }}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>What</TextTransClip>
+                </span>
+                <span class="heading h2 fw-bold home__testi-title-txt">
+                    <TextTransClip
+                        triggerOpts = {{
+                            trigger: '.home__testi-title',
+                            end: 'bottom top+=46%',
+                        }}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>people say</TextTransClip>
+                </span>
+                <span class="heading h2 fw-bold home__testi-title-txt">
+                    <TextTransClip
+                        triggerOpts = {{
+                            trigger: '.home__testi-title',
+                            end: 'bottom top+=42%',
+                        }}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>About<span class="cl-txt-title"> me</span></TextTransClip>
+                </span>
+                <span class="fs-20 cl-txt-desc fw-reg upper home__testi-title-label">(Testimonials)</span>
+            </h2>
+            <div class="home__testi-listing">
+                {testimonials.map((el, idx) => (
+                    <div class="home__testi-item grid">
+                        <p class="heading h4 cl-txt-disable fw-thin home__testi-item-order">{(idx + 1).toString().padStart(2, '0')}.</p>
+                        <div class="home__testi-item-info">
+                            <p class="fs-24 fw-med cl-txt-title">{el.name}</p>
+                            <p class="cl-txt-sub">{el.position}</p>
+                        </div>
+                        <div class="fs-24 fw-thin home__testi-item-feedback-wrap">
+                            <div class="home__testi-item-feedback">{el.feedback}</div>
+                        </div>
+                        <div class="home__testi-item-image">
+                            <Image
+                                class="home__testi-item-image-main"
+                                src={el.image.src}
+                                widths={[400, 768, 1024]}
+                                width={90}
+                                aspectRatio="3:4"
+                                alt={el.image.alt}
+                                layout="cover"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <Image
+                                class="home__testi-item-image-blur"
+                                src={'~/assets/images/testi-blur.png'}
+                                widths={[400, 768, 1024]}
+                                width={90}
+                                aspectRatio="3:4"
+                                alt={'gradient orange blur'}
+                                layout="cover"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
                     </div>
-                    <div class="fs-24 fw-thin home__testi-item-feedback-wrap">
-                        <div class="home__testi-item-feedback">{el.feedback}</div>
-                    </div>
-                    <div class="home__testi-item-image">
-                        <Image
-                            class="home__testi-item-image-main"
-                            src={el.image.src}
-                            widths={[400, 768, 1024]}
-                            width={90}
-                            aspectRatio="3:4"
-                            alt={el.image.alt}
-                            layout="cover"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                        <Image
-                            class="home__testi-item-image-blur"
-                            src={'~/assets/images/testi-blur.png'}
-                            widths={[400, 768, 1024]}
-                            width={90}
-                            aspectRatio="3:4"
-                            alt={'gradient orange blur'}
-                            layout="cover"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                    </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;

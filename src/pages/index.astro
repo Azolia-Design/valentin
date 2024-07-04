@@ -1,17 +1,25 @@
 ---
+import { getEntry } from 'astro:content'
+
 import Layout from '../layouts/PageLayout.astro';
 
 import Hero from '~/components/pages/Home/Hero/Hero.astro';
 import Intro from '~/components/pages/Home/Intro/Intro.astro';
 import Project from '~/components/pages/Home/Project/Project.astro';
 import Testimonial from '~/components/pages/Home/Testimonial/Testimonial.astro';
+import Footer from '~/components/global/Footer/Footer.astro';
+import HeroClone from '~/components/pages/Home/Hero/HeroClone.astro';
+import { headerData, footerData } from '~/navigation';
 const metadata = {
 	title: 'Valentine Chavel',
 };
+const { data } = await getEntry('pages', 'home');
 ---
 <Layout metadata={metadata}>
-	<Hero/>
-	<Intro/>
+	<Hero data={data.hero} />
+	<Intro data={data.introduction}/>
 	<Project/>
 	<Testimonial/>
+	<Footer {...footerData} />
+	<HeroClone data={data.hero}/>
 </Layout>
