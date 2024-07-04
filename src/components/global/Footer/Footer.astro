@@ -47,8 +47,10 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             <Marquee
                 duration="1"
                 client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                <h2 class="heading h2 footer__marquee">hello<span class="cl-txt-orange">@</span>valentinechavel.design hello<span class="cl-txt-orange">@</span>valentinechavel.design</h2>
-                <h2 class="heading h2 footer__marquee">hello<span class="cl-txt-orange">@</span>valentinechavel.design hello<span class="cl-txt-orange">@</span>valentinechavel.design</h2>
+                <h2 class="heading h2 footer__marquee">
+                    <a class="footer__marquee-link" href="mailto:hello@valentinchavel.design">hello<span class="cl-txt-orange">@</span>valentinchavel.design</a>
+                    <a class="footer__marquee-link" href="mailto:hello@valentinchavel.design">hello<span class="cl-txt-orange">@</span>valentinchavel.design</a>
+                </h2>
             </Marquee>
         </div>
     </div>
@@ -126,6 +128,10 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             z-index: 3;
         }
         &__marquee {
+            transition: color .4s ease-in-out;
+            &:hover {
+                color: var(--cl-orange);
+            }
             &-wrap {
                 grid-column: 1/-1;
                 grid-row: 3/4;

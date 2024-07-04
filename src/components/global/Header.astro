@@ -5,6 +5,12 @@ const { id = 'header', socials, links, actions } = Astro.props;
     class="header"
     {...id ? { id } : {}}
 >
+    <div class="header__blur">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
     <div class="container grid">
         <div class="header__logo">
             <p class="header__greating">Good morning!</p>
@@ -24,6 +30,8 @@ const { id = 'header', socials, links, actions } = Astro.props;
 </header>
 
 <style lang="scss">
+    @use '~/assets/styles/mixins' as *;
+
     .header {
         position: fixed;
         top: 0;
@@ -31,10 +39,13 @@ const { id = 'header', socials, links, actions } = Astro.props;
         z-index: 100;
 
         width: 100%;
-        padding: 4rem 0;
+        padding-top: 4rem;
 
         display: flex;
         align-items: center;
+        > .container {
+            z-index: 10;
+        }
         &__logo {
             grid-column: 1/4;
             position: relative;
@@ -60,6 +71,47 @@ const { id = 'header', socials, links, actions } = Astro.props;
         &__act {
             justify-self: end;
             margin-left: -2rem;
+        }
+        &__blur {
+            position: absolute;
+            z-index: 5;
+            left: 0;
+            top: 0;
+            @include size(100%, 280%);
+            transform-origin: left top;
+            pointer-events: none;
+            transition: 1s transform cubic-bezier(.55,0,.1,1), 1s height cubic-bezier(.55,0,.1,1);
+            transform: translateZ(0) translateY(-30%);
+            > div {
+                $gradient-core-cl: #000;
+
+                position: absolute;
+                inset: 0;
+                &:nth-child(1) {
+                    z-index: 2;
+                    -webkit-backdrop-filter: blur(.1rem);
+                    backdrop-filter: blur(.1rem);
+                    -webkit-mask: linear-gradient(to top, rgba($gradient-core-cl, 0) 0%, $gradient-core-cl 12.5%, $gradient-core-cl 37.5%, rgba($gradient-core-cl, 0) 50%);
+                }
+                &:nth-child(2) {
+                    z-index: 3;
+                    -webkit-backdrop-filter: blur(.2rem);
+                    backdrop-filter: blur(.2rem);
+                    -webkit-mask: linear-gradient(to top, rgba($gradient-core-cl, 0) 12.5%, $gradient-core-cl 37.5%, $gradient-core-cl 50%, rgba($gradient-core-cl, 0) 62.5%);
+                }
+                &:nth-child(3) {
+                    z-index: 4;
+                    -webkit-backdrop-filter: blur(.4rem);
+                    backdrop-filter: blur(.4rem);
+                    -webkit-mask: linear-gradient(to top, rgba($gradient-core-cl, 0) 37.5%, $gradient-core-cl 50%, $gradient-core-cl 62.5%, rgba($gradient-core-cl, 0) 75%);
+                }
+                &:nth-child(4) {
+                    z-index: 5;
+                    -webkit-backdrop-filter: blur(.8rem);
+                    backdrop-filter: blur(.8rem);
+                    -webkit-mask: linear-gradient(to top, rgba($gradient-core-cl, 0) 50%, $gradient-core-cl 62.5%, $gradient-core-cl 75%, rgba($gradient-core-cl, 0) 87.5%);
+                }
+            }
         }
     }
 </style>
