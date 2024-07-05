@@ -12,6 +12,7 @@ import markdoc from '@astrojs/markdoc';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
+import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,7 +22,12 @@ const whenExternalScripts = (items = []) =>
     hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
-    output: 'static',
+    output: 'hybrid',
+    adapter: vercel({
+        webAnalytics: {
+            enabled: true,
+        },
+    }),
     devToolbar: {
         enabled: false
     },
