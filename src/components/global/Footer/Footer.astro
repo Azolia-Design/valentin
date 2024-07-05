@@ -77,6 +77,10 @@ const { id = 'footer', socials, whatapps } = Astro.props;
         width: 100%;
         padding-top: 53rem;
         min-height: 100vh;
+        display: flex;
+        > .container {
+            margin-top: auto;
+        }
         &__bg {
             position: absolute;
             z-index: 1;

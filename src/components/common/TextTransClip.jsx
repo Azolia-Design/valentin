@@ -9,13 +9,12 @@ const TextTransClip = (props) => {
         if (!textRef) return;
         gsap.registerPlugin(ScrollTrigger);
         const q = gsap.utils.selector(textRef);
-        console.log((textRef.offsetHeight))
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: textRef,
                 start: 'top bottom',
                 end: `bottom top+=${(window.innerHeight / 2) + textRef.offsetHeight}`,
-                scrub: 1.1,
+                scrub: true,
                 ...props.triggerOpts
             }
         });

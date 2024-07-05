@@ -1,5 +1,6 @@
 ---
 const { id = 'header', socials, links, actions } = Astro.props;
+const pathname = new URL(Astro.request.url).pathname;
 ---
 <header
     class="header"
@@ -23,7 +24,7 @@ const { id = 'header', socials, links, actions } = Astro.props;
         </div>
         <div class="header__menu">
             {links.map((el, i) =>
-                <Fragment><a href={el.href}>{el.text}</a>{i < (links.length) - 1 && '/'}</Fragment>)}
+                <Fragment><a href={el.href} class={`header__menu-link${pathname === el.href ? ' active': ''}`}>{el.text}</a>{i < (links.length) - 1 && '/'}</Fragment>)}
         </div>
         <a href="" class="txt-link header__act">{actions.text}</a>
     </div>
@@ -31,7 +32,6 @@ const { id = 'header', socials, links, actions } = Astro.props;
 
 <style lang="scss">
     @use '~/assets/styles/mixins' as *;
-
     .header {
         position: fixed;
         top: 0;
@@ -67,6 +67,12 @@ const { id = 'header', socials, links, actions } = Astro.props;
             display: flex;
             align-items: center;
             gap: 0 1.2rem;
+            &-link {
+                &.active {
+                    color: var(--cl-dm-title);
+                    // pointer-events: none;
+                }
+            }
         }
         &__act {
             justify-self: end;

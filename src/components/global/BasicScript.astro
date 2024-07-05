@@ -1,10 +1,45 @@
 ---
+declare global {
+    interface Window {
+        swup: any;
+    }
+}
+const pathname = new URL(Astro.request.url).pathname;
 ---
 <script>
     import { initLenis, getLenis } from "~/components/core/lenis";
     // import CMS from "decap-cms-app";
-    // Initialize the CMS object
     // CMS.init();
+
+
+    const setup = () => {
+        console.log("initswupper")
+        window.swup.hooks.on('page:view', () => {
+            console.log("zo ", window.location.href)
+        })
+
+        // window.swup.hooks.on('visit:start', () => {
+
+        // }, { priority: 100 });
+        function myCustomFunction () {
+            console.log("ru")
+            window.scrollTo(0,0)
+            getLenis().scrollTo(0);
+        }
+        window.swup.hooks.on('scroll:top', () => {
+            console.log("zop")
+        })
+        window.swup.hooks.on('visit:start', async () => {
+            await myCustomFunction();
+        });
+    }
+    if (window.swup) {
+        setup()
+    } else {
+        document.addEventListener('swup:enable', setup)
+    }
+
+
 
     const onLoad = function () {
         if (!getLenis()) {

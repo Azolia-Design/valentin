@@ -82,7 +82,7 @@ const ProjectListing = (props) => {
                         {(project) => (
                             <swiper-slide>
                                 <div class="home__project-thumbnail-img">
-                                    <img class="img" src={project.thumbnail.src} alt={project.thumbnail.alt} />
+                                    <img class="img img-fill" src={project.thumbnail.src} alt={project.thumbnail.alt} />
                                 </div>
                             </swiper-slide>
                         )}
