@@ -30,6 +30,7 @@ const awards = [
 <div class="home__intro-wrap">
     <section class="home__intro">
         <IntroScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+        <div class="home__intro-bg-gradient"></div>
         <div class="container grid">
             <div class="home__intro-companies">
                 <h4 class="heading h5 cl-txt-title home__intro-companies-title">I've helped <br/>over 100 companies including</h4>
@@ -126,28 +127,6 @@ const awards = [
                             </div>
                         </div>
                     </Marquee>
-                    <!-- <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                        <div class="home__intro-service-marquee">
-                            <div class="home__intro-service-marquee-item">
-                                <h3 class="heading h3 upper">
-                                    8 years of experience
-                                </h3>
-                                <Icon name="asterisk" class="ic-32" />
-                            </div>
-                            <div class="home__intro-service-marquee-item">
-                                <h3 class="heading h3 upper">
-                                    senior designer
-                                </h3>
-                                <Icon name="asterisk" class="ic-32" />
-                            </div>
-                            <div class="home__intro-service-marquee-item">
-                                <h3 class="heading h3 upper">
-                                    Over 100 customers
-                                </h3>
-                                <Icon name="asterisk" class="ic-32" />
-                            </div>
-                        </div>
-                    </Marquee> -->
                 </div>
                 <div class="home__intro-service-marquee-wrap orange">
                     <Marquee start="left" client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
@@ -172,28 +151,6 @@ const awards = [
                             </div>
                         </div>
                     </Marquee>
-                    <!-- <Marquee client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                        <div class="home__intro-service-marquee">
-                            <div class="home__intro-service-marquee-item">
-                                <h3 class="heading h3 upper">
-                                    Product Design
-                                </h3>
-                                <Icon name="asterisk" class="ic-32" />
-                            </div>
-                            <div class="home__intro-service-marquee-item">
-                                <h3 class="heading h3 upper">
-                                    Brand design & Strategy
-                                </h3>
-                                <Icon name="asterisk" class="ic-32" />
-                            </div>
-                            <div class="home__intro-service-marquee-item">
-                                <h3 class="heading h3 upper">
-                                    Visual design
-                                </h3>
-                                <Icon name="asterisk" class="ic-32" />
-                            </div>
-                        </div>
-                    </Marquee> -->
                 </div>
             </div>
             <div class="home__intro-service-blur">
@@ -221,8 +178,11 @@ const awards = [
         position: relative;
         z-index: 3;
 
-        padding-top: var(--padding-top);
+        // padding-top: var(--padding-top);
         margin-top: calc(-120vh - var(--padding-top));
+        > .container {
+            background-color: var(--cl-dm-bg);
+        }
         &-main {
             grid-column: 9/-1;
 
@@ -456,6 +416,7 @@ const awards = [
             }
         }
         &-service {
+            background-color: var(--cl-dm-bg);
             height: 53.5rem;
             display: grid;
             grid-template-columns: 1fr;
@@ -463,7 +424,7 @@ const awards = [
             justify-content: center;
             contain: paint;
             position: relative;
-            z-index: 2;
+            z-index: 3;
             &-wrap {
                 position: relative;
             }
@@ -472,7 +433,7 @@ const awards = [
                 align-items: center;
                 gap: 0 4rem;
 
-                padding: 4rem 2rem;
+                padding: 2.5rem 2rem;
 
 
                 &-wrap {
@@ -524,6 +485,15 @@ const awards = [
                 z-index: 1;
                 pointer-events: none;
             }
+        }
+        &-bg-gradient {
+            position: relative;
+            background-image: linear-gradient(to top, rgb(0, 5, 15), rgba(0, 5, 15, 0));
+            height: var(--padding-top);
+            width: 100%;
+            left: 0;
+            z-index: 3;
+            pointer-events: none;
         }
     }
 </style>

@@ -58,27 +58,13 @@ const projects = [
         <div class="container">
             <h2 class="upper home__project-title grid">
                 <span class="heading h2 fw-bold home__project-title-txt">
-                    <TextTransClip
-                        triggerOpts = {{
-                            trigger: '.home__project-title',
-                        }}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Projects I</TextTransClip>
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Projects I</TextTransClip>
                 </span>
                 <span class="heading h2 fw-bold home__project-title-txt">
-                    <TextTransClip
-                        triggerOpts = {{
-                            trigger: '.home__project-title',
-                            end: 'bottom top+=46%',
-                        }}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>worked on</TextTransClip>
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>worked on</TextTransClip>
                 </span>
                 <span class="heading h2 fw-bold cl-txt-disable home__project-title-txt">
-                    <TextTransClip
-                        triggerOpts = {{
-                            trigger: '.home__project-title',
-                            end: 'bottom top+=42%',
-                        }}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>16-{currentYear}<span class="heading h3 fw-semi ver-align-top cl-txt-orange"> ®</span></TextTransClip>
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>16-{currentYear}<span class="heading h3 fw-semi ver-align-top cl-txt-orange"> ®</span></TextTransClip>
                 </span>
                 <span class="fs-20 cl-txt-desc fw-reg upper home__project-title-label">(Portfolio)</span>
             </h2>
@@ -106,6 +92,9 @@ const projects = [
     @use '~/assets/styles/mixins' as *;
 
     .home__project {
+        position: relative;
+        z-index: 3;
+        background-color: var(--cl-dm-bg);
         padding-block: 16rem;
         &-title {
 

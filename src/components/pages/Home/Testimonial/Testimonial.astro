@@ -14,27 +14,13 @@ const testimonials = [
         <div class="container">
             <h2 class="upper home__testi-title grid">
                 <span class="heading h2 fw-bold home__testi-title-txt">
-                    <TextTransClip
-                        triggerOpts = {{
-                            trigger: '.home__testi-title'
-                        }}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>What</TextTransClip>
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>What</TextTransClip>
                 </span>
                 <span class="heading h2 fw-bold home__testi-title-txt">
-                    <TextTransClip
-                        triggerOpts = {{
-                            trigger: '.home__testi-title',
-                            end: 'bottom top+=46%',
-                        }}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>people say</TextTransClip>
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>people say</TextTransClip>
                 </span>
                 <span class="heading h2 fw-bold home__testi-title-txt">
-                    <TextTransClip
-                        triggerOpts = {{
-                            trigger: '.home__testi-title',
-                            end: 'bottom top+=42%',
-                        }}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>About<span class="cl-txt-title"> me</span></TextTransClip>
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>About<span class="cl-txt-title"> me</span></TextTransClip>
                 </span>
                 <span class="fs-20 cl-txt-desc fw-reg upper home__testi-title-label">(Testimonials)</span>
             </h2>
@@ -83,7 +69,10 @@ const testimonials = [
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
     .home__testi {
+        position: relative;
+        z-index: 3;
         padding-bottom: 5rem;
+        background-color: var(--cl-dm-bg);
         &-title {
             position: relative;
             padding-block: 12rem;

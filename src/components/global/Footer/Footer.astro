@@ -7,7 +7,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
 <footer class="footer"
     {...id ? (id) : {}}
 >
-    <FooterScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+    <FooterScript client:load/>
     <div class="container grid">
         <div class="footer__info">
             <div class="footer__info-item">
@@ -61,7 +61,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             height={880}
             alt={'a gradient dark orange'}
             layout="cover"
-            loading="lazy"
+            loading="eager"
             decoding="async"
         />
     </div>

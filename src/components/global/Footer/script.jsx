@@ -29,7 +29,7 @@ const FooterScript = () => {
                 trigger: '.home__hero-clone-wrap',
                 start: 'top+=30% top',
                 end: 'bottom bottom',
-                scrub: true
+                scrub: true,
             }
         })
 
