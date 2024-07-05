@@ -1,1 +1,0 @@
-import{o as a,g as n,u as o,t as s}from"./web.CAOUEYuq.js";var i=s("<div class=divScript>");const u=()=>{let s;return a((()=>{})),t=n(i),"function"==typeof s?o(s,t):s=t,t;var t};export{u as default};

@@ -1,1 +1,0 @@
-import{g as o,i as n}from"./lenis.DdMTSj3V.js";const i=function(){o()||n(),console.log("on load")},s=function(){console.log("on page show")};window.onload=i,window.onpageshow=s;

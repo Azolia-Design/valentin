@@ -35,7 +35,7 @@ export default defineConfig({
     integrations: [
         react(),
         markdoc(),
-        keystatic(),
+        ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()]),
         solid({ devtools: true }),
         swup({ globalInstance: true }),
         icon(),
