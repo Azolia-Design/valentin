@@ -1,5 +1,4 @@
 import { register } from 'swiper/element/bundle';
-import { Navigation, Pagination } from 'swiper/modules';
 import { For, createEffect, createSignal, onMount } from "solid-js";
 import gsap from 'gsap';
 
