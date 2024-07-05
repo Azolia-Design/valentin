@@ -65,6 +65,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             decoding="async"
         />
     </div>
+    <div class="footer__shadow"></div>
 </footer>
 <style lang="scss">
     .footer {
@@ -127,6 +128,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             margin-top: -12.2rem;
             position: relative;
             z-index: 3;
+            margin-bottom: -1px;
         }
         &__marquee {
             transition: color .4s ease-in-out;
@@ -142,6 +144,17 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 padding-top: 2.5rem 0 3.5rem;
                 margin: 0 calc(var(--container-padding) * -1);
             }
+        }
+        &__shadow {
+            z-index: -1;
+            background-image: linear-gradient(#121212, rgba(18, 18, 18, 0));
+            height: 40vh;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+            user-select: none;
         }
     }
 </style>

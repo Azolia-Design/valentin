@@ -26,16 +26,17 @@ const FooterScript = () => {
 
         let tlInfinite = gsap.timeline({
             scrollTrigger: {
-                trigger: '.footer',
-                start: 'top top+=20%',
+                trigger: '.home__hero-clone-wrap',
+                start: 'top+=30% top',
                 end: 'bottom bottom',
                 scrub: true
             }
         })
 
-        tlInfinite.fromTo('.home__hero-clone-wrap', { autoAlpha: 0, yPercent: 100 }, { autoAlpha: 1, yPercent: 0, ease: 'linear' })
+        tlInfinite.fromTo('.home__hero-clone-wrap', { autoAlpha: 0, ease: 'linear' }, { autoAlpha: 1, ease: 'linear' })
         onCleanup(() => {
             tl.kill();
+            tlInfinite.kill();
             if (splitedText.isSplit) splitedText.revert();
         });
     })
