@@ -14,6 +14,7 @@ import icon from 'astro-icon';
 import compress from 'astro-compress';
 import vercel from '@astrojs/vercel/serverless';
 
+
 // https://astro.build/config
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
