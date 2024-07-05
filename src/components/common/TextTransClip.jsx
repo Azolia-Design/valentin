@@ -16,7 +16,6 @@ const TextTransClip = (props) => {
                 start: 'top bottom',
                 end: `bottom top+=${(window.innerHeight / 2) + textRef.offsetHeight}`,
                 scrub: 1.1,
-                markers: true,
                 ...props.triggerOpts
             }
         });
