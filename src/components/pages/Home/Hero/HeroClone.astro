@@ -94,16 +94,8 @@ const { data } = Astro.props;
                 img {
                     // transform-origin: 18vw 25vh;
                     transform-origin: center 16%;
+                    object-position: center top !important;
                 }
-            }
-            &-gradient {
-                position: absolute;
-                bottom: 0;
-                background-image: linear-gradient(to top, rgb(0, 5, 15), rgba(0, 5, 15, 0));
-                @include size(100%);
-                left: 0;
-                z-index: 3;
-                pointer-events: none;
             }
         }
         &-scope-wrap {
