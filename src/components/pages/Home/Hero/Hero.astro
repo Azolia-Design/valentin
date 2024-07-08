@@ -42,7 +42,7 @@ const { data } = Astro.props;
         </div>
         <div class="home__hero-bg">
             <div class="home__hero-bg-main">
-                <Image
+            <!-- <Image
                     src={'~/assets/images/home-hero.jpg'}
                     widths={[400, 768, 1024, 2040]}
                     width={1728}
@@ -51,7 +51,14 @@ const { data } = Astro.props;
                     layout="cover"
                     loading="eager"
                     decoding="async"
-                />
+                /> -->
+                <div
+					id="hero-bg"
+                    class="home__hero-bg-main-inner"
+					data-imageOriginal="src/assets/images/home-hero.jpg"
+					data-imageDepth="src/assets/images//depthmap3.png"
+					data-horizontalThreshold="100"
+					data-verticalThreshold="66.66"></div>
             </div>
         </div>
     </section>
@@ -95,6 +102,12 @@ const { data } = Astro.props;
                     // transform-origin: 18vw 25vh;
                     transform-origin: center 16%;
                     object-position: center top !important;
+                }
+                &-inner {
+                    position: absolute;
+                    inset: 0;
+                    transform-origin: center 16%;
+                    // object-position: center top !important;
                 }
             }
         }
@@ -158,10 +171,10 @@ const { data } = Astro.props;
                 span {
                     --anim-dur: 4s;
                     grid-area: 1/1/2/2;
-                    animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
+                    // animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
                     &:nth-child(2) {
                         transform: translateY(100%);
-                        animation-delay: calc((var(--anim-dur)/2) * -1);
+                        // animation-delay: calc((var(--anim-dur)/2) * -1);
                     }
                 }
             }

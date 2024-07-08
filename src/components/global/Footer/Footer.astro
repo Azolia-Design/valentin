@@ -43,7 +43,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 decoding="async"
             />
         </div>
-        <div class="footer__marquee-wrap">
+        <div class="footer__marquee-wrap" data-cursor-img="src/icons/arrow-white.svg">
             <Marquee
                 duration="1"
                 client:visible={{ rootMargin: "100% 0% 100% 0%" }}>

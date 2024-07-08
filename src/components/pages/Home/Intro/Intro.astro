@@ -57,8 +57,11 @@ const awards = [
                             <BreakMutipleLine text={data.title}/>
                     </TextBlurFading>
                 </div>
-                <a href="#" class="btn btn-circle arrow-hover home__intro-btn">
+                <a href="#" class="btn btn-circle arrow-hover home__intro-btn" data-magnetic>
                     <Arrows/>
+                    <svg class="btn-circle-svg" width="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="49" stroke="white" stroke-opacity=".1" stroke-width="2"/>
+                    </svg>
                 </a>
             </div>
             <div class="home__intro-portrait">
@@ -85,7 +88,7 @@ const awards = [
             </div>
             <div class="home__intro-awards">
                 <h3 class="heading h4 cl-txt-title upper home__intro-awards-title">Awards</h3>
-                <div class="home__intro-awards-wrap">
+                <div class="home__intro-awards-wrap" style={{ '--itemLength': awards.length }}>
                     <div class="home__intro-awards-listing">
                         {awards.map((award) =>
                             <div class="home__intro-award">
@@ -181,7 +184,7 @@ const awards = [
         // padding-top: var(--padding-top);
         margin-top: calc(-120vh - var(--padding-top));
         > .container {
-            background-color: var(--cl-dm-bg);
+            // background-color: var(--cl-dm-bg);
         }
         &-main {
             grid-column: 9/-1;
@@ -189,7 +192,6 @@ const awards = [
             color: var(--cl-dm-title);
 
             position: relative;
-            overflow: hidden;
             &-label {
                 vertical-align: top;
                 margin-right: 13rem;
@@ -239,6 +241,7 @@ const awards = [
 
             background-color: rgba(255, 255, 255, 0.05);
             transition: background 0.4s ease-in-out;
+            backdrop-filter: blur(.5rem);
             &:after {
                 content: '';
                 height: 0;
@@ -297,16 +300,20 @@ const awards = [
             }
         }
         &-awards {
+            --scale-factor: 3;
+
+            position: relative;
             grid-column: 9/-1;
-            margin-bottom: 16rem;
+            padding-bottom: 16rem;
             &-wrap {
-                position: relative;
+                margin-bottom: calc(-7.12rem * (var(--scale-factor) - 1) * var(--itemLength));
             }
             &-title {
                 margin-bottom: 6rem;
             }
             &-listing {
-                position: relative;
+                // position: relative;
+                height: calc(7.12rem * var(--scale-factor) * var(--itemLength));
             }
         }
         &-award {
@@ -319,6 +326,8 @@ const awards = [
             border-top: 1px solid var(--cl-dm-border);
 
             position: relative;
+
+            height: calc(7.12rem * var(--scale-factor));
 
             &-name {
                 transition: color 1.333s cubic-bezier(.74, .06, .4, .92);
@@ -487,13 +496,14 @@ const awards = [
             }
         }
         &-bg-gradient {
-            position: relative;
-            background-image: linear-gradient(to top, rgb(0, 5, 15), rgba(0, 5, 15, 0));
-            height: var(--padding-top);
-            width: 100%;
-            left: 0;
-            z-index: 3;
-            pointer-events: none;
+            display: none;
+            // position: relative;
+            // background-image: linear-gradient(to top, rgb(0, 5, 15), rgba(0, 5, 15, 0));
+            // height: var(--padding-top);
+            // width: 100%;
+            // left: 0;
+            // z-index: 3;
+            // pointer-events: none;
         }
     }
 </style>

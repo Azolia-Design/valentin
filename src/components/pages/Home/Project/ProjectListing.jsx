@@ -76,7 +76,7 @@ const ProjectListing = (props) => {
                 </div>
                 <h4 class="heading h5 fw-med upper cl-txt-title">{props.data[activeSlide()].title}</h4>
             </div>
-            <div class="home__project-thumbnail">
+            <div class="home__project-thumbnail" data-cursor-text="View">
                 <swiper-container {...setupSwiper}>
                     <For each={props.data}>
                         {(project) => (

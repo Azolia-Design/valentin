@@ -67,7 +67,7 @@ const { data } = Astro.props;
         position: relative;
 
         display: grid;
-        z-index: 3;
+        // z-index: 3;
         &-main,
         &-bg {
             grid-area: 1/1/2/2;
@@ -153,10 +153,10 @@ const { data } = Astro.props;
                 span {
                     --anim-dur: 4s;
                     grid-area: 1/1/2/2;
-                    animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
+                    // animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
                     &:nth-child(2) {
                         transform: translateY(100%);
-                        animation-delay: calc((var(--anim-dur)/2) * -1);
+                        // animation-delay: calc((var(--anim-dur)/2) * -1);
                     }
                 }
             }

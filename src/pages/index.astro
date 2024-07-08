@@ -16,10 +16,20 @@ const metadata = {
 const { data } = await getEntry('pages', 'home');
 ---
 <Layout metadata={metadata}>
-	<Hero data={data.hero} />
-	<Intro data={data.introduction}/>
+	<div class="home__hero-intro-wrap">
+		<Hero data={data.hero} />
+		<Intro data={data.introduction}/>
+	</div>
 	<Project/>
 	<Testimonial/>
 	<Footer {...footerData} />
 	<HeroClone data={data.hero}/>
 </Layout>
+
+<style>
+	.home__hero-intro-wrap {
+		position: relative;
+		z-index: 4;
+		background-color: var(--cl-dm-bg);
+	}
+</style>

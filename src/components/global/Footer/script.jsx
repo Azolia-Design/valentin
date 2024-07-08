@@ -29,11 +29,11 @@ const FooterScript = () => {
                 trigger: '.home__hero-clone-wrap',
                 start: 'top+=30% top',
                 end: 'bottom bottom',
-                scrub: true,
+                scrub: true
             }
         })
 
-        tlInfinite.fromTo('.home__hero-clone-wrap', { autoAlpha: 0, ease: 'linear' }, { autoAlpha: 1, ease: 'linear' })
+        tlInfinite.to('.home__hero-clone-wrap', { autoAlpha: 1, ease: 'linear' })
         onCleanup(() => {
             tl.kill();
             tlInfinite.kill();

@@ -19,15 +19,14 @@ const TextBlurFading = (props) => {
             }
         });
         tl.fromTo(text.words, {
-            filter: 'blur(4px)',
-            opacity: 0,
-            stagger: .4,
-            duration: 5.5,
-            ease: 'back.out(2.0)',
+            filter: 'blur(10px) brightness(20%)',
+            // autoAlpha: 0.15,
+            yPercent: 5
         },
         {
-            filter: 'blur(0px)',
-            opacity: 1,
+            filter: 'blur(0px) brightness(100%)',
+            yPercent: 0,
+            // autoAlpha: 1,
             stagger: .4,
             duration: 5.5,
             ease: 'back.out(2.0)',

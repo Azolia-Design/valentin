@@ -1,8 +1,8 @@
 import gsap from 'gsap';
 import { createEffect, createSignal, onMount } from "solid-js";
+import { getCursor } from '~/components/core/cursor';
 
-
-const TestiItem = (props) => {
+function TestimonialItem(props) {
     let itemRef;
 
     createEffect(() => {
@@ -14,7 +14,7 @@ const TestiItem = (props) => {
         }
     })
     return (
-        <div ref={itemRef} class="home__testi-item-content grid" onClick={props.onClick}>
+        <div ref={itemRef} class="home__testi-item-content grid">
             <p class="heading h4 cl-txt-disable fw-thin home__testi-item-order">{(props.index + 1).toString().padStart(2, '0')}.</p>
             <div class="home__testi-item-info">
                 <p class="fs-24 fw-med cl-txt-title">{props.data.name}</p>
@@ -32,23 +32,22 @@ const TestiItem = (props) => {
         </div>
     )
 }
-
-const TestimonialListing = (props) => {
-    const [activeIndex, setActiveIndex] = createSignal(0);
+function Testimonials(props) {
+    const [activeIndex, setActiveIndex] = createSignal(-1);
 
     const accordionClick = (index) => {
         setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
     };
-
     return (
         props.data.map((el, idx) => (
-            <div class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}>
-                <TestiItem
-                    data={el}
-                    index={idx}
-                    isOpen={activeIndex() === idx}
-                    onClick={() => accordionClick(idx)}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }} />
+            <div class="home__testi-item"
+                data-cursor-img="src/icons/plus.svg"
+                class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
+                onClick={(e) => {
+                    accordionClick(idx);
+                    getCursor().removeState('-icon');
+                }}>
+                <TestimonialItem data={el} index={idx} isOpen={activeIndex() === idx}/>
                 <div class="home__testi-item-image">
                     <img src={el.image.src} alt={el.image.alt} class="home__testi-item-image-main" />
                     <img src='src/assets/images/testi-blur.png' alt='gradient orange blur' class="home__testi-item-image-blur" />
@@ -58,4 +57,4 @@ const TestimonialListing = (props) => {
     )
 }
 
-export default TestimonialListing;
+export default Testimonials;
