@@ -11,7 +11,7 @@ const { metadata } = Astro.props;
     <slot name="header">
         <Header { ...headerData }/>
     </slot>
-    <main class="transition-fade">
+    <main id="page-container" class="transition-fade">
         <slot />
     </main>
 </Layout>

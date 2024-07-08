@@ -18,7 +18,7 @@ function initLenis() {
 
 function getLenis() {
     if (!lenis) {
-        initLenis ()
+        initLenis();
     }
     return lenis;
 }
