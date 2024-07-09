@@ -45,12 +45,17 @@ function Testimonials(props) {
                 class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
                 onClick={(e) => {
                     accordionClick(idx);
-                    getCursor().removeState('-icon');
+                    if (e.target.classList.contains('active')) {
+                        getCursor().removeState('-media');
+                    }
+                    else {
+                        getCursor().addState('-media');
+                    }
                 }}>
                 <TestimonialItem data={el} index={idx} isOpen={activeIndex() === idx}/>
                 <div class="home__testi-item-image">
                     <img src={el.image.src} alt={el.image.alt} class="home__testi-item-image-main" />
-                    <img src='src/assets/images/testi-blur.png' alt='gradient orange blur' class="home__testi-item-image-blur" />
+                    {props.blur}
                 </div>
             </div>
         ))

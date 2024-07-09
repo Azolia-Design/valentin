@@ -1,8 +1,14 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { getImage } from 'astro:assets';
 import Arrows from '~/components/common/Arrows.astro';
-import Image from '~/components/common/Image.astro';
 import HeroScript from './script';
+import Image from '~/components/common/Image.astro';
+import DeepMap from '~/assets/images/home-hero-map.png';
+import HeroMain from '~/assets/images/home-hero.jpg';
+
+const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
+const HeroMainImg = await getImage({src: HeroMain, format: 'webp', width: HeroMain.width})
 const { data } = Astro.props;
 ---
 <div class="home__hero-wrap">
@@ -55,8 +61,8 @@ const { data } = Astro.props;
                 <div
 					id="hero-bg"
                     class="home__hero-bg-main-inner"
-					data-imageOriginal="/images/home-hero.jpg"
-					data-imageDepth="/images/depthmap3.png"
+					data-imageOriginal={HeroMainImg.src}
+					data-imageDepth={DeepMapImg.src}
 					data-horizontalThreshold="100"
 					data-verticalThreshold="66.66"></div>
             </div>

@@ -4,7 +4,9 @@ import Image from '~/components/common/Image.astro';
 import Marquee from '~/components/common/Marquee';
 import Arrow from '~/icons/arrow-white.svg';
 import FooterScript from './script';
+
 const ArrowIc = await getImage({ src: Arrow, format: "svg" });
+
 const { id = 'footer', socials, whatapps } = Astro.props;
 
 ---
