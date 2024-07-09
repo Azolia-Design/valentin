@@ -54,7 +54,7 @@ function Testimonials(props) {
                 }}>
                 <TestimonialItem data={el} index={idx} isOpen={activeIndex() === idx}/>
                 <div class="home__testi-item-image">
-                    <img src={el.image.src} alt={el.image.alt} class="home__testi-item-image-main" />
+                    <img src={el.image.src} alt={el.image.alt} class="home__testi-item-image-main" width={90} height={120} />
                     {props.blur}
                 </div>
             </div>
