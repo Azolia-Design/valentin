@@ -1,8 +1,12 @@
 ---
+import { getImage } from 'astro:assets';
 import TextTransClip from '~/components/common/TextTransClip';
 import ProjectListing from './ProjectListing';
 import Arrows from "~/components/common/Arrows.astro";
 import Image from "~/components/common/Image.astro";
+import Plus from "~/icons/plus.svg";
+
+const PlusIc = await getImage({ src: Plus, format: "svg" });
 
 let currentYear = new Date().getFullYear() % 100;
 
@@ -69,7 +73,7 @@ const projects = [
                 <span class="fs-20 cl-txt-desc fw-reg upper home__project-title-label">(Portfolio)</span>
             </h2>
             <div class="home__project-main">
-                <ProjectListing data={projects} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                <ProjectListing data={projects} plusIc={PlusIc.src} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
                     <Image
                         src={'~/assets/images/project-blur-thumb.png'}
                         widths={[400, 768, 1024]}

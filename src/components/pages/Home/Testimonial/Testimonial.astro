@@ -1,6 +1,8 @@
 ---
+import { getImage } from 'astro:assets';
 import TextTransClip from '~/components/common/TextTransClip';
 import Testimonials from './Testimonials';
+import Plus from "~/icons/plus.svg";
 
 const testimonials = [
     { name: "Chris Azzopardi", position: "Product Consultant at Bitcoin.com", feedback: "I had the pleasure of working closely with Valentin at bitcoin.com. Throughout our time together, I was consistently impressed by their exceptional design skills, strategic thinking", image: { src: 'src/assets/images/testi-pp.jpg', alt: '' } },
@@ -9,6 +11,8 @@ const testimonials = [
     { name: "Hai Van Tran", position: "Product Designer Lead", feedback: "As the Head of Design at Tyme Bank, I had the distinct pleasure of working closely with Valentin over the past few years. contributions to a wide range of projects. He played a key role in developing our new mobile banking app, praised for its user-friendly design and intuitive functionality. Valentin was instrumental in creating our new internal branding guidelines, which have helped establish a more cohesive and consistent brand identity across all touchpoints.", image: { src: 'src/assets/images/testi-pp.jpg', alt: '' } },
     { name: "Andrew Michael Todd", position: "Head Of Marketing and Growth at Bitcoin.com", feedback: "I am delighted to recommend Valentin, a former Lead Designer at Bitcoin.com. During his time with us Valentin showcased exceptional product design and leadership skills", image: { src: 'src/assets/images/testi-pp.jpg', alt: '' } }
 ]
+
+const PlusIc = await getImage({ src: Plus, format: "svg" });
 ---
 <div class="home__testi-wrap">
     <section class="home__testi">
@@ -26,7 +30,7 @@ const testimonials = [
                 <span class="fs-20 cl-txt-desc fw-reg upper home__testi-title-label">(Testimonials)</span>
             </h2>
             <div class="home__testi-listing">
-                <Testimonials data={testimonials} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                <Testimonials data={testimonials} plusIc={PlusIc.src} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
             </div>
         </div>
     </section>

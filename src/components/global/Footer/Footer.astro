@@ -1,8 +1,12 @@
 ---
+import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
 import Marquee from '~/components/common/Marquee';
+import Arrow from '~/icons/arrow-white.svg';
 import FooterScript from './script';
+const ArrowIc = await getImage({ src: Arrow, format: "svg" });
 const { id = 'footer', socials, whatapps } = Astro.props;
+
 ---
 <footer class="footer"
     {...id ? (id) : {}}
@@ -43,7 +47,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 decoding="async"
             />
         </div>
-        <div class="footer__marquee-wrap" data-cursor-img="src/icons/arrow-white.svg">
+        <div class="footer__marquee-wrap" data-cursor-img={ArrowIc.src}>
             <Marquee
                 duration="1"
                 client:visible={{ rootMargin: "100% 0% 100% 0%" }}>

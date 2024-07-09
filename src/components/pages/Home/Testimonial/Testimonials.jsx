@@ -41,7 +41,7 @@ function Testimonials(props) {
     return (
         props.data.map((el, idx) => (
             <div class="home__testi-item"
-                data-cursor-img="src/icons/plus.svg"
+                data-cursor-img={props.plusIc}
                 class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
                 onClick={(e) => {
                     accordionClick(idx);
