@@ -1,16 +1,17 @@
 import gsap from 'gsap';
-import { createEffect, createSignal, onMount } from "solid-js";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { createEffect, createSignal, onMount, onCleanup } from "solid-js";
 import { getCursor } from '~/components/core/cursor';
 
 function TestimonialItem(props) {
     let itemRef;
-
+    console.log(itemRef)
     createEffect(() => {
         if (props.isOpen) {
-            gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'), { maxHeight: itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight, duration: .4 });
+            gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'), { height: itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight, duration: .4 });
         }
         else {
-            gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'), { maxHeight: itemRef.querySelector('.home__testi-item-feedback.shorten').offsetHeight, duration: .4 });
+            gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'), { height: itemRef.querySelector('.home__testi-item-feedback.shorten').offsetHeight, duration: .4 });
         }
     })
     return (
@@ -33,32 +34,58 @@ function TestimonialItem(props) {
     )
 }
 function Testimonials(props) {
+    let containerRef;
     const [activeIndex, setActiveIndex] = createSignal(-1);
+    const [scaleFactor, setScaleFactor] = createSignal(1);
 
     const accordionClick = (index) => {
         setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
     };
+    onMount(() => {
+        if (!containerRef) return;
+
+        // gsap.registerPlugin(ScrollTrigger);
+
+        // let tl = gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: '.home__testi-listing',
+        //         start: 'top bottom',
+        //         end: 'center bottom',
+        //         scrub: true, markers: true
+        //     }
+        // });
+
+        // tl.to('.home__testi-item', { '--scale-factor': '1', duration: 1, stagger: .03 })
+
+        onCleanup(() => tl.kill());
+    })
     return (
-        props.data.map((el, idx) => (
-            <div class="home__testi-item"
-                data-cursor-img={props.plusIc}
-                class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
-                onClick={(e) => {
-                    accordionClick(idx);
-                    if (e.target.classList.contains('active')) {
-                        getCursor().removeState('-media');
-                    }
-                    else {
-                        getCursor().addState('-media');
-                    }
-                }}>
-                <TestimonialItem data={el} index={idx} isOpen={activeIndex() === idx}/>
-                <div class="home__testi-item-image">
-                    <img src={el.image.src} alt={el.image.alt} class="home__testi-item-image-main" width={90} height={120} />
-                    {props.blur}
+        <div class="home__testi-listing-inner" ref={containerRef}>
+            {props.data.map((el, idx) => (
+                <div class="home__testi-item"
+                    data-cursor-img={props.plusIc}
+                    class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
+                    onClick={(e) => {
+                        accordionClick(idx);
+                        const style = getComputedStyle(e.target);
+                        const scaleFactor = style.getPropertyValue('--scale-factor').trim();
+                        setScaleFactor(scaleFactor);
+                        if (e.target.classList.contains('active')) {
+                            getCursor().removeState('-media');
+                        }
+                        else {
+                            getCursor().addState('-media');
+                        }
+                    }}>
+                    <TestimonialItem data={el} index={idx} scaleFactor={scaleFactor()} isOpen={activeIndex() === idx}/>
+                    <div class="home__testi-item-image">
+                        <img src={el.image.src} alt={el.image.alt} class="home__testi-item-image-main" width={90} height={120} loading="lazy" />
+                        {props.blur}
+                    </div>
                 </div>
-            </div>
-        ))
+            ))}
+        </div>
+
     )
 }
 

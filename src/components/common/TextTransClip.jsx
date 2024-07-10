@@ -18,8 +18,13 @@ const TextTransClip = (props) => {
                 ...props.triggerOpts
             }
         });
+        if (props.reverse) {
+            tl.fromTo([q('.trans-line-above'), q('.trans-line-under')], { yPercent: 0 }, { yPercent: -100, ease: 'linear', duration: 1 })
+        }
+        else {
+            tl.fromTo([q('.trans-line-above'), q('.trans-line-under')], { yPercent: 0 }, { yPercent: 100, ease: 'linear', duration: 1 })
+        }
 
-        tl.fromTo([q('.trans-line-above'), q('.trans-line-under')], { yPercent: 0 }, { yPercent: 100, ease: 'linear', duration: 1 })
 
         onCleanup(() => tl.kill());
     })

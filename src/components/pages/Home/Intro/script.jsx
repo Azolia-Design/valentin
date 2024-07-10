@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { onMount } from 'solid-js';
+import { onMount, onCleanup } from 'solid-js';
 
 const IntroScript = () => {
     let scriptRef;
@@ -19,6 +19,8 @@ const IntroScript = () => {
         });
 
         tl.to('.home__intro-award', { '--scale-factor': '1', duration: 1, stagger: .03 })
+
+        onCleanup(() => tl.kill());
     })
 
     return <div ref={scriptRef} class="divScript"></div>

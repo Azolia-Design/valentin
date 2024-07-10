@@ -1,4 +1,6 @@
 ---
+import HeaderScript from './script';
+
 const { id = 'header', socials, links, actions } = Astro.props;
 const pathname = new URL(Astro.request.url).pathname;
 ---
@@ -6,6 +8,7 @@ const pathname = new URL(Astro.request.url).pathname;
     class="header"
     {...id ? { id } : {}}
 >
+    <HeaderScript client:load/>
     <div class="header__blur">
         <div></div>
         <div></div>
@@ -43,16 +46,29 @@ const pathname = new URL(Astro.request.url).pathname;
 
         display: flex;
         align-items: center;
+        &.on-scroll {
+            .header__blur {
+                opacity: 1;
+            }
+        }
         > .container {
             z-index: 10;
+            align-items: center;
         }
         &__logo {
             grid-column: 1/4;
             position: relative;
             overflow: hidden;
+            display: grid;
+            align-items: center;
+        }
+        &__greating {
+            grid-area: 1/1/2/2;
         }
         &__name {
-            position: absolute;
+            grid-area: 1/1/2/2;
+            transform: translateY(100%);
+            opacity: 0;
         }
         &__socials {
             grid-column: 9/11;
@@ -87,8 +103,9 @@ const pathname = new URL(Astro.request.url).pathname;
             @include size(100%, 280%);
             transform-origin: left top;
             pointer-events: none;
-            transition: 1s transform cubic-bezier(.55,0,.1,1), 1s height cubic-bezier(.55,0,.1,1);
+            transition: 1s transform cubic-bezier(.55,0,.1,1), 1s opacity cubic-bezier(.55,0,.1,1);
             transform: translateZ(0) translateY(-30%);
+            opacity: 0;
             > div {
                 $gradient-core-cl: #000;
 

@@ -18,19 +18,11 @@ const TextBlurFading = (props) => {
                 ...props.triggerOpts
             }
         });
-        tl.fromTo(text.words, {
-            filter: 'blur(10px) brightness(20%)',
-            // autoAlpha: 0.15,
-            yPercent: 5
-        },
-        {
-            filter: 'blur(0px) brightness(100%)',
-            yPercent: 0,
-            // autoAlpha: 1,
-            stagger: .4,
-            duration: 5.5,
-            ease: 'back.out(2.0)',
-        }, 0)
+        tl
+            .fromTo(text.words, { autoAlpha: .15, yPercent: 5 }, {stagger:.4, autoAlpha: 1, yPercent: 0,  duration: 5.5, ease: 'back.out(2.0)' }, 0)
+            .to(text.words, {keyframes: {
+                filter: ['blur(0px)', 'blur(6px)', 'blur(0px)'],
+            }, stagger:.4, duration: 5.5,  ease: 'back.out(2.0)', }, 0)
 
         onCleanup(() => {
             tl.kill();

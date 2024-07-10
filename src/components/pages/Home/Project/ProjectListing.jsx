@@ -64,7 +64,7 @@ const ProjectListing = (props) => {
                                 <div class="home__project-slide-item-progress-inner"></div>
                             </div>
                             <div class="home__project-slide-item-img">
-                                <img class="img" src={project.thumbnail.src} alt={project.thumbnail.alt} width={692} height={903} />
+                                <img class="img" src={project.thumbnail.src} alt={project.thumbnail.alt} width={692} height={903} loading="lazy" />
                             </div>
                         </div>
                     </div>

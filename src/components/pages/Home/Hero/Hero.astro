@@ -6,6 +6,7 @@ import HeroScript from './script';
 import Image from '~/components/common/Image.astro';
 import DeepMap from '~/assets/images/home-hero-map.png';
 import HeroMain from '~/assets/images/home-hero.jpg';
+import TextTransClip from '~/components/common/TextTransClip';
 
 const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
 const HeroMainImg = await getImage({src: HeroMain, format: 'webp', width: HeroMain.width})
@@ -13,7 +14,7 @@ const { data } = Astro.props;
 ---
 <div class="home__hero-wrap">
     <section class="home__hero">
-        <HeroScript client:load/>
+        <HeroScript client:only="solid-js"/>
         <div class="home__hero-main">
             <div class="container grid calc-h">
                 <div class="home__hero-scope-wrap">
@@ -36,11 +37,43 @@ const { data } = Astro.props;
                 </div>
                 <div class="home__hero-title-wrap">
                     <div class="home__hero-greating-wrap">
-                        <p class="home__hero-greating">Hi there! this is</p>
-                        <p class="heading h5 home__hero-name"><span class="fw-med cl-txt-title">Valentin</span> <span class="cl-txt-desc">Chavel</span></p>
+                        <div class="home__hero-greating-inner">
+                            <p class="home__hero-greating">Hi there! this is</p>
+                            <p class="heading h5 home__hero-name"><span class="fw-med cl-txt-title">Valentin</span> <span class="cl-txt-desc">Chavel</span></p>
+                        </div>
                     </div>
-                    <h1 class="heading h1 fw-bold upper home__hero-title">
-                        Design <br/>for financial <div class="cl-txt-orange home__hero-title-slide"><span>Product</span><span>Business</span></div>
+                    <h1 class="heading h1 fw-bold fix-font upper home__hero-title">
+                        <span class="home__hero-title-txt">
+                            <TextTransClip
+                                triggerOpts={{
+                                    trigger: '.home__hero-title',
+                                    start: 'start top+=30%',
+                                    end: 'bottom top+=50%',
+                                }}
+                                reverse={true}
+                                client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Design</TextTransClip>
+                        </span>
+                        <span class="home__hero-title-txt">
+                            <TextTransClip
+                                triggerOpts={{
+                                    trigger: '.home__hero-title',
+                                    start: 'start top+=30%',
+                                    end: 'bottom top+=50%',
+                                }}
+                                reverse={true}
+                            client:visible={{ rootMargin: "100% 0% 100% 0%" }}>for financial</TextTransClip>
+                        </span>
+                        <span class="home__hero-title-txt">
+                            <TextTransClip
+                                triggerOpts={{
+                                    trigger: '.home__hero-title',
+                                    start: 'start top+=30%',
+                                    end: 'bottom top+=50%',
+                                }}
+                                reverse={true}
+                            client:visible={{ rootMargin: "100% 0% 100% 0%" }}><div class="cl-txt-orange home__hero-title-txt mod-slide"><span>Product</span><span>Business</span></div></TextTransClip>
+                        </span>
+
                     </h1>
                     <span class="upper">(Scroll down)</span>
                 </div>
@@ -70,7 +103,7 @@ const { data } = Astro.props;
     </section>
 </div>
 
-<style lang="scss">
+<style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
     .home__hero-wrap {
     }
@@ -151,6 +184,9 @@ const { data } = Astro.props;
         &-greating-wrap {
             margin-bottom: 3.4rem;
         }
+        &-greating {
+            line-height: 3.52rem;
+        }
 
         &-title-wrap {
             grid-row: 1/3;
@@ -165,22 +201,28 @@ const { data } = Astro.props;
 
             margin-bottom: 5rem;
             max-width: 135rem;
-            &-slide {
-                position: relative;
-                display: grid;
-                overflow: hidden;
-                @keyframes slide-text {
-                    0% { transform: translateY(100%); opacity: 0 }
-                    50% { transform: translateY(0); opacity: 1 }
-                    100% { transform: translateY(-100%); opacity: 0 }
+            &-txt {
+                // display: inline-block;
+                .trans-line-above {
+                    display: none;
                 }
-                span {
-                    --anim-dur: 4s;
-                    grid-area: 1/1/2/2;
-                    // animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
-                    &:nth-child(2) {
-                        transform: translateY(100%);
-                        // animation-delay: calc((var(--anim-dur)/2) * -1);
+                &.mod-slide {
+                    position: relative;
+                    display: grid;
+                    overflow: hidden;
+                    @keyframes slide-text {
+                        0% { transform: translateY(100%); opacity: 0 }
+                        50% { transform: translateY(0); opacity: 1 }
+                        100% { transform: translateY(-100%); opacity: 0 }
+                    }
+                    span {
+                        --anim-dur: 4s;
+                        grid-area: 1/1/2/2;
+                        // animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
+                        &:nth-child(2) {
+                            transform: translateY(100%);
+                            // animation-delay: calc((var(--anim-dur)/2) * -1);
+                        }
                     }
                 }
             }

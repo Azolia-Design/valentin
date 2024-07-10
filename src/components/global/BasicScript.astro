@@ -10,7 +10,6 @@ declare global {
 <script>
     import { initLenis, getLenis } from "~/components/core/lenis";
     import { initMouseFollower, getCursor } from '~/components/core/cursor';
-    import ScrollTrigger from 'gsap/dist/ScrollTrigger';
     import initButton from "~/components/core/button";
 
 
@@ -29,6 +28,7 @@ declare global {
 
         window.swup.hooks.on('page:view', (visit) => {
             console.log('New page loaded:', visit.to.url);
+            console.log("khong load lan 2")
         });
 
         window.swup.hooks.on('visit:start', () => {
@@ -53,11 +53,40 @@ declare global {
         document.addEventListener('swup:enable', setup)
     }
 
+
     const onLoad = function () {
         console.log("on load")
+        let ticking = true;
+
+        const applyOnScroll = (scrollPos) => {
+            function headerOnScroll(scrollPos) {
+                const header = document.querySelector('header');
+                if (!header) return;
+                if (scrollPos > (header.offsetHeight * 5) && !header.classList.contains('on-scroll')) {
+                    header.classList.add("on-scroll");
+                }
+                else if (scrollPos <= (header.offsetHeight * 5) && header.classList.contains('on-scroll')) {
+                    header.classList.remove('on-scroll');
+                }
+                ticking = false;
+            }
+            headerOnScroll(scrollPos);;
+        }
+        applyOnScroll(window.scrollY);
 
         if (!getLenis()) {
             initLenis();
+        }
+        else {
+            getLenis().on('scroll', function(inst) {
+                let scrollPos = inst.scroll;
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        applyOnScroll(scrollPos);
+                    });
+                    ticking = true;
+                }
+            })
         }
         if (!getCursor()) {
             initMouseFollower();
@@ -70,9 +99,4 @@ declare global {
 
     window.onload = onLoad;
     window.onpageshow = onPageShow;
-
-    // window.swup.hooks.on('page:view', () => {
-    //     onLoad();
-    //     onPageShow();
-    // })
 </script>

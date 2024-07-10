@@ -31,8 +31,10 @@ const { data } = Astro.props;
                         <p class="home__hero-clone-greating">Hi there! this is</p>
                         <p class="heading h5 home__hero-clone-name"><span class="fw-med cl-txt-title">Valentin</span> <span class="cl-txt-desc">Chavel</span></p>
                     </div>
-                    <h1 class="heading h1 fw-bold upper home__hero-clone-title">
-                        Design <br/>for financial <div class="cl-txt-orange home__hero-clone-title-slide"><span>Product</span><span>Business</span></div>
+                    <h1 class="heading h1 fw-bold fix-font upper home__hero-clone-title">
+                        <span class="home__hero-clone-title-txt">Design</span>
+                        <span class="home__hero-clone-title-txt">for financial </span>
+                        <br/> <div class="cl-txt-orange home__hero-clone-title-txt mod-slide"><span>Product</span><span>Business</span></div>
                     </h1>
                     <span class="upper">(Scroll down)</span>
                 </div>
@@ -141,22 +143,25 @@ const { data } = Astro.props;
 
             margin-bottom: 5rem;
             max-width: 135rem;
-            &-slide {
-                position: relative;
-                display: grid;
-                overflow: hidden;
-                @keyframes slide-text {
-                    0% { transform: translateY(100%); opacity: 0 }
-                    50% { transform: translateY(0); opacity: 1 }
-                    100% { transform: translateY(-100%); opacity: 0 }
-                }
-                span {
-                    --anim-dur: 4s;
-                    grid-area: 1/1/2/2;
-                    // animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
-                    &:nth-child(2) {
-                        transform: translateY(100%);
-                        // animation-delay: calc((var(--anim-dur)/2) * -1);
+            &-txt {
+                display: inline-block;
+                &.mod-slide {
+                    position: relative;
+                    display: grid;
+                    overflow: hidden;
+                    @keyframes slide-text {
+                        0% { transform: translateY(100%); opacity: 0 }
+                        50% { transform: translateY(0); opacity: 1 }
+                        100% { transform: translateY(-100%); opacity: 0 }
+                    }
+                    span {
+                        --anim-dur: 4s;
+                        grid-area: 1/1/2/2;
+                        // animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
+                        &:nth-child(2) {
+                            transform: translateY(100%);
+                            // animation-delay: calc((var(--anim-dur)/2) * -1);
+                        }
                     }
                 }
             }
