@@ -382,3 +382,10 @@ button {
 .fix-font {
     margin-left: -1rem;
 }
+
+.grid-1-1 {
+    display: grid;
+    > * {
+        grid-area: 1/1/2/2;
+    }
+}

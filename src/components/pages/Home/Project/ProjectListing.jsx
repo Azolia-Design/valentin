@@ -1,6 +1,10 @@
 import { register } from 'swiper/element/bundle';
-import { For, createEffect, createSignal, onMount } from "solid-js";
+import { For, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import gsap from 'gsap';
+import SplitType from 'split-type';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { getLenis } from '~/components/core/lenis';
+import Truncate from '~/components/common/TruncateText';
 
 const ProjectListing = (props) => {
     let containerRef;
@@ -8,57 +12,205 @@ const ProjectListing = (props) => {
     const [swiper, setSwiper] = createSignal(null);
 
     const setupSwiper = {
-		loop: true,
+        loop: true,
 		slidesPerView: 1,
 		spaceBetween: 0,
-		effect: "fade",
-		allowTouchMove: false,
+        effect: "fade",
         onSwiperInit: (e) => {
             setSwiper(e.detail[0]);
+            handleActiveSlide(0, true);
         },
         onSwiperSlideChange: ({ detail }) => {
-            setActiveSlide(detail[0].realIndex);
+            // setActiveSlide(detail[0].activeIndex);
 		}
+    }
+
+    const handleActiveSlide = (index, firstInit = false) => {
+        // console.log(index)
+        if (((index === activeSlide()) || index >= props.data.length) && !firstInit) return;
+        let prevIndex = activeSlide();
+
+        setActiveSlide(index);
+        // let allSplitTitle = [];
+
+        // let tlOut = gsap.timeline({});
+
+        let yOffSet = {
+            out: index - prevIndex >= 0 ? -70 : 70,
+            in: index - prevIndex >= 0 ? 70 : -70
+        }
+
+        let elements = [
+            { selector: '.home__project-name-txt', splitBy: 'words' },
+            { selector: '.home__project-year-txt', splitBy: 'chars', options: { duration: .6 } },
+            { selector: '.home__project-desc-txt', splitBy: 'words', options: { duration: 1, stagger: .02 } },
+            { selector: '.home__project-role-listing-inner', splitBy: 'words', options: { duration: 1, stagger: .02 } }
+        ]
+
+        elements.forEach((el) => {
+            let allSplitText = [];
+            document.querySelectorAll(el.selector).forEach((text, idx) => {
+                let subSplitText = [];
+
+                if (text.querySelectorAll('p').length > 0) {
+                    text.querySelectorAll('p').forEach((paragraph, idx) => {
+                        let splittext = new SplitType(paragraph, { types: `lines, ${el.splitBy}`, lineClass: 'split-line' });
+                        gsap.set(splittext[el.splitBy], { autoAlpha: 0 });
+                        subSplitText.push(splittext);
+                    });
+                } else {
+                    let splittext = new SplitType(text, { types: `lines, ${el.splitBy}`, lineClass: 'split-line' });
+                    gsap.set(splittext[el.splitBy], { autoAlpha: 0 });
+                    subSplitText.push(splittext);
+                }
+
+                allSplitText.push(subSplitText);
+            })
+
+            let tl = gsap.timeline({});
+            // Handle previous slide animation
+            console.log(prevIndex)
+            if (Array.isArray(allSplitText[prevIndex])) {
+                allSplitText[prevIndex].forEach((splittext) => {
+                    let tlChild = gsap.timeline({});
+                    tlChild.set(splittext[el.splitBy], { yPercent: 0, autoAlpha: 1 })
+                        .to(splittext[el.splitBy], { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.3, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
+                });
+            } else {
+                tl
+                    .set(allSplitText[prevIndex][el.splitBy], { yPercent: 0, autoAlpha: 1 })
+                    .to(allSplitText[prevIndex][el.splitBy], { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.8, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
+            }
+
+            // // Handle current slide animation
+            if (Array.isArray(allSplitText[index])) {
+                allSplitText[index].forEach((splittext) => {
+                    let tlChild = gsap.timeline({});
+                    tlChild
+                        .set(splittext[el.splitBy], { yPercent: yOffSet.in, autoAlpha: 0 })
+                        .to(splittext[el.splitBy], { yPercent: 0, autoAlpha: 1, duration: 0.3, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
+                    });
+            } else {
+                tl
+                    .set(allSplitText[index][el.splitBy], { yPercent: yOffSet.in, autoAlpha: 0 })
+                    .to(allSplitText[index][el.splitBy], { yPercent: 0, autoAlpha: 1, duration: 0.8, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
+            }
+        })
+        // document.querySelectorAll('.home__project-name-txt').forEach((el, idx) => {
+        //     let splittext = new SplitType(el, { types: 'lines, words', lineClass: 'split-line' })
+        //     gsap.set(splittext.words, { autoAlpha: 0 });
+        //     allSplitTitle.push(splittext);
+        // })
+
+        if (index - prevIndex >= 0) {
+            swiper().slideTo(index);
+            nextAnimation(index)
+        }
+        else {
+            prevAnimation(prevIndex);
+        }
+    }
+
+    const numberOfBreakPoints = props.data.length;
+    const step = 1 / numberOfBreakPoints;
+    const breakPoints = Array.from({ length: numberOfBreakPoints + 1 }, (_, index) => parseFloat((index * step).toPrecision(2)));
+    const onUpdateProgress = (progress) => {
+        for (let i = 0; i < breakPoints.length - 1; i++) {
+            const startPoint = breakPoints[i];
+            const endPoint = breakPoints[i + 1];
+
+            if (progress >= startPoint && progress < endPoint) {
+                let idx = Math.floor(progress * 3)
+                // console.log(idx)
+                handleActiveSlide(idx);
+            }
+        }
+    }
+
+    const scrollToIndex = (index) => {
+        const rect = document.querySelector('.home__project-main').getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        getLenis().scrollTo(rect.top + scrollTop + (window.innerHeight * index))
     }
 
     onMount(() => {
         if (!containerRef) return;
         register();
+
+        gsap.registerPlugin(ScrollTrigger);
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.home__project-main',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true,
+                // snap: breakPoints,
+                onUpdate(self) {
+                    onUpdateProgress(self.progress);
+                }
+            }
+        })
+
+        onCleanup(() => tl.kill());
     });
 
-    createEffect(() => {
-        if (!containerRef) return;
+    const nextAnimation = (index) => {
+        const DELAY = 10;
 
-        const tlImg = gsap.timeline({});
-        tlImg.seek(0);
+        const slides = document.querySelectorAll('.home__project-thumbnail-img')
+        const slide = slides[index];
+        const img = slide.querySelector('img');
 
-        const animTransImg = (index) => {
-            const DOM = {
-                img: document.querySelectorAll('.home__project-thumbnail-img')[index],
-                progressBar: document.querySelectorAll('.home__project-slide-item-progress-inner')[index]
-            }
-            tlImg
-                .set(DOM.img, { x: -50, autoAlpha: 0 }, 0)
-                .set(DOM.progressBar, { rotation: 0 })
-                .to(DOM.img, { x: 0, autoAlpha: 1, duration: 0.8 }, 0)
-                .to(DOM.progressBar, { duration: 8, ease: 'none', rotation: 360, clearProps: 'all' }, 0)
-                .set(DOM.img, { x: 0, autoAlpha: 1 })
-                .to(DOM.img, {
-                    x: 50, autoAlpha: 0, duration: 0.8,
-                    onComplete: () => {
-                        if (swiper()) swiper().slideNext();
-                    }
-                }, "<=0.1")
-        }
+        gsap.set(slide, { clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)' });
+        gsap.set(img, { scale: 2, top: '4em' });
 
-        animTransImg(activeSlide());
-    }, [activeSlide()]);
+        let tlNext = gsap.timeline({});
+        tlNext
+            .to(slide, { clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)", duration: 2, ease: 'power4.inOut' })
+            .to(img, { scale: 1, top: '0%', duration: 2, ease: 'power3.inOut' }, 0)
+            .to(slide, { clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)", duration: 2, ease: 'power4.inOut' }, 0)
+            // .to(DOM.title.words, { yPercent: 0, duration: 2, ease: 'power3.inOut' }, 0);
+
+        // const progressBar = document.querySelectorAll('.home__project-slide-item-progress-inner')[activeSlide()];
+
+        // gsap.set(progressBar, { rotation: 0 })
+        // gsap.to(progressBar, {
+        //     duration: DELAY, ease: 'none', rotation: 360, clearProps: 'all', onComplete: () => {
+        //         let nextIndex = activeSlide() + 1;
+        //         if (nextIndex < props.data.length) {
+        //             handleActiveSlide(nextIndex);
+        //         }
+        //     }
+        // })
+    }
+
+    const prevAnimation = (index) => {
+        const slides = document.querySelectorAll('.home__project-thumbnail-img')
+        const slide = slides[index];
+        const img = slide.querySelector('img');
+
+        gsap.set(slide, { clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)" })
+        gsap.set(img, { scale: 1, top: '0%' });
+        // gsap.set(DOM.title.words, { yPercent: 0 });
+
+        let tlPrev = gsap.timeline({});
+
+        tlPrev
+            .to(slide, { clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)', duration: 2, ease: 'power4.inOut' })
+            .to(img, { scale: 2, top: '4em', duration: 2, ease: 'power3.inOut' }, 0)
+            // .to(DOM.title.words, { yPercent: -100, duration: 2, ease: 'power3.inOut' }, 0);
+    }
 
     return (
         <div ref={containerRef} class="home__project-listing grid">
             <div class="home__project-slide">
                 {props.data.map((project, idx) => (
-                    <div class={`home__project-slide-item-wrap${idx == activeSlide() ? ' active' : ''}`}>
+                    <div
+                        onClick={() => {
+                            handleActiveSlide(idx);
+                            scrollToIndex(idx);
+                        }}
+                        class={`home__project-slide-item-wrap${idx == activeSlide() ? ' active' : ''}`}>
                         <div class="home__project-slide-item">
                             <div class="home__project-slide-item-progress">
                                 <div class="home__project-slide-item-progress-inner"></div>
@@ -72,42 +224,72 @@ const ProjectListing = (props) => {
             </div>
             <div class="home__project-name">
                 <div class="fs-20 fw-med home__project-pagination">
-                    <span class="cl-txt-title">{(activeSlide() + 1).toString().padStart(2, '0')} </span><span class="cl-txt-disable">/ 04</span>
+                    <span class="cl-txt-title">{(activeSlide() + 1).toString().padStart(2, '0')} </span><span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
                 </div>
-                <h4 class="heading h5 fw-med upper cl-txt-title">{props.data[activeSlide()].title}</h4>
-            </div>
-            <div class="home__project-thumbnail" data-cursor-text="View">
-                <swiper-container {...setupSwiper}>
+                <div class="grid-1-1">
                     <For each={props.data}>
                         {(project) => (
-                            <swiper-slide>
-                                <div class="home__project-thumbnail-img">
-                                    <img class="img img-fill" src={project.thumbnail.src} alt={project.thumbnail.alt} />
-                                </div>
-                            </swiper-slide>
+                            <h4 class="heading h5 fw-med upper cl-txt-title home__project-name-txt" >{project.title}</h4>
                         )}
                     </For>
-                </swiper-container>
-                {props.blur}
+                </div>
+            </div>
+            <div class="home__project-thumbnail" data-cursor-text="View">
+                <div class="home__project-thumbnail-wrap">
+                    <swiper-container class='swiper-container' {...setupSwiper}>
+                        <For each={props.data}>
+                            {(project) => (
+                                <swiper-slide>
+                                    <div class="home__project-thumbnail-img">
+                                        <img class="img img-fill" src={project.thumbnail.src} alt={project.thumbnail.alt} />
+                                    </div>
+                                </swiper-slide>
+                            )}
+                        </For>
+                    </swiper-container>
+                </div>
+                {/* {props.blur} */}
             </div>
             <div class="home__project-sub-info">
                 <div class="home__project-year">
                     <p class="cl-txt-desc fw-med home__project-label">Year</p>
-                    <div class="heading h5 fw-med cl-txt-title">{props.data[activeSlide()].year}</div>
+                    <div class="grid-1-1">
+                        <For each={props.data}>
+                            {(project) => (
+                                <div class="heading h5 fw-med cl-txt-title home__project-year-txt">{project.year}</div>
+                            )}
+                        </For>
+                    </div>
                 </div>
                 <div class="home__project-role">
                     <p class="cl-txt-desc fw-med home__project-label">Role</p>
                     <div class="home__project-role-listing">
-                        <For each={props.data[2].role}>
+                        <div class="grid-1-1">
+                            <For each={props.data}>
+                                {(project) => (
+                                    <div class="home__project-role-listing-inner">
+                                        <For each={project.role}>
+                                            {(role) => <p class="fs-20 cl-txt-sub">{role}</p>}
+                                        </For>
+                                    </div>
+                                )}
+                            </For>
+                        </div>
+                        {/* <For each={props.data[2].role}>
                             {(role) => <p class="fs-20 cl-txt-sub">{role}</p>}
-                        </For>
+                        </For> */}
                     </div>
                 </div>
             </div>
             <div class="home__project-desc">
                 <p class="cl-txt-desc fw-med home__project-label">Description</p>
-                <p class="fs-20 cl-txt-sub">{props.data[activeSlide()].desc}</p>
-
+                <div class="grid-1-1">
+                    <For each={props.data}>
+                        {(project) => (
+                            <p class="fs-20 cl-txt-sub home__project-desc-txt">{project.desc}</p>
+                        )}
+                    </For>
+                </div>
                 <a href={props.data[activeSlide()].link} class="cl-txt-orange arrow-hover home__project-link">
                     <span class="txt-link fs-20 cl-txt-orange">All projects</span>
                     {props.arrows}

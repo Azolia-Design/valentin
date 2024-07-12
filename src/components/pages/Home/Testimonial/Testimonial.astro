@@ -82,15 +82,18 @@ const PlusIc = await getImage({ src: Plus, format: "svg" });
             }
         }
         &-listing {
-            // --scale-factor: 2;
+            --scale-factor: 3;
             // margin-bottom: calc(-26rem * (var(--scale-factor) - 1) * var(--itemLength));
+            // margin-bottom: calc(((-7.6rem * (var(--scale-factor) - 1)) - (18.4rem * (var(--scale-factor) - 1))) * var(--itemLength));
+            margin-bottom: calc((((6.4rem + 7.6rem) * (var(--scale-factor) - 1)) * var(--itemLength)) * -1);
             &-inner {
-                // height: calc(26rem * var(--scale-factor) * var(--itemLength));
+                height: calc((12rem + ((6.4rem + 7.6rem) * var(--scale-factor))) * var(--itemLength));
+                // height: calc(((7.6rem * var(--scale-factor)) + 18.4rem) * var(--itemLength));
             }
         }
         &-item {
-            padding: 6.4rem 0 7.6rem;
-            border-top: 1px solid var(--cl-dm-border);
+            padding-block: calc(6.4rem * var(--scale-factor)) calc(7.6rem * var(--scale-factor));
+            // border-top: 1px solid var(--cl-dm-border);
             display: grid;
             grid-template-columns: 1fr;
             // height: calc(26rem * var(--scale-factor));

@@ -30,7 +30,6 @@ const awards = [
 <div class="home__intro-wrap">
     <section class="home__intro">
         <IntroScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
-        <div class="home__intro-bg-gradient"></div>
         <div class="container grid">
             <div class="home__intro-companies">
                 <h4 class="heading h5 cl-txt-title home__intro-companies-title">I've helped <br/>over 100 companies including</h4>
@@ -45,6 +44,7 @@ const awards = [
                 </div>
             </div>
             <div class="home__intro-main">
+                <div class="home__intro-bg-gradient"></div>
                 <div class="heading h4 home__intro-main-txt">
                     <TextBlurFading
                         triggerOpts = {{
@@ -190,8 +190,6 @@ const awards = [
             grid-column: 9/-1;
 
             color: var(--cl-dm-title);
-
-            position: relative;
             &-label {
                 vertical-align: top;
                 margin-right: 13rem;
@@ -443,8 +441,6 @@ const awards = [
                 gap: 0 4rem;
 
                 padding: 2.5rem 2rem;
-
-
                 &-wrap {
                     transition: all .8s cubic-bezier(.74, .06, .4, .92);
                     grid-area: 1/1/2/2;
@@ -496,14 +492,33 @@ const awards = [
             }
         }
         &-bg-gradient {
-            display: none;
-            // position: relative;
+            position: absolute;
             // background-image: linear-gradient(to top, rgb(0, 5, 15), rgba(0, 5, 15, 0));
-            // height: var(--padding-top);
-            // width: 100%;
-            // left: 0;
-            // z-index: 3;
-            // pointer-events: none;
+            height: 100%;
+            width: 100%;
+            @include size(100%);
+            z-index: -1;
+            left: 0;
+            pointer-events: none;
+
+            backdrop-filter: blur(6.7rem);
+            -webkit-backdrop-filter: blur(6.7rem);
+
+            mask-image: linear-gradient(
+                rgba(0, 5, 15, 0),
+                rgba(0, 5, 15, 0.5) 10%,
+                rgba(0, 5, 15, 0.8) 20%,
+                rgba(0, 5, 15, 1) 40%,
+                rgb(0, 5, 15)
+            );
+
+            -webkit-mask-image: linear-gradient(
+                rgba(0, 5, 15, 0),
+                rgba(0, 5, 15, 0.5) 10%,
+                rgba(0, 5, 15, 0.8) 20%,
+                rgba(0, 5, 15, 1) 40%,
+                rgb(0, 5, 15)
+            );
         }
     }
 </style>
