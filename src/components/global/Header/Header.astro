@@ -29,7 +29,7 @@ const pathname = new URL(Astro.request.url).pathname;
             {links.map((el, i) =>
                 <Fragment><a href={el.href} class={`header__menu-link${pathname === el.href ? ' active': ''}`}>{el.text}</a>{i < (links.length) - 1 && '/'}</Fragment>)}
         </div>
-        <a href="" class="txt-link header__act">{actions.text}</a>
+        <a href="" class="txt-link cl-txt-title header__act">{actions.text}</a>
     </div>
 </header>
 

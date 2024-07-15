@@ -18,98 +18,20 @@ const ProjectListing = (props) => {
         effect: "fade",
         onSwiperInit: (e) => {
             setSwiper(e.detail[0]);
-            handleActiveSlide(0, true);
+            requestAnimationFrame(() => handleActiveSlide(0, true));
         },
         onSwiperSlideChange: ({ detail }) => {
             // setActiveSlide(detail[0].activeIndex);
 		}
     }
 
-    const handleActiveSlide = (index, firstInit = false) => {
-        // console.log(index)
-        if (((index === activeSlide()) || index >= props.data.length) && !firstInit) return;
-        let prevIndex = activeSlide();
-
-        setActiveSlide(index);
-        // let allSplitTitle = [];
-
-        // let tlOut = gsap.timeline({});
-
-        let yOffSet = {
-            out: index - prevIndex >= 0 ? -70 : 70,
-            in: index - prevIndex >= 0 ? 70 : -70
-        }
-
-        let elements = [
-            { selector: '.home__project-name-txt', splitBy: 'words' },
-            { selector: '.home__project-year-txt', splitBy: 'chars', options: { duration: .6 } },
-            { selector: '.home__project-desc-txt', splitBy: 'words', options: { duration: 1, stagger: .02 } },
-            { selector: '.home__project-role-listing-inner', splitBy: 'words', options: { duration: 1, stagger: .02 } }
-        ]
-
-        elements.forEach((el) => {
-            let allSplitText = [];
-            document.querySelectorAll(el.selector).forEach((text, idx) => {
-                let subSplitText = [];
-
-                if (text.querySelectorAll('p').length > 0) {
-                    text.querySelectorAll('p').forEach((paragraph, idx) => {
-                        let splittext = new SplitType(paragraph, { types: `lines, ${el.splitBy}`, lineClass: 'split-line' });
-                        gsap.set(splittext[el.splitBy], { autoAlpha: 0 });
-                        subSplitText.push(splittext);
-                    });
-                } else {
-                    let splittext = new SplitType(text, { types: `lines, ${el.splitBy}`, lineClass: 'split-line' });
-                    gsap.set(splittext[el.splitBy], { autoAlpha: 0 });
-                    subSplitText.push(splittext);
-                }
-
-                allSplitText.push(subSplitText);
-            })
-
-            let tl = gsap.timeline({});
-            // Handle previous slide animation
-            console.log(prevIndex)
-            if (Array.isArray(allSplitText[prevIndex])) {
-                allSplitText[prevIndex].forEach((splittext) => {
-                    let tlChild = gsap.timeline({});
-                    tlChild.set(splittext[el.splitBy], { yPercent: 0, autoAlpha: 1 })
-                        .to(splittext[el.splitBy], { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.3, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
-                });
-            } else {
-                tl
-                    .set(allSplitText[prevIndex][el.splitBy], { yPercent: 0, autoAlpha: 1 })
-                    .to(allSplitText[prevIndex][el.splitBy], { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.8, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
-            }
-
-            // // Handle current slide animation
-            if (Array.isArray(allSplitText[index])) {
-                allSplitText[index].forEach((splittext) => {
-                    let tlChild = gsap.timeline({});
-                    tlChild
-                        .set(splittext[el.splitBy], { yPercent: yOffSet.in, autoAlpha: 0 })
-                        .to(splittext[el.splitBy], { yPercent: 0, autoAlpha: 1, duration: 0.3, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
-                    });
-            } else {
-                tl
-                    .set(allSplitText[index][el.splitBy], { yPercent: yOffSet.in, autoAlpha: 0 })
-                    .to(allSplitText[index][el.splitBy], { yPercent: 0, autoAlpha: 1, duration: 0.8, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
-            }
-        })
-        // document.querySelectorAll('.home__project-name-txt').forEach((el, idx) => {
-        //     let splittext = new SplitType(el, { types: 'lines, words', lineClass: 'split-line' })
-        //     gsap.set(splittext.words, { autoAlpha: 0 });
-        //     allSplitTitle.push(splittext);
-        // })
-
-        if (index - prevIndex >= 0) {
-            swiper().slideTo(index);
-            nextAnimation(index)
-        }
-        else {
-            prevAnimation(prevIndex);
-        }
-    }
+    let allSplitText = [];
+    let elements = [
+        { selector: '.home__project-name-txt', splitBy: 'words' },
+        { selector: '.home__project-year-txt', splitBy: 'chars', options: { duration: .6 } },
+        { selector: '.home__project-desc-txt', splitBy: 'words', options: { duration: 1, stagger: .02 } },
+        { selector: '.home__project-role-listing-inner', splitBy: 'words', options: { duration: 1, stagger: .02 } }
+    ]
 
     const numberOfBreakPoints = props.data.length;
     const step = 1 / numberOfBreakPoints;
@@ -128,9 +50,23 @@ const ProjectListing = (props) => {
     }
 
     const scrollToIndex = (index) => {
+        console.log('scroll to', index)
         const rect = document.querySelector('.home__project-main').getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         getLenis().scrollTo(rect.top + scrollTop + (window.innerHeight * index))
+
+        // function toLabel(duration, timeline, label) {
+        //     getLenis().stop()
+        //     const yStart = $('.home-benefit').offset().top - $('.header').outerHeight()
+        //     const now = timeline.progress()
+        //     timeline.seek(label)
+        //     const goToProgress = timeline.progress()
+        //     timeline.progress(now)
+        //     lenis.scrollTo(yStart + (timeline.scrollTrigger.end - timeline.scrollTrigger.start) * goToProgress, {
+        //         duration: duration,
+        //         force: true,
+        //     })
+        // }
     }
 
     onMount(() => {
@@ -151,8 +87,84 @@ const ProjectListing = (props) => {
             }
         })
 
+        elements.forEach((el) => {
+            let elementSplitText = []; // Declare a new sub-array for each element
+
+            document.querySelectorAll(el.selector).forEach((text, idx) => {
+                let subSplitText = [];
+
+                if (text.querySelectorAll('p').length > 0) {
+                    text.querySelectorAll('p').forEach((paragraph) => {
+                        let splittext = new SplitType(paragraph, { types: `lines, ${el.splitBy}`, lineClass: 'split-line' });
+                        gsap.set(splittext[el.splitBy], { autoAlpha: 0 });
+                        subSplitText.push(splittext);
+                    });
+                } else {
+                    let splittext = new SplitType(text, { types: `lines, ${el.splitBy}`, lineClass: 'split-line' });
+                    gsap.set(splittext[el.splitBy], { autoAlpha: 0 });
+                    subSplitText.push(splittext);
+                }
+
+                elementSplitText.push(subSplitText); // Push to the sub-array
+            });
+
+            allSplitText.push(elementSplitText); // Push the sub-array to the main array
+        });
+
         onCleanup(() => tl.kill());
     });
+
+    const handleActiveSlide = (index, firstInit = false) => {
+        if (((index === activeSlide()) || index >= props.data.length) && !firstInit) return;
+        let prevIndex = activeSlide();
+        console.log(index)
+
+        let yOffSet = {
+            out: index - prevIndex >= 0 ? -70 : 70,
+            in: index - prevIndex >= 0 ? 70 : -70
+        }
+
+        elements.forEach((el, idx) => {
+            let tl = gsap.timeline({});
+
+            if (allSplitText[idx][prevIndex].length !== 1) {
+                allSplitText[idx][prevIndex].forEach((splittext) => {
+                    let tlChild = gsap.timeline({});
+                    tlChild.set(splittext[el.splitBy], { yPercent: 0, autoAlpha: 1 })
+                        .to(splittext[el.splitBy], { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.3, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
+                });
+            } else {
+                tl
+                    .set(allSplitText[idx][prevIndex][0][el.splitBy], { yPercent: 0, autoAlpha: 1 })
+                    .to(allSplitText[idx][prevIndex][0][el.splitBy], { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.8, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
+            }
+
+            if (allSplitText[idx][index].length !== 1) {
+                allSplitText[idx][index].forEach((splittext) => {
+                    let tlChild = gsap.timeline({});
+                    tlChild
+                        .set(splittext[el.splitBy], { yPercent: yOffSet.in, autoAlpha: 0 })
+                        .to(splittext[el.splitBy], { yPercent: 0, autoAlpha: 1, duration: 0.3, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
+                    });
+            } else {
+                tl
+                    .set(allSplitText[idx][index][0][el.splitBy], { yPercent: yOffSet.in, autoAlpha: 0 })
+                    .to(allSplitText[idx][index][0][el.splitBy], { yPercent: 0, autoAlpha: 1, duration: 0.8, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
+            }
+        })
+        console.log("curr", index)
+        console.log("prev", prevIndex)
+        if (index - prevIndex >= 0) {
+            swiper().slideTo(index);
+            nextAnimation(index)
+        }
+        else {
+            prevAnimation(prevIndex);
+        }
+        setActiveSlide(index);
+
+    }
+
 
     const nextAnimation = (index) => {
         const DELAY = 10;
@@ -207,7 +219,7 @@ const ProjectListing = (props) => {
                 {props.data.map((project, idx) => (
                     <div
                         onClick={() => {
-                            handleActiveSlide(idx);
+                            // handleActiveSlide(idx);
                             scrollToIndex(idx);
                         }}
                         class={`home__project-slide-item-wrap${idx == activeSlide() ? ' active' : ''}`}>

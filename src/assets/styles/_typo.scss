@@ -262,32 +262,38 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
 }
 .txt {
     &-link {
-        color: var(--cl-dm-title);
-        display: inline-block;
-        vertical-align: bottom;
-        transition: color 400ms ease;
-        position: relative;
+        --line-spacing: 1rem;
 
-        &:after {
-            pointer-events: none;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+
+        &::before,
+        &::after {
             content: '';
             position: absolute;
             display: block;
             bottom: .2em;
             width: 100%;
-            height: .1rem;
+            height: 1px;
             background-color: currentColor;
-            // @include transform(scaleX(0));
-            transform-origin: right;
-            @include transition(transform .5s ease);
+            transition: transform 0.5s cubic-bezier(0.59, 0.23, 0.22, 0.96);
+        }
+        &::before {
+            left: 0;
+        }
+
+        &::after {
+            left: calc(-1 * var(--line-spacing));
+            transform: translateX(-100%);
         }
 
         &:hover {
-            color: var(--cl-orange);
-
-            &:after {
-                @include transform(scaleX(1));
-                transform-origin: left;
+            &::before {
+                transform: translateX(calc(100% + var(--line-spacing)));
+            }
+            &::after {
+                transform: translateX(var(--line-spacing));
             }
         }
 
@@ -415,6 +421,9 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
 
 .split-line {
     contain: paint;
+    will-change: transform;
+}
+.split-line-blur {
     will-change: transform;
 }
 .trans-line {
