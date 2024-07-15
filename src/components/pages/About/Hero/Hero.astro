@@ -1,26 +1,87 @@
 ---
+import Image from '~/components/common/Image.astro';
 import TextTransClip from '~/components/common/TextTransClip';
 let currentYear = new Date().getFullYear() % 100;
 ---
 <section class="sc-about__hero">
     <div class="about__hero">
         <div class="container">
-            <h2 class="upper about__hero-title grid">
+            <h1 class="upper about__hero-title grid">
                 <span class="heading h1 fw-bold about__hero-title-txt">
-                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Valentin </TextTransClip>
+                    <TextTransClip
+                        startSelf={true}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Valentin </TextTransClip>
                 </span>
                 <span class="heading h1 cl-txt-orange fw-bold about__hero-title-txt">
-                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Chavel<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span></TextTransClip>
+                    <TextTransClip
+                        startSelf={true}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Chavel<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span></TextTransClip>
                 </span>
-                <span class="heading h3 fw-semi upper about__hero-year">
+                <span class="heading h3 fw-semi upper about__hero-title-year">
                     <span class="cl-txt-disable">
-                        <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>93</TextTransClip>
+                        <TextTransClip
+                            startSelf={true}
+                            client:visible={{ rootMargin: "100% 0% 100% 0%" }}>93</TextTransClip>
                     </span>
                     <span class="cl-txt-title">
-                        <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>{currentYear}</TextTransClip>
+                        <TextTransClip
+                            startSelf={true}
+                            client:visible={{ rootMargin: "100% 0% 100% 0%" }}>{currentYear}</TextTransClip>
                     </span>
                 </spa>
-            </h2>
+            </h1>
+            <div class="about__hero-info grid">
+                <h2 class="heading h5 cl-txt-sub about__hero-main-intro">
+                    I am a <br/> Head of Design that specializes in Finance
+                </h2>
+                <div class="grid-1-1 about__hero-main-img">
+                    <Image
+                        src={'~/assets/images/intro-portrait.jpg'}
+                        widths={[400, 768, 1024, 2040]}
+                        width={489}
+                        height={686}
+                        alt={'a man'}
+                        layout="cover"
+                        loading="eager"
+                        decoding="async"
+                        class="img img-fill"
+                    />
+                    <Image
+                        src={'~/assets/images/intro-portrait-blur.png'}
+                        widths={[400, 768, 1024, 2040]}
+                        width={489}
+                        height={686}
+                        alt={'a orange blur'}
+                        layout="cover"
+                        loading="lazy"
+                        decoding="async"
+                        class="img img-fill"
+                    />
+                </div>
+                <p class="about__hero-sub-intro intro-1">
+                    Over the years, I worked for some of the biggest actors in the fintech industry:
+                    <br/><br/>
+                    Derivatives exchanges like Liquid, BitMEX and other crypto companies like Bitcoin com.
+                    <br/><br/>
+                    I also ventured into web3 when joining Birthday Research the R&D department of Cake group, and helping them set up their ventures such as DefiMetaChain, Defichain, etc.
+                </p>
+                <p class="about__hero-sub-intro intro-2">
+                    I also worked with tradiotionnal fintech, helping launch Gotyme Bank and leading all features about investment, stocks or crypto.
+                </p>
+                <div class="about__hero-sub-img">
+                    <Image
+                        src={'~/assets/images/about-intro-sub.jpg'}
+                        widths={[400, 768, 1024, 2040]}
+                        width={302}
+                        alt={'a man'}
+                        layout="cover"
+                        loading="eager"
+                        decoding="async"
+                        class="img img-fill"
+                        aspectRatio="1"
+                    />
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -29,10 +90,11 @@ let currentYear = new Date().getFullYear() % 100;
     .sc-about__hero {}
     .about__hero {
         padding-top: 30rem;
+        padding-bottom: 15.2rem;
 
-        height: 300vh;
+        background-color: var(--cl-dm-bg);
         &-title {
-            margin-bottom: 16rem;
+            margin-bottom: 12rem;
             position: relative;
             // gap: 1rem 0;
             &-txt {
@@ -43,13 +105,46 @@ let currentYear = new Date().getFullYear() % 100;
                     margin-left: 1.8rem;
                 }
                 &:nth-child(2) {
-                    grid-column: 4/12;
+                    grid-column: 4/13;
                 }
             }
             &-year {
                 grid-column: 13/16;
                 display: flex;
                 flex-direction: column;
+            }
+        }
+        &-info {
+        }
+        &-main {
+            &-intro {
+                grid-column: 4/7;
+            }
+            &-img {
+                grid-column: 9/14;
+                aspect-ratio: .7;
+                width: 100%;
+                max-height: 68.6rem;
+                overflow: hidden;
+            }
+        }
+        &-sub {
+            &-intro {
+                align-self: end;
+                &.intro-1  {
+                    grid-column: 4/7;
+                    margin-right: -.5rem;
+                }
+                &.intro-2  {
+                    grid-column: 9/12;
+                }
+            }
+            &-img {
+                grid-column: 14/17;
+                aspect-ratio: 1;
+                height: auto;
+                overflow: hidden;
+                margin-left: calc(var(--grid-gap) * -1);
             }
         }
     }

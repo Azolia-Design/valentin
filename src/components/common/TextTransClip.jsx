@@ -9,12 +9,17 @@ const TextTransClip = (props) => {
         if (!textRef) return;
         gsap.registerPlugin(ScrollTrigger);
         const q = gsap.utils.selector(textRef);
+        let rect = textRef.getBoundingClientRect();
+        let topPos =  window.pageYOffset || document.documentElement.scrollTop
+        let offsetTop = rect.top + topPos;
+
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: textRef,
-                start: 'top bottom',
-                end: `bottom top+=${(window.innerHeight / 2) + textRef.offsetHeight}`,
+                start: `top ${(props.startSelf && offsetTop) || 'bottom'}`,
+                end: `bottom top+=${(props.startSelf && '0') || (window.innerHeight / 2) + textRef.offsetHeight}`,
                 scrub: true,
+                markers: props.markers,
                 ...props.triggerOpts
             }
         });

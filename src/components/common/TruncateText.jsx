@@ -1,5 +1,4 @@
 import { createEffect, onCleanup } from 'solid-js';
-import { cvUnit } from '~/utils/number';
 
 function truncateString(str, maxLength) {
   if (str.length > maxLength) {

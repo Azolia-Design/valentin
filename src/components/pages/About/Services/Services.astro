@@ -1,0 +1,130 @@
+---
+import ServicesScript  from './script';
+import Image from '~/components/common/Image.astro';
+import TextTransClip from '~/components/common/TextTransClip';
+const services = [
+    { name: 'Web Design', desc: 'Lorem ipsum dolor sit amet consectetur. Libero dignissim nunc massa placerat euismod volutpat. Amet vel donec a urna faucibus.' },
+    { name: 'Brand Design & Strategy', desc: 'Lorem ipsum dolor sit amet consectetur. Libero dignissim nunc massa placerat euismod volutpat. Amet vel donec a urna faucibus.' },
+    { name: 'Product Design', desc: 'Lorem ipsum dolor sit amet consectetur. Libero dignissim nunc massa placerat euismod volutpat. Amet vel donec a urna faucibus.' }
+]
+---
+<section class="sc-about__service">
+    <ServicesScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+    <div class="about__service">
+        <div class="container">
+            <h2 class="upper fix-font about__service-title grid">
+                <span class="heading h2 fw-bold about__service-title-txt">
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>What I can</TextTransClip>
+                </span>
+                <span class="heading h2 fw-bold about__service-title-txt">
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>help for your</TextTransClip>
+                </span>
+                <span class="heading h2 fw-bold cl-txt-title about__service-title-txt">
+                    <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>business</TextTransClip>
+                </span>
+                <span class="fs-20 cl-txt-desc fw-reg upper about__service-title-label">(Services)</span>
+            </h2>
+            <div class="about__service-listing">
+                {services.map((service, idx) =>
+                    <div class="about__service-item grid">
+                        <span class="line"></span>
+                        <p class="fs-20 cl-txt-disable about__service-item-order">{(idx + 1).toString().padStart(2, '0')}.</p>
+                        <h3 class="heading h3 fw-semi about__service-item-title">{service.name}</h3>
+                        <div class="about__service-item-desc">{service.desc}</div>
+                    </div>
+                )}
+            </div>
+        </div>
+    </div>
+    <div class="about__daily">
+        <div class="grid-1-1 about__daily-img">
+            <Image
+                src={'~/assets/images/intro-life.jpg'}
+                widths={[400, 768, 1024, 2040]}
+                width={1728}
+                height={876}
+                alt={'a man cooking'}
+                layout="cover"
+                loading="lazy"
+                decoding="async"
+            />
+            <Image
+                src={'~/assets/images/intro-life-blur.png'}
+                widths={[400, 768, 1024, 2040]}
+                width={1728}
+                height={876}
+                alt={'a orange blur'}
+                layout="cover"
+                loading="lazy"
+                decoding="async"
+            />
+        </div>
+    </div>
+</section>
+<style lang="scss">
+    .sc-about__service {}
+    .about__service {
+        padding-block: 6rem;
+        &-title {
+            position: relative;
+            margin-bottom: 8rem;
+            &-label {
+                grid-column: 15/17;
+                grid-row: 1/2;
+                justify-self: end;
+            }
+            &-txt {
+                line-height: .835em;
+                &:nth-child(1) {
+                    grid-column: 4/17;
+                    grid-row: 1/2;
+                }
+                &:nth-child(2) {
+                    grid-column: 4/17;
+                }
+                &:nth-child(3) {
+                    grid-column: 4/17;
+                }
+            }
+        }
+        &-listing {
+            display: flex;
+            flex-direction: column;
+        }
+        &-item {
+            position: relative;
+            padding-block: 6.4rem;
+            .line {
+                position: absolute;
+                top: 0;
+            }
+            &-order {
+                transition: color 1.333s var(--spring-easing-2);
+            }
+            &-title {
+                grid-column: 4/14;
+                transition: color 1.333s var(--spring-easing-2);
+            }
+            &-desc {
+                grid-column: 14/17;
+                opacity: 0;
+                transform: translateY(.8rem);
+                transition: opacity .8s ease-in-out, transform 2.333s var(--spring-easing-1);
+            }
+            &:hover {
+                .about__service-item {
+                    &-order {
+                        color: var(--cl-dm-body);
+                    }
+                    &-title {
+                        color: var(--cl-orange);
+                    }
+                    &-desc {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            }
+        }
+    }
+</style>

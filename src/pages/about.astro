@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/PageLayout.astro';
 import Hero from '~/components/pages/About/Hero/Hero.astro';
+import Intro from '~/components/pages/About/Intro/Intro.astro';
+import Services from '~/components/pages/About/Services/Services.astro';
 
 const metadata = {
 	title: 'Valentine Chavel',
@@ -8,4 +10,6 @@ const metadata = {
 ---
 <Layout metadata={metadata}>
 	<Hero />
+	<Intro />
+	<Services />
 </Layout>
