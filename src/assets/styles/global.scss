@@ -25,6 +25,7 @@
     z-index: 100;
     pointer-events: none;
     opacity: .04;
+    mix-blend-mode: overlay;
     &:after {
         content: "";
         position: absolute;

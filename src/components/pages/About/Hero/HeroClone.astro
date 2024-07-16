@@ -1,6 +1,5 @@
 ---
 import Image from '~/components/common/Image.astro';
-import TextTransClip from '~/components/common/TextTransClip';
 let currentYear = new Date().getFullYear() % 100;
 ---
 <section class="sc-about__hero">
@@ -8,25 +7,17 @@ let currentYear = new Date().getFullYear() % 100;
         <div class="container">
             <h1 class="upper about__hero-title grid">
                 <span class="heading h1 fw-bold about__hero-title-txt">
-                    <TextTransClip
-                        startSelf={true}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Valentin </TextTransClip>
+                    Valentin
                 </span>
                 <span class="heading h1 cl-txt-orange fw-bold about__hero-title-txt">
-                    <TextTransClip
-                        startSelf={true}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Chavel<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span></TextTransClip>
+                    Chavel<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span>
                 </span>
                 <span class="heading h3 fw-semi upper about__hero-title-year">
                     <span class="cl-txt-disable">
-                        <TextTransClip
-                            startSelf={true}
-                            client:visible={{ rootMargin: "100% 0% 100% 0%" }}>93</TextTransClip>
+                        93
                     </span>
                     <span class="cl-txt-title">
-                        <TextTransClip
-                            startSelf={true}
-                            client:visible={{ rootMargin: "100% 0% 100% 0%" }}>{currentYear}</TextTransClip>
+                        {currentYear}
                     </span>
                 </spa>
             </h1>
@@ -42,8 +33,8 @@ let currentYear = new Date().getFullYear() % 100;
                         height={686}
                         alt={'a man'}
                         layout="cover"
-                        decoding="async"
                         loading="eager"
+                        decoding="async"
                         class="img img-fill"
                     />
                     <Image
@@ -58,29 +49,6 @@ let currentYear = new Date().getFullYear() % 100;
                         class="img img-fill"
                     />
                 </div>
-                <p class="about__hero-sub-intro intro-1">
-                    Over the years, I worked for some of the biggest actors in the fintech industry:
-                    <br/><br/>
-                    Derivatives exchanges like Liquid, BitMEX and other crypto companies like Bitcoin com.
-                    <br/><br/>
-                    I also ventured into web3 when joining Birthday Research the R&D department of Cake group, and helping them set up their ventures such as DefiMetaChain, Defichain, etc.
-                </p>
-                <p class="about__hero-sub-intro intro-2">
-                    I also worked with tradiotionnal fintech, helping launch Gotyme Bank and leading all features about investment, stocks or crypto.
-                </p>
-                <div class="about__hero-sub-img">
-                    <Image
-                        src={'~/assets/images/about-intro-sub.jpg'}
-                        widths={[400, 768, 1024, 2040]}
-                        width={302}
-                        alt={'a man'}
-                        layout="cover"
-                        loading="eager"
-                        decoding="async"
-                        class="img img-fill"
-                        aspectRatio="1"
-                    />
-                </div>
             </div>
         </div>
     </div>
@@ -92,6 +60,8 @@ let currentYear = new Date().getFullYear() % 100;
         position: relative;
         z-index: 3;
         background-color: var(--cl-dm-bg);
+        height: 100vh;
+        overflow: hidden;
 
         padding-top: 30rem;
         padding-bottom: 15.2rem;
@@ -132,25 +102,6 @@ let currentYear = new Date().getFullYear() % 100;
                 // img {
                 //     opacity: 0;
                 // }
-            }
-        }
-        &-sub {
-            &-intro {
-                align-self: end;
-                &.intro-1  {
-                    grid-column: 4/7;
-                    margin-right: -.5rem;
-                }
-                &.intro-2  {
-                    grid-column: 9/12;
-                }
-            }
-            &-img {
-                grid-column: 14/17;
-                aspect-ratio: 1;
-                height: auto;
-                overflow: hidden;
-                margin-left: calc(var(--grid-gap) * -1);
             }
         }
     }

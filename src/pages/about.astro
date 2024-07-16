@@ -1,8 +1,12 @@
 ---
 import Layout from '../layouts/PageLayout.astro';
 import Hero from '~/components/pages/About/Hero/Hero.astro';
+import HeroClone from '~/components/pages/About/Hero/HeroClone.astro';
 import Intro from '~/components/pages/About/Intro/Intro.astro';
 import Services from '~/components/pages/About/Services/Services.astro';
+import History from '~/components/pages/About/History/History.astro';
+import CTA from '~/components/pages/About/CTA/CTA.astro';
+import { footerData } from '~/navigation';
 
 const metadata = {
 	title: 'Valentine Chavel',
@@ -12,4 +16,7 @@ const metadata = {
 	<Hero />
 	<Intro />
 	<Services />
+	<History />
+	<CTA {...footerData}/>
+	<HeroClone/>
 </Layout>

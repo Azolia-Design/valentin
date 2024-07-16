@@ -1,7 +1,7 @@
 ---
-import ServicesScript  from './script';
 import Image from '~/components/common/Image.astro';
 import TextTransClip from '~/components/common/TextTransClip';
+import ServicesScript  from './script';
 const services = [
     { name: 'Web Design', desc: 'Lorem ipsum dolor sit amet consectetur. Libero dignissim nunc massa placerat euismod volutpat. Amet vel donec a urna faucibus.' },
     { name: 'Brand Design & Strategy', desc: 'Lorem ipsum dolor sit amet consectetur. Libero dignissim nunc massa placerat euismod volutpat. Amet vel donec a urna faucibus.' },
@@ -9,8 +9,8 @@ const services = [
 ]
 ---
 <section class="sc-about__service">
-    <ServicesScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
     <div class="about__service">
+        <ServicesScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
         <div class="container">
             <h2 class="upper fix-font about__service-title grid">
                 <span class="heading h2 fw-bold about__service-title-txt">
@@ -36,7 +36,7 @@ const services = [
             </div>
         </div>
     </div>
-    <div class="about__daily">
+    <div class="about__daily container grid">
         <div class="grid-1-1 about__daily-img">
             <Image
                 src={'~/assets/images/intro-life.jpg'}
@@ -47,6 +47,7 @@ const services = [
                 layout="cover"
                 loading="lazy"
                 decoding="async"
+                class="about__daily-img-inner"
             />
             <Image
                 src={'~/assets/images/intro-life-blur.png'}
@@ -57,14 +58,19 @@ const services = [
                 layout="cover"
                 loading="lazy"
                 decoding="async"
+                class="about__daily-img-blur"
             />
         </div>
+        <p class="fs-24 fw-med cl-txt-title about__daily-content">Outside of work, I am a learning cook, a loving father and an avid learner of all things strategies. I am a recovering suit addict and a lover of beauty.</p>
     </div>
 </section>
 <style lang="scss">
     .sc-about__service {}
     .about__service {
+        position: relative;
+        z-index: 3;
         padding-block: 6rem;
+        background-color: var(--cl-dm-bg);
         &-title {
             position: relative;
             margin-bottom: 8rem;
@@ -99,17 +105,17 @@ const services = [
                 top: 0;
             }
             &-order {
-                transition: color 1.333s var(--spring-easing-2);
+                transition: color .4s ease-in-out;
             }
             &-title {
                 grid-column: 4/14;
-                transition: color 1.333s var(--spring-easing-2);
+                transition: color .4s ease-in-out;
             }
             &-desc {
                 grid-column: 14/17;
                 opacity: 0;
                 transform: translateY(.8rem);
-                transition: opacity .8s ease-in-out, transform 2.333s var(--spring-easing-1);
+                transition: opacity .8s ease-in-out, transform .4s ease-in-out;
             }
             &:hover {
                 .about__service-item {
@@ -125,6 +131,30 @@ const services = [
                     }
                 }
             }
+        }
+    }
+    .about__daily {
+        margin-top: -1px;
+        &-img {
+            margin: 0 calc(var(--container-padding) * -1);
+            grid-column: 1/-1;
+            grid-row: 1/2;
+            &-inner {
+                position: relative;
+                z-index: 2;
+            }
+            &-blur {
+                position: relative;
+                z-index: 3;
+            }
+        }
+        &-content {
+            position: relative;
+            grid-column: 4/8;
+            grid-row: 1/2;
+            max-width: 38.6rem;
+            align-self: end;
+            padding-bottom: 10.2rem;
         }
     }
 </style>

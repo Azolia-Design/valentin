@@ -1,0 +1,98 @@
+---
+const { socials, whatapps } = Astro.props;
+---
+<section class="sc__about-cta">
+    <div class="about__cta">
+        <div class="container">
+            <div class="about__cta-head grid">
+                <p class="fs-24 about__cta-head-label">(What do I bring you?)</p>
+                <h4 class="heading h4 about__cta-head-content">
+                    <span>
+                        <span class="cl-txt-desc">Deep Understanding of</span>
+                        <br/>
+                        <span class="cl-txt-sub">trading and finacial products</span>
+                    </span>
+                    <span>
+                        <span class="cl-txt-desc">Strong Experience</span>
+                        <br/>
+                        <span class="cl-txt-sub">working directly with engineers</span>
+                    </span>
+                </h4>
+            </div>
+            <div class="about__cta-body grid">
+                <div class="about__cta-body-contact">
+                    <div class="about__cta-body-contact-item">
+                        <p class="fw-med about__cta-body-label">Socials</p>
+                        <div class="about__cta-body-social-listing">
+                            {socials.map((social) =>
+                                <a href={social.href} class="fw-med cl-txt-orange">{social.text}</a>
+                            )}
+                        </div>
+                    </div>
+                    <div class="about__cta-body-contact-item">
+                        <p class="fw-med about__cta-body-label">Whatapps</p>
+                        <a href={whatapps.href} class="fw-med cl-txt-orange">{whatapps.text}</a>
+                    </div>
+                </div>
+                <div class="about__cta-body-main">
+                    <p class="fw-med cl-txt-desc about__cta-body-label">Got a project in mind?</p>
+                    <h4 class="fs-24 cl-txt-sub">Let’s make something happen together</h4>
+                </div>
+                <a href="mailto:hello@valentinchavel.design" class="heading h3 about__cta-body-email">hello<span class="cl-txt-orange">@</span><br/>valentinchavel.<br/>design</a>
+            </div>
+        </div>
+    </div>
+</section>
+<style lang="scss">
+    .sc__about-cta {}
+    .about__cta {
+        position: relative;
+        z-index: 3;
+        background-color: var(--cl-dm-bg);
+        padding-bottom: 14.5rem;
+        &-head {
+            margin-bottom: 15rem;
+            &-label {
+                grid-column: 5/8;
+            }
+            &-content {
+                grid-column: 9/17;
+                display: flex;
+                flex-direction: column;
+                gap: 6.2rem 0;
+                margin-top: -.15em;
+            }
+        }
+        &-body {
+            &-label {
+                margin-bottom: 2rem;
+            }
+            &-contact {
+                grid-column: 5/7;
+                grid-row: 1/3;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            &-social {
+                &-listing {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.2rem 0;
+                }
+            }
+            &-main {
+                grid-column: 9/12;
+                margin-bottom: 7.5rem;
+            }
+            &-email {
+                grid-column: 9/15;
+                transition: color .4s ease-in-out;
+                &:hover {
+                    color: var(--cl-dm-title);
+                }
+            }
+        }
+    }
+</style>
