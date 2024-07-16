@@ -33,8 +33,8 @@ let currentYear = new Date().getFullYear() % 100;
                         height={686}
                         alt={'a man'}
                         layout="cover"
+                        decoding="sync"
                         loading="eager"
-                        decoding="async"
                         class="img img-fill"
                     />
                     <Image
@@ -68,7 +68,6 @@ let currentYear = new Date().getFullYear() % 100;
         &-title {
             margin-bottom: 12rem;
             position: relative;
-            // gap: 1rem 0;
             &-txt {
                 line-height: .835em;
                 &:nth-child(1) {
