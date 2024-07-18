@@ -7,7 +7,6 @@ const ServicesScript = () => {
 
     onMount(() => {
         if (!scriptRef) return;
-        console.log("run")
         gsap.registerPlugin(ScrollTrigger);
 
         let tl = gsap.timeline({

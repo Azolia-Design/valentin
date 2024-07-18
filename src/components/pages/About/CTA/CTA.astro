@@ -1,22 +1,42 @@
 ---
+import { getImage } from 'astro:assets';
+
+import TextBlurFading from '~/components/common/TextBlurFading';
+
+import Arrow from '~/icons/arrow-white.svg';
+const ArrowIc = await getImage({ src: Arrow, format: "svg" });
+
 const { socials, whatapps } = Astro.props;
+
 ---
 <section class="sc__about-cta">
     <div class="about__cta">
         <div class="container">
             <div class="about__cta-head grid">
                 <p class="fs-24 about__cta-head-label">(What do I bring you?)</p>
-                <h4 class="heading h4 about__cta-head-content">
-                    <span>
-                        <span class="cl-txt-desc">Deep Understanding of</span>
+                <h4 class="heading h4 cl-txt-sub about__cta-head-content">
+                    <TextBlurFading
+                        triggerOpts = {{
+                            trigger: '.about__cta-head-content',
+                            start: 'top bottom-=15%',
+                            end: 'bottom center+=5%'
+                        }}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                        Deep Understanding of
                         <br/>
-                        <span class="cl-txt-sub">trading and finacial products</span>
-                    </span>
-                    <span>
-                        <span class="cl-txt-desc">Strong Experience</span>
+                        trading and finacial products
+                    </TextBlurFading>
+                    <TextBlurFading
+                        triggerOpts = {{
+                            trigger: '.about__cta-head-content',
+                            start: 'top bottom-=15%',
+                            end: 'bottom center+=5%'
+                        }}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                        Strong Experience
                         <br/>
-                        <span class="cl-txt-sub">working directly with engineers</span>
-                    </span>
+                        working directly with engineers
+                    </TextBlurFading>
                 </h4>
             </div>
             <div class="about__cta-body grid">
@@ -38,7 +58,7 @@ const { socials, whatapps } = Astro.props;
                     <p class="fw-med cl-txt-desc about__cta-body-label">Got a project in mind?</p>
                     <h4 class="fs-24 cl-txt-sub">Let’s make something happen together</h4>
                 </div>
-                <a href="mailto:hello@valentinchavel.design" class="heading h3 about__cta-body-email">hello<span class="cl-txt-orange">@</span><br/>valentinchavel.<br/>design</a>
+                <a href="mailto:hello@valentinchavel.design" class="heading h3 about__cta-body-email" data-cursor-img={ArrowIc.src}>hello<span class="cl-txt-orange">@</span><br/>valentinchavel.<br/>design</a>
             </div>
         </div>
     </div>

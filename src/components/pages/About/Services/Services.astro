@@ -12,24 +12,27 @@ const services = [
     <div class="about__service">
         <ServicesScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
         <div class="container">
-            <h2 class="upper fix-font about__service-title grid">
-                <span class="heading h2 fw-bold about__service-title-txt">
+            <h2 class="fix-font about__service-title grid">
+                <span class="upper heading h2 fw-bold about__service-title-txt">
                     <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>What I can</TextTransClip>
                 </span>
-                <span class="heading h2 fw-bold about__service-title-txt">
+                <span class="upper heading h2 fw-bold about__service-title-txt">
                     <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>help for your</TextTransClip>
                 </span>
-                <span class="heading h2 fw-bold cl-txt-title about__service-title-txt">
+                <span class="upper heading h2 fw-bold cl-txt-title about__service-title-txt">
                     <TextTransClip client:visible={{ rootMargin: "100% 0% 100% 0%" }}>business</TextTransClip>
                 </span>
-                <span class="fs-20 cl-txt-desc fw-reg upper about__service-title-label">(Services)</span>
+                <span class="fs-20 cl-txt-desc fw-reg about__service-title-label">(Services)</span>
             </h2>
             <div class="about__service-listing">
                 {services.map((service, idx) =>
                     <div class="about__service-item grid">
                         <span class="line"></span>
                         <p class="fs-20 cl-txt-disable about__service-item-order">{(idx + 1).toString().padStart(2, '0')}.</p>
-                        <h3 class="heading h3 fw-semi about__service-item-title">{service.name}</h3>
+                        <h3 class="about__service-item-title">
+                            <span class="heading h3 fw-semi">{service.name}</span>
+                            <span class="heading h3 fw-semi">{service.name}</span>
+                        </h3>
                         <div class="about__service-item-desc">{service.desc}</div>
                     </div>
                 )}
@@ -105,17 +108,28 @@ const services = [
                 top: 0;
             }
             &-order {
-                transition: color .4s ease-in-out;
+                transition: color .4s ease-in-out .2s;
             }
             &-title {
                 grid-column: 4/14;
-                transition: color .4s ease-in-out;
+                display: grid;
+                line-height: .835em;
+                overflow: hidden;
+                span {
+                    grid-area: 1/1/2/2;
+                    transition: transform .8s cubic-bezier(0.87, 0, 0.13, 1);
+
+                    &:last-child {
+                        color: var(--cl-orange);
+                        transform: translateY(100%);
+                    }
+                }
             }
             &-desc {
                 grid-column: 14/17;
                 opacity: 0;
-                transform: translateY(.8rem);
-                transition: opacity .8s ease-in-out, transform .4s ease-in-out;
+                transform: translateY(1rem);
+                transition: opacity .8s ease-in-out .2s, transform .8s ease-in-out;
             }
             &:hover {
                 .about__service-item {
@@ -123,7 +137,14 @@ const services = [
                         color: var(--cl-dm-body);
                     }
                     &-title {
-                        color: var(--cl-orange);
+                        span {
+                            &:first-child {
+                                transform: translateY(-100%);
+                            }
+                            &:last-child {
+                                transform: translate(0);
+                            }
+                        }
                     }
                     &-desc {
                         opacity: 1;
@@ -136,6 +157,8 @@ const services = [
     .about__daily {
         margin-top: -1px;
         &-img {
+            position: relative;
+            z-index: 2;
             margin: 0 calc(var(--container-padding) * -1);
             grid-column: 1/-1;
             grid-row: 1/2;
@@ -150,6 +173,7 @@ const services = [
         }
         &-content {
             position: relative;
+            z-index: 3;
             grid-column: 4/8;
             grid-row: 1/2;
             max-width: 38.6rem;

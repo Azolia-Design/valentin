@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import MouseFollower from "mouse-follower";
+import { lerp, inView, cvUnit } from "~/utils/number";
 
 MouseFollower.registerGSAP(gsap);
 let cursor;
@@ -20,249 +21,183 @@ function getCursor() {
 }
 
 function borderGlow() {
+    const gGetter = (property) => (el) => gsap.getProperty(el, property);
+    const gSetter = (property, unit = '') => (el) => gsap.quickSetter(el, property, unit);
+
+    const xGetter = gGetter('x');
+    const yGetter = gGetter('y');
+    const opacityGetter = gGetter('opacity');
+
+    const xSetter = gSetter('x', 'px');
+    const ySetter = gSetter('y', 'px');
+    const opacitySetter = gSetter('opacity');
+
     const createGlow = () => {
-        $('[data-border-glow]').each((idx, el) => {
-            const option = JSON.parse($(el).attr('data-glow-option'))
+        document.querySelectorAll('[data-border-glow]').forEach((el) => {
+            const option = JSON.parse(el.dataset.glowOption);
+            let outerBorder = el.querySelector('.border-outer');
+            let innerBorder = el.querySelector('.border-inner');
+            let lineBorder = el.querySelector('.glow-el');
 
-            // Create Element
-            const outerBorder = document.createElement('div');
-            const innerBorder = document.createElement('div');
-            const lineBorder = document.createElement('div');
-
-            $(outerBorder).addClass('border-outer');
-            $(innerBorder).addClass('border-inner');
-            $(lineBorder).addClass('glow-el');
-
-            const wrapOuterGlow = document.createElement('div');
-            const innerOuterGlow = document.createElement('div');
-            const elementOuterGlow = document.createElement('div');
-
-            $(wrapOuterGlow).addClass('glow-outer');
-            $(innerOuterGlow).addClass('glow-outer-inner');
-            $(elementOuterGlow).addClass('glow-el');
-
-            const wrapInnerGlow = document.createElement('div');
-            const innerInnerGlow = document.createElement('div');
-            const elementInnerGlow = document.createElement('div');
-
-            $(wrapInnerGlow).addClass('glow-inner');
-            $(innerInnerGlow).addClass('glow-inner-inner');
-            $(elementInnerGlow).addClass('glow-el');
-
-            // Set Border Radius for Border
-            // $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('--border-radius', parseFloat($(el).css("borderRadius")) + "px")
-
-            // Set Border Width for Border
-            $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('--border-width', `${parseFloat(option.width) || 1}px`)
-
-            //Set Inset for Border
             if (option.inset) {
+                let widthStyle = '';
+                let heightStyle = '';
+
                 if (!option.inset.x && !option.inset.y) {
-                    $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('width', `calc(100% - ${parseFloat(option.inset)}px)`)
-                    $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('height', `calc(100% - ${parseFloat(option.inset)}px)`)
-
+                    widthStyle = `calc(100% - ${parseFloat(option.inset)}px)`;
+                    heightStyle = `calc(100% - ${parseFloat(option.inset)}px)`;
+                } else {
+                    widthStyle = option.inset.x ? `calc(100% - ${parseFloat(option.inset.x)}px)` : '';
+                    heightStyle = option.inset.y ? `calc(100% - ${parseFloat(option.inset.y)}px)` : '';
                 }
-                if (option.inset.x) {
-                    $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('width', `calc(100% - ${parseFloat(option.inset.x)}px)`)
-                }
-                if (option.inset.y) {
-                    $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('height', `calc(100% - ${parseFloat(option.inset.y)}px)`)
-                }
+                gsap.set(outerBorder, { width: widthStyle, height: heightStyle });
             }
-            $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('--opacity', (option.opacity || 1))
 
+            gsap.set(outerBorder, {
+                '--border-width': option.width || '1px',
+                '--opacity': option.opacity || '1',
+                '--glow': `${option.glow || '4'}rem`,
+                '--bg-cl': option.color || "rgba(255, 255, 255, 1)"
+            })
 
-            //Set Glow for Glow Dot
+            // Set Glow for Glow Dot
             if (option.glow > 10) {
-                $([lineBorder, elementOuterGlow, elementInnerGlow]).addClass('glow-big');
+                lineBorder.classList.add('glow-big');
             } else if (option.glow > 6) {
-                $([lineBorder, elementOuterGlow, elementInnerGlow]).addClass('glow-nor');
+                lineBorder.classList.add('glow-nor')
             } else {
-                // $([lineBorder, elementOuterGlow, elementInnerGlow]).addClass('glow-el');
+                // No additional class needed for default glow
             }
-            $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('--glow', (option.glow || 4) + "rem")
-
-            if (option.color === undefined) {
-                option.color = "rgba(255, 255, 255, 1)";
-            }
-            $([outerBorder, wrapOuterGlow, wrapInnerGlow]).css('--bg-cl', option.color)
 
             if (option.position) {
-                $(lineBorder).addClass('force-cl');
+                lineBorder.classList.add('force-cl');
             }
-
-            // Append Element
-            $(innerBorder).append(lineBorder)
-            $(outerBorder).append(innerBorder)
-
-            $(innerOuterGlow).append(elementOuterGlow)
-            $(wrapOuterGlow).append(innerOuterGlow)
-
-            $(innerInnerGlow).append(elementInnerGlow)
-            $(wrapInnerGlow).append(innerInnerGlow)
-
-            if (!$(el).parents('[data-glow-option]').length && !option.position) {
-                $(el).prepend(wrapOuterGlow)
-                $(el).prepend(wrapInnerGlow)
-            }
-
-            $(el).prepend(outerBorder)
         })
     }
 
     const moveGlow = () => {
-        let target = $('[data-border-glow]');
-        gsap.set(".border-inner, .glow-outer-inner, .glow-inner-inner", {opacity: 0})
-
-        // console.log(target);
+        let target = document.querySelectorAll('[data-border-glow]');
+        gsap.set(".border-inner", { opacity: 0 });
 
         function initDotGlow() {
             let targetPos = {
-                x: xGetter('.cursor'),
-                y: yGetter('.cursor')
-            }
+                x: xGetter('.mf-cursor'),
+                y: yGetter('.mf-cursor')
+            };
 
-            target.each((idx, el) => {
-                let isGetData = false
-                let option
-                let borderTarget
-                let glowOuter
-                let glowInner
-
+            target.forEach((el, idx) => {
+                let isGetData = false;
+                let option;
+                let borderTarget;
+                let glowOuter;
+                let glowInner;
 
                 if (!isGetData) {
-                    option = JSON.parse($(el).attr('data-glow-option'))
-                    borderTarget = $(el).find(".border-inner")
-                    glowOuter = $(el).find(".glow-outer-inner")
-                    glowInner = $(el).find(".glow-inner-inner")
-                    isGetData = true
+                    option = JSON.parse(el.getAttribute('data-glow-option'));
+                    borderTarget = el.querySelector(".border-inner");
+                    isGetData = true;
                 }
 
-                let xBorderTarget = xGetter(borderTarget.get(0))
-                let yBorderTarget = yGetter(borderTarget.get(0))
-
-                let xGlowOuter = xGetter(glowOuter.get(0))
-                let yGlowOuter = yGetter(glowOuter.get(0))
-
-                let xGlowInner = xGetter(glowInner.get(0))
-                let yGlowInner = yGetter(glowInner.get(0))
+                let xBorderTarget = xGetter(borderTarget);
+                let yBorderTarget = yGetter(borderTarget);
 
                 // Move with Cursor
                 const MagicMath = () => {
                     // Calculate Glow Dot Move
-                    const maxXMove = $(el).outerWidth()/2
-                    const maxYMove = $(el).outerHeight()/2
+                    const maxXMove = el.offsetWidth / 2;
+                    const maxYMove = el.offsetHeight / 2;
 
-                    let xMove = targetPos.x - (el.getBoundingClientRect().left + $(el).outerWidth()/2)
-                    let yMove = targetPos.y - (el.getBoundingClientRect().top + $(el).outerHeight()/2)
+                    let xMove = targetPos.x - (el.getBoundingClientRect().left + el.offsetWidth / 2);
+                    let yMove = targetPos.y - (el.getBoundingClientRect().top + el.offsetHeight / 2);
 
-                    let limitBorderXMove = Math.max(Math.min(xMove, maxXMove), -maxXMove)
-                    let limitBorderYMove = Math.max(Math.min(yMove, maxYMove), -maxYMove)
-
-                    let limitGlowOuterXMove = Math.max(Math.min(xMove, (maxXMove - parseFloat($(el).css("borderRadius")))), -(maxXMove - parseFloat($(el).css("borderRadius"))))
-                    let limitGlowOuterYMove = Math.max(Math.min(yMove, (maxYMove - parseFloat($(el).css("borderRadius")))), -(maxYMove - parseFloat($(el).css("borderRadius"))))
-
-                    let GlowInnerXMove
-                    let GlowInnerYMove
+                    let limitBorderXMove = Math.max(Math.min(xMove, maxXMove), -maxXMove);
+                    let limitBorderYMove = Math.max(Math.min(yMove, maxYMove), -maxYMove);
 
                     // Calculate Magnetic Area
                     let boundingMagnet = {
-                        top: el.getBoundingClientRect().top - cvUnit(option.magnetic * 10 /2 || 0, "rem"),
-                        right: el.getBoundingClientRect().right + cvUnit(option.magnetic * 10 /2 || 0, "rem"),
-                        bottom: el.getBoundingClientRect().bottom + cvUnit(option.magnetic * 10 /2 || 0, "rem"),
-                        left: el.getBoundingClientRect().left - cvUnit(option.magnetic * 10 /2 || 0, "rem"),
-                    }
+                        top: el.getBoundingClientRect().top - cvUnit(option.magnetic * 10 / 2 || 0, "rem"),
+                        right: el.getBoundingClientRect().right + cvUnit(option.magnetic * 10 / 2 || 0, "rem"),
+                        bottom: el.getBoundingClientRect().bottom + cvUnit(option.magnetic * 10 / 2 || 0, "rem"),
+                        left: el.getBoundingClientRect().left - cvUnit(option.magnetic * 10 / 2 || 0, "rem"),
+                    };
 
-                    const changeOpacityTarget = [borderTarget]
+                    const changeOpacityTarget = [borderTarget];
 
-                    if (glowOuter.length) {
-                        changeOpacityTarget.push(glowOuter)
-                        changeOpacityTarget.push(glowInner)
+                    if (glowOuter) {
+                        changeOpacityTarget.push(glowOuter);
+                        changeOpacityTarget.push(glowInner);
                     }
 
                     // Anim opacity
                     const changeOpacity = {
                         change: () => {
-                            let opacityTarget = opacityGetter(borderTarget.get(0))
+                            let opacityTarget = opacityGetter(borderTarget);
 
-                            if (borderTarget.hasClass('active')) {
-                                let xOffset = Math.abs(xMove) - maxXMove
-                                let yOffset = Math.abs(yMove) - maxYMove
+                            if (borderTarget.classList.contains('active')) {
+                                let xOffset = Math.abs(xMove) - maxXMove;
+                                let yOffset = Math.abs(yMove) - maxYMove;
 
-                                let xNormalize = Math.min(Math.abs((Math.abs(xMove) - $(el).outerWidth()/2 ) / cvUnit(option.magnetic * 10 /2 || 1, "rem") -1), 1) // Run 0 - 1
-                                let yNormalize = Math.min(Math.abs((Math.abs(yMove) - $(el).outerHeight()/2) / cvUnit(option.magnetic * 10 /2 || 1, "rem") - 1), 1) // Run 0 - 1
-
+                                let xNormalize = Math.min(Math.abs((Math.abs(xMove) - el.offsetWidth / 2) / cvUnit(option.magnetic * 10 / 2 || 1, "rem") - 1), 1); // Run 0 - 1
+                                let yNormalize = Math.min(Math.abs((Math.abs(yMove) - el.offsetHeight / 2) / cvUnit(option.magnetic * 10 / 2 || 1, "rem") - 1), 1); // Run 0 - 1
 
                                 if (xOffset > 0 && yOffset > 0) {
                                     if (xOffset <= yOffset) {
                                         // Opacity Set by Y Pos
-                                        $(changeOpacityTarget).each((idx, el) => {
-                                            opacitySetter(el)(lerp(opacityTarget, yNormalize * 1.15 , .95))
-                                        })
+                                        changeOpacityTarget.forEach(target => {
+                                            opacitySetter(target)(lerp(opacityTarget, yNormalize * 1.15, .95));
+                                        });
                                     } else {
                                         // Opacity Set by X Pos
-                                        $(changeOpacityTarget).each((idx, el) => {
-                                            opacitySetter(el)(lerp(opacityTarget, xNormalize * 1.15, .95))
-                                        })
+                                        changeOpacityTarget.forEach(target => {
+                                            opacitySetter(target)(lerp(opacityTarget, xNormalize * 1.15, .95));
+                                        });
                                     }
                                 } else {
                                     if (xOffset <= 0) {
                                         // Opacity Set by Y Pos
-                                        $(changeOpacityTarget).each((idx, el) => {
-                                            opacitySetter(el)(lerp(opacityTarget, yNormalize * 1.15, .95))
-                                        })
+                                        changeOpacityTarget.forEach(target => {
+                                            opacitySetter(target)(lerp(opacityTarget, yNormalize * 1.15, .95));
+                                        });
                                     }
                                     if (yOffset <= 0) {
                                         // Opacity Set by X Pos
-                                        $(changeOpacityTarget).each((idx, el) => {
-                                            opacitySetter(el)(lerp(opacityTarget, xNormalize * 1.15, .95))
-                                        })
+                                        changeOpacityTarget.forEach(target => {
+                                            opacitySetter(target)(lerp(opacityTarget, xNormalize * 1.15, .95));
+                                        });
                                     }
                                     if (xOffset <= 0 && yOffset <= 0) {
                                         // This is Hovering
-                                        $(changeOpacityTarget).each((idx, el) => {
-                                            opacitySetter(el)(lerp(opacityTarget, 1, .95))
-                                        })
+                                        changeOpacityTarget.forEach(target => {
+                                            opacitySetter(target)(lerp(opacityTarget, 1, .95));
+                                        });
                                     }
                                 }
                             }
                         },
                         default: () => {
-                            gsap.set(changeOpacityTarget, {opacity: 0,})
+                            gsap.set(changeOpacityTarget, { opacity: 0 });
                         },
                         visible: () => {
-                            gsap.set(changeOpacityTarget, {opacity: 1})
+                            gsap.set(changeOpacityTarget, { opacity: 1 });
                         }
-                    }
+                    };
 
                     // Check target in magnetic area yet
                     if (!option.position) {
                         if (boundingMagnet.left <= targetPos.x && targetPos.x <= boundingMagnet.right && boundingMagnet.top <= targetPos.y && targetPos.y <= boundingMagnet.bottom) {
-                            //Anim Border
-                            borderTarget.addClass('active')
-                            xSetter(borderTarget.get(0))(lerp(xBorderTarget, limitBorderXMove, .55))
-                            ySetter(borderTarget.get(0))(lerp(yBorderTarget, limitBorderYMove, .55))
+                            // Anim Border
+                            borderTarget.classList.add('active');
+                            xSetter(borderTarget)(lerp(xBorderTarget, limitBorderXMove, .55));
+                            ySetter(borderTarget)(lerp(yBorderTarget, limitBorderYMove, .55));
 
-                            xSetter(glowOuter.get(0))(lerp(xGlowOuter, xMove, .55))
-                            ySetter(glowOuter.get(0))(lerp(yGlowOuter, yMove, .55))
-
-                            xSetter(glowInner.get(0))(lerp(xGlowInner, xMove, .55))
-                            ySetter(glowInner.get(0))(lerp(yGlowInner, yMove, .55))
-
-                            changeOpacity.change()
+                            changeOpacity.change();
                         } else {
                             // Reset Border and Glow Position
-                            borderTarget.removeClass('active')
-                            xSetter(borderTarget.get(0))(lerp(xBorderTarget, limitBorderXMove, .55))
-                            ySetter(borderTarget.get(0))(lerp(yBorderTarget, limitBorderYMove, .55))
+                            borderTarget.classList.remove('active');
+                            xSetter(borderTarget)(lerp(xBorderTarget, limitBorderXMove, .55));
+                            ySetter(borderTarget)(lerp(yBorderTarget, limitBorderYMove, .55));
 
-                            xSetter(glowOuter.get(0))(lerp(xGlowOuter, xMove, .55))
-                            ySetter(glowOuter.get(0))(lerp(yGlowOuter, yMove, .55))
-
-                            xSetter(glowInner.get(0))(lerp(xGlowInner, xMove, .55))
-                            ySetter(glowInner.get(0))(lerp(yGlowInner, yMove, .55))
-
-                            changeOpacity.default()
+                            changeOpacity.default();
                         }
                     }
 
@@ -270,68 +205,42 @@ function borderGlow() {
                     if (option.position) {
                         if (boundingMagnet.left <= targetPos.x && targetPos.x <= boundingMagnet.right && boundingMagnet.top <= targetPos.y && targetPos.y <= boundingMagnet.bottom) {
                             // Anim
-                            xSetter(borderTarget.get(0))(lerp(xBorderTarget, limitBorderXMove, .1))
-                            ySetter(borderTarget.get(0))(lerp(yBorderTarget, limitBorderYMove, .1))
+                            xSetter(borderTarget)(lerp(xBorderTarget, limitBorderXMove, .1));
+                            ySetter(borderTarget)(lerp(yBorderTarget, limitBorderYMove, .1));
 
-                            xSetter(glowOuter.get(0))(lerp(xGlowOuter, limitBorderXMove, .15))
-                            ySetter(glowOuter.get(0))(lerp(yGlowOuter, limitBorderYMove, .15))
-
-                            xSetter(glowInner.get(0))(lerp(xGlowInner, limitBorderXMove, .15))
-                            ySetter(glowInner.get(0))(lerp(yGlowInner, limitBorderYMove, .15))
-                            changeOpacity.visible()
+                            changeOpacity.visible();
                         } else {
                             // Reset Border and Glow Position
-                            changeOpacity.visible()
-                            xSetter(borderTarget.get(0))(lerp(xBorderTarget, 0, .05))
-                            ySetter(borderTarget.get(0))(lerp(yBorderTarget, 0, .05))
-
-                            xSetter(glowOuter.get(0))(lerp(xGlowOuter, 0, .05))
-                            ySetter(glowOuter.get(0))(lerp(yGlowOuter, 0, .05))
-
-                            xSetter(glowInner.get(0))(lerp(xGlowInner, 0, .05))
-                            ySetter(glowInner.get(0))(lerp(yGlowInner, 0, .05))
+                            changeOpacity.visible();
+                            xSetter(borderTarget)(lerp(xBorderTarget, 0, .05));
+                            ySetter(borderTarget)(lerp(yBorderTarget, 0, .05));
 
                             // Check State Position of this border
-                            const pos = option.position.split(" ")
-                            $(pos).each((idx, posTarget) => {
+                            const pos = option.position.split(" ");
+                            pos.forEach(posTarget => {
                                 switch (posTarget) {
-                                    case 'top':
-                                        ySetter(borderTarget.get(0))(lerp(yBorderTarget, -maxYMove, .05))
-                                        ySetter(glowOuter.get(0))(lerp(yGlowOuter, -maxYMove, .05))
-                                        ySetter(glowInner.get(0))(lerp(yGlowInner, -maxYMove, .05))
-                                        break;
-                                    case 'bottom':
-                                        ySetter(borderTarget.get(0))(lerp(yBorderTarget, maxYMove, .05))
-                                        ySetter(glowOuter.get(0))(lerp(yGlowOuter, maxYMove, .05))
-                                        ySetter(glowInner.get(0))(lerp(yGlowInner, maxYMove, .05))
-                                        break;
-                                    case 'left':
-                                        xSetter(borderTarget.get(0))(lerp(xBorderTarget, -maxXMove, .05))
-                                        xSetter(glowOuter.get(0))(lerp(xGlowOuter, -maxXMove, .05))
-                                        xSetter(glowInner.get(0))(lerp(xGlowInner, -maxXMove, .05))
-                                        break;
-                                    case 'right':
-                                        xSetter(borderTarget.get(0))(lerp(xBorderTarget, maxXMove, .05))
-                                        xSetter(glowOuter.get(0))(lerp(xGlowOuter, maxXMove, .05))
-                                        xSetter(glowInner.get(0))(lerp(xGlowInner, maxXMove, .05))
-                                        break;
+                                    case 'top': ySetter(borderTarget)(lerp(yBorderTarget, -maxYMove, .05)); break;
+                                    case 'bottom': ySetter(borderTarget)(lerp(yBorderTarget, maxYMove, .05)); break;
+                                    case 'left': xSetter(borderTarget)(lerp(xBorderTarget, -maxXMove, .05)); break;
+                                    case 'right': xSetter(borderTarget)(lerp(xBorderTarget, maxXMove, .05)); break;
                                 }
-                            })
+                            });
                         }
                     }
-                }
-
+                };
 
                 if (inView(el)) {
-                    MagicMath()
+                    MagicMath();
                 }
-            })
-            requestAnimationFrame(initDotGlow)
+            });
+
+            requestAnimationFrame(initDotGlow);
         }
-        requestAnimationFrame(initDotGlow)
-    }
+        requestAnimationFrame(initDotGlow);
+    };
+
     createGlow()
-    moveGlow()
+    // moveGlow()
 }
 
 export { initMouseFollower, getCursor, borderGlow }

@@ -26,3 +26,13 @@ export const cvUnit = (val, unit) => {
   }
   return result;
 }
+
+export const lerp = (a, b, t = 0.08) => {
+  return a + (b - a) * t;
+}
+
+export const inView = (el) => {
+	if (0 <= el.getBoundingClientRect().bottom && el.getBoundingClientRect().top <= window.innerHeight) {
+		return true
+	}
+}

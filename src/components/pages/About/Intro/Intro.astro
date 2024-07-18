@@ -11,8 +11,8 @@ import IntroScript  from './script';
                 <span class="line"></span>
                 <TextBlurFading
                     triggerOpts = {{
-                        start: 'top top+=50%',
-                        end: 'bottom top+=50%'
+                        start: 'top bottom-=10%',
+                        end: 'bottom center+=10%'
                     }}
                     client:visible={{ rootMargin: "100% 0% 100% 0%" }}
                     >
@@ -115,14 +115,24 @@ import IntroScript  from './script';
             }
 
             &-circle {
+                position: relative;
                 grid-area: 1/1/2/2;
                 @include size(var(--circle-size));
-                border-radius: 50%;
-                border: 1px dashed var(--cl-dm-disable);
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 transform-origin: center calc(var(--circle-size) - (var(--circle-gap) / 2));
+                @keyframes cir-rotate {
+                    to { transform: rotate(360deg) }
+                }
+                &:before {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    border: 2px dotted var(--cl-dm-disable);
+                    border-radius: 50%;
+                    // animation: cir-rotate 20s linear 0s infinite;
+                }
 
                 @for $i from 1 through 3 {
                     $rotation: calc(#{1 - $i} * 120deg);

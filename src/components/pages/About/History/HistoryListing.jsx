@@ -1,18 +1,83 @@
 import { For, onCleanup, onMount } from "solid-js";
-import { cvUnit } from "~/utils/number";
+import { lerp, cvUnit, inView } from "~/utils/number";
 import Swiper from 'swiper';
+import gsap from 'gsap';
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const HistoryListing = (props) => {
-    let swiperRef;
+    let historiesRef;
     onMount(() => {
-        if (!swiperRef) return;
-        let swiperEl = new Swiper(swiperRef, {
-            slidesPerView: 3,
-            spaceBetween: cvUnit(20, 'rem'),
+        if (!historiesRef) return;
+        gsap.registerPlugin(ScrollTrigger);
+        // let swiperEl = new Swiper(historiesRef, {
+        //     slidesPerView: 3,
+        // })
+
+        let itemWidth = document.querySelector('.about__history-item').offsetWidth;
+        let distance = (itemWidth * props.data.length) - historiesRef.offsetWidth;
+
+        gsap.set('stick-block', { height: distance * 2 });
+        gsap.set('.sc-about__history', { display: 'flex', flexDirection: 'column-reverse' });
+        gsap.set('.about__history', { position: 'static' });
+
+        requestAnimationFrame(() => {
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.about__history',
+                    start: `bottom-=${cvUnit(100, 'rem')} bottom`,
+                    end: `bottom-=${cvUnit(100, 'rem')} top`,
+                    scrub: 1.2,
+                }
+            })
+
+            tl
+            .fromTo('.about__history-listing .swiper-wrapper', { x: 0 }, { x: -distance, ease: 'none' });
+            requestAnimationFrame(() => {
+                gsap.set('.sc-about__history, .about__history', { clearProps: 'all' });
+            })
         })
+
+        let border = document.querySelector('.about__history-listing .border-inner');
+
+        const gGetter = (property) => (el) => gsap.getProperty(el, property);
+        const gSetter = (property, unit = '') => (el) => gsap.quickSetter(el, property, unit);
+
+        const xGetter = gGetter('x');
+        const yGetter = gGetter('y');
+        const xSetter = gSetter('x', 'px');
+        const ySetter = gSetter('y', 'px');
+
+        const maxXMove = historiesRef.offsetWidth / 2;
+        const maxYMove = historiesRef.offsetHeight / 2;
+
+        const borderMove = () => {
+            let targetPos = {
+                x: xGetter('.mf-cursor'),
+                y: yGetter('.mf-cursor')
+            };
+            let rect = historiesRef.getBoundingClientRect();
+
+            const runBorder = () => {
+                let xMove = targetPos.x - (rect.left + maxXMove);
+                let yMove = targetPos.y - (rect.top - maxYMove);
+
+                let limitBorderXMove = Math.max(Math.min(xMove, maxXMove), -maxXMove);
+                let limitBorderYMove = Math.max(Math.min(yMove, maxYMove), -maxYMove);
+
+                xSetter(border)(lerp(xGetter(border), limitBorderXMove, .55));
+                ySetter(border)(lerp(yGetter(border), limitBorderYMove, .55));
+            }
+
+            if (inView(historiesRef)) {
+                runBorder();
+            }
+            requestAnimationFrame(borderMove);
+        }
+        requestAnimationFrame(borderMove);
     })
     return (
-        <div ref={swiperRef} class="swiper about__history-listing" data-cursor-text="Drag" data-cursor="-stroke">
+        <div ref={historiesRef} class="swiper about__history-listing" data-border-glow data-glow-option='{"color": "rgba(255, 255, 255, 1)", "glow": 10, "magnetic": 20, "inset": "-1px", "opacity": ".8"}'>
+            <div class="border-outer"><div class="border-inner"><div class="glow-el glow-nor"></div></div></div>
             <div class="swiper-wrapper">
                 <For each={props.data.reverse()}>
                     {(item) => (
