@@ -62,6 +62,7 @@ function Testimonials(props) {
         <div class="home__testi-listing-inner" ref={containerRef}>
             {props.data.map((el, idx) => (
                 <div class="home__testi-item"
+                    data-cursor="-stroke"
                     data-cursor-img={props.plusIc}
                     class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
                     onClick={(e) => {
