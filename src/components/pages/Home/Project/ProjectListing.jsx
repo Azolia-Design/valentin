@@ -117,7 +117,6 @@ const ProjectListing = (props) => {
     const handleActiveSlide = (index, firstInit = false) => {
         if (((index === activeSlide()) || index >= props.data.length) && !firstInit) return;
         let prevIndex = activeSlide();
-        console.log(index)
 
         let yOffSet = {
             out: index - prevIndex >= 0 ? -70 : 70,
@@ -152,8 +151,8 @@ const ProjectListing = (props) => {
                     .to(allSplitText[idx][index][0][el.splitBy], { yPercent: 0, autoAlpha: 1, duration: 0.8, stagger: 0.04, ease: 'power3.inOut', ...el.options }, '<=0');
             }
         })
-        console.log("curr", index)
-        console.log("prev", prevIndex)
+        // console.log("curr", index)
+        // console.log("prev", prevIndex)
         if (index - prevIndex >= 0) {
             swiper().slideTo(index);
             nextAnimation(index)
@@ -162,7 +161,6 @@ const ProjectListing = (props) => {
             prevAnimation(prevIndex);
         }
         setActiveSlide(index);
-
     }
 
 

@@ -33,7 +33,7 @@ export default defineConfig({
         enabled: false
     },
     integrations: [
-        react(),
+        react({ jsxRuntime: 'classic' }),
         markdoc(),
         ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()]),
         solid({ devtools: true }),
