@@ -62,20 +62,7 @@ const projects = [
 <style lang="scss" is:global>
     .sc-projects__listing {
     }
-    html {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-        &::-webkit-scrollbar {
-            display: none;
-        }
-    }
     .projects__listing {
-        // -ms-overflow-style: none;  /* IE and Edge */
-        // scrollbar-width: none;  /* Firefox */
-        // &::-webkit-scrollbar {
-        //     display: none;
-        // }
-
         &-main {
             padding-top: 17.14vh;
             padding-bottom: 8.76vh;
@@ -83,8 +70,7 @@ const projects = [
         }
     }
     .projects__sticky {
-        position: sticky;
-        top: 0;
+        position: relative;
         height: 100vh;
         > .container {
             z-index: 3;
@@ -101,28 +87,38 @@ const projects = [
         &-area {
             width: 100%;
             height: 50%;
-            // &.animating {
-            //     pointer-events: none;
-            // }
         }
     }
     .project {
         &-item-label {
             margin-bottom: 1rem;
+            pointer-events: auto;
         }
         &__name {
             grid-column: 1/5;
             overflow-wrap: break-word;
             margin-top: -.12em;
             align-self: start;
-            pointer-events: auto;
             line-height: .835em;
+            &-txt {
+                justify-self: start;
+                align-self: start;
+                &.active {
+                    pointer-events: auto;
+                }
+            }
         }
         &__desc {
             grid-column: 1/4;
             align-self: end;
             max-width: 32rem;
-            pointer-events: auto;
+            &-txt {
+                justify-self: start;
+                align-self: end;
+                &.active {
+                    pointer-events: auto;
+                }
+            }
         }
         &__info {
             grid-column: 6/9;
@@ -141,12 +137,26 @@ const projects = [
             display: flex;
             flex-direction: column;
             align-items: start;
-            pointer-events: auto;
+            &-listing {
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                align-self: start;
+                justify-self: start;
+                &.active {
+                    p {
+                        pointer-events: auto;
+                    }
+                }
+            }
         }
         &__year {
             grid-column: 6/8;
             align-self: end;
             pointer-events: auto;
+            display: flex;
+            gap: 0 .5rem;
+            line-height: .9em;
         }
         &__thumbnail {
             height: 100%;
