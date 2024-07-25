@@ -70,11 +70,21 @@
     &.-stroke {
         &:before {
             backdrop-filter: blur(1rem);
-            background: rgba(255, 61, 0, 0.01);
+            background-color: rgba(255, 61, 0, 0.01);
             border: 1px solid var(--cl-dm-border);
         }
         .mf-cursor-text {
             color: var(--cl-orange);
+        }
+    }
+    &.-nav {
+        &:before {
+            backdrop-filter: blur(.2rem);
+            background-color: rgba(255, 61, 0, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        &.-media:before {
+            transform: scale(1.1);
         }
     }
 

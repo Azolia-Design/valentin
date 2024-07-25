@@ -1,11 +1,20 @@
 ---
+import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
 import ProjectListing from './ProjectListing';
+import ArrowNext from '~/icons/arrow-next-orange.svg';
+import ArrowPrev from '~/icons/arrow-prev-orange.svg';
+
+const arrows = {
+    next: await getImage({ src: ArrowNext, format: "svg" }),
+    prev: await getImage({ src: ArrowPrev, format: "svg" })
+};
+
 const projects = [
     {
         link: "#",
         year: 2018,
-        title: "Vietcombank",
+        title: "Vietcom<br/>bank",
         roles: ["Design system", "Mobile app design", "Graphic Design"],
         services: ["Website Design",  "Graphic Design"],
         selling_points: ["Up 200% Conversion Rate", "3.233.222 Downloaded"],
@@ -32,7 +41,7 @@ const projects = [
     {
         link: "#",
         year: 2021,
-        title: "Techcombank",
+        title: "Techcom<br/>bank",
         roles: ["UX/UI Design", "Web Development", "Graphic Design"],
         services: ["Mobile App Design", "Web Development"],
         selling_points: ["Increase User Engagement by 150%", "5,000,000+ Active Users"],
@@ -46,18 +55,27 @@ const projects = [
 ---
 <section class="sc-projects__listing">
     <div class="projects__listing">
-        <div class="projects__sticky">
-            <div class="container">
-                <ProjectListing data={projects} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
-            </div>
-        </div>
+        <ProjectListing data={projects} arrows={arrows} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
     </div>
 </section>
 
 <style lang="scss" is:global>
-    .sc-projects__listing {}
+    .sc-projects__listing {
+    }
+    html {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
     .projects__listing {
-        height: 500vh;
+        // -ms-overflow-style: none;  /* IE and Edge */
+        // scrollbar-width: none;  /* Firefox */
+        // &::-webkit-scrollbar {
+        //     display: none;
+        // }
+
         &-main {
             padding-top: 17.14vh;
             padding-bottom: 8.76vh;
@@ -69,7 +87,23 @@ const projects = [
         top: 0;
         height: 100vh;
         > .container {
+            z-index: 3;
             height: 100%;
+            pointer-events: none;
+        }
+    }
+    .projects__navigation {
+        z-index: 2;
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        &-area {
+            width: 100%;
+            height: 50%;
+            // &.animating {
+            //     pointer-events: none;
+            // }
         }
     }
     .project {
@@ -80,23 +114,39 @@ const projects = [
             grid-column: 1/5;
             overflow-wrap: break-word;
             margin-top: -.12em;
+            align-self: start;
+            pointer-events: auto;
+            line-height: .835em;
         }
         &__desc {
             grid-column: 1/4;
             align-self: end;
             max-width: 32rem;
+            pointer-events: auto;
         }
         &__info {
             grid-column: 6/9;
             grid-row: 1/2;
+            align-self: start;
+            justify-self: start;
 
             display: flex;
             flex-direction: column;
+            align-items: start;
             gap: 7.4rem 0;
+        }
+        &__role,
+        &__services,
+        &__selling {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            pointer-events: auto;
         }
         &__year {
             grid-column: 6/8;
             align-self: end;
+            pointer-events: auto;
         }
         &__thumbnail {
             height: 100%;
@@ -111,14 +161,18 @@ const projects = [
                 display: grid;
             }
             &-img {
+                --clipping: 100%;
+
                 position: relative;
                 width: 100%;
                 height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                // opacity: 0;
+                clip-path: polygon(0% 0%, var(--clipping) 0, var(--clipping) var(--clipping), 0 var(--clipping));
+                pointer-events: auto;
                 img {
+                    transform: translate(calc((100% - var(--clipping)) / -2), calc((100% - var(--clipping)) / -2));
                     position: absolute;
                 }
             }

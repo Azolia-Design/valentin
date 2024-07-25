@@ -24,11 +24,25 @@ declare global {
         });
     }
 
+    const forceScrollTop = () => {
+        getLenis().scrollTo("top", { duration: .001 });
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        } else {
+            window.addEventListener('pageshow', function(event) {
+                if (!event.persisted) {
+                    window.scrollTo(0, 0);
+                }
+            });
+        }
+    }
+
     const setup = () => {
         console.log("initswupper")
 
         window.swup.hooks.on('page:view', (visit) => {
             console.log('New page loaded:', visit.to.url);
+            initMouseFollower();
         });
 
         window.swup.hooks.on('visit:start', () => {
@@ -36,13 +50,13 @@ declare global {
         }, { priority: 100 });
 
         window.swup.hooks.on("content:replace", function () {
-            getLenis().scrollTo("top", { duration: .001 });
-
+            forceScrollTop();
             updateHeader();
         })
         window.swup.hooks.before("content:replace", function() {
             ScrollTrigger.getAll().forEach((e) => e.kill());
             ScrollTrigger.clearMatchMedia();
+            getCursor().destroy();
         })
     }
     if (window.swup) {
@@ -89,9 +103,12 @@ declare global {
         if (!getCursor()) {
             initMouseFollower();
         }
+
+        forceScrollTop();
         borderGlow();
         initButton("render");
     }
+
     const onPageShow = function () {
         console.log("on page show")
     }

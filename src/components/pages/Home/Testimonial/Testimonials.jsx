@@ -72,9 +72,15 @@ function Testimonials(props) {
                         setScaleFactor(scaleFactor);
                         if (e.target.classList.contains('active')) {
                             getCursor().removeState('-media');
+                            getCursor().removeState('-stroke');
+                            e.target.removeAttribute('data-cursor');
+                            e.target.removeAttribute('data-cursor-img');
                         }
                         else {
                             getCursor().addState('-media');
+                            getCursor().addState('-stroke');
+                            e.target.setAttribute('data-cursor', '-stroke');
+                            e.target.setAttribute('data-cursor-img', props.plusIc);
                         }
                     }}>
                     <TestimonialItem data={el} index={idx} scaleFactor={scaleFactor()} isOpen={activeIndex() === idx}/>
