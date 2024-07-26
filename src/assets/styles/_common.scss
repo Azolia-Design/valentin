@@ -164,6 +164,8 @@ img,
     display: block;
     width: 100%;
     height: auto;
+    min-width: 100%;
+    min-height: 100%;
 
     &.img-h {
         height: 100%;

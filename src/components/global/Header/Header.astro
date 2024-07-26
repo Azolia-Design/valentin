@@ -85,7 +85,9 @@ const pathname = new URL(Astro.request.url).pathname;
             gap: 0 1.2rem;
             transition: color .4s ease-in-out;
             &-link {
-                &.active {
+                transition: color .4s ease-in-out;
+                &.active,
+                &:hover {
                     color: var(--cl-dm-title);
                     // pointer-events: none;
                 }

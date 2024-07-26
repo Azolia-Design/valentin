@@ -1,8 +1,17 @@
 ---
 publishDate: 2023-08-09T00:00:00Z
-title: Useful tools and resources to create a professional website
-excerpt: Explore vital tools and resources for a sleek website. From design to functionality, our guide elevates your online presence.
-image: https://images.unsplash.com/photo-1637144113536-9c6e917be447?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80
+title: Definchain
+excerpt: 'No clear requirements or team structure, a very complex product and very little time - let’s see how we made a blockchain explorer:
+DefiMetachain is the ERC-20 blockchain solution of Defichain. As part of this product, I worked on the blockchain explorer.'
+image: ~/assets/images/define-hero.jpg
+roles:
+- Product Design
+services:
+- Website Design
+- Mobile Application
+selling points:
+- Up 200% Conversion Rate
+- 3.233.222 Downloaded
 tags:
   - front-end
   - tools

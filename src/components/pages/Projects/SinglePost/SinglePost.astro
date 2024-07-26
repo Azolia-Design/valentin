@@ -1,0 +1,91 @@
+---
+import Image from "~/components/common/Image.astro";
+const { post } = Astro.props;
+console.log(post.roles.map((role) => role.title))
+---
+<section class="sc-post__hero">
+    <div class="post__hero">
+        <div class=" grid-1-1 post__hero-cover">
+            <div class="post__hero-cover-img">
+                <Image
+                    src={post.image}
+                    class="img"
+                    widths={[400, 900, 1024, 2040]}
+                    alt={post?.excerpt || ''}
+                    width={1024}
+                    height={620}
+                    loading="eager"
+                    decoding="async"
+                />
+            </div>
+            <div class="post__hero-cover-blur">
+                <Image
+                    src={'~/assets/images/post-blur.png'}
+                    alt="background blur"
+                    class="img"
+                    widths={[400, 900, 1024]}
+                    width={1024}
+                    height={620}
+                    loading="eager"
+                    decoding="sync"
+                />
+            </div>
+        </div>
+        <div class="post__hero-main">
+            <div class="container grid">
+                <h1 class="heading h2 upper fw-bold cl-txt-title post__hero-title">{post.title}</h1>
+                <div class="post__hero-info">
+                    <div class="post__hero-role">
+                        <div class="cl-txt-desc fw-med post__hero-label">Role</div>
+                        <div class="post__hero-role-listing">
+                            {post.roles.map((role) => <p class="">{role.title}</p>)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <slot />
+</section>
+<style lang="scss">
+    @use '~/assets/styles/mixins' as *;
+    .sc-post__hero {}
+    .post__hero {
+        position: relative;
+        z-index: 3;
+        background-color: var(--cl-dm-bg);
+        height: 100vh;
+        width: 100%;
+        &-cover {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            &-img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    object-position: top center !important;
+                }
+
+                @include size(100%);
+            }
+            &-blur {
+                @include size(100%);
+            }
+        }
+        &-main {
+            position: relative;
+            z-index: 3;
+            height: 100%;
+            > .container {
+                height: 100%;
+            }
+        }
+        &-title {
+            grid-column: 1/9;
+            align-self: end;
+            padding-bottom: 7.6vh;
+        }
+    }
+</style>

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { defineConfig } from 'astro/config';
 import solid from '@astrojs/solid-js';
 import swup from '@swup/astro';
+import mdx from '@astrojs/mdx';
 
 import { defineConfig, squooshImageService } from 'astro/config';
 import keystatic from '@keystatic/astro';
@@ -39,6 +40,7 @@ export default defineConfig({
         solid({ devtools: true }),
         swup({ globalInstance: true }),
         icon(),
+        mdx(),
         ...whenExternalScripts(() =>
             partytown({
                 config: { forward: ['dataLayer.push'] },

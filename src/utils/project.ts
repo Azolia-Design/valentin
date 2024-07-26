@@ -1,5 +1,7 @@
 import { getCollection } from 'astro:content';
 import { cleanSlug, trimSlash, POST_PERMALINK_PATTERN } from './permalinks';
+import type { CollectionEntry } from 'astro:content';
+import type { Post } from '~/types';
 
 const generatePermalink = async ({
     id,
@@ -20,18 +22,17 @@ const generatePermalink = async ({
         .replace('%hour%', hour)
         .replace('%minute%', minute)
         .replace('%second%', second);
-    console.log(slug)
-    console.log(permalink)
+
     return permalink
         .split('/')
         .map((el) => trimSlash(el))
         .filter((el) => !!el)
         .join('/');
 };
-
-const getNormalizedPost = async (post) => {
+const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> => {
     const { id, slug: rawSlug = '', data } = post;
     const { Content, remarkPluginFrontmatter } = await post.render();
+
     const {
         publishDate: rawPublishDate = new Date(),
         updateDate: rawUpdateDate,
@@ -39,6 +40,9 @@ const getNormalizedPost = async (post) => {
         excerpt,
         image,
         author,
+        services: rawServices = [],
+        roles: rawRoles = [],
+        sellingPoints: rawSellingPoints = [],
         draft = false,
         metadata = {},
     } = data;
@@ -46,6 +50,20 @@ const getNormalizedPost = async (post) => {
     const slug = cleanSlug(rawSlug); // cleanSlug(rawSlug.split('/').pop());
     const publishDate = new Date(rawPublishDate);
     const updateDate = rawUpdateDate ? new Date(rawUpdateDate) : undefined;
+
+
+    const services = rawServices.map((service: string) => ({
+        slug: cleanSlug(service),
+        title: service,
+    }));
+    const roles = rawRoles.map((role: string) => ({
+        slug: cleanSlug(role),
+        title: role,
+    }));
+    const sellingPoints = rawSellingPoints.map((point: string) => ({
+        slug: cleanSlug(point),
+        title: point,
+    }));
 
     return {
         id: id,
@@ -59,8 +77,11 @@ const getNormalizedPost = async (post) => {
         excerpt: excerpt,
         image: image,
 
-        author: author,
+        roles: roles,
+        services: services,
+        sellingPoints: sellingPoints,
 
+        author: author,
         draft: draft,
 
         metadata,
@@ -69,10 +90,11 @@ const getNormalizedPost = async (post) => {
         // or 'content' in case you consume from API
 
         readingTime: remarkPluginFrontmatter?.readingTime,
-        };
+    };
 };
 
-const load = async function () {
+
+const load = async function (): Promise<Array<Post>> {
     const posts = await getCollection('post');
     const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post));
 
@@ -83,19 +105,19 @@ const load = async function () {
     return results;
 };
 
-let _posts;
+let _posts: Array<Post>;
 
-export const fetchPosts = async () => {
+export const fetchPosts = async (): Promise<Array<Post>> => {
     if (!_posts) {
         _posts = await load();
     }
 
     return _posts;
 };
+
 export const getStaticPathsProjectPost = async () => {
     // if (!isBlogEnabled || !isBlogPostRouteEnabled) return [];
     return (await fetchPosts()).flatMap((post) => {
-        console.log(post.permalink);
         return ({
             params: {
                 page: post.permalink,
