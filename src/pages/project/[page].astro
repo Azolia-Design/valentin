@@ -1,0 +1,19 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { getStaticPathsProjectPost } from '~/utils/project';
+import { getCollection } from 'astro:content';
+import { cleanSlug } from '~/utils/permalinks';
+
+export const getStaticPaths = (async () => {
+    return await getStaticPathsProjectPost();
+});
+
+const { post } = Astro.props;
+console.log(post)
+
+const metadata = {
+	title: 'My Projects',
+};
+---
+<Layout metadata={metadata}>
+</Layout>

@@ -143,6 +143,15 @@ declare module 'astro:content' {
   data: any
 } & { render(): Render[".mdoc"] };
 };
+"post": {
+"useful-resources-to-create-websites.md": {
+	id: "useful-resources-to-create-websites.md";
+  slug: "useful-resources-to-create-websites";
+  body: string;
+  collection: "post";
+  data: any
+} & { render(): Render[".md"] };
+};
 
 	};
 

@@ -204,6 +204,26 @@ const ProjectListing = (props) => {
                             </div>
                         </div>
                     </div>
+                    <div class="project__pagination">
+                        <div class="project__pagination-main">
+                            {props.data.map(({ thumbnail }, idx) => (
+                                <div class="project__pagination-item-wrap">
+                                    <div class="project__pagination-item">
+                                        <div class="project__pagination-item-progress">
+                                            <div className="project__pagination-item-progress-inner"></div>
+                                        </div>
+                                        <div class="project__pagination-item-img">
+                                            <img class="img" src={thumbnail.src} alt={thumbnail.alt} width={66} height={94} loading="lazy" />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div class="fs-20 fw-bold project__pagination-number">
+                            <span class="line"></span>
+                            <span class="cl-txt-title">{(index().curr + 1).toString().padStart(2, '0')} </span><span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="projects__navigation">
