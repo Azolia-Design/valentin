@@ -1,15 +1,17 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { getImage } from 'astro:assets';
+import { findImage } from '~/utils/images';
 import Arrows from '~/components/common/Arrows.astro';
 import HeroScript from './script';
-import Image from '~/components/common/Image.astro';
+
 import DeepMap from '~/assets/images/hero-real-deepmap.jpg';
-import HeroMain from '~/assets/images/hero-real-x2.jpg';
+import HeroMain from '~/assets/images/hero-real.jpg';
 import TextTransClip from '~/components/common/TextTransClip';
 
 const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
-const HeroMainImg = await getImage({src: HeroMain, format: 'webp', width: HeroMain.width})
+const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
+
 const { data } = Astro.props;
 ---
 <div class="home__hero-wrap">
@@ -81,16 +83,6 @@ const { data } = Astro.props;
         </div>
         <div class="home__hero-bg">
             <div class="home__hero-bg-main">
-            <!-- <Image
-                    src={'~/assets/images/home-hero.jpg'}
-                    widths={[400, 768, 1024, 2040]}
-                    width={1728}
-                    height={1050}
-                    alt={'a man'}
-                    layout="cover"
-                    loading="eager"
-                    decoding="async"
-                /> -->
                 <div
 					id="hero-bg"
                     class="home__hero-bg-main-inner"

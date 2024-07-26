@@ -33,6 +33,10 @@ export default defineConfig({
     devToolbar: {
         enabled: false
     },
+    prefetch: {
+        prefetchAll: true,
+        defaultStrategy: 'viewport'
+    },
     integrations: [
         react({ jsxRuntime: 'classic' }),
         markdoc(),
