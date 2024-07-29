@@ -20,13 +20,13 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 <p class="fw-med footer__label">Socials</p>
                 <div class="footer__socials-listing">
                     {socials.map((social) =>
-                        <a href={social.href} class="fw-med cl-txt-orange footer__link">{social.text}</a>
+                        <a href={social.href} class="fw-med txt-link hover-un cl-txt-orange footer__link">{social.text}</a>
                     )}
                 </div>
             </div>
             <div class="footer__info-item">
                 <p class="fw-med footer__label">Whatapps</p>
-                <a href={whatapps.href} class="fw-med cl-txt-orange footer__link">{whatapps.text}</a>
+                <a href={whatapps.href} class="fw-med txt-link hover-un cl-txt-orange footer__link">{whatapps.text}</a>
             </div>
         </div>
         <div class="footer__cta">

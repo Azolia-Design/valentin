@@ -1,7 +1,8 @@
-import { getCollection } from 'astro:content';
-import { cleanSlug, trimSlash, POST_PERMALINK_PATTERN } from './permalinks';
 import type { CollectionEntry } from 'astro:content';
 import type { Post } from '~/types';
+
+import { getCollection } from 'astro:content';
+import { cleanSlug, trimSlash, POST_PERMALINK_PATTERN } from './permalinks';
 
 const generatePermalink = async ({
     id,
@@ -51,7 +52,6 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     const publishDate = new Date(rawPublishDate);
     const updateDate = rawUpdateDate ? new Date(rawUpdateDate) : undefined;
 
-
     const services = rawServices.map((service: string) => ({
         slug: cleanSlug(service),
         title: service,
@@ -86,10 +86,10 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
 
         metadata,
 
-        Content: Content,
+        Content: Content
         // or 'content' in case you consume from API
 
-        readingTime: remarkPluginFrontmatter?.readingTime,
+        // readingTime: remarkPluginFrontmatter?.readingTime,
     };
 };
 

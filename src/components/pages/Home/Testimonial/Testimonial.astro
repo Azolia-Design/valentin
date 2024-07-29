@@ -14,7 +14,7 @@ const testimonials = [
 ]
 
 const PlusIc = await getImage({ src: Plus, format: "svg" });
-
+const itemLength = testimonials.length;
 ---
 <div class="home__testi-wrap">
     <section class="home__testi">
@@ -31,7 +31,7 @@ const PlusIc = await getImage({ src: Plus, format: "svg" });
                 </span>
                 <span class="fs-20 cl-txt-desc fw-reg upper home__testi-title-label">(Testimonials)</span>
             </h2>
-            <div class="home__testi-listing" style={{ '--itemLength': testimonials.length }}>
+            <div class="home__testi-listing">
                 <Testimonials data={testimonials} plusIc={PlusIc.src} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
                     <Image
                         src={'~/assets/images/testi-blur.png'}
@@ -51,7 +51,7 @@ const PlusIc = await getImage({ src: Plus, format: "svg" });
     </section>
 </div>
 
-<style lang="scss" is:global>
+<style lang="scss" define:vars={{ itemLength }} is:global>
     @use '~/assets/styles/mixins' as *;
     .home__testi {
         position: relative;

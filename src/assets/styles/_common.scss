@@ -394,3 +394,21 @@ button {
 .swiper {
     width: 100%;
 }
+
+.richtext-global {
+    > * {
+        &:first-child {
+            margin-top: 0;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    p:last-child {
+        margin-bottom: 0;
+    }
+    h2 + h3,
+    h3 + h4 {
+        margin-top: 2.6rem;
+    }
+}

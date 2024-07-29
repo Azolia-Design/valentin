@@ -109,7 +109,7 @@ const ProjectListing = (props) => {
                 // '--clipping': '100%',
             }, {
                 scale: 0,
-                duration: 1.1,
+                duration: .9,
                 ease: 'power2.inOut'
                 // '--clipping': '0%',
             })
@@ -120,7 +120,7 @@ const ProjectListing = (props) => {
             }, {
                 scale: 1,
                 transformOrigin: transformOrigin.in,
-                duration: 1.1,
+                duration: .9,
                 ease: 'power2.inOut',
                 onComplete() {
                     document.querySelector('.projects__listing-main').classList.remove('animating');

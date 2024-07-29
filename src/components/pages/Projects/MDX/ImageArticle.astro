@@ -1,0 +1,35 @@
+---
+import type { ImageMetadata } from 'astro';
+import Image from '~/components/common/Image.astro';
+
+type Props = {
+  src: string | ImageMetadata;
+  alt: string;
+};
+
+const { src, alt } = Astro.props;
+---
+<figure>
+  {
+    typeof src === 'string' ? (
+      <img src={src} alt={alt} class="img" />
+    ) : (
+      <Image
+        widths={[400, 768, 1024, 2040]}
+        width={998}
+        decoding="async"
+        loading="lazy"
+        {src} {alt}  />
+    )
+  }
+  {alt && <figcaption class="fs-16">{alt}</figcaption>}
+</figure>
+<style>
+  figure {
+    /* margin-block: 11.5rem; */
+    margin-block: 8rem;
+  }
+  figcaption {
+    margin-top: 1.9rem;
+  }
+</style>

@@ -37,7 +37,7 @@ const HistoryListing = (props) => {
             })
         })
 
-        let border = document.querySelector('.about__history-listing .border-inner');
+        let border = document.querySelector('.about__history-body .border-inner');
 
         const gGetter = (property) => (el) => gsap.getProperty(el, property);
         const gSetter = (property, unit = '') => (el) => gsap.quickSetter(el, property, unit);
@@ -47,28 +47,28 @@ const HistoryListing = (props) => {
         const xSetter = gSetter('x', 'px');
         const ySetter = gSetter('y', 'px');
 
-        const maxXMove = historiesRef.offsetWidth / 2;
-        const maxYMove = historiesRef.offsetHeight / 2;
+        const maxXMove = document.querySelector('.about__history-body').offsetWidth / 2;
+        const maxYMove = document.querySelector('.about__history-body').offsetHeight / 2;
 
         const borderMove = () => {
             let targetPos = {
                 x: xGetter('.mf-cursor'),
                 y: yGetter('.mf-cursor')
             };
-            let rect = historiesRef.getBoundingClientRect();
+            let rect = document.querySelector('.about__history-body').getBoundingClientRect();
 
             const runBorder = () => {
                 let xMove = targetPos.x - (rect.left + maxXMove);
                 let yMove = targetPos.y - (rect.top - maxYMove);
 
-                let limitBorderXMove = Math.max(Math.min(xMove, maxXMove), -maxXMove);
+                let limitBorderXMove = Math.max(Math.min(xMove, maxXMove * 2), -maxXMove * 2);
                 let limitBorderYMove = Math.max(Math.min(yMove, maxYMove), -maxYMove);
 
                 xSetter(border)(lerp(xGetter(border), limitBorderXMove, .55));
                 ySetter(border)(lerp(yGetter(border), limitBorderYMove, .55));
             }
 
-            if (inView(historiesRef)) {
+            if (inView(document.querySelector('.about__history-body'))) {
                 runBorder();
             }
             requestAnimationFrame(borderMove);
@@ -76,8 +76,7 @@ const HistoryListing = (props) => {
         requestAnimationFrame(borderMove);
     })
     return (
-        <div ref={historiesRef} class="swiper about__history-listing" data-border-glow data-glow-option='{"color": "rgba(255, 255, 255, 1)", "glow": 10, "magnetic": 20, "inset": "-1px", "opacity": ".8"}'>
-            <div class="border-outer"><div class="border-inner"><div class="glow-el glow-nor"></div></div></div>
+        <div ref={historiesRef} class="swiper about__history-listing">
             <div class="swiper-wrapper">
                 <For each={props.data.reverse()}>
                     {(item) => (

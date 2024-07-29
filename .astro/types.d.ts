@@ -154,13 +154,13 @@ declare module 'astro:content' {
 } & { render(): Render[".mdoc"] };
 };
 "post": {
-"defichain.md": {
-	id: "defichain.md";
+"defichain.mdx": {
+	id: "defichain.mdx";
   slug: "defichain";
   body: string;
   collection: "post";
   data: InferEntrySchema<"post">
-} & { render(): Render[".md"] };
+} & { render(): Render[".mdx"] };
 };
 
 	};

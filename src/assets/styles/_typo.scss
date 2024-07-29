@@ -267,6 +267,7 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
         position: relative;
         overflow: hidden;
         display: inline-block;
+        width: fit-content;
 
         &::before,
         &::after {
@@ -294,6 +295,20 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
             }
             &::after {
                 transform: translateX(var(--line-spacing));
+            }
+        }
+        &.hover-un {
+            &::after {
+                display: none;
+            }
+            &::before {
+                transform-origin: right;
+                transform: scaleX(0);
+                transition: 0.6s transform cubic-bezier(0.66, 0, 0.15, 1);
+            }
+            &:hover::before {
+                transform-origin: left;
+                transform: scaleX(1);
             }
         }
 
@@ -337,14 +352,6 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
                     }
                 }
 
-            }
-        }
-
-        &-bold {
-            transition: color 400ms ease;
-
-            &:hover {
-                color: var(--cl-orange);
             }
         }
     }

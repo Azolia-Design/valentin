@@ -1,7 +1,7 @@
 ---
 ---
 {
-    Astro.props.text.split('\n').map((item) => {
+    Astro.props.text.trim().split('\n').map((item) => {
         return (
             <Fragment set:html={item}/>
             <br/>

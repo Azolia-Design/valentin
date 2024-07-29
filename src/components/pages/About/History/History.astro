@@ -39,22 +39,23 @@ const data = [
         <div class="about__history-head">
             <div class="container grid">
                 <HistoryHead client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
-                <span class="fs-20 cl-txt-desc fw-reg upper about__history-label">(History)</span>
+                <span class="fs-20 cl-txt-desc fw-reg about__history-label">(History)</span>
                 <div class="about__history-sub cl-txt-desc sub-1">
                     <span class="line"></span>
                     <p>With many years of experience in designing digital products in the fintech sector, I have a deep understanding of user needs and a knack for innovative creativity.</p>
                 </div>
                 <p class="about__history-sub cl-txt-desc sub-2">By choosing me, your company will benefit from intuitive, effective design solutions that are always up-to-date with the latest trends.</p>
                 <a href="#" class="cl-txt-orange arrow-hover about__history-link">
-                    <span class="txt-link fs-20 fw-med cl-txt-orange">Let's talk</span>
+                    <span class="txt-link fs-20 fw-med">Let's talk</span>
                     <Arrows  />
                 </a>
             </div>
         </div>
-        <div class="about__history-body">
+        <div class="about__history-body" data-border-glow data-glow-option='{"color": "rgba(255, 255, 255, 1)", "glow": 10, "magnetic": 20, "inset": "-1px", "opacity": ".8"}'>
             <div class="container grid">
                 <HistoryListing data={data} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
             </div>
+            <div class="border-outer"><div class="border-inner"><div class="glow-el glow-nor"></div></div></div>
         </div>
     </div>
 </section>
@@ -171,8 +172,8 @@ const data = [
                 color: var(--cl-dm-title);
             }
             &:last-child {
-                border-style: none solid none solid;
-                border-width: 0 1px 0 1px;
+                // border-style: none solid none solid;
+                // border-width: 0 1px 0 1px;
                 .border-outer {
                     padding-right: calc(var(--border-width) / 2.5 * -1);
                 }
@@ -189,7 +190,7 @@ const data = [
                 li {
                     width: 1px;
                     height: 2rem;
-                    background-color: var(--cl-dm-border);
+                    background-color: #242528;
                     &:nth-child(7) {
                         height: 5.2rem;
                     }

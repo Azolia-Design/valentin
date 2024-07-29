@@ -26,6 +26,7 @@ const awards = [
     { name: "Creative Pool", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'red-dot' },
     { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' }
 ]
+const itemLength = awards.length;
 ---
 <div class="home__intro-wrap">
     <section class="home__intro">
@@ -88,7 +89,7 @@ const awards = [
             </div>
             <div class="home__intro-awards">
                 <h3 class="heading h4 cl-txt-title upper home__intro-awards-title">Awards</h3>
-                <div class="home__intro-awards-wrap" style={{ '--itemLength': awards.length }}>
+                <div class="home__intro-awards-wrap">
                     <div class="home__intro-awards-listing">
                         {awards.map((award) =>
                             <div class="home__intro-award">
@@ -172,8 +173,7 @@ const awards = [
     </section>
 </div>
 
-
-<style lang="scss" is:global>
+<style lang="scss" define:vars={{ itemLength }} is:global>
     @use '~/assets/styles/mixins' as *;
     .home__intro {
         --padding-top: 31rem;

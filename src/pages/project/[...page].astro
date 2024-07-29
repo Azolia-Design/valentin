@@ -1,19 +1,22 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
-import { getStaticPathsProjectPost } from '~/utils/project';
 import type { ImageMetadata } from 'astro';
-import merge from 'lodash.merge';
-import SinglePost from '~/components/pages/Projects/SinglePost/SinglePost.astro';
-import { findImage } from '~/utils/images';
 import type { MetaData } from '~/types';
+
+import merge from 'lodash.merge';
+import { findImage } from '~/utils/images';
+import { getStaticPathsProjectPost } from '~/utils/project';
+
+import Layout from '~/layouts/PageLayout.astro';
+import SinglePost from '~/components/pages/Projects/SinglePost/SinglePost.astro';
+import { mdxComponents } from '~/components/pages/Projects/MDX/mdxComponents';
+import ImageArticle from '~/components/pages/Projects/MDX/ImageArticle.astro';
 
 export const getStaticPaths = (async () => {
     return await getStaticPathsProjectPost();
 });
 
 const { post } = Astro.props;
-const image = (await findImage(post.image)) as ImageMetadata;
-
+const image = (await findImage(post.image)) as ImageMetadata | undefined;
 const metadata = merge(
     {
         title: post.title,
@@ -29,11 +32,11 @@ const metadata = merge(
             : {}),
         },
     },
-    { ...(post?.metadata ? { ...post.metadata, canonical: post.metadata?.canonical  } : {}) }
+    { ...(post?.metadata ? { ...post.metadata, canonical: post.metadata?.canonical } : {}) }
     ) as MetaData;
 ---
 <Layout metadata={metadata}>
     <SinglePost post={{ ...post, image: image }}>
-        {post.Content ? <post.Content /> : <Fragment set:html={post.content || ''} />}
+        {post.Content ?  <post.Content components={mdxComponents} /> : <Fragment set:html={post.content || ''} />}
     </SinglePost>
 </Layout>
