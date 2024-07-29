@@ -3,7 +3,6 @@ import gsap from 'gsap';
 import SplitType from "split-type";
 
 const ProjectListing = (props) => {
-    let swiperRef;
     const [index, setIndex] = createSignal({ curr: 0, prev: -1 });
 
     let allSplitText = [];
@@ -51,6 +50,15 @@ const ProjectListing = (props) => {
 
         onCleanup(() => elements.forEach(({ selector }) => SplitType.revert(selector)));
     })
+
+    const pushImage = (e) => {
+        document.querySelector('.project__transition').appendChild(e.target.querySelector('.project__thumbnail-img-inner'));
+
+        let thumbRect = document.querySelector('.project__thumbnail-wrap').getBoundingClientRect();
+        gsap.from('.project__transition', { width: thumbRect.width, height: thumbRect.height, x: thumbRect.left, y: thumbRect.top, ease: 'expo.inOut', duration: 1.2 });
+
+        // gsap.from('.project__transition', { width: '100%' })
+    }
 
     const animationsText = (direction, nextValue) => {
         let yOffSet = {
@@ -194,11 +202,18 @@ const ProjectListing = (props) => {
                     </div>
                     <div class="fs-20 fw-med cl-txt-sub project__year">© <div class="grid-1-1">{props.data.map(({ year }, idx) => <span class="project__year-txt">{year}</span>)}</div></div>
                     <div class="project__thumbnail-wrap">
-                        <div className="project__thumbnail" ref={swiperRef}>
+                        <div className="project__thumbnail">
                             <div className="project__thumbnail-listing grid-1-1">
-                                {props.data.map(({ thumbnail }, idx) => (
-                                    <a href="#" class={`project__thumbnail-img${idx === index().curr ? ' active' : ''}`} data-cursor-text="View">
-                                        <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} />
+                                {props.data.map(({ link, thumbnail }, idx) => (
+                                    <a
+                                        href={link}
+                                        class={`project__thumbnail-img${idx === index().curr ? ' active' : ''}`}
+                                        data-cursor-text="View"
+                                        onClick={pushImage}
+                                    >
+                                        <div class="project__thumbnail-img-inner">
+                                            <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} crossorigin="anonymous" referrerpolicy="no-referrer" loading="lazy" />
+                                        </div>
                                     </a>
                                 ))}
                             </div>

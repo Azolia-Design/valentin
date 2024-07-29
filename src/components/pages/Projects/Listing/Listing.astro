@@ -1,5 +1,6 @@
 ---
 import { getImage } from 'astro:assets';
+import { findImage } from '~/utils/images';
 import Image from '~/components/common/Image.astro';
 import ProjectListing from './ProjectListing';
 import ArrowNext from '~/icons/arrow-next-orange.svg';
@@ -11,6 +12,16 @@ const arrows = {
 };
 
 const projects = [
+    {
+        link: "/project/defichain",
+        year: 2021,
+        title: "Techcom<br/>bank",
+        roles: ["UX/UI Design", "Web Development", "Graphic Design"],
+        services: ["Mobile App Design", "Web Development"],
+        selling_points: ["Increase User Engagement by 150%", "5,000,000+ Active Users"],
+        desc: "Techcombank has established itself as a leading bank through innovative technology and user-centered design.",
+        thumbnail: await findImage('~/assets/images/define-hero.jpg')
+    },
     {
         link: "#",
         year: 2018,
@@ -37,19 +48,6 @@ const projects = [
             src: "/images/project-thumb-2.jpg",
             alt: 'mockup iphone'
         }
-    },
-    {
-        link: "#",
-        year: 2021,
-        title: "Techcom<br/>bank",
-        roles: ["UX/UI Design", "Web Development", "Graphic Design"],
-        services: ["Mobile App Design", "Web Development"],
-        selling_points: ["Increase User Engagement by 150%", "5,000,000+ Active Users"],
-        desc: "Techcombank has established itself as a leading bank through innovative technology and user-centered design.",
-        thumbnail: {
-            src: "/images/project-thumb-3.jpg",
-            alt: 'mockup iphone'
-        }
     }
 ]
 ---
@@ -60,6 +58,7 @@ const projects = [
 </section>
 
 <style lang="scss" is:global>
+    @use '~/assets/styles/mixins' as *;
     .sc-projects__listing {
     }
     .projects__listing {
@@ -174,16 +173,20 @@ const projects = [
                 --clipping: 100%;
 
                 position: relative;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                @include size(100%);
                 clip-path: polygon(0% 0%, var(--clipping) 0, var(--clipping) var(--clipping), 0 var(--clipping));
                 pointer-events: auto;
-                img {
-                    transform: translate(calc((100% - var(--clipping)) / -2), calc((100% - var(--clipping)) / -2));
-                    position: absolute;
+                &-inner {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    pointer-events: none;
+
+                    @include size(100%);
+                    img {
+                        transform: translate(calc((100% - var(--clipping)) / -2), calc((100% - var(--clipping)) / -2));
+                        position: absolute;
+                    }
                 }
             }
         }

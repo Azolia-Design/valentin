@@ -5,6 +5,8 @@ import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/global/Header/Header.astro';
 import DebugArea from '~/components/common/DebugArea.astro';
 
+import HeroTransition from '~/components/pages/Projects/Transition/Hero.astro';
+
 const { metadata } = Astro.props;
 ---
 <Layout title={metadata.title}>
@@ -12,6 +14,7 @@ const { metadata } = Astro.props;
     <slot name="header">
         <Header { ...headerData }/>
     </slot>
+    <HeroTransition/>
     <main id="page-container" class="transition-fade">
         <slot />
     </main>

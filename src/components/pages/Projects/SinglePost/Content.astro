@@ -1,0 +1,146 @@
+---
+import TOC from './TOC';
+import TextBlurFading from "~/components/common/TextBlurFading";
+import BreakMutipleLine from "~/components/common/BreakMutipleLine.astro";
+import Arrows from "~/components/common/Arrows.astro";
+
+const { post } = Astro.props;
+---
+<section class="sc-post__main">
+    <div class="post__main">
+        <div class="post__intro">
+            <div class="container grid">
+                <p class="upper post__intro-label">(Intro)</p>
+                <div class="heading h4 fw-thin cl-txt-title post__intro-content">
+                    <TextBlurFading
+                        triggerOpts = {{
+                            start: 'top bottom-=10%',
+                            end: 'bottom center+=10%'
+                        }}
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}
+                        >
+                        <BreakMutipleLine text={post.excerpt}/>
+                    </TextBlurFading>
+                </div>
+                <a href={"#"} class="cl-txt-orange arrow-hover post__intro-link">
+                    <span class="txt-link hover-un">Visit</span>
+                    <Arrows slot="arrows" />
+                </a>
+            </div>
+        </div>
+        <div class="post__content">
+            <div class="container grid">
+                <div class="post__content-toc">
+                    <TOC client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                </div>
+                <div class="post__content-richtext">
+                    <span class="line"></span>
+                    <div class="richtext-global post__content-richtext-inner">
+                        <slot />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style lang="scss" is:global>
+    @use '~/assets/styles/mixins' as *;
+
+    .sc-post__main {
+        position: relative;
+        z-index: 4;
+        margin-top: -100vh;
+        background-color: var(--cl-dm-bg);
+    }
+    .post {
+        &__main {
+            padding-top: 14.5rem;
+        }
+        &__intro {
+            padding-bottom: 12rem;
+            &-label {
+                grid-column: 1/2;
+                grid-row: 1/2;
+            }
+            &-content {
+                grid-column: 5/15;
+                max-width: 99.7rem;
+            }
+            &-link {
+                display: flex;
+                align-items: center;
+                column-gap: .6rem;
+                grid-column: 1/2;
+                grid-row: 1/2;
+                align-self: end;
+            }
+        }
+        &__content {
+            &-toc {
+                grid-column: 1/4;
+                &-inner {
+                    position: sticky;
+                    max-height: calc(100vh - 15rem);
+                    top: 15rem;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    padding-bottom: 7.5vh;
+                }
+                &-title {
+                    margin-bottom: 1.2rem;
+                }
+                &-listing {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.2rem 0;
+                    list-style-type: none;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    padding-block: 3rem;
+                    margin-block: -3rem;
+                    mask-image: linear-gradient(transparent, #fff 3.2rem,#fff calc(100% - 4rem), transparent);
+                    -webkit-mask-image: linear-gradient(transparent, #fff 3.2rem,#fff calc(100% - 4rem), transparent);
+                    @include custom-scroll(.3rem, transparent, var(--cl-orange));
+                }
+                &-item {
+                    position: relative;
+                    padding-left: 1.6rem;
+                    transition: color 0.4s ease-in-out;
+                    cursor: pointer;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        @include size(.8rem);
+                        border-radius: 50%;
+                        background-color: currentColor;
+                        left: 0;
+                        top: .35em;
+                        transition: background-color 0.4s ease-in-out;
+                    }
+                    &:hover,
+                    &.active {
+                        color: var(--cl-dm-title);
+                        &:before {
+                            background-color: var(--cl-orange);
+                        }
+                    }
+                }
+            }
+            &-richtext {
+                grid-column: 5/15;
+                max-width: 99.7rem;
+                position: relative;
+
+                padding-block: 12rem;
+                h2 {
+                    @include text(h4);
+                }
+                .line {
+                    position: absolute;
+                    top: 0;
+                }
+            }
+        }
+    }
+</style>

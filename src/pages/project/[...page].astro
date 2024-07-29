@@ -6,10 +6,9 @@ import merge from 'lodash.merge';
 import { findImage } from '~/utils/images';
 import { getStaticPathsProjectPost } from '~/utils/project';
 
-import Layout from '~/layouts/PageLayout.astro';
+import Layout from '~/layouts/ProjectLayout.astro';
 import SinglePost from '~/components/pages/Projects/SinglePost/SinglePost.astro';
 import { mdxComponents } from '~/components/pages/Projects/MDX/mdxComponents';
-import ImageArticle from '~/components/pages/Projects/MDX/ImageArticle.astro';
 
 export const getStaticPaths = (async () => {
     return await getStaticPathsProjectPost();

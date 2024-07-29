@@ -89,9 +89,14 @@ const itemLength = testimonials.length;
             }
         }
         &-item {
+            position: relative;
             padding-block: calc(6.4rem * var(--scale-factor)) calc(7.6rem * var(--scale-factor));
             display: grid;
             grid-template-columns: 1fr;
+            .line {
+                position: absolute;
+                top: 0;
+            }
             > * {
                 pointer-events: none;
             }
@@ -177,26 +182,6 @@ const itemLength = testimonials.length;
                         opacity: 0;
                         transition-delay: 0;
                     }
-                }
-            }
-            &:hover {
-                .home__testi-item {
-                    // &-feedback {
-                    //     &.shorten {
-                    //         opacity: 0;
-                    //     }
-                    //     &.fully {
-                    //         opacity: 1;
-                    //     }
-                    // }
-                    &-info, &-feedback-wrap {
-                        opacity: 1;
-                        transition-delay: 0;
-                    }
-                }
-            }
-            &.active {
-                .home__testi-item {
                     &-feedback {
                         &.shorten {
                             opacity: 0;
@@ -204,6 +189,23 @@ const itemLength = testimonials.length;
                         &.fully {
                             opacity: 1;
                         }
+                    }
+                    &-info, &-feedback-wrap {
+                        opacity: 1;
+                        transition-delay: 0;
+                    }
+                }
+            }
+            &:hover {
+                .home__testi-item {
+                    &-image-main {
+                        transform: scale(1);
+                        opacity: 1;
+                        transition-delay: 0;
+                    }
+                    &-image-blur {
+                        opacity: 1;
+                        transition-delay: 0;
                     }
                     &-info, &-feedback-wrap {
                         opacity: 1;

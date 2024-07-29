@@ -166,6 +166,8 @@ img,
     height: auto;
     min-width: 100%;
     min-height: 100%;
+    pointer-events: none;
+    user-select: none;
 
     &.img-h {
         height: 100%;

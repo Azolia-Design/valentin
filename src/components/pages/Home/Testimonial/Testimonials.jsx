@@ -6,15 +6,16 @@ import { getCursor } from '~/components/core/cursor';
 function TestimonialItem(props) {
     let itemRef;
     createEffect(() => {
-        if (props.isOpen) {
-            gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'), { height: itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight, duration: .4 });
-        }
-        else {
-            gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'), { height: itemRef.querySelector('.home__testi-item-feedback.shorten').offsetHeight, duration: .4 });
-        }
+        let animationTrigger = (height) => ({ height: height, duration: .4, onComplete() { props.wrap.classList.remove('animating') } })
+        gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'),
+            props.isOpen
+                ? animationTrigger(itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight)
+                : animationTrigger(itemRef.querySelector('.home__testi-item-feedback.shorten').offsetHeight)
+        );
     })
     return (
         <div ref={itemRef} class="home__testi-item-content grid">
+            <span class='line'></span>
             <p class="heading h4 cl-txt-disable fw-thin home__testi-item-order">{(props.index + 1).toString().padStart(2, '0')}.</p>
             <div class="home__testi-item-info">
                 <p class="fs-24 fw-med cl-txt-title">{props.data.name}</p>
@@ -66,24 +67,41 @@ function Testimonials(props) {
                     data-cursor-img={props.plusIc}
                     class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
                     onClick={(e) => {
+                        if (containerRef.classList.contains('animating')) return;
+                        containerRef.classList.add('animating');
+
                         accordionClick(idx);
                         const style = getComputedStyle(e.target);
                         const scaleFactor = style.getPropertyValue('--scale-factor').trim();
                         setScaleFactor(scaleFactor);
-                        if (e.target.classList.contains('active')) {
-                            getCursor().removeState('-media');
-                            getCursor().removeState('-stroke');
-                            e.target.removeAttribute('data-cursor');
-                            e.target.removeAttribute('data-cursor-img');
-                        }
-                        else {
-                            getCursor().addState('-media');
-                            getCursor().addState('-stroke');
-                            e.target.setAttribute('data-cursor', '-stroke');
-                            e.target.setAttribute('data-cursor-img', props.plusIc);
-                        }
+
+                        document.querySelectorAll('.home__testi-item').forEach((el, i) => {
+                            if (i === idx) {
+                                if (e.target.classList.contains('active')) {
+                                    el.removeAttribute('data-cursor');
+                                    el.removeAttribute('data-cursor-img');
+                                    requestAnimationFrame(() => {
+                                        getCursor().removeState('-media');
+                                        getCursor().removeState('-stroke');
+                                    })
+                                }
+                                else {
+                                    el.setAttribute('data-cursor', '-stroke');
+                                    el.setAttribute('data-cursor-img', props.plusIc);
+                                    requestAnimationFrame(() => {
+                                        getCursor().addState('-media');
+                                        getCursor().addState('-stroke');
+                                    })
+                                }
+                            }
+                            else {
+                                el.setAttribute('data-cursor', '-stroke');
+                                el.setAttribute('data-cursor-img', props.plusIc);
+                            }
+                        })
+
                     }}>
-                    <TestimonialItem data={el} index={idx} scaleFactor={scaleFactor()} isOpen={activeIndex() === idx}/>
+                    <TestimonialItem wrap={containerRef} data={el} index={idx} scaleFactor={scaleFactor()} isOpen={activeIndex() === idx}/>
                     <div class="home__testi-item-image">
                         <img src={el.image.src} alt={el.image.alt} class="home__testi-item-image-main" width={90} height={120} loading="lazy" />
                         {props.blur}
