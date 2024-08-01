@@ -18,14 +18,14 @@ const pathname = new URL(Astro.request.url).pathname;
     <div class="container grid">
         <div class="header__logo">
             <p class="header__greating">Good morning!</p>
-            <h2 class="heading h5 header__name"><span class="fw-med cl-txt-title">Valentin</span> <span class="cl-txt-desc">Chavel</span></h2>
+            <h2 class="heading h5 header__name"><span class="fw-med cl-txt-title">Valentine</span> <span class="cl-txt-desc">Cheval</span></h2>
         </div>
         <div class="header__socials">
             <p class="cl-txt-title">Socials</p>
             {socials.map((el) =>
                 <Fragment>/<a href={el.href} class="header__social">{el.text}</a></Fragment>)}
         </div>
-        <div class="header__menu">
+        <div class="header__menu" data-swup-preload-all>
             {links.map((el, i) =>
                 <Fragment><a href={el.href} class={`header__menu-link${pathname === el.href ? ' active': ''}`}>{el.text}</a>{i < (links.length) - 1 && '/'}</Fragment>)}
         </div>

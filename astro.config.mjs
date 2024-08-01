@@ -42,7 +42,13 @@ export default defineConfig({
         markdoc(),
         ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()]),
         solid({ devtools: true }),
-        swup({ globalInstance: true }),
+        swup({
+            theme: false,
+            // animationClass: 'transition-',
+            containers: ['#swup'],
+            routes: true,
+            globalInstance: true
+        }),
         icon(),
         mdx(),
         ...whenExternalScripts(() =>

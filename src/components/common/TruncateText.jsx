@@ -16,7 +16,6 @@ const Truncate = (props) => {
   createEffect(() => {
     const child = props.children;
     if (!child || !child.style) return;
-    console.log("run")
 
     // Đặt chiều cao tối đa cho phần tử con
     child.style.maxHeight = '7.04rem';

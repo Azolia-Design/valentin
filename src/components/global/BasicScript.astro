@@ -9,65 +9,15 @@ declare global {
 <script src="https://cdnwf.bear.plus/Greensock/CustomEase.js" type="text/javascript"></script>
 <script>
     import { initLenis, getLenis } from "~/components/core/lenis";
-    import { initMouseFollower, getCursor, borderGlow } from '~/components/core/cursor';
-    import initButton from "~/components/core/button";
-    import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-
+    import { initMouseFollower, getCursor } from '~/components/core/cursor';
+    import { initSwup, getSwup } from '~/components/core/swup';
 
     // import CMS from "decap-cms-app";
     // CMS.init();
-    const updateHeader = () => {
-        const links = document.querySelectorAll('.header__menu-link');
-        Array.prototype.forEach.call(links, function (link:any) {
-            link.classList.remove("active");
-            link.getAttribute('href') === window.location.pathname && link.classList.add("active");
-        });
-    }
-
-    const forceScrollTop = () => {
-        getLenis().scrollTo("top", { duration: .001 });
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
-        } else {
-            window.addEventListener('pageshow', function(event) {
-                if (!event.persisted) {
-                    window.scrollTo(0, 0);
-                }
-            });
-        }
-    }
-
-    const setup = () => {
-        console.log("initswupper")
-
-        window.swup.hooks.on('page:view', (visit) => {
-            console.log('New page loaded:', visit.to.url);
-            initMouseFollower();
-        });
-
-        window.swup.hooks.on('visit:start', () => {
-            console.log("zo ", window.location.href)
-        }, { priority: 100 });
-
-        window.swup.hooks.on("content:replace", function () {
-            forceScrollTop();
-            updateHeader();
-        })
-        window.swup.hooks.before("content:replace", function() {
-            ScrollTrigger.getAll().forEach((e) => e.kill());
-            ScrollTrigger.clearMatchMedia();
-            getCursor().destroy();
-        })
-    }
-    if (window.swup) {
-        setup()
-    } else {
-        document.addEventListener('swup:enable', setup)
-    }
-
 
     const onLoad = function () {
         console.log("on load")
+
         let ticking = true;
 
         const applyOnScroll = (scrollPos) => {
@@ -103,10 +53,9 @@ declare global {
         if (!getCursor()) {
             initMouseFollower();
         }
-
-        forceScrollTop();
-        borderGlow();
-        initButton("render");
+        if (!getSwup()) {
+            initSwup();
+        }
     }
 
     const onPageShow = function () {

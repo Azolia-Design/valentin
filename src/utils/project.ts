@@ -93,7 +93,6 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     };
 };
 
-
 const load = async function (): Promise<Array<Post>> {
     const posts = await getCollection('post');
     const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post));
@@ -126,3 +125,19 @@ export const getStaticPathsProjectPost = async () => {
         })
     });
 };
+
+
+export async function getNextPost(originalPost: Post) {
+    let allPosts = await fetchPosts();
+    const index = allPosts.findIndex(post => post.permalink === originalPost.permalink);
+
+    if (index !== -1) {
+        if (index === allPosts.length - 1) {
+            return allPosts[0];
+        } else {
+            return allPosts[index + 1];
+        }
+    }
+
+    return null;
+}

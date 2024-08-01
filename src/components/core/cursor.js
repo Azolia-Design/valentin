@@ -243,4 +243,46 @@ function borderGlow() {
     // moveGlow()
 }
 
-export { initMouseFollower, getCursor, borderGlow }
+function createGlow() {
+    document.querySelectorAll('[data-border-glow]').forEach((el) => {
+        const option = JSON.parse(el.dataset.glowOption);
+        let outerBorder = el.querySelector('.border-outer');
+        let innerBorder = el.querySelector('.border-inner');
+        let lineBorder = el.querySelector('.glow-el');
+
+        if (option.inset) {
+            let widthStyle = '';
+            let heightStyle = '';
+
+            if (!option.inset.x && !option.inset.y) {
+                widthStyle = `calc(100% - ${parseFloat(option.inset)}px)`;
+                heightStyle = `calc(100% - ${parseFloat(option.inset)}px)`;
+            } else {
+                widthStyle = option.inset.x ? `calc(100% - ${parseFloat(option.inset.x)}px)` : '';
+                heightStyle = option.inset.y ? `calc(100% - ${parseFloat(option.inset.y)}px)` : '';
+            }
+            gsap.set(outerBorder, { width: widthStyle, height: heightStyle });
+        }
+
+        gsap.set(outerBorder, {
+            '--border-width': option.width || '1px',
+            '--opacity': option.opacity || '1',
+            '--glow': `${option.glow || '4'}rem`,
+            '--bg-cl': option.color || "rgba(255, 255, 255, 1)"
+        })
+
+        // Set Glow for Glow Dot
+        if (option.glow > 10) {
+            lineBorder.classList.add('glow-big');
+        } else if (option.glow > 6) {
+            lineBorder.classList.add('glow-nor')
+        } else {
+            // No additional class needed for default glow
+        }
+
+        if (option.position) {
+            lineBorder.classList.add('force-cl');
+        }
+    })
+}
+export { initMouseFollower, getCursor, createGlow }

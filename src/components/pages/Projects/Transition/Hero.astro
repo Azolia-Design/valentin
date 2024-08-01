@@ -1,6 +1,10 @@
 ---
 ---
-<div class="project__transition"></div>
+<div class="project__transition">
+    <div class="heading h3 fw-semi cl-txt-title upper" data-project-name></div>
+    <div class="fw-med" data-project-info></div>
+    <div class="fs-20 fw-med cl-txt-sub" data-project-year></div>
+</div>
 <style lang="scss" is:global>
     .project__transition {
         position: absolute;
@@ -10,6 +14,47 @@
         left: 0;
         pointer-events: none;
         z-index: 5;
+        overflow: hidden;
+    }
+    [data-project-name] {
+        position: absolute;
+        z-index: 3;
+        transform-origin: top left;
+        line-height: .835em;
+    }
+    [data-project-info] {
+        position: absolute;
+        z-index: 3;
+
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 7.4rem 0;
+        .project__role,
+        .project__services,
+        .project__selling {
+            color: var(--cl-dm-desc);
+
+            &-listing {
+                margin-top: 1rem;
+                color: var(--cl-dm-subtitle);
+                font-family: 'Helvetica Neue Reg', sans-serif;
+                font-weight: 400;
+            }
+        }
+        .project-item-label {
+            margin-bottom: 0 !important;
+            // margin-bottom: 1rem;
+        }
+    }
+
+    [data-project-year] {
+        position: absolute;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 0 0.5rem;
+        line-height: .9em;
     }
     .project__thumbnail-img-inner {
         display: flex;
@@ -20,6 +65,7 @@
         height: 100%;
         img {
             position: absolute;
+            object-position: top center;
         }
     }
 </style>

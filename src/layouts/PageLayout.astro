@@ -12,7 +12,8 @@ const { metadata } = Astro.props;
     <slot name="header">
         <Header { ...headerData }/>
     </slot>
-    <main id="page-container" class="transition-fade">
+    <div class="transition-overlay"></div>
+    <main id="swup" class="page transition-fade">
         <slot />
     </main>
     <div class="noise"></div>

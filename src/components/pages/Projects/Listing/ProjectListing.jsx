@@ -1,21 +1,30 @@
 import { createSignal, onCleanup, onMount } from "solid-js";
 import gsap from 'gsap';
 import SplitType from "split-type";
+import { cvUnit } from "~/utils/number";
 
 const ProjectListing = (props) => {
+    let projectsRef;
     const [index, setIndex] = createSignal({ curr: 0, prev: -1 });
 
     let allSplitText = [];
     let elements = [
         { selector: '.project__name-txt' },
-        { selector: '.project__desc-txt', options: { duration: 1 } },
+        { selector: '.project__desc-txt', optionsIn: { duration: 1 }, optionsOut: { duration: 1 } },
         { selector: '.project__year-txt' },
-        { selector: '.project__role-listing', options: { duration: 1 } },
-        { selector: '.project__services-listing', options: { duration: 1 } },
-        { selector: '.project__selling-listing', options: { duration: 1 } }
+        { selector: '.project__role .project-item-label', optionsIn: { delay: .2 } },
+        { selector: '.project__services .project-item-label', optionsIn: { delay: .2 } },
+        { selector: '.project__selling .project-item-label', optionsIn: { delay: .2 } },
+        { selector: '.project__role-listing', isArray: true, optionsIn: { duration: 1, delay: .2 }, optionsOut: { duration: 1 } },
+        { selector: '.project__services-listing', isArray: true, optionsIn: { duration: 1, delay: .2 }, optionsOut: { duration: 1 } },
+        { selector: '.project__selling-listing', isArray: true, optionsIn: { duration: 1, delay: .2 }, optionsOut: { duration: 1 } }
     ]
 
     onMount(() => {
+        if (!projectsRef) return;
+
+        pageTransition.reset();
+
         gsap.set('.project__thumbnail-img', {
             scale: (i) => i !== 0 ? 0 : 1,
             zIndex: (i) => props.data.length - i
@@ -24,7 +33,7 @@ const ProjectListing = (props) => {
         elements.forEach((el) => {
             let elementSplitText = []; // Declare a new sub-array for each element
 
-            document.querySelectorAll(el.selector).forEach((text, idx) => {
+            projectsRef.querySelectorAll(el.selector).forEach((text, idx) => {
                 let subSplitText = [];
 
                 if (text.querySelectorAll('p').length > 0) {
@@ -51,13 +60,52 @@ const ProjectListing = (props) => {
         onCleanup(() => elements.forEach(({ selector }) => SplitType.revert(selector)));
     })
 
-    const pushImage = (e) => {
-        document.querySelector('.project__transition').appendChild(e.target.querySelector('.project__thumbnail-img-inner'));
+    const transitionDOM = (attr) => document.querySelector(`.project__transition [data-project-${attr}]`)
 
-        let thumbRect = document.querySelector('.project__thumbnail-wrap').getBoundingClientRect();
-        gsap.from('.project__transition', { width: thumbRect.width, height: thumbRect.height, x: thumbRect.left, y: thumbRect.top, ease: 'expo.inOut', duration: 1.2 });
+    const pageTransition = {
+        create: (e) => {
+            transitionDOM('name').innerHTML = document.querySelector('.project__name-txt.active').innerHTML
+            transitionDOM('info').innerHTML = document.querySelector('.project__info-inner.active').innerHTML;
+            transitionDOM('year').innerHTML = `© ${document.querySelector('.project__year-txt.active').innerHTML}`;
+            document.querySelector('.project__transition').appendChild(e.target.querySelector('.project__thumbnail-img-inner'));
 
-        // gsap.from('.project__transition', { width: '100%' })
+            let thumbRect = document.querySelector('.project__thumbnail-wrap').getBoundingClientRect();
+
+            const getBoundingTransition = (attr) => {
+                let from = document.querySelector(`.project__${attr}`).getBoundingClientRect();
+                let to = document.querySelector(`.projects__position-${attr}`).getBoundingClientRect();
+                return { from, to };
+            }
+
+            gsap
+                .timeline({})
+                .fromTo(transitionDOM('name'),
+                    { x: getBoundingTransition('name').from.left, y: getBoundingTransition('name').from.top, scale: 1, ease: 'power2.inOut' },
+                    { x: getBoundingTransition('name').to.left, y: getBoundingTransition('name').to.top, scale: 2, ease: 'expo.inOut', duration: 1.2 })
+                .fromTo(transitionDOM('info'),
+                    { x: getBoundingTransition('info').from.left, y: getBoundingTransition('info').from.top, ease: 'power2.inOut' },
+                    { x: getBoundingTransition('info').to.left, y: getBoundingTransition('info').from.top, ease: 'expo.inOut', duration: 1.2 }, "<=0")
+                .fromTo(transitionDOM('year'),
+                    { x: getBoundingTransition('year').from.left, y: getBoundingTransition('year').from.top, ease: 'power2.inOut' },
+                    { x: getBoundingTransition('year').to.left, y: getBoundingTransition('year').to.top, lineHeight: '1.4em', ease: 'expo.inOut', duration: 1.2 }, "<=0")
+                .fromTo('.project__thumbnail-img-inner',
+                    { width: thumbRect.width, height: thumbRect.height, x: thumbRect.left, y: thumbRect.top, filter: 'brightness(.8) grayscale(30%)', ease: 'power2.inOut' },
+                    { width: '100%', height: window.innerHeight, x: 0, y: 0, ease: 'expo.inOut', duration: 1.2, filter: 'brightness(1) grayscale(0%)' }, "<=0")
+                .to('.project__transition', { autoAlpha: 0, ease: 'linear', duration: 0.4 })
+        },
+        reset: () => {
+            transitionDOM('name').innerHTML = '';
+            transitionDOM('name').removeAttribute('style');
+
+            transitionDOM('info').innerHTML = '';
+            transitionDOM('info').removeAttribute('style');
+
+            transitionDOM('year').innerHTML = '';
+            transitionDOM('year').removeAttribute('style');
+
+            document.querySelector('.project__transition').removeAttribute('style');
+            document.querySelector('.project__transition .project__thumbnail-img-inner')?.remove();
+        }
     }
 
     const animationsText = (direction, nextValue) => {
@@ -70,30 +118,30 @@ const ProjectListing = (props) => {
             let tl = gsap.timeline({});
 
             if (direction !== 0) {
-                if (allSplitText[idx][index().curr].length !== 1) {
+                if (el.isArray) {
                     allSplitText[idx][index().curr].forEach((splittext) => {
                         let tlChild = gsap.timeline({});
                         tlChild.set(splittext.words, { yPercent: 0, autoAlpha: 1 })
-                            .to(splittext.words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.3, ease: 'power2.inOut', ...el.options }, '<=0');
+                            .to(splittext.words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.3, ease: 'power2.inOut', ...el.optionsOut }, '<=0');
                     });
                 } else {
                     tl
                         .set(allSplitText[idx][index().curr][0].words, { yPercent: 0, autoAlpha: 1 })
-                        .to(allSplitText[idx][index().curr][0].words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.8, ease: 'power2.inOut', ...el.options }, '<=0');
+                        .to(allSplitText[idx][index().curr][0].words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.8, ease: 'power2.inOut', ...el.optionsOut }, '<=0');
                 }
             }
 
-            if (allSplitText[idx][nextValue].length !== 1) {
+            if (el.isArray) {
                 allSplitText[idx][nextValue].forEach((splittext) => {
                     let tlChild = gsap.timeline({});
                     tlChild
                         .set(splittext.words, { yPercent: yOffSet.in, autoAlpha: 0 })
-                        .to(splittext.words, { yPercent: 0, autoAlpha: 1, duration: 0.3, ease: 'power2.inOut', ...el.options }, '<=0');
+                        .to(splittext.words, { yPercent: 0, autoAlpha: 1, duration: 0.3, ease: 'power2.inOut', ...el.optionsIn }, '<=0');
                     });
             } else {
                 tl
-                    .set(allSplitText[idx][nextValue][0].words, { yPercent: yOffSet.in, autoAlpha: 0 }, `-=${el.options?.duration || .8}`)
-                    .to(allSplitText[idx][nextValue][0].words, { yPercent: 0, autoAlpha: 1, duration: 0.8, ease: 'power2.inOut', ...el.options }, "<=0");
+                    .set(allSplitText[idx][nextValue][0].words, { yPercent: yOffSet.in, autoAlpha: 0 }, `-=${direction === 0 ? 0 : el.optionsIn?.duration || .8}`)
+                    .to(allSplitText[idx][nextValue][0].words, { yPercent: 0, autoAlpha: 1, duration: 0.8, ease: 'power2.inOut', delay: .2, ...el.optionsIn }, "<=0");
             }
         })
     }
@@ -149,7 +197,7 @@ const ProjectListing = (props) => {
     }
 
     return (
-        <div class="projects__sticky">
+        <div class="projects__sticky" ref={projectsRef}>
             <div class="container">
                 <div class="projects__listing-main grid" >
                     <div class="project__name">
@@ -163,44 +211,38 @@ const ProjectListing = (props) => {
                         </div>
                     </div>
                     <div class="project__info">
-                        <div class="project__role">
-                            <p class="fw-med cl-txt-desc project-item-label">Role</p>
-                            <div class="grid-1-1">
-                                {props.data.map(({ roles }, idx) => (
-                                    <div class={`project__role-listing${idx === index().curr ? ' active' : ''}`}>
-                                        <For each={roles}>
-                                            {(role) => <p class="cl-txt-sub">{role}</p>}
-                                        </For>
+                        <div className="grid-1-1">
+                            {props.data.map(({ roles, services, selling_points }, idx) => (
+                                <div class={`project__info-inner${idx === index().curr ? ' active' : ''}`}>
+                                    <div className="project__role">
+                                        <p class="fw-med cl-txt-desc project-item-label">Role</p>
+                                        <div class={`project__role-listing${idx === index().curr ? ' active' : ''}`}>
+                                            <For each={roles}>
+                                                {(role) => <p class="cl-txt-sub">{role}</p>}
+                                            </For>
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div class="project__services">
-                            <p class="fw-med cl-txt-desc project-item-label">Services</p>
-                            <div class="grid-1-1">
-                                {props.data.map(({ services }, idx) => (
-                                    <div class={`project__services-listing${idx === index().curr ? ' active' : ''}`}>
-                                        <For each={services}>
-                                            {(service) => <p class="cl-txt-sub">{service}</p>}
-                                        </For>
+                                    <div class="project__services">
+                                        <p class="fw-med cl-txt-desc project-item-label">Services</p>
+                                        <div class={`project__services-listing${idx === index().curr ? ' active' : ''}`}>
+                                            <For each={services}>
+                                                {(service) => <p class="cl-txt-sub">{service}</p>}
+                                            </For>
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div class="project__selling">
-                            <p class="fw-med cl-txt-desc project-item-label">Selling points</p>
-                            <div class="grid-1-1">
-                                {props.data.map(({ selling_points }, idx) => (
-                                    <div class={`project__selling-listing${idx === index().curr ? ' active' : ''}`}>
-                                        <For each={selling_points}>
-                                            {(points) => <p class="cl-txt-sub">{points}</p>}
-                                        </For>
+                                    <div class="project__selling">
+                                        <p class="fw-med cl-txt-desc project-item-label">Selling points</p>
+                                        <div class={`project__selling-listing${idx === index().curr ? ' active' : ''}`}>
+                                            <For each={selling_points}>
+                                                {(points) => <p class="cl-txt-sub">{points}</p>}
+                                            </For>
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
-                    <div class="fs-20 fw-med cl-txt-sub project__year">© <div class="grid-1-1">{props.data.map(({ year }, idx) => <span class="project__year-txt">{year}</span>)}</div></div>
+                    <div class="fs-20 fw-med cl-txt-sub project__year">©<div class="grid-1-1">{props.data.map(({ year }, idx) => <span class={`project__year-txt${idx === index().curr ? ' active' : ''}`}>{year}</span>)}</div></div>
                     <div class="project__thumbnail-wrap">
                         <div className="project__thumbnail">
                             <div className="project__thumbnail-listing grid-1-1">
@@ -209,7 +251,7 @@ const ProjectListing = (props) => {
                                         href={link}
                                         class={`project__thumbnail-img${idx === index().curr ? ' active' : ''}`}
                                         data-cursor-text="View"
-                                        onClick={pushImage}
+                                        onClick={pageTransition.create}
                                     >
                                         <div class="project__thumbnail-img-inner">
                                             <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} crossorigin="anonymous" referrerpolicy="no-referrer" loading="lazy" />
@@ -239,6 +281,11 @@ const ProjectListing = (props) => {
                             <span class="cl-txt-title">{(index().curr + 1).toString().padStart(2, '0')} </span><span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
                         </div>
                     </div>
+                </div>
+                <div class="projects__position grid">
+                    <div className="heading h2 upper fw-semi projects__position-name" innerHTML={props.data[index().curr].title}></div>
+                    <div class="projects__position-info"></div>
+                    <div class="fs-20 fw-med projects__position-year">©</div>
                 </div>
             </div>
             <div class="projects__navigation">

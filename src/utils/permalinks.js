@@ -18,4 +18,4 @@ export const cleanSlug = (text = '') =>
       .map((slug) => slugify(slug))
       .join('/');
 
-export const POST_PERMALINK_PATTERN = trimSlash('%slug%');
+export const POST_PERMALINK_PATTERN = trimSlash('project/%slug%');

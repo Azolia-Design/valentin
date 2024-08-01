@@ -3,6 +3,7 @@ import { lerp, cvUnit, inView } from "~/utils/number";
 import Swiper from 'swiper';
 import gsap from 'gsap';
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { createGlow } from "~/components/core/cursor";
 
 const HistoryListing = (props) => {
     let historiesRef;
@@ -36,6 +37,8 @@ const HistoryListing = (props) => {
                 gsap.set('.sc-about__history, .about__history', { clearProps: 'all' });
             })
         })
+
+        createGlow();
 
         let border = document.querySelector('.about__history-body .border-inner');
 

@@ -7,7 +7,8 @@ import { findImage } from '~/utils/images';
 import { getStaticPathsProjectPost } from '~/utils/project';
 
 import Layout from '~/layouts/ProjectLayout.astro';
-import SinglePost from '~/components/pages/Projects/SinglePost/SinglePost.astro';
+import SinglePost from '~/components/pages/Projects/Post/SinglePost.astro';
+import NextPost from '~/components/pages/Projects/Post/NextPost.astro';
 import { mdxComponents } from '~/components/pages/Projects/MDX/mdxComponents';
 
 export const getStaticPaths = (async () => {
@@ -38,4 +39,5 @@ const metadata = merge(
     <SinglePost post={{ ...post, image: image }}>
         {post.Content ?  <post.Content components={mdxComponents} /> : <Fragment set:html={post.content || ''} />}
     </SinglePost>
+    <NextPost post={post}/>
 </Layout>

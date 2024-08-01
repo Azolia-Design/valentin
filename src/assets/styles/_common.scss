@@ -41,21 +41,50 @@ html {
     }
 }
 
-html.is-changing .transition-fade {
-    transition: 0.4s;
-    opacity: 1;
+.pages {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: var(--cl-dm-bg);
 }
-html.is-animating .transition-fade {
+.page {
+    min-width: 0;
+    position: relative;
+    grid-row: 1;
+    grid-column: 1;
+    background-color: var(--cl-dm-bg);
+    z-index: 2;
+}
+.page+.page {
+    z-index: 1;
+}
+
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color: var(--cl-dm-bg);
     opacity: 0;
+    // transform: translate3d(0, calc(-1 * 100% * var(--overlay-direction, 1)), 0);
+    // transition: opacity 1000ms ease-in-out;
+    pointer-events: none;
 }
 
 body {
+    position: relative;
     @include text(16);
+    overflow: hidden;
 }
 
 .main {
     opacity: 1;
-    transition: opacity 300ms ease;
+    // transition: opacity 300ms ease;
 
     &.on-load {
         opacity: 0;

@@ -1,0 +1,68 @@
+---
+import BreakMutipleLine from "~/components/common/BreakMutipleLine.astro";
+import Image from "~/components/common/Image.astro";
+import { getNextPost } from "~/utils/project";
+
+const { post } = Astro.props;
+let nextPost = await getNextPost(post);
+
+---
+<section class="sc__next-post" data-cursor-text="Next">
+    <a href={`/${nextPost.permalink}`} class="next__post">
+        <div class="heading h2 upper fw-semi cl-txt-title next__post-title">
+            <BreakMutipleLine text={nextPost.title}/>
+        </div>
+        <div class="next__post-img">
+            <Image
+                src={nextPost.image}
+                widths={[400, 768, 1024, 2040]}
+                width={1728}
+                height={500}
+                alt={post.slug}
+                layout="cover"
+                decoding="async"
+                loading="lazy"
+                class="img img-fill"
+            />
+        </div>
+    </a>
+</section>
+<style lang="scss">
+    .sc__next-post {
+
+    }
+    .next__post {
+        height: 50rem;
+        position: relative;
+        overflow: hidden;
+        &-title {
+            position: absolute;
+            z-index: 3;
+
+            top: 50%;
+            left: var(--container-padding);
+            transform: translateY(-50%);
+
+            line-height: .835em;
+        }
+        &-img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            &::before {
+                content: '';
+                background-color: black;
+                opacity: .9;
+                position: absolute;
+                inset: 0;
+                z-index: 3;
+                pointer-events: none;
+            }
+            img {
+                object-fit: top center;
+            }
+        }
+    }
+</style>

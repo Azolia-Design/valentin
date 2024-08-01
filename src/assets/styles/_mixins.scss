@@ -140,3 +140,9 @@ $lg-max: (
 		// border-radius: 2rem;
 	}
 }
+
+@mixin swup-path($state, $from, $to) {
+	&.is-#{$state}.from-route-#{$from}.to-route-#{$to} {
+		@content;
+	}
+}
