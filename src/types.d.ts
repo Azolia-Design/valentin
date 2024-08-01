@@ -15,6 +15,8 @@ export interface Post {
   publishDate: Date;
   /**  */
   updateDate?: Date;
+  /**  */
+  year?: number;
 
   /**  */
   title: string;
