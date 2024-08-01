@@ -12,13 +12,13 @@ const PostScript = () => {
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.sc-post__hero',
-                start: `bottom-=${window.innerHeight} bottom`,
+                start: `top top`,
                 end: `bottom bottom`,
                 scrub: true,
             }
         })
         tl
-            .to('.post__hero-main', { scale: .8, autoAlpha: .6, duration: 1, ease: 'none' }, 0)
+            .to('.post__hero-main', { scale: .8, autoAlpha: .6, duration: 1, ease: 'power2.in' }, 0)
             .to('.post__hero-cover img', { scale: .8, duration: 1, ease: 'none' }, 0)
             .to('.post__hero-cover', { scale: 1.4, autoAlpha: .6, duration: 1, ease: 'none' }, 0)
 

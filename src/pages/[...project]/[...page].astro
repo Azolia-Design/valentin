@@ -6,9 +6,8 @@ import merge from 'lodash.merge';
 import { findImage } from '~/utils/images';
 import { getStaticPathsProjectPost } from '~/utils/project';
 
-import Layout from '~/layouts/ProjectLayout.astro';
+import Layout from '~/layouts/PageLayout.astro';
 import SinglePost from '~/components/pages/Projects/Post/SinglePost.astro';
-import NextPost from '~/components/pages/Projects/Post/NextPost.astro';
 import { mdxComponents } from '~/components/pages/Projects/MDX/mdxComponents';
 
 export const getStaticPaths = (async () => {
@@ -35,9 +34,8 @@ const metadata = merge(
     { ...(post?.metadata ? { ...post.metadata, canonical: post.metadata?.canonical } : {}) }
     ) as MetaData;
 ---
-<Layout metadata={metadata}>
+<Layout metadata={metadata} post={post}>
     <SinglePost post={{ ...post, image: image }}>
         {post.Content ?  <post.Content components={mdxComponents} /> : <Fragment set:html={post.content || ''} />}
     </SinglePost>
-    <NextPost post={post}/>
 </Layout>

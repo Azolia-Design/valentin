@@ -2,13 +2,13 @@
 import BreakMutipleLine from "~/components/common/BreakMutipleLine.astro";
 import Image from "~/components/common/Image.astro";
 import { getNextPost } from "~/utils/project";
+import Content from "./Content";
 
 const { post } = Astro.props;
 let nextPost = await getNextPost(post);
-
 ---
 <section class="sc__next-post" data-cursor-text="Next">
-    <a href={`/${nextPost.permalink}`} class="next__post">
+    <Content class="next__post" link={nextPost.permalink}>
         <div class="heading h2 upper fw-semi cl-txt-title next__post-title">
             <BreakMutipleLine text={nextPost.title}/>
         </div>
@@ -25,7 +25,7 @@ let nextPost = await getNextPost(post);
                 class="img img-fill"
             />
         </div>
-    </a>
+    </Content>
 </section>
 <style lang="scss">
     .sc__next-post {

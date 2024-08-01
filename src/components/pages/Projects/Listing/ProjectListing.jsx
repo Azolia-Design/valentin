@@ -2,6 +2,7 @@ import { createSignal, onCleanup, onMount } from "solid-js";
 import gsap from 'gsap';
 import SplitType from "split-type";
 import { cvUnit } from "~/utils/number";
+import { getLenis } from "~/components/core/lenis";
 
 const ProjectListing = (props) => {
     let projectsRef;
@@ -22,8 +23,6 @@ const ProjectListing = (props) => {
 
     onMount(() => {
         if (!projectsRef) return;
-
-        pageTransition.reset();
 
         gsap.set('.project__thumbnail-img', {
             scale: (i) => i !== 0 ? 0 : 1,
@@ -62,50 +61,42 @@ const ProjectListing = (props) => {
 
     const transitionDOM = (attr) => document.querySelector(`.project__transition [data-project-${attr}]`)
 
-    const pageTransition = {
-        create: (e) => {
-            transitionDOM('name').innerHTML = document.querySelector('.project__name-txt.active').innerHTML
-            transitionDOM('info').innerHTML = document.querySelector('.project__info-inner.active').innerHTML;
-            transitionDOM('year').innerHTML = `© ${document.querySelector('.project__year-txt.active').innerHTML}`;
-            document.querySelector('.project__transition').appendChild(e.target.querySelector('.project__thumbnail-img-inner'));
+    const pageTransition = (e) => {
+        transitionDOM('name').innerHTML = document.querySelector('.project__name-txt.active').innerHTML
+        transitionDOM('info').innerHTML = document.querySelector('.project__info-inner.active').innerHTML;
+        transitionDOM('year').innerHTML = `© ${document.querySelector('.project__year-txt.active').innerHTML}`;
+        document.querySelector('.project__transition').appendChild(e.target.querySelector('.project__thumbnail-img-inner'));
 
-            let thumbRect = document.querySelector('.project__thumbnail-wrap').getBoundingClientRect();
+        let thumbRect = document.querySelector('.project__thumbnail-wrap').getBoundingClientRect();
 
-            const getBoundingTransition = (attr) => {
-                let from = document.querySelector(`.project__${attr}`).getBoundingClientRect();
-                let to = document.querySelector(`.projects__position-${attr}`).getBoundingClientRect();
-                return { from, to };
-            }
-
-            gsap
-                .timeline({})
-                .fromTo(transitionDOM('name'),
-                    { x: getBoundingTransition('name').from.left, y: getBoundingTransition('name').from.top, scale: 1, ease: 'power2.inOut' },
-                    { x: getBoundingTransition('name').to.left, y: getBoundingTransition('name').to.top, scale: 2, ease: 'expo.inOut', duration: 1.2 })
-                .fromTo(transitionDOM('info'),
-                    { x: getBoundingTransition('info').from.left, y: getBoundingTransition('info').from.top, ease: 'power2.inOut' },
-                    { x: getBoundingTransition('info').to.left, y: getBoundingTransition('info').from.top, ease: 'expo.inOut', duration: 1.2 }, "<=0")
-                .fromTo(transitionDOM('year'),
-                    { x: getBoundingTransition('year').from.left, y: getBoundingTransition('year').from.top, ease: 'power2.inOut' },
-                    { x: getBoundingTransition('year').to.left, y: getBoundingTransition('year').to.top, lineHeight: '1.4em', ease: 'expo.inOut', duration: 1.2 }, "<=0")
-                .fromTo('.project__thumbnail-img-inner',
-                    { width: thumbRect.width, height: thumbRect.height, x: thumbRect.left, y: thumbRect.top, filter: 'brightness(.8) grayscale(30%)', ease: 'power2.inOut' },
-                    { width: '100%', height: window.innerHeight, x: 0, y: 0, ease: 'expo.inOut', duration: 1.2, filter: 'brightness(1) grayscale(0%)' }, "<=0")
-                .to('.project__transition', { autoAlpha: 0, ease: 'linear', duration: 0.4 })
-        },
-        reset: () => {
-            transitionDOM('name').innerHTML = '';
-            transitionDOM('name').removeAttribute('style');
-
-            transitionDOM('info').innerHTML = '';
-            transitionDOM('info').removeAttribute('style');
-
-            transitionDOM('year').innerHTML = '';
-            transitionDOM('year').removeAttribute('style');
-
-            document.querySelector('.project__transition').removeAttribute('style');
-            document.querySelector('.project__transition .project__thumbnail-img-inner')?.remove();
+        const getBoundingTransition = (attr) => {
+            let from = document.querySelector(`.project__${attr}`).getBoundingClientRect();
+            let to = document.querySelector(`.projects__position-${attr}`).getBoundingClientRect();
+            return { from, to };
         }
+
+        gsap
+            .timeline({
+                onStart() {
+                    getLenis().stop()
+                },
+                onComplete() {
+                    getLenis().start()
+                }
+            })
+            .fromTo(transitionDOM('name'),
+                { x: getBoundingTransition('name').from.left, y: getBoundingTransition('name').from.top, scale: 1, ease: 'power2.inOut' },
+                { x: getBoundingTransition('name').to.left, y: getBoundingTransition('name').to.top, scale: 2, ease: 'expo.inOut', duration: 1.2 })
+            .fromTo(transitionDOM('info'),
+                { x: getBoundingTransition('info').from.left, y: getBoundingTransition('info').from.top, ease: 'power2.inOut' },
+                { x: getBoundingTransition('info').to.left, y: getBoundingTransition('info').from.top, ease: 'expo.inOut', duration: 1.2 }, "<=0")
+            .fromTo(transitionDOM('year'),
+                { x: getBoundingTransition('year').from.left, y: getBoundingTransition('year').from.top, ease: 'power2.inOut' },
+                { x: getBoundingTransition('year').to.left, y: getBoundingTransition('year').to.top, lineHeight: '1.4em', ease: 'expo.inOut', duration: 1.2 }, "<=0")
+            .fromTo('.project__thumbnail-img-inner',
+                { width: thumbRect.width, height: thumbRect.height, x: thumbRect.left, y: thumbRect.top, filter: 'brightness(.8) grayscale(30%)', ease: 'power2.inOut' },
+                { width: '100%', height: window.innerHeight, x: 0, y: 0, ease: 'expo.inOut', duration: 1.2, filter: 'brightness(1) grayscale(0%)' }, "<=0")
+            .to('.project__transition', { autoAlpha: 0, ease: 'linear', duration: 0.4 })
     }
 
     const animationsText = (direction, nextValue) => {
@@ -251,7 +242,7 @@ const ProjectListing = (props) => {
                                         href={link}
                                         class={`project__thumbnail-img${idx === index().curr ? ' active' : ''}`}
                                         data-cursor-text="View"
-                                        onClick={pageTransition.create}
+                                        onClick={pageTransition}
                                     >
                                         <div class="project__thumbnail-img-inner">
                                             <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} crossorigin="anonymous" referrerpolicy="no-referrer" loading="lazy" />

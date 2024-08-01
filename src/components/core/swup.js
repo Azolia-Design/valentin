@@ -6,10 +6,9 @@ import { getCursor, initMouseFollower } from './cursor';
 import { getLenis } from './lenis';
 import initButton from './button';
 
-import SwupParallelPlugin from '@swup/parallel-plugin';
 import SwupJsPlugin from '@swup/js-plugin';
-import SwupPreloadPlugin from '@swup/preload-plugin';
 import SwupRouteNamePlugin from '@swup/route-name-plugin';
+import { checkIsPostPage } from '~/utils/permalinks';
 
 let swup;
 
@@ -34,78 +33,26 @@ function updateHeader() {
     });
 }
 
-function enterTransition(containers) {
-    const nextContainer = containers.next;
-    const prevContainer = containers.previous;
+function resetTransition(url) {
+    function projectTransition() {
+        const transitionDOM = (attr) => document.querySelector(`.project__transition [data-project-${attr}]`)
 
-    function onComplete() {
-        console.log("xong roi dcm")
+        transitionDOM('name').innerHTML = '';
+        transitionDOM('name').removeAttribute('style');
+
+        transitionDOM('info').innerHTML = '';
+        transitionDOM('info').removeAttribute('style');
+
+        transitionDOM('year').innerHTML = '';
+        transitionDOM('year').removeAttribute('style');
+
+        document.querySelector('.project__transition').removeAttribute('style');
+        document.querySelector('.project__transition .project__thumbnail-img-inner')?.remove();
     }
-    const tl = gsap.timeline({
-        defaults: {
-            duration: 1,
-            ease: 'power2.inOut'
-		},
-		onComplete: onComplete
-    });
-    tl
-        .fromTo(nextContainer, { autoAlpha: 0 }, { autoAlpha: 1 })
-        // .to(DOM.transMask, { yPercent: 80 }, 0)
-        // .to(nextContainer, { autoAlpha: 1 });
-    return tl;
+    if (!checkIsPostPage(url)) {
+        projectTransition();
+    }
 }
-
-function leaveTransition(containers) {
-    const nextContainer = containers.next;
-    const prevContainer = containers.previous;
-
-    const tl = gsap.timeline({
-        defaults: {
-            duration: 10,
-            ease: 'power2.inOut'
-        },
-    });
-
-    tl
-        .to(nextContainer, { autoAlpha: 0 })
-
-    return tl;
-}
-
-// const pageTransition = [
-//     {
-//         from: '(.*)',
-//         to: '(.*)',
-//         // out: (done) => {
-//         //     console.log('outttt')
-//         //     setTimeout(done, 2000);
-//         // },
-//         // in: (done) => {
-//         //     console.log('innnn')
-//         //     done();
-//         // },
-//         out: () => {
-//             console.log('outttt')
-
-//             await gsap.to('.is', { opacity: 0, duration: 1 });
-//         },
-//         in: async () => {
-//             console.log('innnn')
-
-//             // await gsap.fromTo('#swup', { opacity: 0 }, { opacity: 1, duration: 1 });
-
-//             const next = document.querySelector('main');
-//             const prev = document.querySelector('main + main');
-
-//             console.log(next)
-//             console.log(prev)
-//             await Promise.all([
-//                 gsap.fromTo(prev, { scale: 1 },{ scale: 0, duration: 1, overwrite: true, clearProps: 'all' }),
-//                 gsap.fromTo(next, { scale: 0 }, { scale: 1, duration: 1, overwrite: true, clearProps: 'all' })
-//             ]);
-//         }
-//     }
-// ]
 
 function initSwup() {
     swup = new Swup({
@@ -119,30 +66,13 @@ function initSwup() {
                     { name: 'any', path: '(.*)' }
                 ]
             })
-            // new SwupJsPlugin({
-            //     animations: [
-            //         {
-            //             from: '(.*)', // matches any route
-            //             to: '(.*)', // matches any route
-            //             out: async (done) => {
-            //                 console.log('oyyyy')
-            //                 await gsap.fromTo(document.querySelector('main'), { opacity: 1 }, {opacity: 0, duration: 5, onComplete: () => {done()}})
-            //                 // setTimeout(done, 2000);
-            //             }, // immediately continues
-            //             in: async (done) => {
-            //                 console.log('oyyyy22222')
-            //                 gsap.fromTo(document.querySelector('main'), { opacity: 0 }, {opacity: 1, duration: 1}).then(done)
-            //             } // immediately continues
-            //           }
-            // ] }),
-            // new SwupParallelPlugin({ containers: ['main'] }),
-            // new SwupPreloadPlugin()
         ]
     });
 
     swup.hooks.on('page:view', (visit) => {
         console.log('New page loaded:', visit.to.url);
 
+        resetTransition(visit.to.url);
         forceScrollTop();
         initMouseFollower();
         initButton("render");
@@ -160,29 +90,6 @@ function initSwup() {
         ScrollTrigger.clearMatchMedia();
         getCursor().destroy();
     }, { before: true });
-
-
-    // swup.hooks.before('content:insert', (visit, { containers }) => {
-    //     console.log("insert", document.querySelectorAll('.main').length);
-    //     // function check() {
-    //         // requestAnimationFrame(check)
-    //     // }
-    //     // requestAnimationFrame(check)
-    //     // enterTransition(containers[0]);
-    //     // console.log(containers)
-
-    //     // for (const { next } of containers) {
-    //     //     // console.log('About to insert container', next);
-    //     // }
-    // });
-    // swup.hooks.before('content:remove', (visit, { containers }) => {
-    //     console.log("remove", containers);
-
-    //     // for (const { remove } of containers) {
-    //     //     console.log('About to remove containers', remove);
-    //     // }
-    //     // leaveTransition(containers[0])
-    // });
 }
 
 function getSwup() {

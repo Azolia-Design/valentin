@@ -19,3 +19,14 @@ export const cleanSlug = (text = '') =>
       .join('/');
 
 export const POST_PERMALINK_PATTERN = trimSlash('project/%slug%');
+
+export const checkIsPostPage = (path) => {
+  const createPattern = (pattern) => {
+    const regexPattern = pattern.replace('%slug%', '[^/]+');
+    return new RegExp('^' + regexPattern + '$');
+  }
+
+  const currentPath = trimSlash(path);
+  const regex = createPattern(POST_PERMALINK_PATTERN);
+  return regex.test(currentPath);
+}
