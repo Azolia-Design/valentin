@@ -37,27 +37,22 @@ function resetTransition(url) {
     function projectTransition() {
         const transitionDOM = (attr) => document.querySelector(`.project__transition [data-project-${attr}]`)
 
-        transitionDOM('name').innerHTML = '';
-        transitionDOM('name').removeAttribute('style');
+        if (!checkIsPostPage(url)) {
+            document.querySelector('.project__transition').removeAttribute('style');
+            document.querySelector('.project__transition .project__thumbnail-img-inner')?.remove();
 
-        transitionDOM('info').innerHTML = '';
-        transitionDOM('info').removeAttribute('style');
+            transitionDOM('name').innerHTML = '';
+            transitionDOM('name').removeAttribute('style');
 
-        transitionDOM('year').innerHTML = '';
-        transitionDOM('year').removeAttribute('style');
+            transitionDOM('info').innerHTML = '';
+            transitionDOM('info').removeAttribute('style');
 
-        document.querySelector('.project__transition').removeAttribute('style');
-        document.querySelector('.project__transition .project__thumbnail-img-inner')?.remove();
+            transitionDOM('year').innerHTML = '';
+            transitionDOM('year').removeAttribute('style');
+        }
     }
-    function projectDetailTransition() {
-        document.querySelector('.sc__next-post').style.display = none;
-    }
-    if (!checkIsPostPage(url)) {
-        projectTransition();
-    }
-    else {
-        // projectDetailTransition();
-    }
+
+    projectTransition();
 }
 
 function initSwup() {
