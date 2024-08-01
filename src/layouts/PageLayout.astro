@@ -18,7 +18,7 @@ const { metadata, post } = Astro.props;
     <HeroTransition />
     <main id="swup" class="page transition-fade">
         <slot />
-        {post && (<NextPost post={post}/>)}
     </main>
+    <NextPost />
     <div class="noise"></div>
 </Layout>

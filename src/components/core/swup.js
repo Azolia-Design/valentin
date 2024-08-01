@@ -49,8 +49,14 @@ function resetTransition(url) {
         document.querySelector('.project__transition').removeAttribute('style');
         document.querySelector('.project__transition .project__thumbnail-img-inner')?.remove();
     }
+    function projectDetailTransition() {
+        document.querySelector('.sc__next-post').style.display = none;
+    }
     if (!checkIsPostPage(url)) {
         projectTransition();
+    }
+    else {
+        // projectDetailTransition();
     }
 }
 

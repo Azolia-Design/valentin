@@ -77,25 +77,22 @@ const ProjectListing = (props) => {
 
         gsap
             .timeline({
-                onStart() {
-                    getLenis().stop()
-                },
-                onComplete() {
-                    getLenis().start()
-                }
+                defaults: { ease: 'expo.inOut', duration: 1.2 },
+                onStart() { getLenis().stop() },
+                onComplete() { getLenis().start() }
             })
             .fromTo(transitionDOM('name'),
-                { x: getBoundingTransition('name').from.left, y: getBoundingTransition('name').from.top, scale: 1, ease: 'power2.inOut' },
-                { x: getBoundingTransition('name').to.left, y: getBoundingTransition('name').to.top, scale: 2, ease: 'expo.inOut', duration: 1.2 })
+                { x: getBoundingTransition('name').from.left, y: getBoundingTransition('name').from.top, scale: 1 },
+                { x: getBoundingTransition('name').to.left, y: getBoundingTransition('name').to.top, scale: 2 })
             .fromTo(transitionDOM('info'),
-                { x: getBoundingTransition('info').from.left, y: getBoundingTransition('info').from.top, ease: 'power2.inOut' },
-                { x: getBoundingTransition('info').to.left, y: getBoundingTransition('info').from.top, ease: 'expo.inOut', duration: 1.2 }, "<=0")
+                { x: getBoundingTransition('info').from.left, y: getBoundingTransition('info').from.top },
+                { x: getBoundingTransition('info').to.left, y: getBoundingTransition('info').from.top }, "<=0")
             .fromTo(transitionDOM('year'),
-                { x: getBoundingTransition('year').from.left, y: getBoundingTransition('year').from.top, ease: 'power2.inOut' },
-                { x: getBoundingTransition('year').to.left, y: getBoundingTransition('year').to.top, lineHeight: '1.4em', ease: 'expo.inOut', duration: 1.2 }, "<=0")
+                { x: getBoundingTransition('year').from.left, y: getBoundingTransition('year').from.top },
+                { x: getBoundingTransition('year').to.left, y: getBoundingTransition('year').to.top, lineHeight: '1.4em' }, "<=0")
             .fromTo('.project__thumbnail-img-inner',
-                { width: thumbRect.width, height: thumbRect.height, x: thumbRect.left, y: thumbRect.top, filter: 'brightness(.8) grayscale(30%)', ease: 'power2.inOut' },
-                { width: '100%', height: window.innerHeight, x: 0, y: 0, ease: 'expo.inOut', duration: 1.2, filter: 'brightness(1) grayscale(0%)' }, "<=0")
+                { width: thumbRect.width, height: thumbRect.height, x: thumbRect.left, y: thumbRect.top, filter: 'brightness(.8) grayscale(30%)' },
+                { width: '100%', height: window.innerHeight, x: 0, y: 0, filter: 'brightness(1) grayscale(0%)' }, "<=0")
             .to('.project__transition', { autoAlpha: 0, ease: 'linear', duration: 0.4 })
     }
 

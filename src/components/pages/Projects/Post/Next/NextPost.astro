@@ -4,45 +4,70 @@ import Image from "~/components/common/Image.astro";
 import { getNextPost } from "~/utils/project";
 import Content from "./Content";
 
-const { post } = Astro.props;
-let nextPost = await getNextPost(post);
+let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefined;
 ---
-<section class="sc__next-post" data-cursor-text="Next">
-    <Content class="next__post" link={nextPost.permalink}>
-        <div class="heading h2 upper fw-semi cl-txt-title next__post-title">
-            <BreakMutipleLine text={nextPost.title}/>
-        </div>
-        <div class="next__post-img">
-            <Image
-                src={nextPost.image}
-                widths={[400, 768, 1024, 2040]}
-                width={1728}
-                height={500}
-                alt={post.slug}
-                layout="cover"
-                decoding="async"
-                loading="lazy"
-                class="img img-fill"
-            />
-        </div>
-    </Content>
+<section class={`sc__next-post ${nextPost ? 'default' : 'fake'}`} data-cursor-text="Next">
+    <div class='next__post'>
+        {nextPost ? (
+            <Content link={nextPost?.permalink} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                <div class="heading h2 upper fw-semi cl-txt-title next__post-title">
+                    <BreakMutipleLine text={nextPost?.title}/>
+                </div>
+                <div class="next__post-img">
+                    <Image
+                        src={nextPost?.image}
+                        widths={[400, 768, 1024, 2040]}
+                        width={1728}
+                        height={500}
+                        alt={nextPost?.slug}
+                        layout="cover"
+                        decoding="async"
+                        loading="lazy"
+                        class="img img-fill"
+                    />
+                </div>
+            </Content>
+        ) : (
+            <>
+                <div class="heading h2 upper fw-semi cl-txt-title next__post-title"></div>
+                <div class="next__post-img"></div>
+            </>
+        )}
+    </div>
 </section>
-<style lang="scss">
+<style lang="scss" is:global>
     .sc__next-post {
 
+        &.default {
+            position: relative;
+        }
+        &.fake {
+            position: fixed;
+            z-index: 5;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: end;
+            .next__post {
+                position: absolute;
+                img {
+                    filter: brightness(10%);
+                    transform: scale(1.2);
+                    transition: none;
+                }
+            }
+        }
     }
     .next__post {
         height: 50rem;
-        position: relative;
         overflow: hidden;
         &-title {
             position: absolute;
             z-index: 3;
-
-            top: 50%;
             left: var(--container-padding);
-            transform: translateY(-50%);
-
+            bottom: 7.6vh;
             line-height: .835em;
         }
         &-img {
@@ -51,17 +76,16 @@ let nextPost = await getNextPost(post);
             align-items: center;
             position: relative;
             z-index: 2;
-            &::before {
-                content: '';
-                background-color: black;
-                opacity: .9;
-                position: absolute;
-                inset: 0;
-                z-index: 3;
-                pointer-events: none;
+            &:hover {
+                img {
+                    filter: brightness(10%);
+                    transform: scale(1.2);
+                }
             }
             img {
+                filter: brightness(30%);
                 object-fit: top center;
+                transition: filter .4s ease-in-out, transform 1.2s cubic-bezier(0.23, 1, 0.320, 1);
             }
         }
     }
