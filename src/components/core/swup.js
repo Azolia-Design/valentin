@@ -75,9 +75,12 @@ function initSwup() {
 
         resetTransition(visit.to.url);
         forceScrollTop();
-        initMouseFollower();
+        // initMouseFollower();
+    }, { once: true });
+
+    swup.hooks.on('enable', () => {
         initButton("render");
-    });
+    })
 
     swup.hooks.on('visit:start', (visit) => {
         console.log("visit:start", window.location.href)
@@ -89,7 +92,7 @@ function initSwup() {
         forceScrollTop();
         ScrollTrigger.getAll().forEach((e) => e.kill());
         ScrollTrigger.clearMatchMedia();
-        getCursor().destroy();
+        // getCursor().destroy();
     }, { before: true });
 }
 

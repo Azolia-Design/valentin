@@ -31,7 +31,7 @@ const itemLength = testimonials.length;
                 </span>
                 <span class="fs-20 cl-txt-desc fw-reg upper home__testi-title-label">(Testimonials)</span>
             </h2>
-            <div class="home__testi-listing">
+            <div class="home__testi-listing" style={{ '--itemLength': itemLength }}>
                 <Testimonials data={testimonials} plusIc={PlusIc.src} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
                     <Image
                         src={'~/assets/images/testi-blur.png'}
@@ -51,13 +51,14 @@ const itemLength = testimonials.length;
     </section>
 </div>
 
-<style lang="scss" define:vars={{ itemLength }} is:global>
+<style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
     .home__testi {
         position: relative;
-        z-index: 3;
+        z-index: 4;
         padding-bottom: 5rem;
         background-color: var(--cl-dm-bg);
+        pointer-events: none;
         &-title {
             position: relative;
             padding-block: 12rem;
@@ -93,6 +94,7 @@ const itemLength = testimonials.length;
             padding-block: calc(6.4rem * var(--scale-factor)) calc(7.6rem * var(--scale-factor));
             display: grid;
             grid-template-columns: 1fr;
+            pointer-events: auto;
             .line {
                 position: absolute;
                 top: 0;

@@ -4,8 +4,12 @@ const { class: className } = Astro.props;
 
 ---
 <div class:list={["ic-arr-wrap", className]}>
-    <Icon name="arrow" class="arr-main" />
-    <Icon name="arrow" class="arr-clone"/>
+    <div class="arr-main ic">
+        <Icon name="arrow" />
+    </div>
+    <div class="arr-clone ic">
+        <Icon name="arrow" />
+    </div>
 </div>
 <style lang="scss" is:global>
     .ic-arr-wrap {
@@ -18,6 +22,7 @@ const { class: className } = Astro.props;
     .arr-clone {
         transition: transform .6s cubic-bezier(.4,0,.1,1);
         grid-area: 1/1/2/2;
+        width: 1.6rem;
     }
     .arr-clone {
         transform: translate(-100%, 100%);

@@ -68,6 +68,8 @@ const services = [
     </div>
 </section>
 <style lang="scss">
+    @use '~/assets/styles/mixins' as *;
+
     .sc-about__service {}
     .about__service {
         position: relative;
@@ -134,7 +136,7 @@ const services = [
             &:hover {
                 .about__service-item {
                     &-order {
-                        color: var(--cl-dm-body);
+                        @include tColor(body, dm);
                     }
                     &-title {
                         span {

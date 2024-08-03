@@ -6,6 +6,7 @@
     <div class="fs-20 fw-med cl-txt-sub" data-project-year></div>
 </div>
 <style lang="scss" is:global>
+    @use '~/assets/styles/mixins' as *;
     .project__transition {
         position: absolute;
         width: 100%;
@@ -33,11 +34,12 @@
         .project__role,
         .project__services,
         .project__selling {
-            color: var(--cl-dm-desc);
+            @include tColor(desc, dm);
 
             &-listing {
                 margin-top: 1rem;
-                color: var(--cl-dm-subtitle);
+                @include tColor(subtitle, dm);
+
                 font-family: 'Helvetica Neue Reg', sans-serif;
                 font-weight: 400;
             }

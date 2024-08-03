@@ -15,7 +15,7 @@ function initMouseFollower() {
 
 function getCursor() {
     if (!cursor) {
-        initMouseFollower();
+        // initMouseFollower();
     }
     return cursor;
 }

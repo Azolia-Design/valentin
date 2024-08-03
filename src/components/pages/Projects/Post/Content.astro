@@ -1,7 +1,7 @@
 ---
 import TOC from './TOC';
 import TextBlurFading from "~/components/common/TextBlurFading";
-import BreakMutipleLine from "~/components/common/BreakMutipleLine.astro";
+import BreakMultipleLine from "~/components/common/BreakMultipleLine.astro";
 import Arrows from "~/components/common/Arrows.astro";
 
 const { post } = Astro.props;
@@ -19,7 +19,7 @@ const { post } = Astro.props;
                         }}
                         client:visible={{ rootMargin: "100% 0% 100% 0%" }}
                         >
-                        <BreakMutipleLine text={post.excerpt}/>
+                        <BreakMultipleLine text={post.excerpt}/>
                     </TextBlurFading>
                 </div>
                 <a href={"#"} class="cl-txt-orange arrow-hover post__intro-link">
@@ -120,7 +120,7 @@ const { post } = Astro.props;
                     }
                     &:hover,
                     &.active {
-                        color: var(--cl-dm-title);
+                        @include tColor(title, dm);
                         &:before {
                             background-color: var(--cl-orange);
                         }

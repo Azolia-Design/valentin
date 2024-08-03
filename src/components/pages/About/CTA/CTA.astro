@@ -64,6 +64,8 @@ const { socials, whatapps } = Astro.props;
     </div>
 </section>
 <style lang="scss">
+    @use '~/assets/styles/mixins' as *;
+
     .sc__about-cta {}
     .about__cta {
         position: relative;
@@ -110,7 +112,7 @@ const { socials, whatapps } = Astro.props;
                 grid-column: 9/15;
                 transition: color .4s ease-in-out;
                 &:hover {
-                    color: var(--cl-dm-title);
+                    @include tColor(title, dm);
                 }
             }
         }

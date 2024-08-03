@@ -122,7 +122,6 @@ body {
     grid-template-columns: repeat(var(--grid-column), 1fr);
 
     @include md {
-        --grid-gap: 1.6rem;
     }
 }
 :root {
@@ -182,6 +181,11 @@ button {
     * {
         pointer-events: none;
     }
+}
+
+svg {
+    width: 100% !important;
+    height: auto !important;
 }
 
 ul, li {

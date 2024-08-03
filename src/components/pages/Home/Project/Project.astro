@@ -3,42 +3,40 @@ import TextTransClip from '~/components/common/TextTransClip';
 import ProjectListing from './ProjectListing';
 import Arrows from "~/components/common/Arrows.astro";
 import Image from "~/components/common/Image.astro";
+import { findImage } from '~/utils/images';
 
 let currentYear = new Date().getFullYear() % 100;
 
 const projects = [
     {
-        link: "#",
-        year: 2018,
-        title: "X21 Digital Leads $3 Million Seed Funding Round",
-        role: ["Design system", "Mobile app design", "Graphic Design"],
-        desc: "Lorem ipsum dolor sit amet consectetur. Sit non risus sed in mauris amet. Venenatis interdum pellentesque pellentesque.",
-        thumbnail: {
-            src: "/images/project-thumb.jpg",
-            alt: 'mockup iphone'
-        }
-    },
-    {
-        link: "#",
-        year: 2019,
-        title: "DeFi Sells Out Seed Round Allocation",
-        role: ["Website maintenance", "AI Design"],
-        desc: "Lorem ipsum dolor sit amet consectetur. Sit non risus sed in mauris amet. Venenatis interdum pellentesque pellentesque.",
-        thumbnail: {
-            src: "/images/project-thumb.jpg",
-            alt: 'mockup iphone'
-        }
-    },
-    {
-        link: "#",
+        link: "/project/defichain",
         year: 2020,
-        title: "Bitcoin and Crypto DeFi Wallet",
-        role: ["Brand Identity", "Product Design", "SEO", "Art Direction"],
-        desc: "Lorem ipsum dolor sit amet consectetur. Sit non risus sed in mauris amet. Venenatis interdum pellentesque pellentesque.",
-        thumbnail: {
-            src: "/images/project-thumb.jpg",
-            alt: 'mockup iphone'
-        }
+        title: "Definchain",
+        roles: ["Product Design"],
+        services: ["Website Design", "Mobile Application"],
+        selling_points: ["Up 200% Conversion Rate", "3.233.222 Downloaded"],
+        desc: "Techcombank has established itself as a leading bank through innovative technology and user-centered design.",
+        thumbnail: await findImage('~/assets/images/define-hero.jpg')
+    },
+    {
+        link: "/project/vietcombank",
+        year: 2018,
+        title: "Vietcom<br/>bank",
+        roles: ["Design system", "Mobile app design", "Graphic Design"],
+        services: ["Website Design",  "Graphic Design"],
+        selling_points: ["Increase User Engagement by 150%", "5,000,000+ Active Users"],
+        desc: "Vietcombank is one of the fastest growing global bank. Part of it is due to it's strong design thinking process.",
+        thumbnail: await findImage('~/assets/images/define-hero-2.jpg'),
+    },
+    {
+        link: "/project/bidv",
+        year: 2021,
+        title: "BIDV",
+        roles: ["Brand Identity", "UX Research", "Web Design"],
+        services: ["Branding", "User Experience Research"],
+        selling_points: ["Brand Recognition Boost by 120%", "Awarded Best Banking Website 2020"],
+        desc: "BIDV's rebranding and UX improvements have significantly enhanced customer satisfaction and brand loyalty.",
+        thumbnail: await findImage('~/assets/images/define-hero-3.jpg')
     }
 ]
 ---
@@ -60,18 +58,6 @@ const projects = [
             <div class="home__project-main">
                 <div class="home__project-main-stick">
                     <ProjectListing data={projects} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                        <Image
-                            src={'~/assets/images/project-blur-thumb.png'}
-                            widths={[400, 768, 1024]}
-                            width={692}
-                            height={903}
-                            alt={'orange blur'}
-                            layout="cover"
-                            loading="lazy"
-                            decoding="async"
-                            slot="blur"
-                            class="home__project-thumbnail-blur"
-                        />
                         <Arrows slot="arrows" />
                     </ProjectListing>
                 </div>
@@ -86,11 +72,17 @@ const projects = [
         z-index: 3;
         background-color: var(--cl-dm-bg);
         padding-block: 16rem;
+        @include md {
+            padding-block: 12rem;
+        }
         &-title {
 
             margin-bottom: 16rem;
             position: relative;
             // gap: 1rem 0;
+            @include md {
+                margin-bottom: 8rem;
+            }
             &-label {
                 grid-column: 14/16;
                 grid-row: 1/2;
@@ -98,6 +90,9 @@ const projects = [
             }
             &-txt {
                 line-height: .835em;
+                @include md {
+                    @include text(dis2);
+                }
                 &:nth-child(1) {
                     grid-column: 1/16;
                     grid-row: 1/2;
@@ -113,7 +108,7 @@ const projects = [
         }
         &-main {
             position: relative;
-            height: 400vh;
+            height: 500vh;
             &-stick {
                 position: sticky;
                 top: 0;
@@ -147,8 +142,11 @@ const projects = [
             margin-bottom: 4rem;
 
             border-bottom: .1rem solid var(--cl-dm-border);
-            span:first-child {
-                clip-path: polygon(0 0, 100% 0, 100% 1.4em, 0 1.4em);
+            display: flex;
+            align-items: center;
+            gap: 0 1rem;
+            line-height: .9em;
+            &-txt {
             }
         }
         &-slide {
@@ -198,13 +196,6 @@ const projects = [
                         height: 100%;
                         object-fit: cover;
                     }
-                    // clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-                    // transition: clip-path .4s linear;
-                    // img {
-                    //     width: 100%;
-                    //     height: 100%;
-                    //     object-fit: cover;
-                    // }
                 }
                 &-progress {
                     z-index: 2;
@@ -251,7 +242,6 @@ const projects = [
                 }
             }
             &-img {
-                pointer-events: none;
                 flex: none;
                 position: relative;
                 @include size(100%);
@@ -298,6 +288,9 @@ const projects = [
         }
         &-year {
             margin-bottom: 9.5vh;
+            &-txt {
+                line-height: .9em;
+            }
         }
         &-label {
             margin-bottom: 1rem;

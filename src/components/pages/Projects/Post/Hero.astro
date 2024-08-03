@@ -1,5 +1,5 @@
 ---
-import BreakMutipleLine from "~/components/common/BreakMutipleLine.astro";
+import BreakMultipleLine from "~/components/common/BreakMultipleLine.astro";
 import Image from "~/components/common/Image.astro";
 const { post } = Astro.props;
 ---
@@ -35,7 +35,7 @@ const { post } = Astro.props;
         <div class="post__hero-main">
             <div class="container grid">
                 <h1 class="heading h2 upper fw-semi cl-txt-title post__hero-title">
-                    <BreakMutipleLine text={post.title}/>
+                    <BreakMultipleLine text={post.title}/>
                 </h1>
                 <div class="post__hero-info">
                     <div class="post__hero-role">

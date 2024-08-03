@@ -83,7 +83,7 @@ html {
     // }
 
     @media screen and (max-width: 991px) {
-        font-size: 1.1990407674vw;
+        font-size: 0.9765652vw;
     }
 
     @media screen and (max-width: 767px) {
@@ -102,6 +102,12 @@ html {
 
 // Heading
 :root {
+    --fs-dis1: 9.2rem;
+    --lh-dis1: 1em;
+
+    --fs-dis2: 8rem;
+    --lh-dis2: 1em;
+
     --fs-h1: 18rem;
     --lh-h1: 1em;
 
@@ -175,6 +181,11 @@ html {
     .h#{$i} {
         @include text(h#{$i});
     }
+}
+
+.display {
+    &-1 { @include text(dis1); }
+    &-2 { @include text(dis2); }
 }
 
 // Body text

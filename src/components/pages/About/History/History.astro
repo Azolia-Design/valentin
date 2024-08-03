@@ -61,6 +61,8 @@ const data = [
 </section>
 
 <style lang="scss" is:global>
+    @use '~/assets/styles/mixins' as *;
+
     .sc-about__history {
         position: relative;
     }
@@ -169,7 +171,7 @@ const data = [
             padding-bottom: 10rem;
             transition: color .4s ease-in-out;
             &:hover {
-                color: var(--cl-dm-title);
+                @include tColor(title, dm);
             }
             &:last-child {
                 // border-style: none solid none solid;

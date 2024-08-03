@@ -5,7 +5,7 @@ import Arrows from '~/components/common/Arrows.astro';
 import TextBlurFading from '~/components/common/TextBlurFading';
 import Marquee from '~/components/common/Marquee';
 import IntroScript  from './script';
-import BreakMutipleLine from '~/components/common/BreakMutipleLine.astro';
+import BreakMultipleLine from '~/components/common/BreakMultipleLine.astro';
 
 const { data } = Astro.props;
 const companies = [
@@ -37,7 +37,9 @@ const itemLength = awards.length;
                 <div class="home__intro-companies-listing">
                     {companies.map((ic) =>
                         <div class="home__intro-company">
-                            <Icon name=`company/${ic}` class="home__intro-company-ic" />
+                            <div class="ic home__intro-company-ic">
+                                <Icon name=`company/${ic}` />
+                            </div>
                         </div>
                     )}
                     <div class="home__intro-company">
@@ -55,7 +57,7 @@ const itemLength = awards.length;
                         client:visible={{ rootMargin: "100% 0% 100% 0%" }}
                         >
                             <span class="fs-24 home__intro-main-label">(intro)</span>
-                            <BreakMutipleLine text={data.title}/>
+                            <BreakMultipleLine text={data.title}/>
                     </TextBlurFading>
                 </div>
                 <a href="#" class="btn btn-circle arrow-hover home__intro-btn" data-magnetic>
@@ -87,16 +89,21 @@ const itemLength = awards.length;
                     aspectRatio="3:4"
                 />
             </div>
-            <div class="home__intro-awards">
+            <div class="home__intro-awards" style={{ '--itemLength': itemLength }}>
                 <h3 class="heading h4 cl-txt-title upper home__intro-awards-title">Awards</h3>
                 <div class="home__intro-awards-wrap">
                     <div class="home__intro-awards-listing">
                         {awards.map((award) =>
                             <div class="home__intro-award">
-                                <div class="line"></div>
-                                <p class="fs-24 cl-txt-desc home__intro-award-name">{award.name}</p>
-                                <p class="cl-txt-disable home__intro-award-year">{award.year}</p>
-                                <p class="cl-txt-disable home__intro-award-category">{award.category}</p>
+                                <span class="line"></span>
+                                <div class="home__intro-award-inner">
+                                    <p class="fs-24 cl-txt-desc home__intro-award-name">{award.name}</p>
+                                    <p class="cl-txt-disable home__intro-award-year">{award.year}</p>
+                                    <p class="cl-txt-disable home__intro-award-category">{award.category}</p>
+                                </div>
+                                <div class="home__intro-award-logo-mb">
+                                    <Icon name={award.logo} />
+                                </div>
                             </div>
                             <div class="home__intro-award-logo">
                                 <Icon name={award.logo} />
@@ -115,19 +122,25 @@ const itemLength = awards.length;
                                 <h3 class="heading h3 upper">
                                     8 years of experience
                                 </h3>
-                                <Icon name="asterisk" class="ic-32" />
+                                <div class="ic-32">
+                                    <Icon name="asterisk"  />
+                                </div>
                             </div>
                             <div class="home__intro-service-marquee-item">
                                 <h3 class="heading h3 upper">
                                     senior designer
                                 </h3>
-                                <Icon name="asterisk" class="ic-32" />
+                                <div class="ic-32">
+                                    <Icon name="asterisk"  />
+                                </div>
                             </div>
                             <div class="home__intro-service-marquee-item">
                                 <h3 class="heading h3 upper">
                                     Over 100 customers
                                 </h3>
-                                <Icon name="asterisk" class="ic-32" />
+                                <div class="ic-32">
+                                    <Icon name="asterisk"  />
+                                </div>
                             </div>
                         </div>
                     </Marquee>
@@ -139,19 +152,25 @@ const itemLength = awards.length;
                                 <h3 class="heading h3 upper">
                                     Product Design
                                 </h3>
-                                <Icon name="asterisk" class="ic-32" />
+                                <div class="ic-32">
+                                    <Icon name="asterisk"  />
+                                </div>
                             </div>
                             <div class="home__intro-service-marquee-item">
                                 <h3 class="heading h3 upper">
                                     Brand design & Strategy
                                 </h3>
-                                <Icon name="asterisk" class="ic-32" />
+                                <div class="ic-32">
+                                    <Icon name="asterisk"  />
+                                </div>
                             </div>
                             <div class="home__intro-service-marquee-item">
                                 <h3 class="heading h3 upper">
                                     Visual design
                                 </h3>
-                                <Icon name="asterisk" class="ic-32" />
+                                <div class="ic-32">
+                                    <Icon name="asterisk"  />
+                                </div>
                             </div>
                         </div>
                     </Marquee>
@@ -173,7 +192,7 @@ const itemLength = awards.length;
     </section>
 </div>
 
-<style lang="scss" define:vars={{ itemLength }} is:global>
+<style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
     .home__intro {
         --padding-top: 31rem;
@@ -189,24 +208,42 @@ const itemLength = awards.length;
         &-main {
             grid-column: 9/-1;
 
-            color: var(--cl-dm-title);
+            @include tColor(title, dm);
+            @include md {
+                grid-column: 6/13;
+            }
             &-label {
                 vertical-align: top;
                 margin-right: 13rem;
+                @include tColor(body, dm);
+
+                @include md {
+                    margin-right: 6rem;
+                    @include text(16);
+                }
             }
             &-txt {
                 margin-bottom: 6rem;
+                @include md {
+                    margin-bottom: 3.2rem;
+                }
             }
-
         }
         &-btn {
             @include size(10rem);
+            .ic {
+                width: 2.4rem;
+            }
         }
         &-portrait {
             display: grid;
             grid-column: 15/-1;
             margin-top: -2.8rem;
             margin-bottom: 12rem;
+            @include md {
+                margin-block: 8rem;
+                grid-column: 11/13;
+            }
             img {
                 grid-area: 1/1/2/2;
             }
@@ -217,6 +254,9 @@ const itemLength = awards.length;
 
             // align-self: center;
             will-change: transform, opacity;
+            @include md {
+                grid-column: 1/5;
+            }
             &-title {
                 max-width: 29.5rem;
 
@@ -245,12 +285,18 @@ const itemLength = awards.length;
                 height: 0;
                 padding-top: 100%;
             }
+            @include md {
+                width: 10rem;
+            }
             &-ic {
                 width: 10.9rem;
                 height: auto;
                 position: absolute;
                 opacity: .3;
                 transition: opacity 0.4s cubic-bezier(.74, .06, .4, .92);
+                @include md {
+                    width: 7.3rem;
+                }
             }
 
             &:hover {
@@ -292,6 +338,10 @@ const itemLength = awards.length;
             }
             &:nth-child(6) {
                 grid-column: 4/5;
+                @include md {
+                    grid-column: 3/4;
+                    grid-row: 7/8;
+                }
             }
             &:nth-child(10) {
                 grid-column: 1/3;
@@ -299,39 +349,68 @@ const itemLength = awards.length;
         }
         &-awards {
             --scale-factor: 3;
+            --height-item: 7.12rem;
 
             position: relative;
             grid-column: 9/-1;
             padding-bottom: 16rem;
+            @include md {
+                --height-item: 11.8rem;
+                --scale-factor: 2.5;
+
+                grid-column: 6/-1;
+                padding-bottom: 12rem;
+            }
             &-wrap {
-                margin-bottom: calc(-7.12rem * (var(--scale-factor) - 1) * var(--itemLength));
+                margin-bottom: calc((var(--height-item) * -1) * (var(--scale-factor) - 1) * var(--itemLength));
             }
             &-title {
                 margin-bottom: 6rem;
+                @include md {
+                    margin-bottom: 4rem;
+                }
             }
             &-listing {
                 // position: relative;
-                height: calc(7.12rem * var(--scale-factor) * var(--itemLength));
+                height: calc(var(--height-item) * var(--scale-factor) * var(--itemLength));
             }
         }
         &-award {
-            display: grid;
-            column-gap: 2rem;
-            grid-template-columns: 51.32fr 10.49fr 38.19fr;
-            align-items: center;
-
             padding-block: 2rem;
             border-top: 1px solid var(--cl-dm-border);
 
             position: relative;
-
-            height: calc(7.12rem * var(--scale-factor));
-
+            height: calc(var(--height-item) * var(--scale-factor));
+            @include md {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            &-inner {
+                display: grid;
+                column-gap: 2rem;
+                grid-template-columns: 51.32fr 10.49fr 38.19fr;
+                align-items: center;
+                @include md {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 0;
+                }
+            }
             &-name {
                 transition: color 1.333s cubic-bezier(.74, .06, .4, .92);
+                @include md {
+                    @include text(h5);
+                    @include tColor(title, dm);
+                    margin-bottom: 1rem;
+                }
             }
             &-year {
                 transition: color 1.333s cubic-bezier(.74, .06, .4, .92);
+                @include md {
+                    order: -1;
+                }
             }
             &-category {
                 justify-self: end;
@@ -352,8 +431,19 @@ const itemLength = awards.length;
 
                 transition: opacity 0.4s ease-in-out, transform .4s ease-in-out;
                 svg {
-                    height: 100%;
-                    width: auto;
+                    height: 100% !important;
+                    width: auto !important;
+                }
+                @include md {
+                    display: none;
+                }
+                &-mb {
+                    display: none;
+                    @include md {
+                        display: block;
+                        color: var(--cl-orange);
+                        @include size(7.4rem);
+                    }
                 }
             }
 
@@ -398,13 +488,13 @@ const itemLength = awards.length;
 
             &:hover {
                 .home__intro-award-name {
-                    color: var(--cl-dm-title);
+                    @include tColor(title, dm);
                 }
                 .home__intro-award-year {
-                    color: var(--cl-dm-desc);
+                    @include tColor(desc, dm);
                 }
                 .home__intro-award-category {
-                    color: var(--cl-dm-body);
+                    @include tColor(body, dm);
                 }
                 + .home__intro-award-logo {
                     opacity: 1;
@@ -432,6 +522,9 @@ const itemLength = awards.length;
             contain: paint;
             position: relative;
             z-index: 4;
+            @include md {
+                height: 26.5rem;
+            }
             &-wrap {
                 position: relative;
             }
@@ -448,7 +541,7 @@ const itemLength = awards.length;
                     position: relative;
                     margin: 0 calc(var(--container-padding) * -1);
                     &.orange {
-                        color: var(--cl-dm-title);
+                        @include tColor(title, dm);
                         background-color: var(--cl-orange);
                         transform: rotate(9.139deg);
                         transform-origin: center;
@@ -461,14 +554,15 @@ const itemLength = awards.length;
                     }
                     &.black {
                         background-color: black;
-                        color: var(--cl-dm-desc);
+                        @include tColor(desc, dm);
+
                         transform: rotate(-5.831deg);
                         transform-origin: center;
                         filter: blur(.7rem);
                         z-index: 2;
                         &:hover {
                             filter: blur(0);
-                            color: var(--cl-dm-title);
+                            @include tColor(title, dm);
                             ~ .home__intro-service-marquee-wrap {
                                 filter: blur(.7rem);
                             }

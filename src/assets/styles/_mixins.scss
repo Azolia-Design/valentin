@@ -126,6 +126,10 @@ $lg-max: (
 	-o-transition-delay: $args;
 }
 
+@mixin tColor($color, $mode) {
+	color: var(--cl-#{$mode}-#{$color});
+}
+
 @mixin custom-scroll($width: 0.7rem, $bgTrack: #ddd, $bgThumb: #1D1D1D) {
 	&::-webkit-scrollbar {
 		width: $width;

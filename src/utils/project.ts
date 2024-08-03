@@ -47,7 +47,6 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
         draft = false,
         metadata = {},
     } = data;
-    console.log(data)
 
     const slug = cleanSlug(rawSlug); // cleanSlug(rawSlug.split('/').pop());
     const publishDate = new Date(rawPublishDate);

@@ -21,9 +21,15 @@ const { data } = Astro.props;
                     <p class="home__hero-clone-intro">{data.subtitle}</p>
                     <span class="line"></span>
                     <div class="home__hero-clone-awards">
-                        <Icon name="red-dot" class="home__hero-clone-award"/>
-                        <Icon name="ux-design" class="home__hero-clone-award"/>
-                        <Icon name="dfa" class="home__hero-clone-award"/>
+                        <div class="ic home__hero-clone-award">
+                            <Icon name="red-dot" />
+                        </div>
+                        <div class="ic home__hero-clone-award">
+                            <Icon name="uxdesign" />
+                        </div>
+                        <div class="ic home__hero-clone-award">
+                            <Icon name="dfa" />
+                        </div>
                     </div>
                 </div>
                 <div class="home__hero-clone-title-wrap">
@@ -121,7 +127,7 @@ const { data } = Astro.props;
                 justify-content: space-between;
                 align-items: center;
 
-                color: var(--cl-dm-title);
+                @include tColor(title, dm);
                 transition: color 0.4s ease-in-out;
             }
         }
@@ -138,7 +144,7 @@ const { data } = Astro.props;
             padding-bottom: 3.2rem;
         }
         &-title {
-            color: var(--cl-dm-title);
+            @include tColor(title, dm);
             line-height: .835em;
 
             margin-bottom: 5rem;

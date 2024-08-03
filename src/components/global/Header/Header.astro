@@ -76,6 +76,17 @@ const pathname = new URL(Astro.request.url).pathname;
             display: flex;
             align-items: center;
             gap: 0 1.2rem;
+            @include md {
+                grid-column: 5/8;
+            }
+        }
+        &__social {
+            transition: color .4s ease-in-out;
+            &.active,
+            &:hover {
+                @include tColor(title, dm);
+                // pointer-events: none;
+            }
         }
         &__menu {
             grid-column: 13/16;
@@ -83,12 +94,14 @@ const pathname = new URL(Astro.request.url).pathname;
             display: flex;
             align-items: center;
             gap: 0 1.2rem;
-            transition: color .4s ease-in-out;
+            @include md {
+                grid-column: 8/11;
+            }
             &-link {
                 transition: color .4s ease-in-out;
                 &.active,
                 &:hover {
-                    color: var(--cl-dm-title);
+                    @include tColor(title, dm);
                     // pointer-events: none;
                 }
             }
@@ -96,6 +109,9 @@ const pathname = new URL(Astro.request.url).pathname;
         &__act {
             justify-self: end;
             margin-left: -2rem;
+            @include md {
+                grid-column: 12/13;
+            }
         }
         &__blur {
             position: absolute;

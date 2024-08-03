@@ -1,5 +1,5 @@
 ---
-import BreakMutipleLine from "~/components/common/BreakMutipleLine.astro";
+import BreakMultipleLine from "~/components/common/BreakMultipleLine.astro";
 import Image from "~/components/common/Image.astro";
 import { getNextPost } from "~/utils/project";
 import Content from "./Content";
@@ -11,26 +11,30 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
         {nextPost ? (
             <Content link={nextPost?.permalink} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
                 <div class="heading h2 upper fw-semi cl-txt-title next__post-title">
-                    <BreakMutipleLine text={nextPost?.title}/>
+                    <BreakMultipleLine text={nextPost?.title}/>
                 </div>
                 <div class="next__post-img">
-                    <Image
-                        src={nextPost?.image}
-                        widths={[400, 768, 1024, 2040]}
-                        width={1728}
-                        height={500}
-                        alt={nextPost?.slug}
-                        layout="cover"
-                        decoding="async"
-                        loading="lazy"
-                        class="img img-fill"
-                    />
+                    <div class="next__post-img-inner">
+                        <Image
+                            src={nextPost?.image}
+                            widths={[400, 768, 1024, 2040]}
+                            width={1728}
+                            height={500}
+                            alt={nextPost?.slug}
+                            layout="cover"
+                            decoding="async"
+                            loading="lazy"
+                            class="img"
+                        />
+                    </div>
                 </div>
             </Content>
         ) : (
             <>
                 <div class="heading h2 upper fw-semi cl-txt-title next__post-title"></div>
-                <div class="next__post-img"></div>
+                <div class="next__post-img">
+                    <div class="next__post-img-inner"></div>
+                </div>
             </>
         )}
     </div>
@@ -51,10 +55,14 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
             align-items: end;
             .next__post {
                 position: absolute;
-                img {
-                    filter: brightness(10%);
-                    transform: scale(1.2);
-                    transition: none;
+                top: 0;
+                width: 100%;
+                &-img {
+                    &-inner {
+                        transform: scale(1.2);
+                        filter: brightness(10%);
+                        transition: none;
+                    }
                 }
             }
         }
@@ -72,19 +80,28 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
         &-img {
             display: flex;
             justify-content: center;
-            align-items: center;
+            // align-items: center;
             position: relative;
             z-index: 2;
-            &:hover {
-                img {
-                    filter: brightness(10%);
-                    transform: scale(1.2);
-                }
-            }
-            img {
+            height: 100%;
+            width: 100%;
+            &-inner {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                transition: transform 1.2s cubic-bezier(0.23, 1, 0.320, 1);
+                transform-origin: center top;
                 filter: brightness(30%);
-                object-fit: top center;
-                transition: filter .4s ease-in-out, transform 1.2s cubic-bezier(0.23, 1, 0.320, 1);
+
+                img {
+                    height: auto;
+                    object-position: top center !important;
+                    transition: filter .4s ease-in-out;
+                }
+                &:hover {
+                    transform: scale(1.2);
+                    filter: brightness(10%);
+                }
             }
         }
     }
