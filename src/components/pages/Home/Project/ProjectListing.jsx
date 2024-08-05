@@ -89,7 +89,6 @@ const ProjectListing = (props) => {
             start: 'top top',
             end: 'bottom bottom',
             scrub: true,
-            markers: true
         }
         let tlTrans = gsap.timeline({
             scrollTrigger: {
@@ -251,23 +250,7 @@ const ProjectListing = (props) => {
     return (
         <div ref={containerRef} class="home__project-listing grid">
             <div class="home__project-slide">
-                {props.data.map((project, idx) => (
-                    <div
-                        onClick={() => {
-                            // handleActiveSlide(idx);
-                            scrollToIndex(idx);
-                        }}
-                        class={`home__project-slide-item-wrap${idx == index().curr ? ' active' : ''}`}>
-                        <div class="home__project-slide-item">
-                            <div class="home__project-slide-item-progress">
-                                <div class="home__project-slide-item-progress-inner"></div>
-                            </div>
-                            <div class="home__project-slide-item-img">
-                                <img class="img" src={project.thumbnail.src} alt={project.thumbnail.alt} width={692} height={903} loading="lazy" />
-                            </div>
-                        </div>
-                    </div>
-                ))}
+                {props.slides}
             </div>
             <div class="home__project-name">
                 <div class="home__project-name-wrap">
@@ -300,17 +283,7 @@ const ProjectListing = (props) => {
             </div>
             <div class="home__project-thumbnail">
                 <div class="home__project-thumbnail-wrap">
-                    <div class='home__project-thumbnail-listing grid-1-1'>
-                        {props.data.map(({ thumbnail, link }, idx) => (
-                            <a href={link} class="home__project-thumbnail-img" data-cursor-text="View">
-                                <div class="home__project-thumbnail-img-wrap">
-                                    <div class="home__project-thumbnail-img-inner">
-                                        <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} />
-                                    </div>
-                                </div>
-                            </a>
-                        ))}
-                    </div>
+                    {props.thumbnails}
                 </div>
             </div>
             <div class="home__project-sub-info">

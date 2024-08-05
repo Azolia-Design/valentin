@@ -3,6 +3,7 @@ import TextTransClip from '~/components/common/TextTransClip';
 import ProjectListing from './ProjectListing';
 import Arrows from "~/components/common/Arrows.astro";
 import { findImage } from '~/utils/images';
+import Image from '~/components/common/Image.astro';
 
 let currentYear = new Date().getFullYear() % 100;
 
@@ -15,7 +16,10 @@ const projects = [
         services: ["Website Design", "Mobile Application"],
         selling_points: ["Up 200% Conversion Rate", "3.233.222 Downloaded"],
         desc: "DefiMetachain is the ERC-20 blockchain solution of Defichain. As part of this product, I worked on the blockchain explorer.",
-        thumbnail: await findImage('~/assets/images/define-hero.jpg')
+        thumbnail: {
+            src: '~/assets/images/define-hero.jpg',
+            alt: 'Definchain thumbnail'
+        }
     },
     {
         link: "/project/vietcombank",
@@ -25,7 +29,10 @@ const projects = [
         services: ["Website Design",  "Graphic Design"],
         selling_points: ["Increase User Engagement by 150%", "5,000,000+ Active Users"],
         desc: "Vietcombank is one of the fastest growing global bank. Part of it is due to it's strong design thinking process.",
-        thumbnail: await findImage('~/assets/images/define-hero-2.jpg'),
+        thumbnail: {
+            src: '~/assets/images/define-hero-2.jpg',
+            alt: 'vietcombank thumbnail'
+        },
     },
     {
         link: "/project/bidv",
@@ -35,7 +42,10 @@ const projects = [
         services: ["Branding", "User Experience Research"],
         selling_points: ["Brand Recognition Boost by 120%", "Awarded Best Banking Website 2020"],
         desc: "BIDV's rebranding and UX improvements have significantly enhanced customer satisfaction and brand loyalty.",
-        thumbnail: await findImage('~/assets/images/define-hero-3.jpg')
+        thumbnail: {
+            src: '~/assets/images/define-hero-3.jpg',
+            alt: 'BIDV thumbnail'
+        }
     }
 ]
 ---
@@ -57,6 +67,53 @@ const projects = [
             <div class="home__project-main">
                 <div class="home__project-main-stick">
                     <ProjectListing data={projects} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+                        <Fragment slot='thumbnails'>
+                            <div class='home__project-thumbnail-listing grid-1-1'>
+                                {projects.map(({ thumbnail, link }) => (
+                                    <a href={link} class="home__project-thumbnail-img" data-cursor-text="View">
+                                        <div class="home__project-thumbnail-img-wrap">
+                                            <div class="home__project-thumbnail-img-inner">
+                                                <Image
+                                                    src={thumbnail.src}
+                                                    widths={[400, 768, 1024, 2040]}
+                                                    width={692}
+                                                    height={903}
+                                                    alt={thumbnail.alt}
+                                                    layout="cover"
+                                                    decoding="async"
+                                                    loading="lazy"
+                                                    class="img img-fill"
+                                                />
+                                            </div>
+                                        </div>
+                                    </a>
+                                ))}
+                            </div>
+                        </Fragment>
+                        <Fragment slot='slides'>
+                            {projects.map(({ thumbnail }) => (
+                                <div class='home__project-slide-item-wrap'>
+                                    <div class="home__project-slide-item">
+                                        <div class="home__project-slide-item-progress">
+                                            <div class="home__project-slide-item-progress-inner"></div>
+                                        </div>
+                                        <div class="home__project-slide-item-img">
+                                            <Image
+                                                src={thumbnail.src}
+                                                widths={[400, 768, 1024]}
+                                                width={692}
+                                                height={903}
+                                                alt={thumbnail.alt}
+                                                layout="cover"
+                                                decoding="async"
+                                                loading="lazy"
+                                                class="img img-fill"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </Fragment>
                         <Arrows slot="arrows" />
                     </ProjectListing>
                 </div>
@@ -282,9 +339,9 @@ const projects = [
             &-wrap {
                 height: 100%;
                 width: 100%;
-                >  * {
-                    height: 100%;
-                }
+            }
+            &-listing {
+                height: 100%;
             }
             &-img {
                 --clipIn: 100%;
