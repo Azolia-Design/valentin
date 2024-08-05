@@ -51,7 +51,9 @@ declare global {
             })
         }
         if (!getCursor()) {
-            initMouseFollower();
+            if (window.innerWidth > 991) {
+                initMouseFollower();
+            }
         }
         if (!getSwup()) {
             initSwup();

@@ -1,32 +1,17 @@
 import { register } from 'swiper/element/bundle';
-import { For, createEffect, createSignal, onCleanup, onMount } from "solid-js";
+import { For, Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import gsap from 'gsap';
 import SplitType from 'split-type';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { getLenis } from '~/components/core/lenis';
 import Truncate from '~/components/common/TruncateText';
 import BreakMultipleLine from '~/components/common/BreakMultipleLine.astro';
-
+import useDimension from '~/components/hooks/useDimension';
 
 const ProjectListing = (props) => {
     let containerRef;
-    const [activeSlide, setActiveSlide] = createSignal(0);
     const [index, setIndex] = createSignal({ curr: 0, prev: -1 });
-    // const [swiper, setSwiper] = createSignal(null);
-
-    // const setupSwiper = {
-    //     loop: true,
-	// 	slidesPerView: 1,
-	// 	spaceBetween: 0,
-    //     effect: "fade",
-    //     onSwiperInit: (e) => {
-    //         setSwiper(e.detail[0]);
-    //         requestAnimationFrame(() => handleActiveSlide(0, true));
-    //     },
-    //     onSwiperSlideChange: ({ detail }) => {
-    //         // setActiveSlide(detail[0].activeIndex);
-	// 	}
-    // }
+    const { isDesktop, isTablet } = useDimension();
 
     let allSplitText = [];
     let elements = [
@@ -60,7 +45,6 @@ const ProjectListing = (props) => {
         //     })
         // }
     }
-
     const onUpdateProgress = (progress) => {
         for (let i = 0; i < breakPoints.length - 1; i++) {
             // const startPoint = breakPoints[i];
@@ -83,7 +67,6 @@ const ProjectListing = (props) => {
 
         gsap.registerPlugin(ScrollTrigger);
 
-
         let thumbTlOptions = {
             trigger: window.innerWidth > 991 ? '.home__project-main' : '.home__project-wrap',
             start: 'top top',
@@ -96,6 +79,23 @@ const ProjectListing = (props) => {
                 onUpdate(self) {
                     onUpdateProgress(self.progress);
                 },
+                onRefreshInit(self) {
+                    requestAnimationFrame(() => {
+                        let idx = Math.floor(self.progress * props.data.length)
+                        console.log(idx)
+                        if (idx === 0) {
+                            animationsText(idx)
+                        }
+                        else {
+                            if (idx === props.data.length) {
+                                onChangeIndex(idx - 1);
+                            }
+                            else {
+                                onChangeIndex(idx);
+                            }
+                        }
+                    })
+                }
             },
             defaults: {
                 ease: 'none'
@@ -193,14 +193,11 @@ const ProjectListing = (props) => {
             });
 
             allSplitText.push(elementSplitText); // Push the sub-array to the main array
-
         });
 
-        animationsText(0)
-
         onCleanup(() => {
-            tlTrans.kill()
-            tlScale.kill()
+            tlTrans.kill();
+            tlScale.kill();
         });
     });
 
@@ -212,16 +209,18 @@ const ProjectListing = (props) => {
         elements.forEach((el, idx) => {
             let tl = gsap.timeline({});
 
-            if (el.isArray) {
-                allSplitText[idx][index().curr].forEach((splittext) => {
-                    let tlChild = gsap.timeline({});
-                    tlChild.set(splittext.words, { yPercent: 0, autoAlpha: 1 })
-                        .to(splittext.words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.3, ease: 'power2.inOut', ...el.optionsOut }, '<=0');
-                });
-            } else {
-                tl
-                    .set(allSplitText[idx][index().curr][0].words, { yPercent: 0, autoAlpha: 1 })
-                    .to(allSplitText[idx][index().curr][0].words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.8, ease: 'power2.inOut', ...el.optionsOut }, '<=0');
+            if ((newValue - index().curr) !== 0) {
+                if (el.isArray) {
+                    allSplitText[idx][index().curr].forEach((splittext) => {
+                        let tlChild = gsap.timeline({});
+                        tlChild.set(splittext.words, { yPercent: 0, autoAlpha: 1 })
+                            .to(splittext.words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.3, ease: 'power2.inOut', ...el.optionsOut }, '<=0');
+                    });
+                } else {
+                    tl
+                        .set(allSplitText[idx][index().curr][0].words, { yPercent: 0, autoAlpha: 1 })
+                        .to(allSplitText[idx][index().curr][0].words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.8, ease: 'power2.inOut', ...el.optionsOut }, '<=0');
+                }
             }
 
             if (el.isArray) {
@@ -238,7 +237,6 @@ const ProjectListing = (props) => {
             }
         })
     }
-
 
     const onChangeIndex = (newIndex) => {
         if (newIndex !== index().curr && newIndex < props.data.length) {
@@ -270,16 +268,18 @@ const ProjectListing = (props) => {
                         </For>
                     </div>
                 </div>
-                <div class="home__project-year mod-tablet">
-                    <p class="cl-txt-desc fw-med home__project-label">Year</p>
-                    <div class="grid-1-1">
-                        <For each={props.data}>
-                            {(project) => (
-                                <div class="heading h5 fw-med cl-txt-title home__project-year-txt">{project.year}</div>
-                            )}
-                        </For>
+                <Show when={isTablet()}>
+                    <div class="home__project-year mod-tablet">
+                        <p class="cl-txt-desc fw-med home__project-label">Year</p>
+                        <div class="grid-1-1">
+                            <For each={props.data}>
+                                {(project) => (
+                                    <div class="heading h5 fw-med cl-txt-title home__project-year-txt">{project.year}</div>
+                                )}
+                            </For>
+                        </div>
                     </div>
-                </div>
+                </Show>
             </div>
             <div class="home__project-thumbnail">
                 <div class="home__project-thumbnail-wrap">
@@ -287,16 +287,18 @@ const ProjectListing = (props) => {
                 </div>
             </div>
             <div class="home__project-sub-info">
-                <div class="home__project-year">
-                    <p class="cl-txt-desc fw-med home__project-label">Year</p>
-                    <div class="grid-1-1">
-                        <For each={props.data}>
-                            {(project) => (
-                                <div class="heading h5 fw-med cl-txt-title home__project-year-txt">{project.year}</div>
-                            )}
-                        </For>
+                <Show when={isDesktop()}>
+                    <div class="home__project-year">
+                        <p class="cl-txt-desc fw-med home__project-label">Year</p>
+                        <div class="grid-1-1">
+                            <For each={props.data}>
+                                {(project) => (
+                                    <div class="heading h5 fw-med cl-txt-title home__project-year-txt">{project.year}</div>
+                                )}
+                            </For>
+                        </div>
                     </div>
-                </div>
+                </Show>
                 <div class="home__project-role">
                     <p class="cl-txt-desc fw-med home__project-label">Role</p>
                     <div class="home__project-role-listing">

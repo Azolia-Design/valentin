@@ -15,7 +15,9 @@ function initMouseFollower() {
 
 function getCursor() {
     if (!cursor) {
-        initMouseFollower();
+        if (window.innerWidth > 991) {
+            initMouseFollower();
+        }
     }
     return cursor;
 }

@@ -75,7 +75,9 @@ function initSwup() {
 
         resetTransition(visit.to.url);
         forceScrollTop();
-        initMouseFollower();
+        if (window.innerWidth > 991) {
+            initMouseFollower();
+        }
     });
 
     swup.hooks.on('enable', () => {

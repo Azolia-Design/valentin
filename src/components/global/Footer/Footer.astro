@@ -74,6 +74,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
     <div class="footer__shadow"></div>
 </footer>
 <style lang="scss">
+    @use '~/assets/styles/mixins' as *;
     .footer {
         position: relative;
         z-index: 3;
@@ -84,6 +85,10 @@ const { id = 'footer', socials, whatapps } = Astro.props;
         padding-top: 53rem;
         min-height: 100vh;
         display: flex;
+        @include md {
+            min-height: auto;
+            padding-top: 32rem;
+        }
         > .container {
             margin-top: auto;
         }
@@ -96,19 +101,22 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             height: auto;
         }
         &__label {
-            margin-bottom: 2rem;
+            margin-bottom: .8rem;
         }
         &__info {
             grid-column: 1/3;
             &-item {
                 padding-bottom: 7rem;
+                @include md {
+                    padding-bottom: 2.4rem;
+                }
             }
         }
         &__socials {
             &-listing {
                 display: flex;
                 flex-direction: column;
-                gap: 1.2rem 0;
+                gap: .4rem 0;
             }
         }
         &__cta {
@@ -119,16 +127,25 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             padding-top: 4rem;
 
             border-top: 1px solid var(--cl-lm-border);
+            @include md {
+                padding-top: 2.4rem;
+            }
             &-label {
                 margin-bottom: 1rem;
 
                 color: var(--cl-lm-disable);
+            }
+            &-title {
+                @include text(h4);
             }
         }
         &__title {
             grid-column: 10/-1;
             grid-row: 1/3;
             align-self: start;
+            @include md {
+                grid-column: 8/-1;
+            }
         }
         &__main-image {
             grid-column: 3/10;
@@ -139,9 +156,19 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             position: relative;
             z-index: 3;
             margin-bottom: -1px;
+            @include md {
+                grid-column: 3/8;
+
+                margin-top: -3.6rem;
+                margin-right: -5rem;
+                margin-left: 2rem;
+            }
         }
         &__marquee {
             transition: color .4s ease-in-out;
+            @include md {
+                @include text(dis2);
+            }
             &:hover {
                 color: var(--cl-orange);
             }
