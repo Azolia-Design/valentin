@@ -25,7 +25,10 @@ const ProjectListing = (props) => {
         if (!projectsRef) return;
 
         gsap.set('.project__thumbnail-img', {
-            scale: (i) => i !== 0 ? 0 : 1,
+            '--clipOut': (i) => i === 0 ? '100%' : '0%',
+            '--clipIn': '0%',
+            '--imgTrans': '0%',
+            '--imgDirection': '-1',
             zIndex: (i) => props.data.length - i
         });
 
@@ -137,40 +140,85 @@ const ProjectListing = (props) => {
     const animationThumbnail = (direction, nextValue) => {
         if (direction === 0) return;
         let thumbnails = document.querySelectorAll('.project__thumbnail-img');
-
-        let transformOrigin = {
-            out: direction > 0 ? 'top left' : 'bottom right',
-            in: direction > 0 ? 'bottom right' : 'top left'
-        }
-
-        let tl = gsap.timeline({})
-        tl
-            .set(thumbnails[index().curr], { transformOrigin: transformOrigin.out, duration: 0 })
-            .fromTo(thumbnails[index().curr], {
-                scale: 1,
-                transformOrigin: transformOrigin.out,
-
-                // '--clipping': '100%',
-            }, {
-                scale: 0,
-                duration: .9,
+        console.log(index().curr)
+        console.log(nextValue)
+        let tlTrans = gsap.timeline({
+            defaults: {
+                ease: 'power3.inOut'
+            },
+        })
+        let tlScale = gsap.timeline({
+            defaults: {
                 ease: 'power2.inOut'
-                // '--clipping': '0%',
+            },
+        })
+        tlTrans
+            .set(thumbnails[index().curr], {
+                '--clipOut': '100%',
+                '--clipIn': '0%',
+                '--imgTrans': '0%',
+                '--imgDirection': '-1',
+                duration: 0
             })
-            .fromTo(thumbnails[nextValue], {
-                scale: 0,
-                transformOrigin: transformOrigin.out
-                // '--clipping': '0%',
+            .fromTo(thumbnails[index().curr], {
+                '--clipOut': '100%',
+                '--clipIn': '0%',
+                '--imgTrans': '0%',
+                '--imgDirection': '-1',
             }, {
-                scale: 1,
-                transformOrigin: transformOrigin.in,
-                duration: .9,
+                '--clipOut': direction > 0 ? '0%' : '100%',
+                '--clipIn': direction > 0 ? '0%' : '100%',
+                '--imgTrans': direction > 0 ? '100%' : '-100%',
+                '--imgDirection': '-1',
+                duration: 1,
+                ease: 'power2.inOut'
+            })
+            .set(thumbnails[nextValue], {
+                '--clipIn': direction > 0 ? '100%' : '0%',
+                '--clipOut': direction > 0 ? '100%' : '0%',
+                '--imgTrans': direction > 0 ? '100%' : '-100%',
+                '--imgDirection': '1',
+                duration: 0
+            }, "<=0")
+            .fromTo(thumbnails[nextValue], {
+                '--clipIn': direction > 0 ? '100%' : '0%',
+                '--clipOut': direction > 0 ? '100%' : '0%',
+                '--imgTrans': direction > 0 ? '100%' : '-100%',
+                '--imgDirection': '1'
+            }, {
+                '--clipIn': '0%',
+                '--clipOut': '100%',
+                '--imgTrans': '0%',
+                '--imgDirection': '1',
+                duration: 1,
                 ease: 'power2.inOut',
                 onComplete() {
                     document.querySelector('.projects__listing-main').classList.remove('animating');
                 }
-                // '--clipping': '100%',
             }, "<=0")
+
+        tlScale
+            .set(thumbnails[index().curr], {
+                '--imgScale': '1',
+                duration: 0
+            })
+            .fromTo(thumbnails[index().curr], {
+                '--imgScale': '1',
+            }, {
+                '--imgScale': '.6',
+                duration: 1,
+            })
+            .set(thumbnails[nextValue], {
+                '--imgScale': '1.4',
+                duration: 0
+            }, "<=0")
+            .fromTo(thumbnails[nextValue], {
+                '--imgScale': '1.4',
+            }, {
+                '--imgScale': '1',
+                duration: 1,
+            }, "<=0")
+
     }
 
     const onChangeIndex = (direction) => {
@@ -241,8 +289,10 @@ const ProjectListing = (props) => {
                                         data-cursor-text="View"
                                         onClick={pageTransition}
                                     >
-                                        <div class="project__thumbnail-img-inner">
-                                            <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} crossorigin="anonymous" referrerpolicy="no-referrer" loading="lazy" />
+                                        <div class="project__thumbnail-img-wrap">
+                                            <div class="project__thumbnail-img-inner">
+                                                <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} crossorigin="anonymous" referrerpolicy="no-referrer" loading="lazy" />
+                                            </div>
                                         </div>
                                     </a>
                                 ))}

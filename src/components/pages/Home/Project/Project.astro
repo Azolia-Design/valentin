@@ -2,7 +2,6 @@
 import TextTransClip from '~/components/common/TextTransClip';
 import ProjectListing from './ProjectListing';
 import Arrows from "~/components/common/Arrows.astro";
-import Image from "~/components/common/Image.astro";
 import { findImage } from '~/utils/images';
 
 let currentYear = new Date().getFullYear() % 100;
@@ -15,7 +14,7 @@ const projects = [
         roles: ["Product Design"],
         services: ["Website Design", "Mobile Application"],
         selling_points: ["Up 200% Conversion Rate", "3.233.222 Downloaded"],
-        desc: "Techcombank has established itself as a leading bank through innovative technology and user-centered design.",
+        desc: "DefiMetachain is the ERC-20 blockchain solution of Defichain. As part of this product, I worked on the blockchain explorer.",
         thumbnail: await findImage('~/assets/images/define-hero.jpg')
     },
     {
@@ -67,6 +66,12 @@ const projects = [
 </div>
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
+    .home__project-wrap {
+        @include md {
+            position: relative;
+            height: 600vh;
+        }
+    }
     .home__project {
         position: relative;
         z-index: 3;
@@ -74,6 +79,17 @@ const projects = [
         padding-block: 16rem;
         @include md {
             padding-block: 12rem;
+
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+        > .container {
+            @include md {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
         }
         &-title {
 
@@ -109,21 +125,43 @@ const projects = [
         &-main {
             position: relative;
             height: 500vh;
+            @include md {
+                height: auto;
+                flex: 1;
+            }
             &-stick {
                 position: sticky;
                 top: 0;
                 height: 100vh;
+                @include md {
+                    position: relative;
+                    height: 100%;
+                }
             }
         }
         &-listing {
             padding-bottom: 4.5rem;
             height: 100%;
             padding: 14rem 0 4vh;
+            @include md {
+                padding: 0;
+                grid-template-rows: 1fr auto;
+                row-gap: 4rem;
+            }
         }
         &-name {
             grid-column: 1/4;
             grid-row: 2/3;
             align-self: end;
+            @include md {
+                grid-column: 1/3;
+                grid-row: 1/2;
+                align-self: stretch;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
             &-txt {
                 --max-height: calc(3.2rem * 1.1 * 2);
 
@@ -154,6 +192,9 @@ const projects = [
             flex-direction: column;
             margin: -1rem 0;
             grid-column: 1/3;
+            @include md {
+                display: none;
+            }
             &-item {
                 position: relative;
                 @include size(100%);
@@ -234,6 +275,10 @@ const projects = [
 
             position: relative;
             overflow: hidden;
+            @include md {
+                grid-column: 5/13;
+                grid-row: 1/2;
+            }
             &-wrap {
                 height: 100%;
                 width: 100%;
@@ -242,18 +287,32 @@ const projects = [
                 }
             }
             &-img {
+                --clipIn: 100%;
+                --clipOut: 100%;
+                --imgTrans: 0%;
+                --imgDirection: -1;
+                --imgScale: 1;
+
                 flex: none;
                 position: relative;
                 @include size(100%);
-
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                position: relative;
+                clip-path: polygon(var(--clipIn) var(--clipIn), var(--clipOut) var(--clipIn), var(--clipOut) var(--clipOut), var(--clipIn) var(--clipOut));
+                &-wrap {
+                    transform-origin: 25% 25%;
+                    transform: scale(var(--imgScale));
+                    @include size(100%);
+                }
+                &-inner {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    @include size(100%);
+                }
 
                 img {
                     object-fit: cover;
                     position: absolute;
+                    transform: translate(calc(var(--imgTrans) / (2 * var(--imgDirection))), calc(var(--imgTrans) / (2 * var(--imgDirection))));
                 }
             }
             &-blur {
@@ -266,10 +325,18 @@ const projects = [
         }
         &-sub-info {
             grid-column: 13/16;
+            @include md {
+                grid-column: 1/5;
+                // align-self: end;
+            }
         }
         &-desc {
             grid-column: 13/17;
             align-self: end;
+            @include md {
+                grid-column: 5/11;
+                align-self: start;
+            }
         }
         &-link {
             display: flex;
@@ -278,6 +345,10 @@ const projects = [
 
             margin-top: 14vh;
             margin-bottom: 2.4vh;
+            @include md {
+                margin-top: 5.8rem;
+                margin-bottom: 0;
+            }
         }
         &-role {
             &-listing {
@@ -288,6 +359,16 @@ const projects = [
         }
         &-year {
             margin-bottom: 9.5vh;
+            &.mod-tablet {
+                display: none;
+                @include md {
+                    display: block;
+                }
+            }
+            @include md {
+                display: none;
+                margin-bottom: 0;
+            }
             &-txt {
                 line-height: .9em;
             }

@@ -18,7 +18,7 @@ const projects = [
         roles: ["Product Design"],
         services: ["Website Design", "Mobile Application"],
         selling_points: ["Up 200% Conversion Rate", "3.233.222 Downloaded"],
-        desc: "Techcombank has established itself as a leading bank through innovative technology and user-centered design.",
+        desc: "DefiMetachain is the ERC-20 blockchain solution of Defichain. As part of this product, I worked on the blockchain explorer.",
         thumbnail: await findImage('~/assets/images/define-hero.jpg')
     },
     {
@@ -206,12 +206,23 @@ const projects = [
                 display: grid;
             }
             &-img {
-                --clipping: 100%;
+                --clipIn: 100%;
+                --clipOut: 100%;
+                --imgTrans: 0%;
+                --imgDirection: -1;
+                --imgScale: 1;
 
                 position: relative;
                 @include size(100%);
-                clip-path: polygon(0% 0%, var(--clipping) 0, var(--clipping) var(--clipping), 0 var(--clipping));
-                pointer-events: auto;
+                clip-path: polygon(var(--clipIn) var(--clipIn), var(--clipOut) var(--clipIn), var(--clipOut) var(--clipOut), var(--clipIn) var(--clipOut));
+                &.active {
+                    pointer-events: auto;
+                }
+                &-wrap {
+                    transform-origin: 25% 25%;
+                    transform: scale(var(--imgScale));
+                    @include size(100%);
+                }
                 &-inner {
                     display: flex;
                     justify-content: center;
@@ -220,8 +231,9 @@ const projects = [
 
                     @include size(100%);
                     img {
-                        transform: translate(calc((100% - var(--clipping)) / -2), calc((100% - var(--clipping)) / -2));
                         position: absolute;
+                        object-fit: cover;
+                        transform: translate(calc(var(--imgTrans) / (2 * var(--imgDirection))), calc(var(--imgTrans) / (2 * var(--imgDirection))));
                     }
                 }
             }

@@ -83,12 +83,17 @@ const ProjectListing = (props) => {
 
         gsap.registerPlugin(ScrollTrigger);
 
-        let tl = gsap.timeline({
+
+        let thumbTlOptions = {
+            trigger: window.innerWidth > 991 ? '.home__project-main' : '.home__project-wrap',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: true,
+            markers: true
+        }
+        let tlTrans = gsap.timeline({
             scrollTrigger: {
-                trigger: '.home__project-main',
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: true,
+                ...thumbTlOptions,
                 onUpdate(self) {
                     onUpdateProgress(self.progress);
                 },
@@ -98,37 +103,71 @@ const ProjectListing = (props) => {
             },
         })
 
+        let tlScale = gsap.timeline({
+            scrollTrigger: thumbTlOptions,
+            defaults: {
+                ease: 'power2.inOut'
+            },
+        })
+
         let thumbnails = document.querySelectorAll('.home__project-thumbnail-img');
 
         thumbnails.forEach((thumbnail, idx) => {
             if (idx + 1 < props.data.length) {
-                tl
-                    .set(thumbnails[idx], { transformOrigin: 'top left', duration: 0 })
-                    .fromTo(thumbnails[idx], {
-                        scale: 1,
-                        transformOrigin: 'top left'
-                        // '--clipping': '100%',
-                    }, {
-                        scale: 0,
-                        duration: 1
-                        // '--clipping': '0%',
+                tlTrans
+                    .set(thumbnails[idx], {
+                        '--clipOut': '100%',
+                        '--clipIn': '0%',
+                        '--imgTrans': '0%',
+                        '--imgDirection': '-1',
+                        duration: 0
                     })
+                    .fromTo(thumbnails[idx], {
+                        '--clipOut': '100%',
+                        '--clipIn': '0%',
+                        '--imgTrans': '0%',
+                        '--imgDirection': '-1',
+                    }, {
+                        '--clipOut': '0%',
+                        '--clipIn': '0%',
+                        '--imgTrans': '100%',
+                        '--imgDirection': '-1',
+                        duration: 1,
+                    }, '<=0')
                     .fromTo(thumbnails[idx + 1], {
-                    scale: 0,
-                    transformOrigin: 'top left'
-                    // '--clipping': '0%',
-                }, {
-                    scale: 1,
-                    transformOrigin: 'bottom right',
-                    duration: 1
-                    // '--clipping': '100%',
-                }, "<=0")
+                        '--clipIn': '100%',
+                        '--clipOut': '100%',
+                        '--imgTrans': '100%',
+                        '--imgDirection': '1',
+                    }, {
+                        '--clipIn': '0%',
+                        '--clipOut': '100%',
+                        '--imgTrans': '0%',
+                        '--imgDirection': '1',
+                        duration: 1
+                    }, "<=0")
+
+                tlScale
+                    .set(thumbnails[idx], {
+                        '--imgScale': '1',
+                        duration: 0
+                    })
+                    .fromTo(thumbnails[idx], {
+                        '--imgScale': '1',
+                    }, {
+                        '--imgScale': '.6',
+                        duration: 1,
+                    }, '<=0')
+                    .fromTo(thumbnails[idx + 1], {
+                        '--imgScale': '1.4',
+                    }, {
+                        '--imgScale': '1',
+                        duration: 1
+                        }, "<=0")
             }
         })
 
         gsap.set(thumbnails, {
-            scale: (i) => i !== 0 ? 0 : 1,
-            transformOrigin: (i) => i !== 0 ? 'bottom right' : 'top left',
             zIndex: (i) => props.data.length - i
         });
 
@@ -160,7 +199,10 @@ const ProjectListing = (props) => {
 
         animationsText(0)
 
-        onCleanup(() => tl.kill());
+        onCleanup(() => {
+            tlTrans.kill()
+            tlScale.kill()
+        });
     });
 
     const animationsText = (newValue) => {
@@ -228,20 +270,32 @@ const ProjectListing = (props) => {
                 ))}
             </div>
             <div class="home__project-name">
-                <div class="fs-20 fw-med home__project-pagination">
-                    <div class="grid-1-1">
-                        {props.data.map((_, idx) => (
-                            <span class="cl-txt-title home__project-pagination-txt">{(idx + 1).toString().padStart(2, '0')} </span>
-                        ))}
+                <div class="home__project-name-wrap">
+                    <div class="fs-20 fw-med home__project-pagination">
+                        <div class="grid-1-1">
+                            {props.data.map((_, idx) => (
+                                <span class="cl-txt-title home__project-pagination-txt">{(idx + 1).toString().padStart(2, '0')} </span>
+                            ))}
+                        </div>
+                        <span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
                     </div>
-                    <span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
+                    <div class="grid-1-1">
+                        <For each={props.data}>
+                            {(project) => (
+                                <h4 class="heading h5 fw-med upper cl-txt-title home__project-name-txt" innerHTML={project.title}/>
+                            )}
+                        </For>
+                    </div>
                 </div>
-                <div class="grid-1-1">
-                    <For each={props.data}>
-                        {(project) => (
-                            <h4 class="heading h5 fw-med upper cl-txt-title home__project-name-txt" innerHTML={project.title}/>
-                        )}
-                    </For>
+                <div class="home__project-year mod-tablet">
+                    <p class="cl-txt-desc fw-med home__project-label">Year</p>
+                    <div class="grid-1-1">
+                        <For each={props.data}>
+                            {(project) => (
+                                <div class="heading h5 fw-med cl-txt-title home__project-year-txt">{project.year}</div>
+                            )}
+                        </For>
+                    </div>
                 </div>
             </div>
             <div class="home__project-thumbnail">
@@ -249,7 +303,11 @@ const ProjectListing = (props) => {
                     <div class='home__project-thumbnail-listing grid-1-1'>
                         {props.data.map(({ thumbnail, link }, idx) => (
                             <a href={link} class="home__project-thumbnail-img" data-cursor-text="View">
-                                <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} />
+                                <div class="home__project-thumbnail-img-wrap">
+                                    <div class="home__project-thumbnail-img-inner">
+                                        <img class="img img-fill" src={thumbnail.src} alt={thumbnail.alt} />
+                                    </div>
+                                </div>
                             </a>
                         ))}
                     </div>
