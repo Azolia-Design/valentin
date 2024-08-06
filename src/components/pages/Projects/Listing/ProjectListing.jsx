@@ -99,7 +99,7 @@ const ProjectListing = (props) => {
             .to('.project__transition', { autoAlpha: 0, ease: 'linear', duration: 0.4 })
     }
 
-    const animationsText = (direction, nextValue) => {
+    const animationText = (direction, nextValue) => {
         let yOffSet = {
             out: direction > 0 ? -100 : 100,
             in: direction > 0 ? 100 : -100
@@ -218,7 +218,6 @@ const ProjectListing = (props) => {
                 '--imgScale': '1',
                 duration: 1,
             }, "<=0")
-
     }
 
     const onChangeIndex = (direction) => {
@@ -227,7 +226,7 @@ const ProjectListing = (props) => {
         document.querySelector('.projects__listing-main').classList.add('animating');
 
         let nextValue = index().curr + direction < 0 ? props.data.length - 1 : index().curr + direction > props.data.length - 1 ? 0 : index().curr + direction;
-        animationsText(direction, nextValue);
+        animationText(direction, nextValue);
         animationThumbnail(direction, nextValue);
         setIndex({ curr: nextValue, prev: index().curr });
     }

@@ -421,6 +421,9 @@ button {
 
 .fix-font {
     margin-left: -1rem;
+    @include sm {
+        margin-left: -.4rem;
+    }
 }
 
 .grid-1-1 {

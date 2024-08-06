@@ -48,19 +48,22 @@ function Testimonials(props) {
     onMount(() => {
         if (!containerRef) return;
 
-        gsap.registerPlugin(ScrollTrigger);
-        let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.home__testi-listing',
-                start: 'top bottom',
-                end: 'bottom bottom',
-                scrub: true
-            }
-        });
+        if (window.innerWidth > 767) {
+            gsap.registerPlugin(ScrollTrigger);
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home__testi-listing',
+                    start: 'top bottom',
+                    end: 'bottom bottom',
+                    scrub: true
+                }
+            });
 
-        tl.to('.home__testi-item', { '--scale-factor': '1', duration: 1, stagger: .03 })
+            tl.to('.home__testi-item', { '--scale-factor': '1', duration: 1, stagger: .03 })
 
-        onCleanup(() => tl.kill());
+            onCleanup(() => tl.kill());
+        }
+
     })
     return (
         <div class="home__testi-listing-inner" ref={containerRef}>

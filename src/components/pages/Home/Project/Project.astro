@@ -128,6 +128,8 @@ const projects = [
         @include md {
             height: 600vh;
             z-index: 5;
+        }
+        @include sm {
             height: auto;
         }
     }
@@ -172,7 +174,7 @@ const projects = [
                     grid-column: 11/13;
                 }
                 @include sm {
-                    grid-column: 1/-1;
+                    grid-column: 1/5;
                     grid-row: 1/2;
                     justify-self: start;
                 }
@@ -185,9 +187,7 @@ const projects = [
                 }
                 @include sm {
                     @include text(h2);
-                    line-height: 0.835em;
                     grid-column: 1/-1 !important;
-                    margin-left: -.3rem !important;
                 }
                 &:nth-child(1) {
                     grid-column: 1/16;
@@ -199,6 +199,7 @@ const projects = [
                     }
                     @include sm {
                         grid-row: 2/3;
+                        margin-left: 0;
                     }
                 }
                 &:nth-child(2) {
@@ -246,6 +247,9 @@ const projects = [
                 padding: 0;
                 grid-template-rows: 1fr auto;
                 row-gap: 4rem;
+            }
+            @include sm {
+                row-gap: 2.4rem;
             }
         }
         &-name {
@@ -296,8 +300,10 @@ const projects = [
                 padding-block: 0 2rem;
                 margin-bottom: 3rem;
             }
-            &-txt {
-                @include text(18);
+            @include sm {
+                @include text(16);
+                line-height: 1em;
+                gap: 0 .6rem;
             }
         }
         &-slide {
@@ -393,8 +399,9 @@ const projects = [
                 grid-row: 1/2;
             }
             @include sm {
-                grid-column: 1/-1;
+                grid-column: 1/3;
                 grid-row: 2/3;
+                aspect-ratio: .7;
             }
             &-wrap {
                 height: 100%;
@@ -447,8 +454,12 @@ const projects = [
                 // align-self: end;
             }
             @include sm {
-                grid-column: 1/-1;
+                grid-column: 3/-1;
                 grid-row: 2/3;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
         }
         &-desc {
@@ -459,11 +470,14 @@ const projects = [
                 align-self: start;
             }
             @include sm {
-                grid-column: 1/-1;
+                grid-column: 1/5;
             }
             &-txt {
                 @include md {
                     @include text(18);
+                }
+                @include sm {
+                    @include text(16);
                 }
             }
         }
@@ -478,6 +492,12 @@ const projects = [
                 margin-top: 5.8rem;
                 margin-bottom: 0;
             }
+            @include sm {
+                margin-top: 3.8rem;
+                .fs-20 {
+                    @include text(16);
+                }
+            }
         }
         &-role {
             &-listing {
@@ -487,6 +507,9 @@ const projects = [
                 p {
                     @include md {
                         @include text(18);
+                    }
+                    @include sm {
+                        @include text(16);
                     }
                 }
             }
@@ -503,14 +526,44 @@ const projects = [
                 display: none;
                 margin-bottom: 0;
             }
+            @include sm {
+                display: block;
+            }
             &-txt {
                 line-height: .9em;
+                @include sm {
+                    @include text(16);
+                    line-height: 0.9em;
+                }
             }
         }
         &-label {
             margin-bottom: 1rem;
             @include md {
                 @include text(16);
+            }
+        }
+        &-navigation {
+            display: flex;
+            align-items: center;
+            gap: 0 .5rem;
+
+            grid-column: 3/-1;
+            grid-row: 1/2;
+            align-self: start;
+            justify-self: end;
+            margin: -.6rem;
+
+            display: none;
+            @include sm {
+                display: flex;
+            }
+            &-arrow {
+                padding: .6rem;
+                &.disable {
+                    pointer-events: none;
+                    @include tColor(disable, dm);
+                }
             }
         }
     }

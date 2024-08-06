@@ -11,7 +11,7 @@ import useDimension from '~/components/hooks/useDimension';
 const ProjectListing = (props) => {
     let containerRef;
     const [index, setIndex] = createSignal({ curr: 0, prev: -1 });
-    const { isDesktop, isTablet } = useDimension();
+    const { isDesktop, isTablet, isMobile } = useDimension();
 
     let allSplitText = [];
     let elements = [
@@ -56,7 +56,7 @@ const ProjectListing = (props) => {
 
             if (progress >= startPoint && progress < endPoint) {
                 let idx = Math.floor(progress * props.data.length)
-                onChangeIndex(idx);
+                changeIndexOnScroll(idx);
             }
         }
     };
@@ -66,110 +66,6 @@ const ProjectListing = (props) => {
         register();
 
         gsap.registerPlugin(ScrollTrigger);
-
-        let thumbTlOptions = {
-            trigger: window.innerWidth > 991 ? '.home__project-main' : '.home__project-wrap',
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: true,
-        }
-        let tlTrans = gsap.timeline({
-            scrollTrigger: {
-                ...thumbTlOptions,
-                onUpdate(self) {
-                    onUpdateProgress(self.progress);
-                },
-                onRefreshInit(self) {
-                    requestAnimationFrame(() => {
-                        let idx = Math.floor(self.progress * props.data.length)
-                        console.log(idx)
-                        if (idx === 0) {
-                            animationsText(idx)
-                        }
-                        else {
-                            if (idx === props.data.length) {
-                                onChangeIndex(idx - 1);
-                            }
-                            else {
-                                onChangeIndex(idx);
-                            }
-                        }
-                    })
-                }
-            },
-            defaults: {
-                ease: 'none'
-            },
-        })
-
-        let tlScale = gsap.timeline({
-            scrollTrigger: thumbTlOptions,
-            defaults: {
-                ease: 'power2.inOut'
-            },
-        })
-
-        let thumbnails = document.querySelectorAll('.home__project-thumbnail-img');
-
-        thumbnails.forEach((thumbnail, idx) => {
-            if (idx + 1 < props.data.length) {
-                tlTrans
-                    .set(thumbnails[idx], {
-                        '--clipOut': '100%',
-                        '--clipIn': '0%',
-                        '--imgTrans': '0%',
-                        '--imgDirection': '-1',
-                        duration: 0
-                    })
-                    .fromTo(thumbnails[idx], {
-                        '--clipOut': '100%',
-                        '--clipIn': '0%',
-                        '--imgTrans': '0%',
-                        '--imgDirection': '-1',
-                    }, {
-                        '--clipOut': '0%',
-                        '--clipIn': '0%',
-                        '--imgTrans': '100%',
-                        '--imgDirection': '-1',
-                        duration: 1,
-                    }, '<=0')
-                    .fromTo(thumbnails[idx + 1], {
-                        '--clipIn': '100%',
-                        '--clipOut': '100%',
-                        '--imgTrans': '100%',
-                        '--imgDirection': '1',
-                    }, {
-                        '--clipIn': '0%',
-                        '--clipOut': '100%',
-                        '--imgTrans': '0%',
-                        '--imgDirection': '1',
-                        duration: 1
-                    }, "<=0")
-
-                tlScale
-                    .set(thumbnails[idx], {
-                        '--imgScale': '1',
-                        duration: 0
-                    })
-                    .fromTo(thumbnails[idx], {
-                        '--imgScale': '1',
-                    }, {
-                        '--imgScale': '.6',
-                        duration: 1,
-                    }, '<=0')
-                    .fromTo(thumbnails[idx + 1], {
-                        '--imgScale': '1.4',
-                    }, {
-                        '--imgScale': '1',
-                        duration: 1
-                        }, "<=0")
-            }
-        })
-
-        gsap.set(thumbnails, {
-            zIndex: (i) => props.data.length - i
-        });
-
 
         elements.forEach((el) => {
             let elementSplitText = []; // Declare a new sub-array for each element
@@ -195,13 +91,128 @@ const ProjectListing = (props) => {
             allSplitText.push(elementSplitText); // Push the sub-array to the main array
         });
 
-        onCleanup(() => {
-            tlTrans.kill();
-            tlScale.kill();
+        let thumbTlOptions = {
+            trigger: window.innerWidth > 991 ? '.home__project-main' : '.home__project-wrap',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: true,
+        }
+
+        let thumbnails = document.querySelectorAll('.home__project-thumbnail-img');
+        if (window.innerWidth > 767) {
+            let tlTrans = gsap.timeline({
+                scrollTrigger: {
+                    ...thumbTlOptions,
+                    onUpdate(self) {
+                        onUpdateProgress(self.progress);
+                    },
+                    onRefreshInit(self) {
+                        requestAnimationFrame(() => {
+                            let idx = Math.floor(self.progress * props.data.length)
+                            console.log(idx)
+                            if (idx === 0) {
+                                animationText(idx)
+                            }
+                            else {
+                                if (idx === props.data.length) {
+                                    changeIndexOnScroll(idx - 1);
+                                }
+                                else {
+                                    changeIndexOnScroll(idx);
+                                }
+                            }
+                        })
+                    }
+                },
+                defaults: {
+                    ease: 'none'
+                },
+                // pause: window.innerWidth > 991 ? false : true
+            })
+
+            let tlScale = gsap.timeline({
+                scrollTrigger: thumbTlOptions,
+                defaults: {
+                    ease: 'power2.inOut'
+                },
+                // pause: window.innerWidth > 991 ? false : true
+            })
+            thumbnails.forEach((thumbnail, idx) => {
+                if (idx + 1 < props.data.length) {
+                    tlTrans
+                        .set(thumbnails[idx], {
+                            '--clipOut': '100%',
+                            '--clipIn': '0%',
+                            '--imgTrans': '0%',
+                            '--imgDirection': '-1',
+                            duration: 0
+                        })
+                        .fromTo(thumbnails[idx], {
+                            '--clipOut': '100%',
+                            '--clipIn': '0%',
+                            '--imgTrans': '0%',
+                            '--imgDirection': '-1',
+                        }, {
+                            '--clipOut': '0%',
+                            '--clipIn': '0%',
+                            '--imgTrans': '100%',
+                            '--imgDirection': '-1',
+                            duration: 1,
+                        }, '<=0')
+                        .fromTo(thumbnails[idx + 1], {
+                            '--clipIn': '100%',
+                            '--clipOut': '100%',
+                            '--imgTrans': '100%',
+                            '--imgDirection': '1',
+                        }, {
+                            '--clipIn': '0%',
+                            '--clipOut': '100%',
+                            '--imgTrans': '0%',
+                            '--imgDirection': '1',
+                            duration: 1
+                        }, "<=0")
+
+                    tlScale
+                        .set(thumbnails[idx], {
+                            '--imgScale': '1',
+                            duration: 0
+                        })
+                        .fromTo(thumbnails[idx], {
+                            '--imgScale': '1',
+                        }, {
+                            '--imgScale': '.6',
+                            duration: 1,
+                        }, '<=0')
+                        .fromTo(thumbnails[idx + 1], {
+                            '--imgScale': '1.4',
+                        }, {
+                            '--imgScale': '1',
+                            duration: 1
+                            }, "<=0")
+                }
+            })
+            onCleanup(() => {
+                tlTrans.kill();
+                tlScale.kill();
+            });
+        }
+        else {
+            gsap.set(thumbnails, {
+                '--clipOut': (i) => i === 0 ? '100%' : '0%',
+                '--clipIn': '0%',
+                '--imgTrans': '0%',
+                '--imgDirection': '-1'
+            });
+            animationText(0);
+        }
+
+        gsap.set(thumbnails, {
+            zIndex: (i) => props.data.length - i
         });
+
     });
 
-    const animationsText = (newValue) => {
+    const animationText = (newValue) => {
         let yOffSet = {
             out: newValue - index().curr > 0 ? -70 : 70,
             in:  newValue - index().curr > 0 ? 70 : -70
@@ -222,7 +233,6 @@ const ProjectListing = (props) => {
                         .to(allSplitText[idx][index().curr][0].words, { yPercent: yOffSet.out, autoAlpha: 0, duration: 0.8, ease: 'power2.inOut', ...el.optionsOut }, '<=0');
                 }
             }
-
             if (el.isArray) {
                 allSplitText[idx][newValue].forEach((splittext) => {
                     let tlChild = gsap.timeline({});
@@ -238,9 +248,103 @@ const ProjectListing = (props) => {
         })
     }
 
-    const onChangeIndex = (newIndex) => {
+    const animationThumbnail = (newValue) => {
+        let direction = newValue - index().curr;
+
+        let thumbnails = document.querySelectorAll('.home__project-thumbnail-img');
+
+        let tlTrans = gsap.timeline({
+            defaults: {
+                ease: 'power3.inOut'
+            },
+        })
+        let tlScale = gsap.timeline({
+            defaults: {
+                ease: 'power2.inOut'
+            },
+        })
+        tlTrans
+            .set(thumbnails[index().curr], {
+                '--clipOut': '100%',
+                '--clipIn': '0%',
+                '--imgTrans': '0%',
+                '--imgDirection': '-1',
+                duration: 0
+            })
+            .fromTo(thumbnails[index().curr], {
+                '--clipOut': '100%',
+                '--clipIn': '0%',
+                '--imgTrans': '0%',
+                '--imgDirection': '-1',
+            }, {
+                '--clipOut': direction > 0 ? '0%' : '100%',
+                '--clipIn': direction > 0 ? '0%' : '100%',
+                '--imgTrans': direction > 0 ? '100%' : '-100%',
+                '--imgDirection': '-1',
+                duration: 1,
+                ease: 'power2.inOut'
+            })
+            .set(thumbnails[newValue], {
+                '--clipIn': direction > 0 ? '100%' : '0%',
+                '--clipOut': direction > 0 ? '100%' : '0%',
+                '--imgTrans': direction > 0 ? '100%' : '-100%',
+                '--imgDirection': '1',
+                duration: 0
+            }, "<=0")
+            .fromTo(thumbnails[newValue], {
+                '--clipIn': direction > 0 ? '100%' : '0%',
+                '--clipOut': direction > 0 ? '100%' : '0%',
+                '--imgTrans': direction > 0 ? '100%' : '-100%',
+                '--imgDirection': '1'
+            }, {
+                '--clipIn': '0%',
+                '--clipOut': '100%',
+                '--imgTrans': '0%',
+                '--imgDirection': '1',
+                duration: 1,
+                ease: 'power2.inOut',
+                onComplete() {
+                    document.querySelector('.home__project-listing').classList.remove('animating');
+                }
+            }, "<=0")
+
+        tlScale
+            .set(thumbnails[index().curr], {
+                '--imgScale': '1',
+                duration: 0
+            })
+            .fromTo(thumbnails[index().curr], {
+                '--imgScale': '1',
+            }, {
+                '--imgScale': '.6',
+                duration: 1,
+            })
+            .set(thumbnails[newValue], {
+                '--imgScale': '1.4',
+                duration: 0
+            }, "<=0")
+            .fromTo(thumbnails[newValue], {
+                '--imgScale': '1.4',
+            }, {
+                '--imgScale': '1',
+                duration: 1,
+            }, "<=0")
+    }
+
+    const changeIndexOnClick = (direction) => {
+        if (document.querySelector('.home__project-listing').classList.contains('animating')) return;
+        let newIndex = index().curr + direction;
+        if (newIndex < 0 || newIndex > props.data.length - 1) return;
+
+        document.querySelector('.home__project-listing').classList.add('animating');
+        animationText(newIndex);
+        animationThumbnail(newIndex);
+        setIndex({ curr: newIndex, prev: index().curr });
+    }
+
+    const changeIndexOnScroll = (newIndex) => {
         if (newIndex !== index().curr && newIndex < props.data.length) {
-            animationsText(newIndex);
+            animationText(newIndex);
             setIndex({ curr: newIndex, prev: index().curr });
         };
     }
@@ -287,7 +391,7 @@ const ProjectListing = (props) => {
                 </div>
             </div>
             <div class="home__project-sub-info">
-                <Show when={isDesktop()}>
+                <Show when={isDesktop(), isMobile()}>
                     <div class="home__project-year">
                         <p class="cl-txt-desc fw-med home__project-label">Year</p>
                         <div class="grid-1-1">
@@ -329,6 +433,22 @@ const ProjectListing = (props) => {
                     <span class="txt-link fs-20 cl-txt-orange">All projects</span>
                     {props.arrows}
                 </a>
+            </div>
+            <div class="home__project-navigation">
+                <div className={`home__project-navigation-arrow prev${index().curr === 0 ? ' disable' : ''}`} onClick={() => changeIndexOnClick(-1)}>
+                    <div class="ic ic-20">
+                        <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.6 8.00003H14M6.19998 3.80005L2 8.00003L6.19998 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
+                        </svg>
+                    </div>
+                </div>
+                <div className={`home__project-navigation-arrow next${index().curr === props.data.length - 1 ? ' disable' : ''}`} onClick={() => changeIndexOnClick(1)}>
+                    <div className="ic ic-20">
+                        <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.4 8.00003H2M9.79997 3.80005L14 8.00003L9.79997 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
     )
