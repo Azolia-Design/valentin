@@ -124,9 +124,11 @@ const projects = [
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
     .home__project-wrap {
+        position: relative;
         @include md {
-            position: relative;
             height: 600vh;
+            z-index: 5;
+            height: auto;
         }
     }
     .home__project {
@@ -142,6 +144,11 @@ const projects = [
             top: 0;
             height: 100vh;
         }
+        @include sm {
+            padding-block: 0 4rem;
+            position: relative;
+            height: auto;
+        }
         > .container {
             @include md {
                 height: 100%;
@@ -150,7 +157,6 @@ const projects = [
             }
         }
         &-title {
-
             margin-bottom: 16rem;
             position: relative;
             // gap: 1rem 0;
@@ -165,12 +171,23 @@ const projects = [
                     @include text(16);
                     grid-column: 11/13;
                 }
+                @include sm {
+                    grid-column: 1/-1;
+                    grid-row: 1/2;
+                    justify-self: start;
+                }
             }
             &-txt {
                 line-height: .835em;
                 @include md {
                     @include text(dis2);
                     line-height: 0.835em;
+                }
+                @include sm {
+                    @include text(h2);
+                    line-height: 0.835em;
+                    grid-column: 1/-1 !important;
+                    margin-left: -.3rem !important;
                 }
                 &:nth-child(1) {
                     grid-column: 1/16;
@@ -180,17 +197,26 @@ const projects = [
                         grid-column: 1/11;
                         margin-left: 1rem;
                     }
+                    @include sm {
+                        grid-row: 2/3;
+                    }
                 }
                 &:nth-child(2) {
                     grid-column: 5/16;
                     @include md {
                         grid-column: 5/13;
                     }
+                    @include sm {
+                        grid-row: 3/4;
+                    }
                 }
                 &:nth-child(3) {
                     grid-column: 5/16;
                     @include md {
                         grid-column: 5/13;
+                    }
+                    @include sm {
+                        grid-row: 4/5;
                     }
                 }
             }
@@ -234,6 +260,9 @@ const projects = [
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+            }
+            @include sm {
+                grid-column: 1/-1;
             }
             &-txt {
                 --max-height: calc(3.2rem * 1.1 * 2);
@@ -363,6 +392,10 @@ const projects = [
                 grid-column: 5/13;
                 grid-row: 1/2;
             }
+            @include sm {
+                grid-column: 1/-1;
+                grid-row: 2/3;
+            }
             &-wrap {
                 height: 100%;
                 width: 100%;
@@ -413,6 +446,10 @@ const projects = [
                 grid-column: 1/5;
                 // align-self: end;
             }
+            @include sm {
+                grid-column: 1/-1;
+                grid-row: 2/3;
+            }
         }
         &-desc {
             grid-column: 13/17;
@@ -420,6 +457,9 @@ const projects = [
             @include md {
                 grid-column: 5/11;
                 align-self: start;
+            }
+            @include sm {
+                grid-column: 1/-1;
             }
             &-txt {
                 @include md {

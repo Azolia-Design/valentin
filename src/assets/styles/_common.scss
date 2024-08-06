@@ -126,6 +126,7 @@ body {
     }
     @include sm {
         --grid-column: 4;
+        --grid-gap: 1.6rem;
     }
 }
 :root {

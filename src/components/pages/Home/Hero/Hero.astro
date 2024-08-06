@@ -15,7 +15,7 @@ const { data } = Astro.props;
 ---
 <div class="home__hero-wrap">
     <section class="home__hero">
-        <HeroScript client:only="solid-js"/>
+        <HeroScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
         <div class="home__hero-main">
             <div class="container grid calc-h">
                 <div class="home__hero-scope-wrap">
@@ -50,37 +50,40 @@ const { data } = Astro.props;
                         </div>
                     </div>
                     <h1 class="heading h1 fw-bold fix-font upper home__hero-title">
-                        <span class="home__hero-title-txt">
+                        <span class="home__hero-title-txt">Design</span>
+                        <span class="home__hero-title-txt">for financial</span>
+                        <div class="cl-txt-orange home__hero-title-txt mod-slide"><span>Product</span><span>Business</span></div>
+                        <!-- <span class="home__hero-title-txt">
                             <TextTransClip
                                 triggerOpts={{
                                     trigger: '.home__hero-title',
-                                    start: 'bottom bottom-=30%',
-                                    end: 'bottom top+=50%',
+                                    start: `bottom+=50% bottom-=20%`,
+                                    end: 'bottom top+=20%',
+                                    markers: true
                                 }}
                                 reverse={true}
                                 client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Design</TextTransClip>
-                        </span>
-                        <span class="home__hero-title-txt">
+                        </span> -->
+                        <!-- <span class="home__hero-title-txt">
                             <TextTransClip
                                 triggerOpts={{
                                     trigger: '.home__hero-title',
-                                    start: 'bottom bottom-=30%',
-                                    end: 'bottom top+=50%',
+                                    start: `bottom+=50% bottom-=20%`,
+                                    end: 'bottom top+=20%',
                                 }}
                                 reverse={true}
                             client:visible={{ rootMargin: "100% 0% 100% 0%" }}>for financial</TextTransClip>
-                        </span>
-                        <span class="home__hero-title-txt">
+                        </span> -->
+                        <!-- <span class="home__hero-title-txt">
                             <TextTransClip
                                 triggerOpts={{
                                     trigger: '.home__hero-title',
-                                    start: 'bottom bottom-=30%',
-                                    end: 'bottom top+=50%',
+                                    start: `bottom+=50% bottom-=20%`,
+                                    end: 'bottom top+=20%',
                                 }}
                                 reverse={true}
                             client:visible={{ rootMargin: "100% 0% 100% 0%" }}><div class="cl-txt-orange home__hero-title-txt mod-slide"><span>Product</span><span>Business</span></div></TextTransClip>
-                        </span>
-
+                        </span> -->
                     </h1>
                     <span class="upper">(Scroll down)</span>
                 </div>
@@ -99,6 +102,7 @@ const { data } = Astro.props;
         </div>
     </section>
 </div>
+<script src="src/vendors/gyronorm.complete.min.js" async></script>
 
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
@@ -159,6 +163,9 @@ const { data } = Astro.props;
                 align-self: end;
                 grid-row: 3/4;
             }
+            @include sm {
+                grid-column: 1/-1;
+            }
         }
         &-scope {
             display: flex;
@@ -206,6 +213,10 @@ const { data } = Astro.props;
 
             @include md {
                 grid-row: 1/3;
+                grid-column: 1/-1;
+            }
+            @include sm {
+                grid-row: 1/2;
             }
         }
         &-title {
@@ -216,6 +227,11 @@ const { data } = Astro.props;
             max-width: 135rem;
             @include md {
                 @include text(dis1);
+                line-height: 0.835em;
+            }
+            @include sm {
+                @include text(h1);
+                line-height: 0.835em;
             }
             &-txt {
                 // display: inline-block;
@@ -262,6 +278,9 @@ const { data } = Astro.props;
                 .line {
                     display: none;
                 }
+            }
+            @include sm {
+                grid-column: 1/-1;
             }
         }
 

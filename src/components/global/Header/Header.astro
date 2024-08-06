@@ -46,6 +46,9 @@ const pathname = new URL(Astro.request.url).pathname;
 
         display: flex;
         align-items: center;
+        @include sm {
+            display: none;
+        }
         &.on-scroll {
             .header__blur {
                 opacity: 1;
