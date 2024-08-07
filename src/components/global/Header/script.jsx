@@ -34,6 +34,36 @@ const HeaderScript = () => {
         });
         tlSub.fromTo('.header__greating', { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: 'none' })
 
+        if (window.innerWidth <= 767) {
+            document.querySelector('.header__toggle').addEventListener('click', function (e) {
+                let elActive = document.querySelector('.header__toggle .current');
+                gsap.to(elActive, {
+                    yPercent: -100, autoAlpha: 0, duration: 0.5, ease: 'power2.inOut',
+                    onStart() {
+                        e.target.classList.add('ev-none');
+                        elActive.classList.remove('current');
+                    }
+                });
+                const elNonActive = document.querySelector('.header__toggle :not(.current)');
+
+                gsap.set(elNonActive, { yPercent: 100, autoAlpha: 0, duration: 0 });
+                gsap.to(elNonActive, {
+                    yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.inOut',
+                    onComplete() {
+                        e.target.classList.remove('ev-none');
+                    }
+                });
+                elNonActive.classList.add('current');
+
+                let nav = document.querySelector('.nav');
+                if (document.querySelector('.nav').classList.contains('active')) {
+                    nav.classList.remove('active');
+                }
+                else {
+                    nav.classList.add('active');
+                }
+            })
+        }
     })
     return (<div ref={scriptRef} class="divScript"></div>)
 }

@@ -30,6 +30,25 @@ const pathname = new URL(Astro.request.url).pathname;
                 <Fragment><a href={el.href} class={`header__menu-link${pathname === el.href ? ' active': ''}`}>{el.text}</a>{i < (links.length) - 1 && '/'}</Fragment>)}
         </div>
         <a href="" class="txt-link cl-txt-title header__act">{actions.text}</a>
+        <button class="fs-16 cl-txt-title fw-med header__toggle">
+            <span class="current">Menu</span>
+            <span>Close</span>
+        </button>
+    </div>
+    <div class="nav">
+        <div class="container calc-h">
+            <div class="nav__menu">
+                {links.map((el, i) =>
+                    <Fragment><a href={el.href} class={`heading h1 upper fw-semi nav__menu-link cl-txt-${pathname === el.href ? 'title': 'disable'}`}>{el.text}</a></Fragment>)}
+            </div>
+            <div class="line"></div>
+            <div class="nav__socials">
+                <p class="cl-txt-title">Socials</p>
+                {socials.map((el) =>
+                    <Fragment>/<a href={el.href} class="nav__social">{el.text}</a></Fragment>)}
+            </div>
+            <a href="" class="heading h2 cl-txt-orange nav__act">{actions.text}</a>
+        </div>
     </div>
 </header>
 
@@ -169,6 +188,61 @@ const pathname = new URL(Astro.request.url).pathname;
                     -webkit-mask: linear-gradient(to top, rgba($gradient-core-cl, 0) 50%, $gradient-core-cl 62.5%, $gradient-core-cl 75%, rgba($gradient-core-cl, 0) 87.5%);
                 }
             }
+        }
+        &__toggle {
+            display: none;
+            position: relative;
+            justify-self: end;
+            overflow: hidden;
+            @include sm {
+                display: block;
+            }
+            span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 0;
+                &.current {
+                    opacity: 1;
+                    position: relative;
+                }
+            }
+        }
+    }
+    .nav {
+        display: none;
+        background-color: var(--cl-dm-bg);
+        position: fixed;
+        inset: 0;
+        transform: translate(10%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform .6s ease-in-out, opacity .5s ease-in-out .1s;
+        @include sm {
+            display: block;
+        }
+        &.active {
+            transform: translate(0%);
+            opacity: 1;
+            pointer-events: auto;
+            transition-delay: 0s;
+        }
+        > .container {
+            display: flex;
+            flex-direction: column;
+        }
+        &__menu {
+            margin-top: 6.4rem;
+            padding-block: 4rem;
+        }
+        &__socials {
+            display: flex;
+            padding-block: 2rem;
+            gap: 0 1rem;
+        }
+        &__act {
+            margin-top: auto;
+            padding-bottom: 6dvh;
         }
     }
 </style>

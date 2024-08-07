@@ -131,6 +131,17 @@ body {
 :root {
     --container-width: 1728px;
     --container-padding: 6rem;
+    @include md {
+        --container-padding: 4rem;
+    }
+
+    @include sm {
+        --container-padding: 2rem;
+    }
+
+    @include xs {
+        --container-padding: 1.6rem;
+    }
 }
 .container {
     position: relative;
@@ -146,18 +157,6 @@ body {
 
     &.calc-h {
         height: 100%;
-    }
-
-    @include md {
-        --container-padding: 4rem;
-    }
-
-    @include sm {
-        --container-padding: 2rem;
-    }
-
-    @include xs {
-        --container-padding: 1.6rem;
     }
 }
 
