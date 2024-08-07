@@ -47,11 +47,14 @@ const pathname = new URL(Astro.request.url).pathname;
         display: flex;
         align-items: center;
         @include sm {
-            display: none;
+            padding-block: 2rem;
         }
         &.on-scroll {
             .header__blur {
                 opacity: 1;
+            }
+            @include sm {
+                background: linear-gradient(0deg, rgb(0, 5, 15, 0) 0%, #00050f 100%);
             }
         }
         > .container {
@@ -82,6 +85,9 @@ const pathname = new URL(Astro.request.url).pathname;
             @include md {
                 grid-column: 5/8;
             }
+            @include sm {
+                display: none;
+            }
         }
         &__social {
             transition: color .4s ease-in-out;
@@ -100,6 +106,9 @@ const pathname = new URL(Astro.request.url).pathname;
             @include md {
                 grid-column: 8/11;
             }
+            @include sm {
+                display: none;
+            }
             &-link {
                 transition: color .4s ease-in-out;
                 &.active,
@@ -114,6 +123,9 @@ const pathname = new URL(Astro.request.url).pathname;
             margin-left: -2rem;
             @include md {
                 grid-column: 12/13;
+            }
+            @include sm {
+                display: none;
             }
         }
         &__blur {
