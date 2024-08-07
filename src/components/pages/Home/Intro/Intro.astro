@@ -177,16 +177,18 @@ const itemLength = awards.length;
                 </div>
             </div>
             <div class="home__intro-service-blur">
-                <Image
-                    src={'~/assets/images/intro-service-blur.png'}
-                    widths={[400, 768, 1024]}
-                    width={1511}
-                    alt={'a orange blur'}
-                    layout="cover"
-                    loading="lazy"
-                    decoding="async"
-                    aspectRatio="1"
-                />
+                <div class="home__intro-service-blur-inner">
+                    <Image
+                        src={'~/assets/images/intro-service-blur.png'}
+                        widths={[400, 768, 1024]}
+                        width={1511}
+                        alt={'a orange blur'}
+                        layout="cover"
+                        loading="lazy"
+                        decoding="async"
+                        aspectRatio="1"
+                    />
+                </div>
             </div>
         </div>
     </section>
@@ -668,11 +670,22 @@ const itemLength = awards.length;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                @include size(151.1rem);
                 z-index: 4;
                 pointer-events: none;
+                height: 151.1rem;
+                width: 100%;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 @include sm {
-                    @include size(80rem);
+                    height: 80rem;
+                }
+                &-inner {
+                    @include size(151.1rem);
+                    @include sm {
+                        @include size(80rem);
+                    }
                 }
             }
         }

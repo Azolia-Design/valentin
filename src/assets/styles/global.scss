@@ -27,6 +27,9 @@
     pointer-events: none;
     opacity: .04;
     mix-blend-mode: overlay;
+    @include sm {
+        display: none;
+    }
     &:after {
         content: "";
         position: absolute;

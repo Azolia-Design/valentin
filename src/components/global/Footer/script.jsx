@@ -18,7 +18,6 @@ const FooterScript = () => {
                 start: 'top+=50% bottom',
                 end: 'bottom+=100% bottom',
                 scrub: true,
-                markers: true
             }
         })
 

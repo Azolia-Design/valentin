@@ -109,7 +109,6 @@ const ProjectListing = (props) => {
                     onRefreshInit(self) {
                         requestAnimationFrame(() => {
                             let idx = Math.floor(self.progress * props.data.length)
-                            console.log(idx)
                             if (idx === 0) {
                                 animationText(idx)
                             }
@@ -391,7 +390,7 @@ const ProjectListing = (props) => {
                 </div>
             </div>
             <div class="home__project-sub-info">
-                <Show when={isDesktop(), isMobile()}>
+                <Show when={[isDesktop(), isMobile()]}>
                     <div class="home__project-year">
                         <p class="cl-txt-desc fw-med home__project-label">Year</p>
                         <div class="grid-1-1">

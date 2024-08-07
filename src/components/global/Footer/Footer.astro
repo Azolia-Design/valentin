@@ -13,7 +13,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
 <footer class="footer"
     {...id ? (id) : {}}
 >
-    <FooterScript client:load/>
+    <FooterScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
     <div class="container grid">
         <div class="footer__info">
             <div class="footer__info-item">
@@ -90,6 +90,9 @@ const { id = 'footer', socials, whatapps } = Astro.props;
         @include md {
             min-height: auto;
             padding-top: 32rem;
+        }
+        @include sm {
+            padding-top: 20rem;
         }
         > .container {
             margin-top: auto;
@@ -172,6 +175,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             @include sm {
                 grid-row: 1/2;
                 grid-column: 1/-1;
+                margin-bottom: 6.4rem;
             }
         }
         &__main-image {
