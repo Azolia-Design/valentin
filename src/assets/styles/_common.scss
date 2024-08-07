@@ -79,7 +79,6 @@ html {
 body {
     position: relative;
     @include text(16);
-    overflow: hidden;
 }
 
 .main {
