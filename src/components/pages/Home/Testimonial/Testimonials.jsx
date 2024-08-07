@@ -1,10 +1,23 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { createEffect, createSignal, onMount, onCleanup } from "solid-js";
+import Swiper from 'swiper';
 import { getCursor } from '~/components/core/cursor';
 
 function TestimonialItem(props) {
     let itemRef;
+    onMount(() => {
+        if (itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight !== itemRef.querySelector('.home__testi-item-feedback.shorten').offsetHeight) {
+            itemRef.querySelector('.home__testi-item-toggle').classList.add('enable');
+        }
+
+        let animationTrigger = (height) => ({ height: height, duration: .4, onComplete() { props.wrap.classList.remove('animating') } })
+
+        itemRef.querySelector('.home__testi-item-toggle').addEventListener('click', function (e) {
+            gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'), animationTrigger(itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight));
+            e.target.classList.remove('enable');
+        })
+    })
     createEffect(() => {
         let animationTrigger = (height) => ({ height: height, duration: .4, onComplete() { props.wrap.classList.remove('animating') } })
         gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'),
@@ -12,7 +25,7 @@ function TestimonialItem(props) {
                 ? animationTrigger(itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight)
                 : animationTrigger(itemRef.querySelector('.home__testi-item-feedback.shorten').offsetHeight)
         );
-    })
+    }, [props.isOpen])
     return (
         <div ref={itemRef} class="home__testi-item-content grid">
             <span class='line'></span>
@@ -30,9 +43,13 @@ function TestimonialItem(props) {
                     <div class="home__testi-item-feedback-txt">{props.data.feedback}</div>
                 </div>
             </div>
-            <div class="home__testi-item-toggle">
-                <span></span>
-                <span></span>
+            <button class="home__testi-item-toggle">
+                <span class="fw-med txt-link">Read more</span>
+                <span class="fw-med"></span>
+            </button>
+            <div class="home__testi-item-image">
+                <img src={props.data.image.src} alt={props.data.image.alt} class="home__testi-item-image-main" width={90} height={120} loading="lazy" />
+                {props.blur}
             </div>
         </div>
     )
@@ -63,60 +80,74 @@ function Testimonials(props) {
 
             onCleanup(() => tl.kill());
         }
+        else {
+            document.querySelector('.home__testi-listing').querySelectorAll('[data-swiper]').forEach(element => {
+                if (element.getAttribute('data-swiper') == 'swiper')
+                    element.classList.add('swiper')
+                else
+                    element.classList.add(`swiper-${element.getAttribute('data-swiper')}`)
+            });
 
+            const swiper = new Swiper(containerRef, {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                onSlideChange: (slide) => {
+                    console.log(slide)
+                }
+            })
+        }
     })
     return (
-        <div class="home__testi-listing-inner" ref={containerRef}>
-            {props.data.map((el, idx) => (
-                <div class="home__testi-item"
-                    data-cursor="-stroke"
-                    data-cursor-img={props.plusIc}
-                    class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
-                    onClick={(e) => {
-                        if (containerRef.classList.contains('animating')) return;
-                        containerRef.classList.add('animating');
+        <div className="home__testi-listing-inner" ref={containerRef} data-swiper="swiper">
+            <div class="home__testi-listing-inner-wrapper" data-swiper="wrapper">
+                {props.data.map((el, idx) => (
+                    <div class="home__testi-item"
+                        data-cursor="-stroke"
+                        data-cursor-img={props.plusIc}
+                        class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
+                        data-swiper="slide"
+                        onClick={(e) => {
+                            if (window.innerWidth > 767) {
+                                if (containerRef.classList.contains('animating')) return;
+                                containerRef.classList.add('animating');
+                                accordionClick(idx);
+                            }
+                            const style = getComputedStyle(e.target);
+                            const scaleFactor = style.getPropertyValue('--scale-factor').trim();
+                            setScaleFactor(scaleFactor);
 
-                        accordionClick(idx);
-                        const style = getComputedStyle(e.target);
-                        const scaleFactor = style.getPropertyValue('--scale-factor').trim();
-                        setScaleFactor(scaleFactor);
-
-                        if (window.innerWidth > 991) {
-                            document.querySelectorAll('.home__testi-item').forEach((el, i) => {
-                                if (i === idx) {
-                                    if (e.target.classList.contains('active')) {
-                                        el.removeAttribute('data-cursor');
-                                        el.removeAttribute('data-cursor-img');
-                                        requestAnimationFrame(() => {
-                                            getCursor().removeState('-media');
-                                            getCursor().removeState('-stroke');
-                                        })
+                            if (window.innerWidth > 991) {
+                                document.querySelectorAll('.home__testi-item').forEach((el, i) => {
+                                    if (i === idx) {
+                                        if (e.target.classList.contains('active')) {
+                                            el.removeAttribute('data-cursor');
+                                            el.removeAttribute('data-cursor-img');
+                                            requestAnimationFrame(() => {
+                                                getCursor().removeState('-media');
+                                                getCursor().removeState('-stroke');
+                                            })
+                                        }
+                                        else {
+                                            el.setAttribute('data-cursor', '-stroke');
+                                            el.setAttribute('data-cursor-img', props.plusIc);
+                                            requestAnimationFrame(() => {
+                                                getCursor().addState('-media');
+                                                getCursor().addState('-stroke');
+                                            })
+                                        }
                                     }
                                     else {
                                         el.setAttribute('data-cursor', '-stroke');
                                         el.setAttribute('data-cursor-img', props.plusIc);
-                                        requestAnimationFrame(() => {
-                                            getCursor().addState('-media');
-                                            getCursor().addState('-stroke');
-                                        })
                                     }
-                                }
-                                else {
-                                    el.setAttribute('data-cursor', '-stroke');
-                                    el.setAttribute('data-cursor-img', props.plusIc);
-                                }
-                            })
-                        }
-                    }}>
-                    <TestimonialItem wrap={containerRef} data={el} index={idx} scaleFactor={scaleFactor()} isOpen={activeIndex() === idx}/>
-                    <div class="home__testi-item-image">
-                        <img src={el.image.src} alt={el.image.alt} class="home__testi-item-image-main" width={90} height={120} loading="lazy" />
-                        {props.blur}
+                                })
+                            }
+                        }}>
+                        <TestimonialItem wrap={containerRef} blur={props.blur} data={el} index={idx} scaleFactor={scaleFactor()} isOpen={activeIndex() === idx}/>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
-
     )
 }
 

@@ -17,12 +17,12 @@ const FooterScript = () => {
                 trigger: '.footer__title',
                 start: 'top+=50% bottom',
                 end: 'bottom+=100% bottom',
-                scrub: true
+                scrub: true,
+                markers: true
             }
         })
 
         tl.fromTo(splitedText.words, { autoAlpha: 0 }, { autoAlpha: 1, duration: 5.5, stagger: .4, ease: 'linear' })
-
 
         let tlInfinite = gsap.timeline({
             scrollTrigger: {

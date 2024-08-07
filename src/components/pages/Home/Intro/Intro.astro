@@ -657,7 +657,9 @@ const itemLength = awards.length;
                         }
                     }
                     .ic-32 {
-                        @include size(1.2rem);
+                        @include sm {
+                            @include size(1.2rem);
+                        }
                     }
                 }
             }

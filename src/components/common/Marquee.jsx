@@ -38,7 +38,7 @@ const Marquee = (props) => {
                 xTarget = -distance;
             }
             let tlDir = getLenis().direction >= 0 ? 1 : -1;
-            gsap.quickSetter(DOM.list[0], 'x', 'px')(xTarget + (getLenis().velocity + (tlDir * (Number(props.duration) || 3))) * direction[props.start || "left"]);
+            gsap.quickSetter(DOM.list[0], 'x', 'px')(xTarget + (getLenis().velocity * (window.innerWidth > 991 ? 1 : .1) + (tlDir * (Number(props.duration) || 3))) * direction[props.start || "left"]);
 
             requestAnimationFrame(animationMarquee);
         }
