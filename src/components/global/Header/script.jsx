@@ -12,8 +12,8 @@ const HeaderScript = () => {
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.home__hero-greating-wrap',
-                start: `top top+=${cvUnit(40, 'rem')}`,
-                end: `bottom top+=${cvUnit(40, 'rem') + document.querySelector('.header__name').offsetHeight}`,
+                start: `top top+=${cvUnit(window.innerWidth > 767 ? 40 : 20, 'rem')}`,
+                end: `bottom top+=${cvUnit(window.innerWidth > 767 ? 40 : 20, 'rem') + document.querySelector('.header__name').offsetHeight}`,
                 scrub: true
             }
         })

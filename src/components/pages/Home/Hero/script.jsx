@@ -21,7 +21,7 @@ const HeroScript = (props) => {
         })
         tl
             .fromTo('.home__hero-bg-main-inner', { scale: 1, xPercent: 0, yPercent: 0 }, { scale: 1.7, xPercent: 5, yPercent: -8, duration: 2, ease: 'linear' })
-            .fromTo(['.home__hero-title-wrap', '.home__hero-scope-wrap', '.home__hero-intro-wrap'], { autoAlpha: 1 }, { autoAlpha: 0, stagger: .1, duration: .5, ease: 'linear' }, 0)
+            .fromTo(['.home__hero-title-wrap', '.home__hero-scope-wrap', '.home__hero-intro-wrap'], { autoAlpha: 1 }, { autoAlpha: 1, stagger: .1, duration: .5, ease: 'linear' }, 0)
             .fromTo('.home__hero-bg-main-inner', { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: 'linear' }, '>.5')
             // .fromTo(['.home__hero-clone-wrap', '.home__hero-bg-main-inner'], { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: 'linear' }, '>.5')
             // .fromTo('.home__intro-bg-gradient', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1, ease: 'linear' }, '-=1')
