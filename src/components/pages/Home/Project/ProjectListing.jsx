@@ -113,12 +113,7 @@ const ProjectListing = (props) => {
                                 animationText(idx)
                             }
                             else {
-                                if (idx === props.data.length) {
-                                    changeIndexOnScroll(idx - 1);
-                                }
-                                else {
-                                    changeIndexOnScroll(idx);
-                                }
+                                changeIndexOnScroll(idx === props.data.length ? idx - 1 : idx);
                             }
                         })
                     }
