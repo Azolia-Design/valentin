@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { getImage } from 'astro:assets';
+import Image from '~/components/common/Image.astro';
 import Arrows from '~/components/common/Arrows.astro';
 import HeroScript from './script';
 
@@ -97,6 +98,17 @@ const { data } = Astro.props;
 					data-imageDepth={DeepMapImg.src}
 					data-horizontalThreshold="150"
 					data-verticalThreshold="66.66"></div>
+                <Image
+                    class="img img-fill home__hero-bg-main-inner mod-mb"
+                    src={HeroMainImg.src}
+                    widths={[400, 768, 1024, 2040]}
+                    width={1728}
+                    height={1050}
+                    alt={'a man'}
+                    layout="cover"
+                    loading="eager"
+                    decoding="sync"
+                />
                 <div class="home__hero-gradient-mb"></div>
             </div>
         </div>
@@ -153,6 +165,15 @@ const { data } = Astro.props;
                     position: absolute;
                     inset: 0;
                     transform-origin: center 16%;
+                    @include sm {
+                        display: none;
+                    }
+                    &.mod-mb {
+                        display: none;
+                        @include sm {
+                            display: block;
+                        }
+                    }
                     // object-position: center top !important;
                 }
             }
