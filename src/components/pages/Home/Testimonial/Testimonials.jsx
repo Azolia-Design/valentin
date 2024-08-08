@@ -13,10 +13,18 @@ function TestimonialItem(props) {
 
         let animationTrigger = (height) => ({ height: height, duration: .4, onComplete() { props.wrap.classList.remove('animating') } })
 
-        itemRef.querySelector('.home__testi-item-toggle').addEventListener('click', function (e) {
-            gsap.to(itemRef.querySelector('.home__testi-item-feedback-wrap'), animationTrigger(itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight));
+        const handleToggle = (e) => {
+            const feedbackWrap = itemRef.querySelector('.home__testi-item-feedback-wrap');
+            const feedbackHeight = itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight;
+            gsap.to(feedbackWrap, animationTrigger(feedbackHeight));
             e.target.classList.remove('enable');
-        })
+        };
+
+        const toggleButton = itemRef.querySelector('.home__testi-item-toggle');
+        toggleButton.addEventListener('click', handleToggle);
+        onCleanup(() => {
+            toggleButton.removeEventListener('click', handleToggle);
+        });
     })
     createEffect(() => {
         let animationTrigger = (height) => ({ height: height, duration: .4, onComplete() { props.wrap.classList.remove('animating') } })

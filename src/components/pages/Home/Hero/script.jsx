@@ -100,7 +100,7 @@ const HeroScript = (props) => {
                 this.createScene();
                 this.addTexture();
                 this.mouseMove();
-                this.gyro();
+                // this.gyro();
             }
 
             addShader( source, type ) {

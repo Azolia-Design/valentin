@@ -87,7 +87,7 @@ const { data } = Astro.props;
 
             @include size(100%, 100vh);
             @include sm {
-                @include size(100%, 100dvh);
+                @include size(100%, 100svh);
             }
             & > .container {
                 grid-template-rows: 1fr auto;
@@ -104,7 +104,7 @@ const { data } = Astro.props;
                 height: 100vh;
                 will-change: scale;
                 @include sm {
-                    height: 100dvh;
+                    height: 100svh;
                 }
                 img {
                     // transform-origin: 18vw 25vh;
@@ -195,7 +195,7 @@ const { data } = Astro.props;
             }
             @include sm {
                 grid-row: 1/2;
-                padding-bottom: 5dvh;
+                padding-bottom: 5svh;
             }
         }
         &-title {
@@ -330,7 +330,7 @@ const { data } = Astro.props;
                 display: block;
                 position: absolute;
                 bottom: 0;
-                height: 43dvh;
+                height: 43svh;
                 width: 100%;
                 z-index: 1;
                 background: linear-gradient(180deg, rgb(0, 5, 15, 0) 0%, #00050f 70%);
