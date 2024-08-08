@@ -34,6 +34,10 @@ const services = [
                             <span class="heading h3 fw-semi">{service.name}</span>
                         </h3>
                         <div class="about__service-item-desc">{service.desc}</div>
+                        <button class="about__service-item-toggle">
+                            <span></span>
+                            <span></span>
+                        </button>
                     </div>
                 )}
             </div>
@@ -83,18 +87,23 @@ const services = [
                 grid-column: 15/17;
                 grid-row: 1/2;
                 justify-self: end;
+                @include md {
+                    grid-column: 11/13;
+
+                    @include text(16);
+                }
             }
             &-txt {
                 line-height: .835em;
+                grid-column: 4/-1;
+                @include md {
+                    grid-column: 3/-1;
+
+                    @include text(dis2);
+                    line-height: .835em;
+                }
                 &:nth-child(1) {
-                    grid-column: 4/17;
                     grid-row: 1/2;
-                }
-                &:nth-child(2) {
-                    grid-column: 4/17;
-                }
-                &:nth-child(3) {
-                    grid-column: 4/17;
                 }
             }
         }
@@ -111,12 +120,19 @@ const services = [
             }
             &-order {
                 transition: color .4s ease-in-out .2s;
+                @include md {
+                    align-self: center;
+                }
             }
             &-title {
                 grid-column: 4/14;
                 display: grid;
                 line-height: .835em;
                 overflow: hidden;
+                @include md {
+                    grid-column: 3/10;
+                    margin-bottom: .5rem;
+                }
                 span {
                     grid-area: 1/1/2/2;
                     transition: transform .8s cubic-bezier(0.87, 0, 0.13, 1);
@@ -132,8 +148,70 @@ const services = [
                 opacity: 0;
                 transform: translateY(1rem);
                 transition: opacity .8s ease-in-out .2s, transform .8s ease-in-out;
+                @include md {
+                    grid-column: 3/10;
+                    grid-row: 2/3;
+                    height: 0;
+                    overflow: hidden
+                }
+            }
+            &-toggle {
+                display: none;
+                @include md {
+                    display: grid;
+                    align-self: center;
+                    grid-column: 12/13;
+
+                    align-items: center;
+                    justify-content: center;
+
+                    @include size(4.4rem);
+                    border-radius: 50%;
+                    border: 1px solid var(--cl-dm-border);
+                    background-color: rgba(255, 61, 0, 0.04);
+                    backdrop-filter: blur(1rem);
+                    transition: transform .5s cubic-bezier(.455, .03, .515, .955), background-color .3s ease-out .1s;
+                    span {
+                        grid-area: 1/1/2/2;
+                        line-height: 1em;
+                        height: 1px;
+                        width: 1.6rem;
+                        background-color: var(--cl-orange);
+                        transition: background-color .3s ease-out .25s, opacity .2s ease-in-out .1s;
+                        font-size: 0;
+                        &:before, &:after {
+                            display: none;
+                        }
+                        &:last-child {
+                            transform: rotate(90deg);
+                        }
+                    }
+                }
             }
             &:hover {
+                @include md-up {
+                    .about__service-item {
+                        &-order {
+                            @include tColor(body, dm);
+                        }
+                        &-title {
+                            span {
+                                &:first-child {
+                                    transform: translateY(-100%);
+                                }
+                                &:last-child {
+                                    transform: translate(0);
+                                }
+                            }
+                        }
+                        &-desc {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+                }
+            }
+            &.active {
                 .about__service-item {
                     &-order {
                         @include tColor(body, dm);
@@ -152,6 +230,19 @@ const services = [
                         opacity: 1;
                         transform: translateY(0);
                     }
+                    &-toggle  {
+                        transform: rotate(-180deg);
+                        background-color: var(--cl-orange);
+                        span {
+                            background-color: var(--cl-white);
+                            @include sm {
+                                background-color: transparent;
+                            }
+                            &:last-child {
+                                opacity: 0;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -164,6 +255,9 @@ const services = [
             margin: 0 calc(var(--container-padding) * -1);
             grid-column: 1/-1;
             grid-row: 1/2;
+            @include md {
+                margin: 0 -25rem;
+            }
             &-inner {
                 position: relative;
                 z-index: 2;
@@ -181,6 +275,12 @@ const services = [
             max-width: 38.6rem;
             align-self: end;
             padding-bottom: 10.2rem;
+            @include md {
+                grid-column: 3/7;
+                margin-right: calc(var(--grid-gap) * -1);
+                padding-bottom: 6.5rem;
+                @include text(20);
+            }
         }
     }
 </style>

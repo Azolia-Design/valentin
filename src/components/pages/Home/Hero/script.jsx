@@ -15,7 +15,7 @@ const HeroScript = (props) => {
             scrollTrigger: {
                 trigger: '.home__hero-bg',
                 start: 'top top',
-                end: 'bottom bottom',
+                end: 'bottom+=500px bottom',
                 scrub: true,
             }
         })

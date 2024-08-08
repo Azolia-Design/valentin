@@ -76,6 +76,11 @@ const { socials, whatapps } = Astro.props;
             margin-bottom: 15rem;
             &-label {
                 grid-column: 5/8;
+                @include md {
+                    grid-column: 3/6;
+                    @include text(16);
+                    margin-bottom: 1.8rem;
+                }
             }
             &-content {
                 grid-column: 9/17;
@@ -83,11 +88,19 @@ const { socials, whatapps } = Astro.props;
                 flex-direction: column;
                 gap: 6.2rem 0;
                 margin-top: -.15em;
+                @include md {
+                    grid-column: 3/-1;
+                    gap: 4.4rem 0;
+                    @include text(h3);
+                }
             }
         }
         &-body {
             &-label {
                 margin-bottom: 2rem;
+                @include md {
+                    margin-bottom: 1.2rem;
+                }
             }
             &-contact {
                 grid-column: 5/7;
@@ -96,21 +109,35 @@ const { socials, whatapps } = Astro.props;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                @include md {
+                    grid-column: 3/5;
+                }
             }
             &-social {
                 &-listing {
                     display: flex;
                     flex-direction: column;
                     gap: 1.2rem 0;
+                    @include md {
+                        gap: 1rem 0;
+                    }
                 }
             }
             &-main {
                 grid-column: 9/12;
                 margin-bottom: 7.5rem;
+                @include md {
+                    grid-column: 6/10;
+                    margin-right: calc(var(--grid-gap) * -1);
+                }
             }
             &-email {
                 grid-column: 9/15;
                 transition: color .4s ease-in-out;
+                @include md {
+                    grid-column: 6/-1;
+                    @include text(h1);
+                }
                 &:hover {
                     @include tColor(title, dm);
                 }
