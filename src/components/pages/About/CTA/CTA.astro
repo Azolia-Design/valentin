@@ -59,6 +59,7 @@ const { socials, whatapps } = Astro.props;
                     <h4 class="fs-24 fw-reg cl-txt-sub">Let's make something happen together</h4>
                 </div>
                 <a href="mailto:hello@valentinecheval.design" class="heading h3 about__cta-body-email" data-cursor-img={ArrowIc.src}>hello<span class="cl-txt-orange">@</span><br/>valentinecheval.<br/>design</a>
+                <a href="mailto:hello@valentinecheval.design" class="heading h2 about__cta-body-email mod-mb" data-cursor-img={ArrowIc.src}>hello<span class="cl-txt-orange">@</span><br/>valentine<br/>cheval.<br/>design</a>
             </div>
         </div>
     </div>
@@ -72,14 +73,26 @@ const { socials, whatapps } = Astro.props;
         z-index: 3;
         background-color: var(--cl-dm-bg);
         padding-bottom: 14.5rem;
+        @include sm {
+            padding-bottom: 5rem;
+        }
         &-head {
             margin-bottom: 15rem;
+            @include md {
+                margin-bottom: 12rem;
+            }
+            @include sm {
+                margin-bottom: 8rem;
+            }
             &-label {
                 grid-column: 5/8;
                 @include md {
                     grid-column: 3/6;
                     @include text(16);
                     margin-bottom: 1.8rem;
+                }
+                @include sm {
+                    grid-column: 1/-1;
                 }
             }
             &-content {
@@ -93,6 +106,11 @@ const { socials, whatapps } = Astro.props;
                     gap: 4.4rem 0;
                     @include text(h3);
                 }
+                @include sm {
+                    grid-column: 1/-1;
+                    gap: 3.2em 0;
+                    @include text(h6);
+                }
             }
         }
         &-body {
@@ -100,6 +118,9 @@ const { socials, whatapps } = Astro.props;
                 margin-bottom: 2rem;
                 @include md {
                     margin-bottom: 1.2rem;
+                }
+                @include sm {
+                    margin-bottom: .8rem;
                 }
             }
             &-contact {
@@ -111,6 +132,13 @@ const { socials, whatapps } = Astro.props;
                 justify-content: space-between;
                 @include md {
                     grid-column: 3/5;
+                }
+                @include sm {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 0 var(--grid-gap);
+                    grid-column: 1/-1;
+                    margin-bottom: 4rem;
                 }
             }
             &-social {
@@ -130,13 +158,29 @@ const { socials, whatapps } = Astro.props;
                     grid-column: 6/10;
                     margin-right: calc(var(--grid-gap) * -1);
                 }
+                @include sm {
+                    grid-column: 1/-1;
+                    max-width: 25rem;
+                    margin-bottom: 6rem;
+                }
             }
             &-email {
                 grid-column: 9/15;
                 transition: color .4s ease-in-out;
+                &.mod-mb {
+                    display: none;
+                    @include sm {
+                        display: inline-block;
+                    }
+                }
                 @include md {
                     grid-column: 6/-1;
                     @include text(h1);
+                }
+                @include sm {
+                    display: none;
+                    grid-column: 1/-1;
+                    @include text(h2);
                 }
                 &:hover {
                     @include tColor(title, dm);

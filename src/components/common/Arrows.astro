@@ -12,6 +12,7 @@ const { class: className } = Astro.props;
     </div>
 </div>
 <style lang="scss" is:global>
+    @use '~/assets/styles/mixins' as *;
     .ic-arr-wrap {
         display: grid;
         overflow: hidden;
@@ -23,6 +24,9 @@ const { class: className } = Astro.props;
         transition: transform .6s cubic-bezier(.4,0,.1,1);
         grid-area: 1/1/2/2;
         width: 1.6rem;
+        @include sm {
+            width: 1.4rem;
+        }
     }
     .arr-clone {
         transform: translate(-100%, 100%);

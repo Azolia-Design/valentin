@@ -17,7 +17,7 @@ import IntroScript  from './script';
         <div class="container grid">
             <p class="fs-24 about__intro-label">(I work with)</p>
             <div class="about__intro-passion">
-                <h3 class="heading h5 fw-med about__intro-passion-title">I have a strong passion for highly complex financial products</h3>
+                <h3 class="heading h5 cl-txt-sub fw-med about__intro-passion-title">I have a strong passion for highly complex financial products</h3>
                 <span class="line"></span>
                 <div class="about__intro-passion-sub">
                     <p>I'm fascinated by their intricate details and the strategic thinking required to use them effectively. This drives me to stay updated on the latest developments in the financial industry.
@@ -58,6 +58,10 @@ import IntroScript  from './script';
                 padding-top: 6rem;
                 @include text(16);
             }
+            @include sm {
+                grid-area: 1/1/2/-1;
+                margin-top: .25em;
+            }
         }
         &-vision {
             &-content {
@@ -68,6 +72,10 @@ import IntroScript  from './script';
                 @include md {
                     gap: 6rem 0;
                     grid-column: 3/-1;
+                }
+                @include sm {
+                    grid-column: 1/-1;
+                    grid-row: 1/2;
                 }
             }
             &-empty {
@@ -83,17 +91,26 @@ import IntroScript  from './script';
             @include md {
                 grid-column: 3/6;
             }
+            @include sm {
+                grid-column: 1/-1;
+            }
             &-title {
                 padding-top: 12rem;
                 padding-bottom: 3.2rem;
                 @include md {
                     padding-top: 6rem;
                 }
+                @include sm {
+                    padding-block: 3.2rem;
+                }
             }
             &-sub {
                 padding-top: 16.6rem;
                 @include md {
                     padding-top: 6rem;
+                }
+                @include md {
+                    padding-top: 3.2rem;
                 }
             }
             &-listing {
@@ -117,6 +134,13 @@ import IntroScript  from './script';
                     grid-column: 8/12;
                     margin-inline: 1.2rem;
                 }
+                @include sm {
+                    --circle-size: 20.6rem;
+                    --circle-gap: 4rem;
+                    --padding-block: 4rem;
+
+                    grid-column: 1/-1;
+                }
                 &:before {
                     content: 'VC';
                     @include text(h5);
@@ -126,6 +150,12 @@ import IntroScript  from './script';
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, calc(-50% + var(--circle-gap) / 2));
+                    @include md {
+                        @include text(18);
+                    }
+                    @include sm {
+                        @include text(16);
+                    }
                 }
             }
 
@@ -151,6 +181,9 @@ import IntroScript  from './script';
                 &-txt {
                     @include md {
                         @include text(14);
+                    }
+                    @include sm {
+                        @include text(12);
                     }
                 }
 

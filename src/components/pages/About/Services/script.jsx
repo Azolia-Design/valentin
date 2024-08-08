@@ -17,7 +17,7 @@ const ServicesScript = () => {
                 scrub: true
             }
         })
-        tl.from('.about__daily-img-inner', { yPercent: -20, duration: 1, ease: 'linear' });
+        tl.from('.about__daily-img-inner', { yPercent: window.innerWidth > 767 ? -20 : -10, duration: 1, ease: 'linear' });
 
         if (window.innerWidth <= 991) {
             document.querySelectorAll('.about__service-item').forEach((el) => {

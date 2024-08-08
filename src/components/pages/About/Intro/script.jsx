@@ -11,7 +11,7 @@ const IntroScript = () => {
         if (!scriptRef) return;
         gsap.registerPlugin(ScrollTrigger);
 
-        const GRID_COL = window.innerWidth > 991 ? 5 : 3;
+        const GRID_COL = window.innerWidth <= 991 ? window.innerWidth <= 767 ? 1 : 3 : 5;
         let emptySpace = (document.querySelector('.container-col').offsetWidth + cvUnit(20, 'rem')) * GRID_COL
         document.querySelector('.about__intro-vision-empty').style.width = `${emptySpace}px`;
 

@@ -35,27 +35,33 @@ const HeaderScript = () => {
         tlSub.fromTo('.header__greating', { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: 'none' })
 
         if (window.innerWidth <= 767) {
+            let NAV = {
+                toggle: () => {
+                    let elActive = document.querySelector('.header__toggle .current');
+                    gsap.to(elActive, {
+                        yPercent: -100, autoAlpha: 0, duration: 0.5, ease: 'power2.inOut',
+                        onStart() {
+                            document.querySelector('.header__toggle').classList.add('ev-none');
+                            elActive.classList.remove('current');
+                        }
+                    });
+
+                    const elNonActive = document.querySelector('.header__toggle :not(.current)');
+                    gsap.set(elNonActive, { yPercent: 100, autoAlpha: 0, duration: 0 });
+                    gsap.to(elNonActive, {
+                        yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.inOut',
+                        onComplete() {
+                            document.querySelector('.header__toggle').classList.remove('ev-none');
+                        }
+                    });
+                    elNonActive.classList.add('current');
+                },
+            }
+
+            let nav = document.querySelector('.nav');
+
             document.querySelector('.header__toggle').addEventListener('click', function (e) {
-                let elActive = document.querySelector('.header__toggle .current');
-                gsap.to(elActive, {
-                    yPercent: -100, autoAlpha: 0, duration: 0.5, ease: 'power2.inOut',
-                    onStart() {
-                        e.target.classList.add('ev-none');
-                        elActive.classList.remove('current');
-                    }
-                });
-                const elNonActive = document.querySelector('.header__toggle :not(.current)');
-
-                gsap.set(elNonActive, { yPercent: 100, autoAlpha: 0, duration: 0 });
-                gsap.to(elNonActive, {
-                    yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.inOut',
-                    onComplete() {
-                        e.target.classList.remove('ev-none');
-                    }
-                });
-                elNonActive.classList.add('current');
-
-                let nav = document.querySelector('.nav');
+                NAV.toggle();
                 if (document.querySelector('.nav').classList.contains('active')) {
                     nav.classList.remove('active');
                 }
@@ -63,6 +69,16 @@ const HeaderScript = () => {
                     nav.classList.add('active');
                 }
             })
+
+            document.querySelectorAll('.nav__menu-link')
+                .forEach((el) => el.addEventListener('click', function (e) {
+                    setTimeout(() => {
+                        NAV.toggle();
+                        if (document.querySelector('.nav').classList.contains('active')) {
+                            nav.classList.remove('active');
+                        }
+                    }, 500);
+                }))
         }
     })
     return (<div ref={scriptRef} class="divScript"></div>)
