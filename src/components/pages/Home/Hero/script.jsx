@@ -66,7 +66,7 @@ const HeroScript = (props) => {
             }
         `;
 
-        const gn = new GyroNorm();
+        // const gn = new GyroNorm();
 
         // gn.FULLTILT = FULLTILT;
         class Sketch {
@@ -213,28 +213,28 @@ const HeroScript = (props) => {
                 this.render();
             }
 
-            gyro() {
-                let that = this;
+            // gyro() {
+            //     let that = this;
 
-                this.maxTilt = 15;
+            //     this.maxTilt = 15;
 
 
-                const rotationCoef = 0.15;
+            //     const rotationCoef = 0.15;
 
-                gn.init({ gravityNormalized: true }).then(function() {
-                gn.start(function(data) {
+            //     gn.init({ gravityNormalized: true }).then(function() {
+            //     gn.start(function(data) {
 
-                    let y = data.do.gamma;
-                    let x = data.do.beta;
+            //         let y = data.do.gamma;
+            //         let x = data.do.beta;
 
-                    that.mouseTargetY = clamp(x,-that.maxTilt, that.maxTilt)/that.maxTilt;
-                    that.mouseTargetX = -clamp(y,-that.maxTilt, that.maxTilt)/that.maxTilt;
+            //         that.mouseTargetY = clamp(x,-that.maxTilt, that.maxTilt)/that.maxTilt;
+            //         that.mouseTargetX = -clamp(y,-that.maxTilt, that.maxTilt)/that.maxTilt;
 
-                });
-                }).catch(function(e) {
-                    // console.log('not supported');
-                });
-            }
+            //     });
+            //     }).catch(function(e) {
+            //         // console.log('not supported');
+            //     });
+            // }
             mouseMove() {
                 let that = this;
                 document.addEventListener('mousemove', function(e) {
