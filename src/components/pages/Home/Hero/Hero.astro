@@ -9,10 +9,6 @@ import DeepMap from '~/assets/images/hero-real-deepmap.jpg';
 import HeroMain from '~/assets/images/hero-real.jpg';
 import TextTransClip from '~/components/common/TextTransClip';
 import Background2D from './Background2D';
-import Canvas from './Canvas.astro';
-
-const worker = new URL('src/components/pages/Home/Hero/worker.js', Astro.url);
-console.log(worker)
 
 const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
 const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
@@ -96,20 +92,19 @@ const { data } = Astro.props;
         </div>
         <div class="home__hero-bg">
             <div class="home__hero-bg-main">
-                <Canvas
+                <!-- <Canvas
                     original={HeroMainImg.src}
                     depth={DeepMapImg.src}
                     horizontalThreshold={150}
                     verticalThreshold={66.66}
-                />
-                <!-- <Background2D
+                /> -->
+                <Background2D
                     original={HeroMainImg.src}
                     depth={DeepMapImg.src}
                     horizontalThreshold={150}
                     verticalThreshold={66.66}
                     client:media="(min-width: 992px)"
-                    worker={worker.href}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}/> -->
+                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
                 <Image
                     class="img img-fill home__hero-bg-main-inner mod-mb"
                     src={HeroMainImg.src}
