@@ -1,7 +1,7 @@
 ---
 ---
-<script is:inline type="text/partytown">
-    import { Sketch, Uniform, Rect } from "./Sketch";
+<script type="text/partytown">
+    import { Sketch, Uniform, Rect } from "~/components/pages/Home/Hero/Sketch";
     Uniform.prototype.set = function( ...values ) {
         if (this.currentValue && this.areValuesEqual(values, this.currentValue)) {
             return; // If the new values are the same as the current ones, do nothing
@@ -11,6 +11,8 @@
         let args = [ this.location ].concat( values );
         this.gl[ method ].apply( this.gl, args );
     };
+
+    console.log("run")
 
     Uniform.prototype.areValuesEqual = function(newValues, oldValues) {
         if (!oldValues) return false;
