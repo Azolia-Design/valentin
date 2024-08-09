@@ -127,23 +127,25 @@ class Sketch {
     createScene() {
         this.program = this.gl.createProgram();
 
-        // this.addShader( vertex, this.gl.VERTEX_SHADER );
-        // this.addShader( fragment, this.gl.FRAGMENT_SHADER );
+        requestIdleCallback(() => {
+            this.addShader( vertex, this.gl.VERTEX_SHADER );
+            this.addShader( fragment, this.gl.FRAGMENT_SHADER );
 
-        this.gl.linkProgram( this.program );
-        this.gl.useProgram( this.program );
+            this.gl.linkProgram( this.program );
+            this.gl.useProgram( this.program );
 
-        this.uResolution = new Uniform( 'resolution', '4f' , this.program, this.gl );
-        this.uMouse = new Uniform( 'mouse', '2f' , this.program, this.gl );
-        this.uTime = new Uniform( 'time', '1f' , this.program, this.gl );
-        this.uRatio = new Uniform( 'pixelRatio', '1f' , this.program, this.gl );
-        this.uThreshold = new Uniform( 'threshold', '2f' , this.program, this.gl );
-        // create position attrib
-        this.billboard = new Rect( this.gl );
-        this.positionLocation = this.gl.getAttribLocation(this.program, 'a_position');
+            this.uResolution = new Uniform( 'resolution', '4f' , this.program, this.gl );
+            this.uMouse = new Uniform( 'mouse', '2f' , this.program, this.gl );
+            this.uTime = new Uniform( 'time', '1f' , this.program, this.gl );
+            this.uRatio = new Uniform( 'pixelRatio', '1f' , this.program, this.gl );
+            this.uThreshold = new Uniform( 'threshold', '2f' , this.program, this.gl );
+            // create position attrib
+            this.billboard = new Rect( this.gl );
+            this.positionLocation = this.gl.getAttribLocation(this.program, 'a_position');
 
-        this.gl.enableVertexAttribArray( this.positionLocation );
-        this.gl.vertexAttribPointer( this.positionLocation, 2, this.gl.FLOAT, false, 0, 0 );
+            this.gl.enableVertexAttribArray( this.positionLocation );
+            this.gl.vertexAttribPointer( this.positionLocation, 2, this.gl.FLOAT, false, 0, 0 );
+        })
     }
 
     addTexture() {
