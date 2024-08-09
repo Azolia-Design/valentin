@@ -127,8 +127,8 @@ class Sketch {
     createScene() {
         this.program = this.gl.createProgram();
 
-        this.addShader( vertex, this.gl.VERTEX_SHADER );
-        this.addShader( fragment, this.gl.FRAGMENT_SHADER );
+        // this.addShader( vertex, this.gl.VERTEX_SHADER );
+        // this.addShader( fragment, this.gl.FRAGMENT_SHADER );
 
         this.gl.linkProgram( this.program );
         this.gl.useProgram( this.program );
