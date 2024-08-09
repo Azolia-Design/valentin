@@ -1,12 +1,6 @@
-import gsap from 'gsap';
 import { createSignal, onMount } from "solid-js";
 import { clamp, inView } from '~/utils/number';
 import { loadImage, loadImages } from '~/utils/loadImage';
-
-const gGetter = (property) => (el) => gsap.getProperty(el, property);
-
-const xGetter = gGetter('x');
-const yGetter = gGetter('y');
 
 const vertex = `
     attribute vec2 a_position;

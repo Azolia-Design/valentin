@@ -23,3 +23,4 @@ export const loadImages = (urls, callback) => {
         images.push(image);
     }
 }
+
