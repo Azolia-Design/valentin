@@ -1,8 +1,8 @@
 ---
-
 ---
 <script is:inline type="text/partytown">
-    (function () {
+    import { onCleanup, onMount } from "solid-js";
+    onMount(() => {
         const vertex = `
             attribute vec2 a_position;
 
@@ -294,8 +294,6 @@
             this.gl[ method ].apply( this.gl, args );
         };
 
-        console.log("run")
-
         Uniform.prototype.areValuesEqual = function(newValues, oldValues) {
             if (!oldValues) return false;
             if (newValues.length !== oldValues.length) return false;
@@ -320,7 +318,7 @@
         };
 
         new Sketch(document.getElementById('hero-bg'));
-    })();
+    })
 </script>
 <canvas
     id="hero-bg"
