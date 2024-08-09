@@ -44,6 +44,7 @@
     "@astrojs/partytown": "^2.1.1",
     "astro-compress": "^2.2.28",
     "node-sass": "^9.0.0",
-    "sass": "^1.77.6"
+    "sass": "^1.77.6",
+    "worker-loader": "^3.0.8"
   }
 }
