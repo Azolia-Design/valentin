@@ -244,6 +244,10 @@ const ProjectListing = (props) => {
                         <div class="grid-1-1">
                             {props.data.map(({ desc }, idx) => <p className={`project__desc-txt${idx === index().curr ? ' active' : ''}`}>{desc}</p>)}
                         </div>
+                        <a href={props.data[index().curr].link} class="cl-txt-orange arrow-hover project__link">
+                            <span class="txt-link hover-un cl-txt-orange">Explore</span>
+                            {props.arrows}
+                        </a>
                     </div>
                     <div class="project__info">
                         <div className="grid-1-1">
@@ -313,9 +317,43 @@ const ProjectListing = (props) => {
                                 </div>
                             ))}
                         </div>
-                        <div class="fs-20 fw-bold project__pagination-number">
+                        <div class="project__pagination-wrap">
                             <span class="line"></span>
-                            <span class="cl-txt-title">{(index().curr + 1).toString().padStart(2, '0')} </span><span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
+                            <div class="fs-20 fw-bold project__pagination-number">
+                                <span class="cl-txt-title">{(index().curr + 1).toString().padStart(2, '0')} </span><span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
+                            </div>
+                            {/* <div class="project__pagination-control">
+                                <div className='project__pagination-control-arrow prev' onClick={() => onChangeIndex(-1)}>
+                                    <div class="ic ic-20">
+                                        <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.6 8.00003H14M6.19998 3.80005L2 8.00003L6.19998 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className='project__pagination-control-arrow next' onClick={() => onChangeIndex(1)}>
+                                    <div className="ic ic-20">
+                                        <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M13.4 8.00003H2M9.79997 3.80005L14 8.00003L9.79997 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div> */}
+                        </div>
+                    </div>
+                    <div class="project__control">
+                        <div className='project__control-arrow prev' onClick={() => onChangeIndex(-1)}>
+                            <div class="ic ic-20">
+                                <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.6 8.00003H14M6.19998 3.80005L2 8.00003L6.19998 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div className='project__control-arrow next' onClick={() => onChangeIndex(1)}>
+                            <div className="ic ic-20">
+                                <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.4 8.00003H2M9.79997 3.80005L14 8.00003L9.79997 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -326,8 +364,8 @@ const ProjectListing = (props) => {
                 </div>
             </div>
             <div class="projects__navigation">
-                <div class="projects__navigation-area prev" onClick={() => onChangeIndex(-1)} data-cursor="-nav" data-cursor-img={props.arrows.prev.src}></div>
-                <div class="projects__navigation-area next" onClick={() => onChangeIndex(1)} data-cursor="-nav" data-cursor-img={props.arrows.next.src}></div>
+                <div class="projects__navigation-area prev" onClick={() => onChangeIndex(-1)} data-cursor="-nav" data-cursor-img={props.arrowsIC.prev.src}></div>
+                <div class="projects__navigation-area next" onClick={() => onChangeIndex(1)} data-cursor="-nav" data-cursor-img={props.arrowsIC.next.src}></div>
             </div>
         </div>
     )

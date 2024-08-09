@@ -169,7 +169,7 @@ const { socials, whatapps } = Astro.props;
                 transition: color .4s ease-in-out;
                 &.mod-mb {
                     display: none;
-                    @include sm {
+                    @include xs {
                         display: inline-block;
                     }
                 }
@@ -178,9 +178,12 @@ const { socials, whatapps } = Astro.props;
                     @include text(h1);
                 }
                 @include sm {
-                    display: none;
+                    // display: none;
                     grid-column: 1/-1;
                     @include text(h2);
+                }
+                @include xs {
+                    display: none;
                 }
                 &:hover {
                     @include tColor(title, dm);
