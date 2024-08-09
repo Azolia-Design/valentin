@@ -77,10 +77,10 @@ class Sketch {
         this.startTime = performance.now();
 
         this.createScene();
-        this.addTexture();
-        this.mouseMove();
-        this.resizeHandler = this.debounce(this.resizeHandler.bind(this), 100);
-        this.resize();
+        setTimeout(() => {
+            this.addTexture();
+            this.mouseMove();
+        }, 1000);
     }
 
     addShader( source, type ) {
@@ -187,6 +187,8 @@ class Sketch {
         this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures[1]);
 
         // start application
+        this.resizeHandler = this.debounce(this.resizeHandler.bind(this), 100);
+        this.resize();
         this.render();
     }
 
