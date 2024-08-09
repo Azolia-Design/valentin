@@ -274,7 +274,6 @@ const HeroScript = (props) => {
             let args = [ this.location ].concat( values );
             this.gl[ method ].apply( this.gl, args );
         };
-
         function Rect( gl ) {
             var buffer = gl.createBuffer();
             gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
@@ -291,7 +290,7 @@ const HeroScript = (props) => {
             gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
         };
 
-        new Sketch('hero-bg')
+        // new Sketch('hero-bg')
         onCleanup(() => tl.kill());
     })
     return <div ref={scriptRef} class="divScript"></div>

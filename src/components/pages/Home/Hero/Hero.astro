@@ -8,6 +8,7 @@ import HeroScript from './script';
 import DeepMap from '~/assets/images/hero-real-deepmap.jpg';
 import HeroMain from '~/assets/images/hero-real.jpg';
 import TextTransClip from '~/components/common/TextTransClip';
+import Background2D from './Background2D';
 
 const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
 const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
@@ -91,13 +92,13 @@ const { data } = Astro.props;
         </div>
         <div class="home__hero-bg">
             <div class="home__hero-bg-main">
-                <div
-					id="hero-bg"
-                    class="home__hero-bg-main-inner"
-					data-imageOriginal={HeroMainImg.src}
-					data-imageDepth={DeepMapImg.src}
-					data-horizontalThreshold="150"
-					data-verticalThreshold="66.66"></div>
+                <Background2D
+                    original={HeroMainImg.src}
+                    depth={DeepMapImg.src}
+                    horizontalThreshold={150}
+                    verticalThreshold={66.66}
+                    client:media="(min-width: 992px)"
+                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
                 <Image
                     class="img img-fill home__hero-bg-main-inner mod-mb"
                     src={HeroMainImg.src}
@@ -165,6 +166,7 @@ const { data } = Astro.props;
                     position: absolute;
                     inset: 0;
                     transform-origin: center 16%;
+                    @include size(100%);
                     @include sm {
                         display: none;
                     }
