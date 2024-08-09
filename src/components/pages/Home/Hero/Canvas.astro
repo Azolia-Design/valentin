@@ -2,7 +2,13 @@
 
 ---
 <script is:inline type="text/partytown">
-    console.log("run")
+    (function () {
+        console.log("run")
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('webgl');
+        const elm = document.getElementById('testGetContextWebGLCanvas');
+        elm.textContent = ctx.canvas.tagName;
+    })();
     // const vertex = `
     //     attribute vec2 a_position;
 
