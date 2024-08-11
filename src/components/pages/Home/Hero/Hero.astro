@@ -186,6 +186,9 @@ const { data } = Astro.props;
                     }
                     &.canvas {
                         opacity: 0;
+                        @include md {
+                            display: none;
+                        }
                     }
                     // object-position: center top !important;
                 }
@@ -421,7 +424,7 @@ const { data } = Astro.props;
                 bottom: 0;
                 height: 43svh;
                 width: 100%;
-                z-index: 1;
+                z-index: 2;
                 background: linear-gradient(180deg, rgb(0, 5, 15, 0) 0%, #00050f 70%);
             }
         }

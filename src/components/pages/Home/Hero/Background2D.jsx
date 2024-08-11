@@ -264,9 +264,10 @@ function Background2D(props) {
     let canvasRef;
     onMount(() => {
         if (!canvasRef) return;
+        if (window.innerWidth <= 991) return;
+
         canvasRef.width = canvasRef.offsetWidth;
         canvasRef.height = canvasRef.offsetHeight;
-
         Uniform.prototype.set = function( ...values ) {
             if (this.currentValue && this.areValuesEqual(values, this.currentValue)) {
                 return; // If the new values are the same as the current ones, do nothing
@@ -301,13 +302,9 @@ function Background2D(props) {
             gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
         };
 
-        if (document.readyState !== 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
             const sketch = new Sketch(canvasRef);
-        } else {
-            document.addEventListener('DOMContentLoaded', function () {
-                const sketch = new Sketch(canvasRef);
-            });
-        }
+        });
     })
     return (
         <canvas
