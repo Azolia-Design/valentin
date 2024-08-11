@@ -1,3 +1,4 @@
+import gsap from 'gsap';
 import { createSignal, onMount } from "solid-js";
 import { clamp, inView } from '~/utils/number';
 import { loadImage, loadImages } from '~/utils/loadImage';
@@ -39,8 +40,6 @@ const fragment = `
         gl_FragColor = texture2D(image0, mirrored(fake3d));
     }
 `;
-
-
 class Sketch {
     constructor(canvas) {
         this.canvas = canvas;
@@ -70,11 +69,11 @@ class Sketch {
 
         this.startTime = performance.now();
 
+        this.isFirstRender = true;
+
+        this.addTexture();
         this.createScene();
-        setTimeout(() => {
-            this.addTexture();
-            this.mouseMove();
-        }, 1000);
+        this.mouseMove();
     }
 
     addShader( source, type ) {
@@ -121,25 +120,23 @@ class Sketch {
     createScene() {
         this.program = this.gl.createProgram();
 
-        requestIdleCallback(() => {
-            this.addShader( vertex, this.gl.VERTEX_SHADER );
-            this.addShader( fragment, this.gl.FRAGMENT_SHADER );
+        this.addShader( vertex, this.gl.VERTEX_SHADER );
+        this.addShader( fragment, this.gl.FRAGMENT_SHADER );
 
-            this.gl.linkProgram( this.program );
-            this.gl.useProgram( this.program );
+        this.gl.linkProgram( this.program );
+        this.gl.useProgram( this.program );
 
-            this.uResolution = new Uniform( 'resolution', '4f' , this.program, this.gl );
-            this.uMouse = new Uniform( 'mouse', '2f' , this.program, this.gl );
-            this.uTime = new Uniform( 'time', '1f' , this.program, this.gl );
-            this.uRatio = new Uniform( 'pixelRatio', '1f' , this.program, this.gl );
-            this.uThreshold = new Uniform( 'threshold', '2f' , this.program, this.gl );
-            // create position attrib
-            this.billboard = new Rect( this.gl );
-            this.positionLocation = this.gl.getAttribLocation(this.program, 'a_position');
+        this.uResolution = new Uniform( 'resolution', '4f' , this.program, this.gl );
+        this.uMouse = new Uniform( 'mouse', '2f' , this.program, this.gl );
+        this.uTime = new Uniform( 'time', '1f' , this.program, this.gl );
+        this.uRatio = new Uniform( 'pixelRatio', '1f' , this.program, this.gl );
+        this.uThreshold = new Uniform( 'threshold', '2f' , this.program, this.gl );
+        // create position attrib
+        this.billboard = new Rect( this.gl );
+        this.positionLocation = this.gl.getAttribLocation(this.program, 'a_position');
 
-            this.gl.enableVertexAttribArray( this.positionLocation );
-            this.gl.vertexAttribPointer( this.positionLocation, 2, this.gl.FLOAT, false, 0, 0 );
-        })
+        this.gl.enableVertexAttribArray( this.positionLocation );
+        this.gl.vertexAttribPointer( this.positionLocation, 2, this.gl.FLOAT, false, 0, 0 );
     }
 
     addTexture() {
@@ -208,6 +205,13 @@ class Sketch {
     }
 
     render() {
+        if (this.isFirstRender) {
+            gsap.to('.home__hero-bg-main-inner.canvas', {
+                autoAlpha: 1, duration: 1, ease: 'none', delay: .5, onComplete() {
+                    document.querySelector('.home__hero-bg-main-inner.placeholder').style.display = 'none';
+            } });
+            this.isFirstRender = false;
+        }
         let currentTime = (performance.now() - this.startTime) / 1000;
         this.uTime.set(currentTime);
 
@@ -297,14 +301,19 @@ function Background2D(props) {
             gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
         };
 
-        new Sketch(canvasRef);
-        // console.log(canvasRef)
+        if (document.readyState !== 'loading') {
+            const sketch = new Sketch(canvasRef);
+        } else {
+            document.addEventListener('DOMContentLoaded', function () {
+                const sketch = new Sketch(canvasRef);
+            });
+        }
     })
     return (
         <canvas
             ref={canvasRef}
             id="hero-bg"
-            class="home__hero-bg-main-inner"
+            class="home__hero-bg-main-inner canvas"
             data-imageOriginal={props.original}
             data-imageDepth={props.depth}
             data-verticalThreshold={props.verticalThreshold}

@@ -10,8 +10,6 @@ import HeroMain from '~/assets/images/hero-real.jpg';
 import TextTransClip from '~/components/common/TextTransClip';
 import Background2D from './Background2D';
 
-const worker = new URL('src/components/pages/Home/Hero/shaderWorker.js', Astro.url);
-
 const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
 const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
 
@@ -94,25 +92,28 @@ const { data } = Astro.props;
         </div>
         <div class="home__hero-bg">
             <div class="home__hero-bg-main">
-                <Background2D
-                    original={HeroMainImg.src}
-                    depth={DeepMapImg.src}
-                    horizontalThreshold={150}
-                    verticalThreshold={66.66}
-                    client:media="(min-width: 992px)"
-                    worker={worker.href}
-                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
-                <Image
-                    class="img img-fill home__hero-bg-main-inner mod-mb"
-                    src={HeroMainImg.src}
-                    widths={[400, 768, 1024, 2040]}
-                    width={1728}
-                    height={1050}
-                    alt={'a man'}
-                    layout="cover"
-                    loading="eager"
-                    decoding="sync"
-                />
+                <div class="home__hero-bg-main-wrap">
+                    <div class="home__hero-bg-main-inner placeholder">
+                        <Image
+                            class="img img-fill "
+                            src={HeroMainImg.src}
+                            widths={[400, 768, 1024, 2040]}
+                            width={1728}
+                            height={1050}
+                            alt={'a man'}
+                            layout="cover"
+                            loading="eager"
+                            decoding="sync"
+                        />
+                    </div>
+                    <Background2D
+                        original={HeroMainImg.src}
+                        depth={DeepMapImg.src}
+                        horizontalThreshold={150}
+                        verticalThreshold={66.66}
+                        client:media="(min-width: 992px)"
+                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                </div>
                 <div class="home__hero-gradient-mb"></div>
             </div>
         </div>
@@ -165,19 +166,26 @@ const { data } = Astro.props;
                     transform-origin: center 16%;
                     object-position: center top !important;
                 }
+                &-wrap {
+                    position: absolute;
+                    inset: 0;
+                    z-index: 2;
+                    @include size(100%);
+                    transform-origin: center 16%;
+                }
                 &-inner {
                     position: absolute;
                     inset: 0;
-                    transform-origin: center 16%;
                     @include size(100%);
-                    @include sm {
-                        display: none;
+                    &.placeholder {
+                        // opacity: 0;
+                        // display: none;
+                        // @include sm {
+                        //     display: block;
+                        // }
                     }
-                    &.mod-mb {
-                        display: none;
-                        @include sm {
-                            display: block;
-                        }
+                    &.canvas {
+                        opacity: 0;
                     }
                     // object-position: center top !important;
                 }
