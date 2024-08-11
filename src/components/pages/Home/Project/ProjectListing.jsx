@@ -356,7 +356,7 @@ const ProjectListing = (props) => {
                                 <span class="cl-txt-title home__project-pagination-txt">{(idx + 1).toString().padStart(2, '0')} </span>
                             ))}
                         </div>
-                        <span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
+                        <span class="cl-txt-desc">/ {props.data.length.toString().padStart(2, '0')}</span>
                     </div>
                     <div class="grid-1-1">
                         <For each={props.data}>
