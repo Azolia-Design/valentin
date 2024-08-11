@@ -303,6 +303,8 @@ function Background2D(props) {
             Rect.prototype.render = function( gl ) {
                 gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
             };
+
+            const sketch = new Sketch(canvasRef);
         }
 
         let isInitCanvas = false;
