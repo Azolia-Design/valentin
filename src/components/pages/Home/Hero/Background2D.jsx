@@ -268,44 +268,47 @@ function Background2D(props) {
 
         canvasRef.width = canvasRef.offsetWidth;
         canvasRef.height = canvasRef.offsetHeight;
-        Uniform.prototype.set = function( ...values ) {
-            if (this.currentValue && this.areValuesEqual(values, this.currentValue)) {
-                return; // If the new values are the same as the current ones, do nothing
-            }
-            this.currentValue = values; // Update the current value
-            let method = 'uniform' + this.suffix;
-            let args = [ this.location ].concat( values );
-            this.gl[ method ].apply( this.gl, args );
-        };
 
-        Uniform.prototype.areValuesEqual = function(newValues, oldValues) {
-            if (!oldValues) return false;
-            if (newValues.length !== oldValues.length) return false;
-
-            for (let i = 0; i < newValues.length; i++) {
-                if (newValues[i] !== oldValues[i]) {
-                    return false;
+        function initCanvas() {
+            Uniform.prototype.set = function( ...values ) {
+                if (this.currentValue && this.areValuesEqual(values, this.currentValue)) {
+                    return; // If the new values are the same as the current ones, do nothing
                 }
-            }
+                this.currentValue = values; // Update the current value
+                let method = 'uniform' + this.suffix;
+                let args = [ this.location ].concat( values );
+                this.gl[ method ].apply( this.gl, args );
+            };
 
-            return true;
-        };
+            Uniform.prototype.areValuesEqual = function(newValues, oldValues) {
+                if (!oldValues) return false;
+                if (newValues.length !== oldValues.length) return false;
 
-        Rect.verts = new Float32Array([
-            -1, -1,
-            1, -1,
-            -1, 1,
-            1, 1,
-        ]);
+                for (let i = 0; i < newValues.length; i++) {
+                    if (newValues[i] !== oldValues[i]) {
+                        return false;
+                    }
+                }
 
-        Rect.prototype.render = function( gl ) {
-            gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
-        };
+                return true;
+            };
+
+            Rect.verts = new Float32Array([
+                -1, -1,
+                1, -1,
+                -1, 1,
+                1, 1,
+            ]);
+
+            Rect.prototype.render = function( gl ) {
+                gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
+            };
+        }
 
         let isInitCanvas = false;
         document.addEventListener('mousemove', function () {
             if (isInitCanvas) return;
-            const sketch = new Sketch(canvasRef);
+            initCanvas();
             isInitCanvas = true;
         })
     })
