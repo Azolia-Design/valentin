@@ -302,9 +302,12 @@ function Background2D(props) {
             gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
         };
 
-        document.addEventListener('DOMContentLoaded', function () {
+        let isInitCanvas = false;
+        document.addEventListener('mousemove', function () {
+            if (isInitCanvas) return;
             const sketch = new Sketch(canvasRef);
-        });
+            isInitCanvas = true;
+        })
     })
     return (
         <canvas
