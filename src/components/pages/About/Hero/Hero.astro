@@ -7,27 +7,11 @@ let currentYear = new Date().getFullYear() % 100;
     <div class="about__hero">
         <div class="container">
             <h1 class="upper about__hero-title grid">
-                <span class="heading h1 fw-bold about__hero-title-txt">
-                    <TextTransClip
-                        startSelf={true}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Valentine</TextTransClip>
-                </span>
-                <span class="heading h1 cl-txt-orange fw-bold about__hero-title-txt">
-                    <TextTransClip
-                        startSelf={true}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>Cheval<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span></TextTransClip>
-                </span>
+                <span class="heading h1 fw-bold about__hero-title-txt">Valentine</span>
+                <span class="heading h1 cl-txt-orange fw-bold about__hero-title-txt">Cheval<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span></span>
                 <span class="heading h3 fw-semi upper about__hero-title-year">
-                    <span class="cl-txt-disable">
-                        <TextTransClip
-                            startSelf={true}
-                            client:visible={{ rootMargin: "100% 0% 100% 0%" }}>93</TextTransClip>
-                    </span>
-                    <span class="cl-txt-title">
-                        <TextTransClip
-                            startSelf={true}
-                            client:visible={{ rootMargin: "100% 0% 100% 0%" }}>{currentYear}</TextTransClip>
-                    </span>
+                    <span class="cl-txt-disable">93</span>
+                    <span class="cl-txt-title">{currentYear}</span>
                 </spa>
             </h1>
             <div class="about__hero-info grid">

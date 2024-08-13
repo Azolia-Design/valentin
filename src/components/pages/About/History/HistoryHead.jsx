@@ -14,21 +14,6 @@ const HistoryHead = (props) => {
     return (
         <>
             <h2 class="upper fix-font about__history-title grid">
-                {/* <span class="heading h2 fw-bold about__history-title-txt">
-                    <TextTransClip triggerOpts={triggerOpts(0)}>I have</TextTransClip>
-                </span>
-                <span class="heading h2 fw-bold cl-txt-orange about__history-title-txt">
-                    <TextTransClip triggerOpts={triggerOpts(1)}>8 years</TextTransClip>
-                </span>
-                <span class="heading h2 fw-bold about__history-title-txt">
-                    <TextTransClip triggerOpts={triggerOpts(2)}>of Experience</TextTransClip>
-                </span>
-                <span class="heading h2 fw-bold about__history-title-txt">
-                    <TextTransClip triggerOpts={triggerOpts(3)}>in <span class="cl-txt-title">fintech</span></TextTransClip>
-                </span>
-                <span class="heading h2 fw-bold about__history-title-txt">
-                    <TextTransClip triggerOpts={triggerOpts(4)}>field</TextTransClip>
-                </span> */}
                 <span class="heading h2 fw-bold about__history-title-txt">I have</span>
                 <span class="heading h2 fw-bold cl-txt-orange about__history-title-txt">8 years</span>
                 <span class="heading h2 fw-bold about__history-title-txt">of Experience</span>

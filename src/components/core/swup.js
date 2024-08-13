@@ -4,7 +4,6 @@ import gsap from 'gsap';
 
 import { getCursor, initMouseFollower } from './cursor';
 import { getLenis } from './lenis';
-import initButton from './button';
 
 import SwupJsPlugin from '@swup/js-plugin';
 import SwupRouteNamePlugin from '@swup/route-name-plugin';
@@ -27,6 +26,7 @@ function forceScrollTop() {
 }
 
 function updateHeader() {
+    console.log("update header")
     const links = window.innerWidth > 767 ? document.querySelectorAll('.header__menu-link') : document.querySelectorAll('.nav__menu-link');
     Array.prototype.forEach.call(links, function (link) {
         link.classList.remove("active");
@@ -57,6 +57,7 @@ function resetTransition(url) {
 }
 
 function initSwup() {
+    console.log("Swuper")
     swup = new Swup({
         containers: ['main'],
         plugins: [
@@ -82,13 +83,11 @@ function initSwup() {
     });
 
     swup.hooks.on('enable', () => {
-        initButton("render");
     })
 
     swup.hooks.on('visit:start', (visit) => {
         console.log("visit:start", window.location.href)
     });
-
 
     swup.hooks.on('content:replace', () => {
         updateHeader();

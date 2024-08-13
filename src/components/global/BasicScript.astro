@@ -11,51 +11,55 @@ declare global {
     import { initLenis, getLenis } from "~/components/core/lenis";
     import { initMouseFollower, getCursor } from '~/components/core/cursor';
     import { initSwup, getSwup } from '~/components/core/swup';
-    // import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+    import initButton from "~/components/core/button";
 
     // import CMS from "decap-cms-app";
     // CMS.init();
+    let ticking = true;
 
-    const onLoad = function () {
+    if (!getLenis()) {
+        initLenis();
+    }
+    else {
+        getLenis().on('scroll', function(inst) {
+            let scrollPos = inst.scroll;
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    applyOnScroll(scrollPos);
+                });
+                ticking = true;
+            }
+        })
+    }
+
+    const applyOnScroll = (scrollPos) => {
+        function headerOnScroll(scrollPos) {
+            const header = document.querySelector('header');
+            if (!header) return;
+            if (scrollPos > (header.offsetHeight * 6) && !header.classList.contains('on-scroll')) {
+                header.classList.add("on-scroll");
+            }
+            else if (scrollPos <= (header.offsetHeight * 6) && header.classList.contains('on-scroll')) {
+                header.classList.remove('on-scroll');
+            }
+            ticking = false;
+        }
+        headerOnScroll(scrollPos);;
+    }
+    applyOnScroll(window.scrollY);
+
+    const initPage = () => {
+        console.log("run")
+        getLenis().scrollTo("top", {
+            duration: .001
+        });
+        onLoad();
+    }
+    const onLoad = () =>{
         console.log("on load")
 
-        // if (history.scrollRestoration) {
-        //     history.scrollRestoration = "manual";
-        // }
+        initButton('render');
 
-
-        let ticking = true;
-
-        const applyOnScroll = (scrollPos) => {
-            function headerOnScroll(scrollPos) {
-                const header = document.querySelector('header');
-                if (!header) return;
-                if (scrollPos > (header.offsetHeight * 5) && !header.classList.contains('on-scroll')) {
-                    header.classList.add("on-scroll");
-                }
-                else if (scrollPos <= (header.offsetHeight * 5) && header.classList.contains('on-scroll')) {
-                    header.classList.remove('on-scroll');
-                }
-                ticking = false;
-            }
-            headerOnScroll(scrollPos);;
-        }
-        applyOnScroll(window.scrollY);
-
-        if (!getLenis()) {
-            initLenis();
-        }
-        else {
-            getLenis().on('scroll', function(inst) {
-                let scrollPos = inst.scroll;
-                if (!ticking) {
-                    requestAnimationFrame(() => {
-                        applyOnScroll(scrollPos);
-                    });
-                    ticking = true;
-                }
-            })
-        }
         if (!getCursor()) {
             if (window.innerWidth > 991) {
                 initMouseFollower();
@@ -66,10 +70,6 @@ declare global {
         }
     }
 
-    const onPageShow = function () {
-        console.log("on page show")
-    }
 
-    window.onload = onLoad;
-    window.onpageshow = onPageShow;
+    window.onload = initPage;
 </script>

@@ -8,7 +8,10 @@ let cursor;
 function initMouseFollower() {
     cursor = new MouseFollower({
         speed: 0.85,
-        skewing: 2,
+        skewing: 0,
+        skewingText: 0.5,
+        skewingIcon: 0.5,
+        skewingMedia: 0.5,
         overwrite: true
     })
 }

@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import { onMount, onCleanup } from 'solid-js';
 import { initScrollTrigger } from '~/components/core/scrollTrigger';
+import { cvUnit } from '~/utils/number';
 
 const HeroScript = (props) => {
     let scriptRef;
@@ -26,7 +27,42 @@ const HeroScript = (props) => {
             .fromTo('.home__intro-companies', { yPercent: 0 }, { yPercent: window.innerWidth > 767 ? 20 : 0, duration: 1, ease: 'linear' }, "<.3")
             .to('.home__intro-bg-gradient', { display: 'none', duration: 0, ease: 'linear' });
 
-        onCleanup(() => tl.kill());
+
+        // let tlShowHeader = gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: '.home__hero-greating-wrap',
+        //         start: `top top+=${cvUnit(window.innerWidth > 767 ? 40 : 20, 'rem')}`,
+        //         end: `bottom top+=${cvUnit(window.innerWidth > 767 ? 40 : 20, 'rem') + document.querySelector('.header__name').offsetHeight}`,
+        //         scrub: true,
+        //         markers: true
+        //     }
+        // })
+        // let tlHiddenGreating = gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: '.home__hero-greating-wrap',
+        //         start: `top top+=${cvUnit(50, 'rem') + document.querySelector('.header__name').offsetHeight}`,
+        //         end: `top top+=${document.querySelector('.header__name').offsetHeight}`,
+        //         scrub: true
+        //     }
+        // });
+
+        // document.querySelector('.header__name').removeAttribute('style');
+
+        // gsap.set('.header__name', { yPercent: 100, autoAlpha: 1, duration: 0 })
+        // tlShowHeader
+        //     .to('.header__name', { yPercent: 0, duration: 1, ease: 'none' })
+        //     .to('.header__greating', { y: document.querySelector('.header__name').offsetHeight * -1, duration: 1, ease: 'none' }, 0)
+        //     .to('.home__hero-name', { autoAlpha: 0, duration: 0, ease: 'none' })
+        //     .to('.header__name', { autoAlpha: 1, duration: 0, ease: 'none' }, '<=0')
+
+        // tlHiddenGreating
+        //     .fromTo('.header__greating', { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: 'none' })
+
+        onCleanup(() => {
+            tl.kill();
+            // tlShowHeader.kill();
+            // tlHiddenGreating.kill();
+        });
     })
     return <div ref={scriptRef} class="divScript"></div>
 }

@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { createSignal, onMount } from "solid-js";
+import { createSignal, onCleanup, onMount } from "solid-js";
 import { clamp, inView } from '~/utils/number';
 import { loadImages } from '~/utils/loadImage';
 
@@ -271,7 +271,10 @@ function Background2D(props) {
         canvasRef.width = canvasRef.offsetWidth;
         canvasRef.height = canvasRef.offsetHeight;
 
+        let isInitCanvas = false;
+
         function initCanvas() {
+            if (isInitCanvas) return;
             Uniform.prototype.set = function( ...values ) {
                 if (this.currentValue && this.areValuesEqual(values, this.currentValue)) {
                     return; // If the new values are the same as the current ones, do nothing
@@ -306,13 +309,12 @@ function Background2D(props) {
                 gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
             };
             const sketch = new Sketch(canvasRef);
+            isInitCanvas = true;
         }
 
-        let isInitCanvas = false;
-        document.addEventListener('mousemove', function () {
-            if (isInitCanvas) return;
-            initCanvas();
-            isInitCanvas = true;
+        document.addEventListener('mousemove', initCanvas)
+        onCleanup(() => {
+            document.removeEventListener('mousemove', initCanvas);
         })
     })
     return (
