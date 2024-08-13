@@ -55,16 +55,47 @@ const { post } = Astro.props;
     .post {
         &__main {
             padding-top: 14.5rem;
+            @include md {
+                padding-top: 8rem;
+            }
+            @include sm {
+                padding-top: 6rem;
+            }
+            @include xs {
+                padding-top: 4rem;
+            }
         }
         &__intro {
             padding-bottom: 12rem;
+            @include md {
+                padding-bottom: 8rem;
+            }
+            @include sm {
+                padding-bottom: 6rem;
+            }
+            @include xs {
+                padding-bottom: 4rem;
+            }
             &-label {
                 grid-column: 1/2;
                 grid-row: 1/2;
+                @include sm {
+                    grid-column: 1/-1;
+                    margin-bottom: 1.2rem;
+                    @include text(14);
+                }
             }
             &-content {
                 grid-column: 5/15;
                 max-width: 99.7rem;
+                @include md {
+                    grid-column: 4/-1;
+                }
+                @include sm {
+                    grid-column: 1/-1;
+                    max-width: unset;
+                    margin-bottom: 3.2rem;
+                }
             }
             &-link {
                 display: flex;
@@ -73,11 +104,17 @@ const { post } = Astro.props;
                 grid-column: 1/2;
                 grid-row: 1/2;
                 align-self: end;
+                @include sm {
+                    grid-row: 3/4;
+                }
             }
         }
         &__content {
             &-toc {
                 grid-column: 1/4;
+                @include sm {
+                    display: none;
+                }
                 &-inner {
                     position: sticky;
                     max-height: calc(100vh - 15rem);
@@ -133,6 +170,17 @@ const { post } = Astro.props;
                 position: relative;
 
                 padding-block: 12rem;
+                @include md {
+                    grid-column: 4/-1;
+                    padding-block: 8rem;
+                }
+                @include sm {
+                    grid-column: 1/-1;
+                    padding-block: 6rem;
+                }
+                @include xs {
+                    padding-block: 4rem;
+                }
                 h2 {
                     @include text(h4);
                 }

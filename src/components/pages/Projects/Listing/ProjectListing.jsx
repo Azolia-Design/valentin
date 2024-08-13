@@ -13,6 +13,7 @@ const ProjectListing = (props) => {
         { selector: '.project__name-txt' },
         { selector: '.project__desc-txt', optionsIn: { duration: 1 }, optionsOut: { duration: 1 } },
         { selector: '.project__year-txt' },
+        { selector: '.home__project-pagination-txt' },
         { selector: '.project__role .project-item-label', optionsIn: { delay: .2 } },
         { selector: '.project__services .project-item-label', optionsIn: { delay: .2 } },
         { selector: '.project__selling .project-item-label', optionsIn: { delay: .2 } },
@@ -241,6 +242,7 @@ const ProjectListing = (props) => {
                         </div>
                     </div>
                     <div class="project__desc">
+                        <div className="line"></div>
                         <div class="grid-1-1">
                             {props.data.map(({ desc }, idx) => <p className={`project__desc-txt${idx === index().curr ? ' active' : ''}`}>{desc}</p>)}
                         </div>
@@ -319,8 +321,13 @@ const ProjectListing = (props) => {
                         </div>
                         <div class="project__pagination-wrap">
                             <span class="line"></span>
-                            <div class="fs-20 fw-bold project__pagination-number">
-                                <span class="cl-txt-title">{(index().curr + 1).toString().padStart(2, '0')} </span><span class="cl-txt-disable">/ {props.data.length.toString().padStart(2, '0')}</span>
+                            <div class="fs-20 fw-med project__pagination-number">
+                                <div class="grid-1-1">
+                                    {props.data.map((_, idx) => (
+                                        <span class="cl-txt-title home__project-pagination-txt">{(idx + 1).toString().padStart(2, '0')} </span>
+                                    ))}
+                                </div>
+                                <span class="cl-txt-disable"><span class="slash">/</span>{props.data.length.toString().padStart(2, '0')}</span>
                             </div>
                             {/* <div class="project__pagination-control">
                                 <div className='project__pagination-control-arrow prev' onClick={() => onChangeIndex(-1)}>
@@ -342,14 +349,14 @@ const ProjectListing = (props) => {
                     </div>
                     <div class="project__control">
                         <div className='project__control-arrow prev' onClick={() => onChangeIndex(-1)}>
-                            <div class="ic ic-20">
+                            <div class="ic ic-16">
                                 <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M2.6 8.00003H14M6.19998 3.80005L2 8.00003L6.19998 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
                                 </svg>
                             </div>
                         </div>
                         <div className='project__control-arrow next' onClick={() => onChangeIndex(1)}>
-                            <div className="ic ic-20">
+                            <div className="ic ic-16">
                                 <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.4 8.00003H2M9.79997 3.80005L14 8.00003L9.79997 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
                                 </svg>

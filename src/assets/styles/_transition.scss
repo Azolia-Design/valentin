@@ -43,6 +43,9 @@ html {
     @include swup-path(animating, project, project) {
         .transition-fade {
             transition: .6s;
+            @include md {
+                transition: 1s;
+            }
         }
     }
 }

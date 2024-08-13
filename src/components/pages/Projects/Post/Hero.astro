@@ -19,6 +19,7 @@ const { post } = Astro.props;
                     decoding="sync"
                 />
             </div>
+            <div class="post__hero-cover-gradient"></div>
             <!-- <div class="post__hero-cover-blur">
                 <Image
                     src={'~/assets/images/post-blur.png'}
@@ -41,7 +42,7 @@ const { post } = Astro.props;
                     <div class="post__hero-role">
                         <div class="cl-txt-desc fw-med post__hero-label">Role</div>
                         <div class="post__hero-role-listing">
-                            {post.roles.map((role) => <p class="cl-txt-sub">{role.title}</p>)}
+                            {[...post.roles, '', '', ''].slice(0, 3).map((role) => <p class="cl-txt-sub">{role.title}</p>)}
                         </div>
                     </div>
                     <div class="post__hero-service">
@@ -56,6 +57,7 @@ const { post } = Astro.props;
                             {post.sellingPoints.map((point) => <p class="cl-txt-sub">{point.title}</p>)}
                         </div>
                     </div>
+                    <p class="fw-med cl-txt-sub post__hero-year mod-tab">© {post.year}</p>
                 </div>
                 <div class="post__hero-bottom">
                     <p class="fs-20 fw-med cl-txt-sub post__hero-year">© {post.year}</p>
@@ -87,6 +89,15 @@ const { post } = Astro.props;
                 position: absolute;
                 inset: 0;
                 z-index: 2;
+                @include md {
+                    height: 72svh; //or 72vh
+                    top: 0;
+                    mask-image: linear-gradient(transparent,#fff 0,#fff calc(100% - 15svh), transparent);
+                    -webkit-mask-image: linear-gradient(transparent,#fff 0,#fff calc(100% - 15svh), transparent);
+                }
+                @include sm {
+                    height: 67svh;
+                }
                 &-img {
                     display: flex;
                     justify-content: center;
@@ -100,6 +111,20 @@ const { post } = Astro.props;
                 &-blur {
                     @include size(100%);
                 }
+                &-gradient {
+                    display: none;
+                    position: relative;
+                    z-index: 2;
+                    background: linear-gradient(22deg, #00050f 16.32%, rgb(0, 5, 15, 0) 50%);
+                    height: 31svh;
+                    margin-top: auto;
+                    @include md {
+                        display: block;
+                    }
+                    @include sm {
+                        height: 40svh;
+                    }
+                }
             }
             &-main {
                 position: relative;
@@ -107,6 +132,15 @@ const { post } = Astro.props;
                 height: 100%;
                 > .container {
                     height: 100%;
+                    @include md {
+                        // grid-template-rows: 1fr auto;
+                    }
+                }
+                @include md {
+                    padding-bottom: 5.7svh;
+                }
+                @include sm {
+                    padding-bottom: 3.2svh;
                 }
             }
             &-title {
@@ -116,6 +150,23 @@ const { post } = Astro.props;
 
                 line-height: .835em;
                 padding-bottom: 7.6vh;
+
+                @include md {
+                    @include text(dis1);
+                    line-height: .835em;
+                    padding-bottom: 0;
+                    grid-row: 1/2;
+                    grid-column: 1/-1;
+
+                    padding-bottom: 22svh;
+                }
+                @include sm {
+                    @include text(h1);
+                    line-height: .835em;
+
+                    padding-bottom: 28svh;
+                    overflow-wrap: anywhere;
+                }
             }
             &-info {
                 padding-top: 17.14vh;
@@ -127,9 +178,58 @@ const { post } = Astro.props;
                 flex-direction: column;
                 justify-content: start;
                 gap: 7.4rem 0;
+                @include md {
+                    padding-top: 0;
+                    grid-column: 1/10;
+                    grid-row: 1/2;
+                    display: grid;
+                    align-self: end;
+                    grid-template-columns: repeat(2, 1fr);
+                    width: 100%;
+                    max-width: unset;
+                    gap: 5rem 8.5rem;
+                }
+                @include sm {
+                    gap: 3.2rem 1.6rem;
+                    grid-column: 1/-1;
+                }
+                @include xs {
+                    @include text(14);
+                }
+            }
+            &-selling {
+                @include md {
+                    grid-column: 2/3;
+                }
+                @include sm {
+                    grid-column: 1/-1;
+                }
+            }
+            &-year {
+                @include md {
+                    display: none;
+                }
+                &.mod-tab {
+                    display: none;
+                    @include md {
+                        display: block;
+                        grid-column: 1/2;
+                        grid-row: 2/3;
+                        align-self: end;
+                    }
+                    @include sm {
+                        grid-column: 1/-1;
+                        grid-row: 3/4;
+                        justify-self: end;
+                        margin-top: -2.5rem;
+                    }
+                }
             }
             &-label {
                 margin-bottom: 1rem;
+                @include xs {
+                    @include text(14);
+                }
                 // opacity: 0;
             }
             &-bottom {
@@ -139,6 +239,22 @@ const { post } = Astro.props;
                 display: flex;
                 justify-content: space-between;
                 align-items: baseline;
+                @include md {
+                    grid-column: 11/-1;
+                    grid-row: 1/2;
+                    padding-bottom: 0;
+                }
+                @include sm {
+                    grid-column: 1/-1;
+                }
+            }
+            &-cta {
+                @include md {
+                    @include text(14);
+                }
+                @include sm {
+                    display: none;
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { createSignal, onMount } from "solid-js";
 import { clamp, inView } from '~/utils/number';
-import { loadImage, loadImages } from '~/utils/loadImage';
+import { loadImages } from '~/utils/loadImage';
 
 const vertex = `
     attribute vec2 a_position;
@@ -43,6 +43,7 @@ const fragment = `
 class Sketch {
     constructor(canvas) {
         this.canvas = canvas;
+
         this.gl = this.canvas.getContext('webgl');
         this.ratio = window.devicePixelRatio;
         this.windowWidth = window.innerWidth;
@@ -141,15 +142,16 @@ class Sketch {
 
     addTexture() {
         if (this.textures.length === 0) { // Only load textures if they haven't been loaded
+            this.start.bind(this.images);
             loadImages(this.imageURLs, this.start.bind(this));
         } else {
-            this.start(); // Start immediately if textures are already loaded
+            this.start(this.images); // Start immediately if textures are already loaded
         }
     }
 
     start(images) {
         let that = this;
-        let gl = that.gl;
+        let gl = that.gl;a
 
         this.imageAspect = images[0].naturalHeight/images[0].naturalWidth;
         for (var i = 0; i < images.length; i++) {
@@ -220,7 +222,7 @@ class Sketch {
         let newMouseX = this.mouseX + (this.mouseTargetX - this.mouseX) * 0.05;
         let newMouseY = this.mouseY + (this.mouseTargetY - this.mouseY) * 0.05;
 
-        // Kiểm tra xem sự thay đổi có lớn hơn ngưỡng không
+        // Check for mouse change with epsilon
         if (Math.abs(newMouseX - this.mouseX) > epsilon || Math.abs(newMouseY - this.mouseY) > epsilon) {
             this.mouseX = newMouseX;
             this.mouseY = newMouseY;
@@ -303,7 +305,6 @@ function Background2D(props) {
             Rect.prototype.render = function( gl ) {
                 gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 );
             };
-
             const sketch = new Sketch(canvasRef);
         }
 

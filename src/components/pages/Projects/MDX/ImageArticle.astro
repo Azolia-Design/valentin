@@ -24,12 +24,20 @@ const { src, alt } = Astro.props;
   }
   {alt && <figcaption class="fs-16">{alt}</figcaption>}
 </figure>
-<style>
+<style lang="scss">
+    @use '~/assets/styles/mixins' as *;
+
   figure {
     /* margin-block: 11.5rem; */
     margin-block: 8rem;
+    @include md {
+      margin-block: 4.8rem;
+    }
   }
   figcaption {
     margin-top: 1.9rem;
+    @include sm {
+      margin-top: 1.4rem;
+    }
   }
 </style>

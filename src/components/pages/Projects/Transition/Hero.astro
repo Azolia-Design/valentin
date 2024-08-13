@@ -31,6 +31,9 @@
         flex-direction: column;
         align-items: start;
         gap: 7.4rem 0;
+        .grid-1-1  {
+            display: grid !important;
+        }
         .project__role,
         .project__services,
         .project__selling {
@@ -42,6 +45,11 @@
 
                 font-family: 'Helvetica Neue Reg', sans-serif;
                 font-weight: 400;
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                align-self: start;
+                grid-area: 1/1/2/2;
             }
         }
         .project-item-label {

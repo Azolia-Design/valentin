@@ -17,8 +17,14 @@ const PostScript = () => {
                 scrub: true,
             }
         })
+
+
+        let scaleArray = ['.post__hero-title, .post__hero-year, .post__hero-cta'];
+        if (window.innerWidth <= 991) {
+            scaleArray.push('.post__hero-info', '.post__hero-bottom')
+        }
         tl
-            .to(['.post__hero-title, .post__hero-year, .post__hero-cta'], { scale: .8, autoAlpha: .6, duration: 1, ease: 'power2.in' }, 0)
+            .to(scaleArray, { scale: .8, autoAlpha: .6, duration: 1, ease: 'power2.in' }, 0)
             .to('.post__hero-cover img', { scale: .8, duration: 1, ease: 'none' }, 0)
             .to('.post__hero-cover', { scale: 1.4,  autoAlpha: .5, duration: 1, ease: 'none' }, 0)
 

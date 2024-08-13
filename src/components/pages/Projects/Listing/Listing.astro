@@ -69,7 +69,8 @@ const projects = [
                 grid-template-rows: auto auto 1fr auto auto;
             }
             @include sm {
-                padding-top: 10vh;
+                padding-top: calc(6rem + 3.28svh);
+                grid-template-rows: auto 1fr auto auto auto;
             }
         }
     }
@@ -140,12 +141,24 @@ const projects = [
                 grid-row: 1/2;
                 padding-bottom: 6rem;
             }
+            @include sm {
+                grid-row: 3/4;
+                padding-top: 4rem;
+                padding-bottom: 0;
+                margin-right: 6rem;
+                overflow-wrap: anywhere;
+                margin-bottom: 3.2rem;
+            }
             &-txt {
                 justify-self: start;
                 align-self: start;
                 line-height: .835em;
                 @include md {
                     @include text(h1);
+                    line-height: .835em;
+                }
+                @include sm {
+                    @include text(h2);
                     line-height: .835em;
                 }
                 &.active {
@@ -157,16 +170,33 @@ const projects = [
             grid-column: 1/4;
             align-self: end;
             max-width: 32rem;
+            position: relative;
             @include md {
                 padding-top: 4rem;
                 grid-column: 5/10;
                 max-width: 30rem;
+            }
+            @include sm {
+                padding-top: 3.2rem;
+                grid-column: 1/-1;
+                margin-right: 6rem;
+            }
+            .line {
+                display: none;
+                @include sm {
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                }
             }
             &-txt {
                 justify-self: start;
                 align-self: end;
                 &.active {
                     pointer-events: auto;
+                }
+                @include sm {
+                    align-self: start;
                 }
             }
         }
@@ -177,6 +207,9 @@ const projects = [
             @include md {
                 margin-top: 4.35svh;
                 display: flex;
+            }
+            @include sm {
+                margin-top: 4rem;
             }
         }
         &__info {
@@ -192,6 +225,9 @@ const projects = [
                 grid-row: 3/4;
                 grid-column: 1/5;
                 padding-top: 8rem;
+            }
+            @include sm {
+                display: none;
             }
 
             // display: flex;
@@ -244,6 +280,13 @@ const projects = [
                 grid-column: 1/5;
                 grid-row: 4/5;
             }
+            @include sm {
+                grid-column: 1/-1;
+                grid-row: 3/5;
+                justify-self: end;
+                margin-bottom: -.5rem;
+                @include text(14);
+            }
         }
         &__thumbnail {
             height: 100%;
@@ -258,6 +301,8 @@ const projects = [
                 }
                 @include sm {
                     grid-column: 1/-1;
+                    grid-row: 1/3;
+                    margin-right: 6rem;
                 }
             }
             &-listing {
@@ -306,6 +351,11 @@ const projects = [
             @include md {
                 grid-column: 1/5;
                 grid-row: 2/3;
+            }
+            @include sm {
+                grid-column: 1/1/-1;
+                grid-row: 1/2;
+                justify-self: end;
             }
             &-main {
                 display: flex;
@@ -382,8 +432,18 @@ const projects = [
             }
             &-number {
                 position: relative;
+                display: flex;
+                align-items: center;
+                gap: 0 1rem;
+                line-height: .9em;
                 @include md {
                     @include text(18);
+                    line-height: 1em;
+                }
+                @include sm {
+                    @include text(14);
+                    gap: 0 .2rem;
+                    line-height: 1em;
                 }
             }
         }
@@ -392,17 +452,28 @@ const projects = [
 
             @include md {
                 display: flex;
-                align-items: center;
-                gap: 0 .5rem;
-                grid-column: 1/1/-1;
-                grid-row: 1/2;
-
-                margin: -.6rem;
+                align-items: end;
+                justify-self: end;
+                gap: 0 .8rem;
+                grid-area: 1/1/2/-1;
+                padding-bottom: 6rem;
+            }
+            @include sm {
+                padding-bottom: 0;
+                grid-row: 2/3;
+                margin: -.3rem;
             }
             &-arrow {
                 @include size(4.4rem);
                 border-radius: 50%;
                 border: 1px solid var(--cl-dm-border);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                @include sm {
+                    @include size(2.2rem);
+                    border: none;
+                }
             }
         }
     }
