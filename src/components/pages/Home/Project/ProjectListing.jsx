@@ -1,5 +1,4 @@
-import { register } from 'swiper/element/bundle';
-import { For, Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
+import { For, Show, createSignal, onCleanup, onMount } from "solid-js";
 import gsap from 'gsap';
 import SplitType from 'split-type';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -7,6 +6,7 @@ import { getLenis } from '~/components/core/lenis';
 import Truncate from '~/components/common/TruncateText';
 import BreakMultipleLine from '~/components/common/BreakMultipleLine.astro';
 import useDimension from '~/components/hooks/useDimension';
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const ProjectListing = (props) => {
     let containerRef;
@@ -63,9 +63,7 @@ const ProjectListing = (props) => {
 
     onMount(() => {
         if (!containerRef) return;
-        register();
-
-        gsap.registerPlugin(ScrollTrigger);
+        initScrollTrigger();
 
         elements.forEach((el) => {
             let elementSplitText = []; // Declare a new sub-array for each element

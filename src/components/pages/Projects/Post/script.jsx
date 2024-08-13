@@ -1,13 +1,13 @@
-import { onMount, onCleanup } from 'solid-js';
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { onMount, onCleanup } from 'solid-js';
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const PostScript = () => {
     let scriptRef;
 
     onMount(() => {
         if (!scriptRef) return;
-        gsap.registerPlugin(ScrollTrigger);
+        initScrollTrigger();
 
         let tl = gsap.timeline({
             scrollTrigger: {

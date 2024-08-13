@@ -1,8 +1,8 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { createEffect, createSignal, onMount, onCleanup } from "solid-js";
 import Swiper from 'swiper';
 import { getCursor } from '~/components/core/cursor';
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 function TestimonialItem(props) {
     let itemRef;
@@ -74,7 +74,7 @@ function Testimonials(props) {
         if (!containerRef) return;
 
         if (window.innerWidth > 767) {
-            gsap.registerPlugin(ScrollTrigger);
+            initScrollTrigger();
             let tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.home__testi-listing',

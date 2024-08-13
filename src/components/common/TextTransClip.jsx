@@ -1,13 +1,14 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { onMount, onCleanup } from 'solid-js';
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const TextTransClip = (props) => {
     let textRef;
 
     onMount(() => {
         if (!textRef) return;
-        gsap.registerPlugin(ScrollTrigger);
+
+        initScrollTrigger();
         const q = gsap.utils.selector(textRef);
         let rect = textRef.getBoundingClientRect();
         let topPos =  window.pageYOffset || document.documentElement.scrollTop

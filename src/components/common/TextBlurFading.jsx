@@ -1,14 +1,14 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { onMount, onCleanup } from 'solid-js';
 import SplitType from 'split-type';
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const TextBlurFading = (props) => {
     let textRef;
 
     onMount(() => {
         if (!textRef) return;
-        gsap.registerPlugin(ScrollTrigger);
+        initScrollTrigger();
 
         const text = SplitType.create(textRef, { types: 'lines, words', lineClass: 'split-line-blur' });
         let tl = gsap.timeline({

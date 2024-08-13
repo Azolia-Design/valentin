@@ -1,13 +1,11 @@
 import gsap from 'gsap';
 import { onMount, onCleanup } from "solid-js";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { getLenis } from '~/components/core/lenis';
 
 const Marquee = (props) => {
     let marqueeRef;
     onMount(() => {
         if (!marqueeRef) return;
-        gsap.registerPlugin(ScrollTrigger);
 
         const q = gsap.utils.selector(marqueeRef);
         const DOM = {
@@ -43,7 +41,6 @@ const Marquee = (props) => {
             requestAnimationFrame(animationMarquee);
         }
         requestAnimationFrame(animationMarquee)
-
 
         onCleanup(() => {
         });

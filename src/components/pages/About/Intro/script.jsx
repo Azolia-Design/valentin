@@ -2,14 +2,14 @@ import { onMount, onCleanup } from 'solid-js';
 import SplitType from 'split-type';
 import { cvUnit } from '~/utils/number';
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const IntroScript = () => {
     let scriptRef;
 
     onMount(() => {
         if (!scriptRef) return;
-        gsap.registerPlugin(ScrollTrigger);
+        initScrollTrigger();
 
         const GRID_COL = window.innerWidth <= 991 ? window.innerWidth <= 767 ? 1 : 3 : 5;
         let emptySpace = (document.querySelector('.container-col').offsetWidth + cvUnit(20, 'rem')) * GRID_COL

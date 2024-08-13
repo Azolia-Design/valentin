@@ -1,13 +1,13 @@
 import { onMount, onCleanup } from 'solid-js';
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const HistoryScript = () => {
     let scriptRef;
 
     onMount(() => {
         if (!scriptRef) return;
-        gsap.registerPlugin(ScrollTrigger);
+        initScrollTrigger();
     })
 
     return <div ref={scriptRef} class="divScript"></div>

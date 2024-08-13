@@ -2,15 +2,15 @@ import { createSignal, For, onCleanup, onMount } from "solid-js";
 import { lerp, cvUnit, inView } from "~/utils/number";
 import Swiper from 'swiper';
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { createGlow } from "~/components/core/cursor";
+import { initScrollTrigger } from "~/components/core/scrollTrigger";
 
 const HistoryListing = (props) => {
     let historiesRef;
     const [activeIndex, setActiveIndex] = createSignal(-1);
     onMount(() => {
         if (!historiesRef) return;
-        gsap.registerPlugin(ScrollTrigger);
+        initScrollTrigger();
         // let swiperEl = new Swiper(historiesRef, {
         //     slidesPerView: 3,
         // })

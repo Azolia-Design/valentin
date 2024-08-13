@@ -1,14 +1,14 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { onMount, onCleanup } from 'solid-js';
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const IntroScript = () => {
     let scriptRef;
 
     onMount(() => {
         if (!scriptRef) return;
-        gsap.registerPlugin(ScrollTrigger);
 
+        initScrollTrigger();
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.home__intro-awards-listing',

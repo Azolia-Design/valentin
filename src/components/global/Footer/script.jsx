@@ -1,7 +1,7 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { onMount, onCleanup } from 'solid-js';
 import SplitType from 'split-type';
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const FooterScript = () => {
     let scriptRef;
@@ -9,7 +9,7 @@ const FooterScript = () => {
     onMount(() => {
         if (!scriptRef) return;
 
-        gsap.registerPlugin(ScrollTrigger);
+        initScrollTrigger();
         const splitedText = new SplitType('.footer__title', { types: 'lines, words', lineClass: 'split-line' });
 
         let tl = gsap.timeline({

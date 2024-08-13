@@ -1,21 +1,20 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { onMount, onCleanup } from 'solid-js';
+import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const HeroScript = (props) => {
     let scriptRef;
 
     onMount(() => {
         if (!scriptRef) return;
+        initScrollTrigger();
 
-        gsap.registerPlugin(ScrollTrigger);
-        console.log(ScrollTrigger.defaults())
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.home__hero-bg',
                 start: 'top top',
                 end: 'bottom+=500px bottom',
-                scrub: true
+                scrub: true,
             }
         })
         tl
