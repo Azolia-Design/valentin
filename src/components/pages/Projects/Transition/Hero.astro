@@ -1,9 +1,11 @@
 ---
 ---
 <div class="project__transition">
-    <div class="heading h3 fw-semi cl-txt-title upper" data-project-name></div>
-    <div class="fw-med" data-project-info></div>
-    <div class="fs-20 fw-med cl-txt-sub" data-project-year></div>
+    <div class="container calc-h">
+        <div class="heading h3 fw-semi cl-txt-title upper" data-project-name></div>
+        <div class="fw-med" data-project-info></div>
+        <div class="fs-20 fw-med cl-txt-sub" data-project-year></div>
+    </div>
 </div>
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
@@ -22,6 +24,19 @@
         z-index: 3;
         transform-origin: top left;
         line-height: .835em;
+        // width: calc(100% - var(--container-padding));
+        // left: calc(var(--container-padding) * -1);
+        // padding-inline: var(--container-padding);
+        @include md {
+            @include text(h1);
+            line-height: .835em;
+        }
+        @include sm {
+            @include text(h2);
+            line-height: .835em;
+            overflow-wrap: anywhere;
+            width: 100vw;
+        }
     }
     [data-project-info] {
         position: absolute;
@@ -31,8 +46,8 @@
         flex-direction: column;
         align-items: start;
         gap: 7.4rem 0;
-        .grid-1-1  {
-            display: grid !important;
+        @include md {
+            display: none;
         }
         .project__role,
         .project__services,
@@ -65,6 +80,9 @@
         align-items: center;
         gap: 0 0.5rem;
         line-height: .9em;
+        @include md {
+            display: none;
+        }
     }
     .project__thumbnail-img-inner {
         display: flex;

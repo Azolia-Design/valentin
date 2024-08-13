@@ -77,6 +77,9 @@ const projects = [
     .projects__sticky {
         position: relative;
         height: 100vh;
+        @include md {
+            height: 100svh;
+        }
         > .container {
             z-index: 3;
             height: 100%;
@@ -113,6 +116,18 @@ const projects = [
 
             line-height: .835em;
             padding-bottom: 7.6vh;
+
+            @include md {
+                @include text(dis1);
+                line-height: .835em;
+                padding-bottom: calc(22svh + 5.7svh);
+            }
+            @include sm {
+                @include text(h1);
+                line-height: .835em;
+                padding-bottom: calc(28svh + 3.2svh);
+                overflow-wrap: anywhere;
+            }
         }
         &-info {
             grid-row: 1/2;

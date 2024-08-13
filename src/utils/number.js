@@ -31,6 +31,8 @@ export const lerp = (a, b, t = 0.08) => {
   return a + (b - a) * t;
 }
 
+export const percentage = (percent, total) => ((percent / 100) * total).toFixed(2);
+
 export const inView = (el) => {
 	if (0 <= el.getBoundingClientRect().bottom && el.getBoundingClientRect().top <= window.innerHeight) {
 		return true

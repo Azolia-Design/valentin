@@ -1,7 +1,7 @@
 import { createSignal, onCleanup, onMount } from "solid-js";
 import gsap from 'gsap';
 import SplitType from "split-type";
-import { cvUnit } from "~/utils/number";
+import { cvUnit, percentage } from "~/utils/number";
 import { getLenis } from "~/components/core/lenis";
 
 const ProjectListing = (props) => {
@@ -65,11 +65,11 @@ const ProjectListing = (props) => {
 
     const transitionDOM = (attr) => document.querySelector(`.project__transition [data-project-${attr}]`)
 
-    const pageTransition = (e) => {
+    const pageTransition = () => {
         transitionDOM('name').innerHTML = document.querySelector('.project__name-txt.active').innerHTML
         transitionDOM('info').innerHTML = document.querySelector('.project__info-inner.active').innerHTML;
         transitionDOM('year').innerHTML = `© ${document.querySelector('.project__year-txt.active').innerHTML}`;
-        document.querySelector('.project__transition').appendChild(e.target.querySelector('.project__thumbnail-img-inner'));
+        document.querySelector('.project__transition').appendChild(document.querySelector('.project__thumbnail-img.active .project__thumbnail-img-inner'));
 
         let thumbRect = document.querySelector('.project__thumbnail-wrap').getBoundingClientRect();
 
@@ -78,26 +78,41 @@ const ProjectListing = (props) => {
             let to = document.querySelector(`.projects__position-${attr}`).getBoundingClientRect();
             return { from, to };
         }
+        let tl = gsap.timeline({
+            defaults: { ease: 'expo.inOut', duration: 1.2 },
+            onStart() { getLenis().stop() },
+            onComplete() { getLenis().start() }
+        })
 
-        gsap
-            .timeline({
-                defaults: { ease: 'expo.inOut', duration: 1.2 },
-                onStart() { getLenis().stop() },
-                onComplete() { getLenis().start() }
-            })
+        tl
             .fromTo(transitionDOM('name'),
-                { x: getBoundingTransition('name').from.left, y: getBoundingTransition('name').from.top, scale: 1 },
-                { x: getBoundingTransition('name').to.left, y: getBoundingTransition('name').to.top, scale: 2 })
-            .fromTo(transitionDOM('info'),
-                { x: getBoundingTransition('info').from.left, y: getBoundingTransition('info').from.top },
-                { x: getBoundingTransition('info').to.left, y: getBoundingTransition('info').from.top }, "<=0")
-            .fromTo(transitionDOM('year'),
-                { x: getBoundingTransition('year').from.left, y: getBoundingTransition('year').from.top },
-                { x: getBoundingTransition('year').to.left, y: getBoundingTransition('year').to.top, lineHeight: '1.4em' }, "<=0")
+                { y: getBoundingTransition('name').from.top, scale: 1 },
+                {
+                    y: getBoundingTransition('name').to.top,
+                    scale:
+                        window.innerWidth <= 767 ? 1.1428571429 :
+                        window.innerWidth <= 991 ? 1.4375 : 2
+                })
             .fromTo('.project__thumbnail-img-inner',
                 { width: thumbRect.width, height: thumbRect.height, x: thumbRect.left, y: thumbRect.top, filter: 'brightness(.8) grayscale(30%)' },
-                { width: '100%', height: window.innerHeight, x: 0, y: 0, filter: 'brightness(1) grayscale(0%)' }, "<=0")
+                {
+                    width: '100%',
+                    height: percentage(
+                        window.innerWidth <= 767 ? 67 :
+                        window.innerWidth <= 991 ? 72 : 100, window.innerHeight), x: 0, y: 0, filter: 'brightness(1) grayscale(0%)'
+                }, "<=0")
             .to('.project__transition', { autoAlpha: 0, ease: 'linear', duration: 0.4 })
+
+
+        if (window.innerWidth > 991) {
+            tl
+                .fromTo(transitionDOM('info'),
+                    { x: getBoundingTransition('info').from.left, y: getBoundingTransition('info').from.top },
+                    { x: getBoundingTransition('info').to.left, y: getBoundingTransition('info').from.top }, 0)
+                .fromTo(transitionDOM('year'),
+                    { x: getBoundingTransition('year').from.left, y: getBoundingTransition('year').from.top },
+                    { x: getBoundingTransition('year').to.left, y: getBoundingTransition('year').to.top, lineHeight: '1.4em' }, "<=0")
+        }
     }
 
     const animationText = (direction, nextValue) => {
@@ -141,8 +156,7 @@ const ProjectListing = (props) => {
     const animationThumbnail = (direction, nextValue) => {
         if (direction === 0) return;
         let thumbnails = document.querySelectorAll('.project__thumbnail-img');
-        console.log(index().curr)
-        console.log(nextValue)
+
         let tlTrans = gsap.timeline({
             defaults: {
                 ease: 'power3.inOut'
@@ -246,7 +260,10 @@ const ProjectListing = (props) => {
                         <div class="grid-1-1">
                             {props.data.map(({ desc }, idx) => <p className={`project__desc-txt${idx === index().curr ? ' active' : ''}`}>{desc}</p>)}
                         </div>
-                        <a href={props.data[index().curr].link} class="cl-txt-orange arrow-hover project__link">
+                        <a
+                            href={props.data[index().curr].link}
+                            class="cl-txt-orange arrow-hover project__link"
+                            onClick={pageTransition}>
                             <span class="txt-link hover-un cl-txt-orange">Explore</span>
                             {props.arrows}
                         </a>
