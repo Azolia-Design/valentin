@@ -7,7 +7,6 @@ import HeroScript from './script';
 
 import DeepMap from '~/assets/images/hero-real-deepmap.jpg';
 import HeroMain from '~/assets/images/hero-real.jpg';
-import TextTransClip from '~/components/common/TextTransClip';
 import Background2D from './Background2D';
 
 const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
@@ -96,7 +95,7 @@ const { data } = Astro.props;
                     <div class="home__hero-bg-main-inner placeholder">
                         <Image
                             class="img img-fill "
-                            src={'~/assets/images/hero-real.jpg'}
+                            src={HeroMainImg.src}
                             widths={[400, 768, 1024, 2040]}
                             width={1728}
                             height={1050}

@@ -51,7 +51,7 @@ const HeaderScript = () => {
                 trigger: '.home__hero-greating-wrap',
                 start: `top top+=${cvUnit(50, 'rem') + document.querySelector('.header__name').offsetHeight}`,
                 end: `top top+=${document.querySelector('.header__name').offsetHeight}`,
-                scrub: true
+                scrub: true,
             }
         });
         tlSub.fromTo('.header__greating', { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: 'none' })

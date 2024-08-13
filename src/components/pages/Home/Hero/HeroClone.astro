@@ -1,8 +1,11 @@
 ---
 import { Icon } from 'astro-icon/components';
 import Arrows from '~/components/common/Arrows.astro';
+import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
+import HeroMain from '~/assets/images/hero-real.jpg';
 const { data } = Astro.props;
+const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
 ---
 <div class="home__hero-clone-wrap">
     <section class="home__hero-clone">
@@ -49,7 +52,7 @@ const { data } = Astro.props;
         <div class="home__hero-clone-bg">
             <div class="home__hero-clone-bg-main">
                 <Image
-                    src={'~/assets/images/hero-real.jpg'}
+                    src={HeroMainImg.src}
                     widths={[400, 768, 1024, 2040]}
                     width={1728}
                     height={1050}
