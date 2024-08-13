@@ -70,13 +70,14 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
                     }
                     .next {
                         @include md {
-                            // position: absolute;
-                            // bottom: 22svh;
-                            margin-bottom: 22svh;
+                            margin-bottom: 30rem;
                             opacity: 0;
                         }
                         @include sm {
-                            margin-bottom: 28svh;
+                            margin-bottom: 28rem;
+                        }
+                        @include xs {
+                            margin-bottom: 24rem;
                         }
                     }
                     .current {
