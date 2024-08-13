@@ -58,7 +58,13 @@ const { socials, whatapps } = Astro.props;
                     <p class="fw-med cl-txt-desc about__cta-body-label">Got a project in mind?</p>
                     <h4 class="fs-24 fw-reg cl-txt-sub">Let's make something happen together</h4>
                 </div>
-                <a href="mailto:hello@valentinecheval.design" class="heading h3 about__cta-body-email" data-cursor-img={ArrowIc.src}>hello<span class="cl-txt-orange">@</span><br/>valentinecheval.<br/>design</a>
+                <a href="mailto:hello@valentinecheval.design" class="heading h3 about__cta-body-email" data-cursor-img={ArrowIc.src}>
+                    <div class="hover-multiple">
+                        <div class="about__cta-body-email-inner">
+                            hello<span class="cl-txt-orange">@</span><br/>valentinecheval.<br/>design
+                        </div>
+                    </div>
+                </a>
                 <a href="mailto:hello@valentinecheval.design" class="heading h2 about__cta-body-email mod-mb" data-cursor-img={ArrowIc.src}>hello<span class="cl-txt-orange">@</span><br/>valentine<br/>cheval.<br/>design</a>
             </div>
         </div>
@@ -172,6 +178,9 @@ const { socials, whatapps } = Astro.props;
                     @include xs {
                         display: inline-block;
                     }
+                }
+                &-inner {
+                    display: inline;
                 }
                 @include md {
                     grid-column: 6/-1;
