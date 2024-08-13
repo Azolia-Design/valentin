@@ -93,13 +93,13 @@ const { post } = Astro.props;
                 inset: 0;
                 z-index: 2;
                 @include md {
-                    height: 72svh; //or 72vh
+                    height: 72dvh; //or 72vh
                     top: 0;
                     mask-image: linear-gradient(transparent,#fff 0,#fff calc(100% - 15svh), transparent);
                     -webkit-mask-image: linear-gradient(transparent,#fff 0,#fff calc(100% - 15svh), transparent);
                 }
                 @include sm {
-                    height: 67svh;
+                    height: 67dvh;
                 }
                 &-img {
                     display: flex;
