@@ -18,6 +18,10 @@
         pointer-events: none;
         z-index: 5;
         overflow: hidden;
+        display: grid;
+        > * {
+            grid-area: 1/1/2/2;
+        }
     }
     [data-project-name] {
         position: absolute;
@@ -35,7 +39,9 @@
             @include text(h2);
             line-height: .835em;
             overflow-wrap: anywhere;
-            width: 100vw;
+        }
+        @include xs {
+            width: 76%;
         }
     }
     [data-project-info] {

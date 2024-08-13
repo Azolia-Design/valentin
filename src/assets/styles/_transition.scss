@@ -25,6 +25,9 @@ html {
     @include swup-path(animating, projects, project) {
         .transition-fade {
             transition: .6s;
+            @include md {
+                transition: 1s;
+            }
         }
         .project__name-txt.active {
             opacity: 0;
