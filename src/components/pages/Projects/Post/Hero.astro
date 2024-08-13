@@ -85,6 +85,9 @@ const { post } = Astro.props;
             width: 100%;
             bottom: 0;
             overflow: hidden;
+            @include md {
+                height: 100svh;
+            }
             &-cover {
                 position: absolute;
                 inset: 0;
