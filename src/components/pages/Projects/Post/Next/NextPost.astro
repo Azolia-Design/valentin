@@ -155,6 +155,9 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
                 bottom: 3.2svh;
                 overflow-wrap: anywhere;
             }
+            @include xs {
+                width: calc(100% - 3.2rem);
+            }
         }
         &-img {
             display: flex;

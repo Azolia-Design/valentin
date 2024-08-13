@@ -52,6 +52,9 @@
                 @include md {
                     display: block;
                 }
+                @include sm {
+                    height: 30rem;
+                }
             }
         }
     }
@@ -70,10 +73,8 @@
         @include sm {
             @include text(h2);
             line-height: .835em;
+            max-width: 30.12rem;
             overflow-wrap: anywhere;
-        }
-        @include xs {
-            width: 76%;
         }
     }
     [data-project-info] {
