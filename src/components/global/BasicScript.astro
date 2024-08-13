@@ -19,9 +19,9 @@ declare global {
     const onLoad = function () {
         console.log("on load")
 
-        if (history.scrollRestoration) {
-            history.scrollRestoration = "manual";
-        }
+        // if (history.scrollRestoration) {
+        //     history.scrollRestoration = "manual";
+        // }
         if (window.innerWidth <= 767) {
             ScrollTrigger.defaults({
                 scroller: ".wrapper"

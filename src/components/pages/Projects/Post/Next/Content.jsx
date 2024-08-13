@@ -20,8 +20,6 @@ function Content(props) {
                 defaults: { ease: 'expo.inOut', duration: 1.2 },
                 onStart() {
                     getLenis().stop();
-                    console.log(title.from.getBoundingClientRect().top)
-                    console.log(title.to.getBoundingClientRect().top)
                 },
                 onComplete() {
                     getLenis().start();

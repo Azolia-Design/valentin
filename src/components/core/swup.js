@@ -14,14 +14,15 @@ let swup;
 
 function forceScrollTop() {
     getLenis().scrollTo("top", { duration: .001 });
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    } else {
-        window.addEventListener('pageshow', function(event) {
-            if (!event.persisted) {
-                window.scrollTo(0, 0);
-            }
-        });
+
+    if (history.scrollRestoration) {
+        history.scrollRestoration = "manual";
+    }
+    if (window.innerWidth > 767) {
+        window.scrollTo(0, 0);
+    }
+    else {
+        document.querySelector('.wrapper').scrollTo(0, 0);
     }
 }
 

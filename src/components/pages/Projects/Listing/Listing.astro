@@ -121,6 +121,7 @@ const projects = [
             @include md {
                 @include text(dis1);
                 line-height: .835em;
+                grid-column: 1/-1;
                 padding-bottom: calc(30rem + 5.7svh);
             }
             @include sm {
@@ -136,6 +137,9 @@ const projects = [
         &-info {
             grid-row: 1/2;
             grid-column: 13/14;
+            @include md {
+                display: none;
+            }
         }
         &-year {
             grid-column: 13/14;
@@ -143,6 +147,9 @@ const projects = [
             // line-height: .9em;
             padding-bottom: 9.2vh;
             align-self: end;
+            @include md {
+                display: none;
+            }
         }
     }
     .project {

@@ -22,6 +22,38 @@
         > * {
             grid-area: 1/1/2/2;
         }
+        .project__thumbnail-img-inner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            img {
+                position: absolute;
+                object-position: top center;
+            }
+            @include md {
+                mask-image: linear-gradient(transparent,#fff 0,#fff calc(100% - 15svh), transparent);
+                -webkit-mask-image: linear-gradient(transparent,#fff 0,#fff calc(100% - 15svh), transparent);
+            }
+            &:before {
+                content: '';
+                position: absolute;
+                z-index: 2;
+                background: linear-gradient(22deg, #00050f 16.32%, rgb(0, 5, 15, 0) 50%);
+                bottom: 0;
+                height: 31svh;
+                width: 100%;
+                opacity: .8;
+
+                display: none;
+                @include md {
+                    display: block;
+                }
+            }
+        }
     }
     [data-project-name] {
         position: absolute;
@@ -88,18 +120,6 @@
         line-height: .9em;
         @include md {
             display: none;
-        }
-    }
-    .project__thumbnail-img-inner {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        pointer-events: none;
-        width: 100%;
-        height: 100%;
-        img {
-            position: absolute;
-            object-position: top center;
         }
     }
 </style>
