@@ -11,12 +11,24 @@ declare global {
     import { initLenis, getLenis } from "~/components/core/lenis";
     import { initMouseFollower, getCursor } from '~/components/core/cursor';
     import { initSwup, getSwup } from '~/components/core/swup';
+    import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
     // import CMS from "decap-cms-app";
     // CMS.init();
 
     const onLoad = function () {
         console.log("on load")
+
+        if (history.scrollRestoration) {
+            history.scrollRestoration = "manual";
+        }
+        if (window.innerWidth <= 767) {
+            console.log("zo")
+            ScrollTrigger.defaults({
+                scroller: ".wrapper"
+            });
+        }
+
 
         let ticking = true;
 

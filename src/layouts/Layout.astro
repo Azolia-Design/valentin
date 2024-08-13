@@ -54,7 +54,9 @@ const { title } = Astro.props;
 		<link rel="preload" href="/fonts/MatterSQ-Bold.woff2" as="font" type="font/woff2" crossorigin>
 	</head>
 	<body>
-		<slot />
+		<div class="wrapper">
+			<slot />
+		</div>
 		<BasicScript />
 		<style is:global>
 			/* Improve Page speed */
