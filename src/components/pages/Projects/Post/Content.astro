@@ -22,8 +22,11 @@ const { post } = Astro.props;
                         <BreakMultipleLine text={post.excerpt}/>
                     </TextBlurFading>
                 </div>
-                <a href={"#"} class="cl-txt-orange arrow-hover post__intro-link">
-                    <span class="txt-link hover-un">Visit</span>
+                <a href={"#"} class="cl-txt-orange arrow-hover post__intro-link" data-cursor="-link" data-cursor-stick=".post__intro-link-stick">
+                    <span class="txt-link hover-un">
+                        <div id="sticker" class="post__intro-link-stick"></div>
+                        Visit
+                    </span>
                     <Arrows slot="arrows" />
                 </a>
             </div>
@@ -130,12 +133,12 @@ const { post } = Astro.props;
                 &-listing {
                     display: flex;
                     flex-direction: column;
-                    gap: 1.2rem 0;
+                    // gap: 1.2rem 0;
                     list-style-type: none;
                     overflow-y: auto;
                     overflow-x: hidden;
                     padding-block: 3rem;
-                    margin-block: -3rem;
+                    margin-block: -3.6rem;
                     mask-image: linear-gradient(transparent, #fff 3.2rem,#fff calc(100% - 4rem), transparent);
                     -webkit-mask-image: linear-gradient(transparent, #fff 3.2rem,#fff calc(100% - 4rem), transparent);
                     @include custom-scroll(.3rem, transparent, var(--cl-orange));
@@ -145,20 +148,23 @@ const { post } = Astro.props;
                     padding-left: 1.6rem;
                     transition: color 0.4s ease-in-out;
                     cursor: pointer;
-                    &:before {
-                        content: '';
+                    padding-block: .6rem;
+                    &-point {
                         position: absolute;
                         @include size(.8rem);
                         border-radius: 50%;
-                        background-color: currentColor;
+                        background-color: var(--cl-dm-disable);
                         left: 0;
-                        top: .35em;
+                        top: .7em;
                         transition: background-color 0.4s ease-in-out;
                     }
-                    &:hover,
+                    // &:hover,
+                    &:hover {
+                        @include tColor(title, dm);
+                    }
                     &.active {
                         @include tColor(title, dm);
-                        &:before {
+                        .post__content-toc-item-point {
                             background-color: var(--cl-orange);
                         }
                     }

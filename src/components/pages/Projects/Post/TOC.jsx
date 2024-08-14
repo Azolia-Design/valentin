@@ -35,15 +35,19 @@ const TOC = () => {
 
     return (
         <div class="post__content-toc-inner">
-            <p className="fw-med cl-txt-desc post__content-toc-title">Summary</p>
+            <p className="fw-med cl-txt-desc post__content-toc-title" data-cursor-stick>Summary</p>
             <ul class="post__content-toc-listing" data-lenis-prevent>
                 {headings().map((heading, idx) =>
                     <li
-                        class={`fw-med cl-txt-disable post__content-toc-item${idx === activeToc() ? ' active': ''}`}
+                        class={`fw-med cl-txt-disable post__content-toc-item${idx === activeToc() ? ' active' : ''}`}
                         onClick={() => {
                             activeScrollTo(heading.id);
                             setActiveToc(idx);
-                        }}>
+                        }}
+                        data-cursor='-link'
+                        data-cursor-stick={`.post__content-toc-item-point.toc-${idx}`}
+                    >
+                        <div class={`post__content-toc-item-point toc-${idx}`}></div>
                         {heading.text}
                     </li>)}
             </ul>
