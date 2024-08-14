@@ -86,8 +86,13 @@ const ProjectListing = (props) => {
 
         tl
             .fromTo(transitionDOM('name'),
-                { y: getBoundingTransition('name').from.top, scale: 1 },
                 {
+                    x: window.innerWidth > 991 ? getBoundingTransition('name').from.left : 0,
+                    y: getBoundingTransition('name').from.top,
+                    scale: 1
+                },
+                {
+                    x: window.innerWidth > 991 ? getBoundingTransition('name').to.left : 0,
                     y: getBoundingTransition('name').to.top,
                     scale:
                         window.innerWidth <= 767 ? 1.1428571429 :

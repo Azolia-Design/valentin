@@ -77,6 +77,12 @@
             color: var(--cl-orange);
         }
     }
+    &.-mag {
+        &:before {
+            transform:scale(1.6);
+            background-color: rgba(255, 61, 0, 0.05);
+        }
+    }
     &.-nav {
         &:before {
             backdrop-filter: blur(.2rem);
@@ -85,6 +91,13 @@
         }
         &.-media:before {
             transform: scale(1.1);
+        }
+    }
+    &.-link {
+        &:before {
+            transform:scale(.1);
+            // left: -4.1rem;
+            // top: -1.95rem;
         }
     }
 
@@ -313,4 +326,12 @@
             }
         }
     }
+}
+
+#sticker {
+    position: relative;
+    width: 0;
+    height: 0;
+    top: .65em;
+    left: -1rem;
 }

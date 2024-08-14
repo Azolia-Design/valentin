@@ -20,13 +20,29 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 <p class="fw-med footer__label">Socials</p>
                 <div class="footer__socials-listing">
                     {socials.map((social) =>
-                        <a href={social.href} class="fw-med txt-link hover-un cl-txt-orange footer__link">{social.text}</a>
+                        <a
+                            href={social.href}
+                            class="fw-med txt-link hover-un cl-txt-orange footer__link"
+                            data-cursor-stick={`.footer__link-stick.${social.text}`}
+                            data-cursor="-link"
+                            >
+                                <div id="sticker" class={`footer__link-stick ${social.text}`}></div>
+                                {social.text}
+                            </a>
                     )}
                 </div>
             </div>
             <div class="footer__info-item">
                 <p class="fw-med footer__label">Whatapps</p>
-                <a href={whatapps.href} class="fw-med txt-link hover-un cl-txt-orange footer__link">{whatapps.text}</a>
+                <a
+                    href={whatapps.href}
+                    class="fw-med txt-link hover-un cl-txt-orange footer__link"
+                    data-cursor-stick={'.footer__link-stick.whatapps'}
+                    data-cursor="-link"
+                    >
+                    <div id="sticker" class="footer__link-stick whatapps"></div>
+                    {whatapps.text}
+                </a>
             </div>
         </div>
         <div class="footer__cta">
@@ -128,7 +144,10 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             &-listing {
                 display: flex;
                 flex-direction: column;
-                gap: .4rem 0;
+                margin-block: -.2rem;
+                .footer__link {
+                    padding-block: .2rem;
+                }
             }
         }
         &__cta {

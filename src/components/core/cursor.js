@@ -12,7 +12,7 @@ function initMouseFollower() {
         skewingText: 0.5,
         skewingIcon: 0.5,
         skewingMedia: 0.5,
-        overwrite: true
+        stickDelta: 0
     })
 }
 

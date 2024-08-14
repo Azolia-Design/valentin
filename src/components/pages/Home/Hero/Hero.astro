@@ -23,8 +23,8 @@ const { data } = Astro.props;
                     <ul class="home__hero-scope">
                         {data.scopes.map((el) => <li>{el}</li>)}
                     </ul>
-                    <a href="#" class="arrow-hover home__hero-scope-cta">
-                        <span class="txt-link">How can I help?</span>
+                    <a href="#" class="arrow-hover home__hero-scope-cta" data-cursor="-link" data-cursor-stick=".home-cta-stick">
+                        <span class="txt-link"><div id="sticker" class="home-cta-stick"></div>How can I help?</span>
                         <Arrows class="ic-20"/>
                     </a>
                 </div>

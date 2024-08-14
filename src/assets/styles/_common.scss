@@ -327,7 +327,7 @@ button {
             display: none;
         }
         &:hover {
-            background: rgba(255, 61, 0, 0.05);
+            // background: rgba(255, 61, 0, 0.05);
             // border-color: var(--cl-dm-disable);
         }
         &-svg {
@@ -487,3 +487,4 @@ button {
         background-size: 100% 100%;
     }
 }
+

@@ -29,7 +29,10 @@ const pathname = new URL(Astro.request.url).pathname;
             {links.map((el, i) =>
                 <Fragment><a href={el.href} class={`header__menu-link${pathname === el.href ? ' active': ''}`}>{el.text}</a>{i < (links.length) - 1 && '/'}</Fragment>)}
         </div>
-        <a href="" class="txt-link cl-txt-title header__act">{actions.text}</a>
+        <a href="" class="txt-link cl-txt-title header__act" data-cursor-stick=".header__act-stick" data-cursor='-link'>
+            <div id="sticker" class="header__act-stick"></div>
+            {actions.text}
+        </a>
         <button class="fs-16 cl-txt-title fw-med header__toggle">
             <span class="current">Menu</span>
             <span>Close</span>
@@ -138,6 +141,11 @@ const pathname = new URL(Astro.request.url).pathname;
         &__act {
             justify-self: end;
             margin-left: -2rem;
+            &:hover {
+                @media (hover:hover) {
+                    color: var(--cl-orange);
+                }
+            }
             @include md {
                 grid-column: 12/13;
             }

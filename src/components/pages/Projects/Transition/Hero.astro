@@ -22,6 +22,12 @@
         > * {
             grid-area: 1/1/2/2;
         }
+        .container {
+            display: contents;
+            @include md {
+                display: block;
+            }
+        }
         .project__thumbnail-img-inner {
             display: flex;
             justify-content: center;
