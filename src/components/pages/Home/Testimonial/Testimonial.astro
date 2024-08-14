@@ -53,6 +53,9 @@ const itemLength = testimonials.length;
         padding-bottom: 5rem;
         background-color: var(--cl-dm-bg);
         pointer-events: none;
+        @include sm {
+            pointer-events: auto;
+        }
         &-title {
             position: relative;
             padding-block: 12rem;
@@ -120,6 +123,34 @@ const itemLength = testimonials.length;
                 }
                 @include sm {
                     height: auto;
+                }
+            }
+        }
+        &-control {
+            display: none;
+            @include sm {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 3rem;
+            }
+        }
+        &-pagination {
+            display: flex;
+            align-items: center;
+            gap: 0 .6rem;
+        }
+        &-navigation {
+            display: flex;
+            align-items: center;
+            gap: 0 .5rem;
+            margin: -.6rem;
+            pointer-events: auto;
+            &-arrow {
+                padding: .6rem;
+                &.disable {
+                    pointer-events: none;
+                    @include tColor(disable, dm);
                 }
             }
         }

@@ -27,7 +27,16 @@ const pathname = new URL(Astro.request.url).pathname;
         </div>
         <div class="header__menu">
             {links.map((el, i) =>
-                <Fragment><a href={el.href} class={`header__menu-link${pathname === el.href ? ' active': ''}`}>{el.text}</a>{i < (links.length) - 1 && '/'}</Fragment>)}
+                <Fragment>
+                    <a
+                        href={el.href}
+                        class={`header__menu-link${pathname === el.href ? ' active': ''}`}
+                        data-cursor="-link"
+                        data-cursor-stick={`.header__menu-link-stick.${el.text}`}
+                        >
+                        <div id="sticker" class={`header__menu-link-stick ${el.text}`}></div>
+                        {el.text}
+                    </a><span class="splash">{i < (links.length) - 1 && '/'}</span></Fragment>)}
         </div>
         <a href="" class="txt-link cl-txt-title header__act" data-cursor-stick=".header__act-stick" data-cursor='-link'>
             <div id="sticker" class="header__act-stick"></div>
@@ -129,12 +138,22 @@ const pathname = new URL(Astro.request.url).pathname;
             @include sm {
                 display: none;
             }
+            .splash {
+                transition: transform .4s ease-in-out;
+            }
             &-link {
-                transition: color .4s ease-in-out;
-                &.active,
+                transition: color .4s ease-in-out, margin .4s ease-in-out;
+                &-stick {
+                    left: -.1rem !important;
+                    top: .6em !important;
+                }
                 &:hover {
                     @include tColor(title, dm);
-                    // pointer-events: none;
+                    margin-left: 1rem;
+                }
+                &.active {
+                    @include tColor(title, dm);
+                    pointer-events: none;
                 }
             }
         }

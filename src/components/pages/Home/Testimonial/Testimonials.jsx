@@ -66,6 +66,7 @@ function Testimonials(props) {
     let containerRef;
     const [activeIndex, setActiveIndex] = createSignal(-1);
     const [scaleFactor, setScaleFactor] = createSignal(1);
+    const [activeSlide, setActiveSlide] = createSignal(0);
 
     const accordionClick = (index) => {
         setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -99,14 +100,49 @@ function Testimonials(props) {
             const swiper = new Swiper(containerRef, {
                 slidesPerView: 1,
                 spaceBetween: 0,
-                onSlideChange: (slide) => {
-                    console.log(slide)
+                on: {
+                    slideChange: (slide) => {
+                        setActiveSlide(slide.realIndex);
+                    }
                 }
+            })
+
+            const swiperNext = () => swiper.slideNext();
+            const swiperPrev = () => swiper.slidePrev();
+            document.querySelector('.home__testi-navigation-arrow.next').addEventListener('click', swiperNext);
+            document.querySelector('.home__testi-navigation-arrow.prev').addEventListener('click', swiperPrev);
+
+            onCleanup(() => {
+                swiper.destroy(true, false);
+                document.querySelector('.home__testi-navigation-arrow.next').removeEventListener('click', swiperNext);
+                document.querySelector('.home__testi-navigation-arrow.prev').removeEventListener('click', swiperPrev);
             })
         }
     })
     return (
         <div className="home__testi-listing-inner" ref={containerRef} data-swiper="swiper">
+            <div class="home__testi-control">
+                <div class="fw-med home__testi-pagination">
+                    <span class="cl-txt-title home__testi-pagination-txt">{(activeSlide() + 1).toString().padStart(2, '0')} </span>
+                    <span class="cl-txt-desc">/ {props.data.length.toString().padStart(2, '0')}</span>
+                </div>
+                <div class="home__testi-navigation">
+                    <div className='home__testi-navigation-arrow prev'>
+                        <div class="ic ic-20">
+                            <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.6 8.00003H14M6.19998 3.80005L2 8.00003L6.19998 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div className='home__testi-navigation-arrow next'>
+                        <div className="ic ic-20">
+                            <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.4 8.00003H2M9.79997 3.80005L14 8.00003L9.79997 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="home__testi-listing-inner-wrapper" data-swiper="wrapper">
                 {props.data.map((el, idx) => (
                     <div class="home__testi-item"

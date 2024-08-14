@@ -222,8 +222,10 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 justify-content: center;
             }
             &-inner {
-                width: 43rem;
-                aspect-ratio: .8;
+                @include md {
+                    width: 40rem;
+                    aspect-ratio: .8;
+                }
             }
         }
         &__marquee {
