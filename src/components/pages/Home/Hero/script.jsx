@@ -16,7 +16,6 @@ const HeroScript = (props) => {
                 start: 'top top',
                 end: 'bottom+=500px bottom',
                 scrub: true,
-                markers: true,
             }
         })
         tl
