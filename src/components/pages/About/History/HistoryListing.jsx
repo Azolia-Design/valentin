@@ -1,6 +1,5 @@
 import { createSignal, For, onCleanup, onMount } from "solid-js";
 import { lerp, cvUnit, inView } from "~/utils/number";
-import Swiper from 'swiper';
 import gsap from 'gsap';
 import { createGlow, getCursor } from "~/components/core/cursor";
 import { initScrollTrigger } from "~/components/core/scrollTrigger";
@@ -48,7 +47,7 @@ const HistoryListing = (props) => {
             })
 
             tl
-            .fromTo('.about__history-listing .swiper-wrapper', { x: 0 }, { x: -distance, ease: 'none' });
+            .fromTo('.about__history-listing-wrapper', { x: 0 }, { x: -distance, ease: 'none' });
             requestAnimationFrame(() => {
                 gsap.set('.sc-about__history, .about__history', { clearProps: 'all' });
             })
