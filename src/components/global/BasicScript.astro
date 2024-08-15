@@ -8,56 +8,29 @@ declare global {
 <script src="https://cdnwf.bear.plus/Greensock/DrawSVG.js" type="text/javascript" async></script>
 <script src="https://cdnwf.bear.plus/Greensock/CustomEase.js" type="text/javascript" async></script>
 <script>
-    import { initLenis, getLenis } from "~/components/core/lenis";
+    import { initLenis, getLenis, applyOnScroll, reInitLenisScroll } from "~/components/core/lenis";
     import { initMouseFollower, getCursor } from '~/components/core/cursor';
     import { initSwup, getSwup } from '~/components/core/swup';
     import initButton from "~/components/core/button";
+    import { checkIsPostPage } from "~/utils/permalinks";
 
     // import CMS from "decap-cms-app";
     // CMS.init();
-    let ticking = true;
 
+    let isProjectPage = window.location.pathname === '/projects' || checkIsPostPage(window.location.pathname);
     if (!getLenis()) {
-        initLenis();
-    }
-    else {
-        getLenis().on('scroll', function(inst) {
-            let scrollPos = inst.scroll;
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    applyOnScroll(scrollPos);
-                });
-                ticking = true;
-            }
-        })
+        initLenis({ infinite: isProjectPage ? false : true });
     }
 
-    const applyOnScroll = (scrollPos) => {
-        function headerOnScroll(scrollPos) {
-            const header = document.querySelector('header');
-            if (!header) return;
-            if (scrollPos > (header.offsetHeight * 6) && !header.classList.contains('on-scroll')) {
-                header.classList.add("on-scroll");
-            }
-            else if (scrollPos <= (header.offsetHeight * 6) && header.classList.contains('on-scroll')) {
-                header.classList.remove('on-scroll');
-            }
-            ticking = false;
-        }
-        headerOnScroll(scrollPos);;
-    }
     applyOnScroll(window.scrollY);
 
     const initPage = () => {
-        console.log("run")
         getLenis().scrollTo("top", {
             duration: .001
         });
         onLoad();
     }
     const onLoad = () =>{
-        console.log("on load")
-
         initButton('render');
 
         if (!getCursor()) {

@@ -16,6 +16,7 @@ const HeroScript = (props) => {
                 start: 'top top',
                 end: 'bottom+=500px bottom',
                 scrub: true,
+                markers: true,
             }
         })
         tl
@@ -59,7 +60,7 @@ const HeroScript = (props) => {
         //     .fromTo('.header__greating', { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: 'none' })
 
         onCleanup(() => {
-            tl.kill();
+            // tl.kill();
             // tlShowHeader.kill();
             // tlHiddenGreating.kill();
         });

@@ -71,6 +71,7 @@ const HistoryListing = (props) => {
 
         let reqID;
         const borderMove = () => {
+            if (!document.querySelector('.about__history-body-inner')) return;
             let targetPos = {
                 x: xGetter('.mf-cursor'),
                 y: yGetter('.mf-cursor')
@@ -95,8 +96,8 @@ const HistoryListing = (props) => {
         reqID = requestAnimationFrame(borderMove);
 
         onCleanup(() => {
-            cancelAnimationFrame(reqID);
             tl.kill();
+            cancelAnimationFrame(reqID);
         })
     })
     return (

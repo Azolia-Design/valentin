@@ -351,22 +351,6 @@ const ProjectListing = (props) => {
                                 </div>
                                 <span class="cl-txt-disable"><span class="slash">/</span>{props.data.length.toString().padStart(2, '0')}</span>
                             </div>
-                            {/* <div class="project__pagination-control">
-                                <div className='project__pagination-control-arrow prev' onClick={() => onChangeIndex(-1)}>
-                                    <div class="ic ic-20">
-                                        <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M2.6 8.00003H14M6.19998 3.80005L2 8.00003L6.19998 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div className='project__pagination-control-arrow next' onClick={() => onChangeIndex(1)}>
-                                    <div className="ic ic-20">
-                                        <svg width="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M13.4 8.00003H2M9.79997 3.80005L14 8.00003L9.79997 12.2" stroke="currentColor" stroke-width="1.13137" stroke-miterlimit="10" stroke-linecap="square"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                     <div class="project__control">
