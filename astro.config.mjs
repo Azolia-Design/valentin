@@ -57,7 +57,7 @@ export default defineConfig({
             })
         ),
         compress({
-            CSS: true,
+            // CSS: true,
             HTML: {
                 'html-minifier-terser': {
                     removeAttributeQuotes: false,
@@ -79,16 +79,5 @@ export default defineConfig({
             '~': path.resolve(__dirname, './src'),
             },
         },
-    },
-    module: {
-        rules: [
-            {
-                test: /\.worker\.js$/, // Đặt tên file worker là .worker.js
-                use: { loader: 'worker-loader' }
-            }
-        ]
-    },
-    worker: {
-    format: 'es', // Đặt định dạng cho Web Workers
-    },
+    }
 });
