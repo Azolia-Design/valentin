@@ -1,6 +1,6 @@
 ---
 import { SEO } from "astro-seo";
-// import "~/assets/styles/global.scss";
+import cssGlobal from '~/assets/styles/global.scss?url';
 import BasicScript from '~/components/global/BasicScript.astro';
 import 'src/assets/styles/libs/swiper.css';
 import StylesGlobal from "./StylesGlobal.astro";
@@ -20,7 +20,8 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="en">
 	<head>
-		<StylesGlobal/>
+		<!-- <StylesGlobal/> -->
+		<link rel="stylesheet" href={cssGlobal}/>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
