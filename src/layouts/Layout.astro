@@ -20,6 +20,7 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="en">
 	<head>
+		<StylesGlobal/>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
@@ -56,17 +57,9 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<div class="wrapper">
-			<StylesGlobal/>
 			<slot />
 		</div>
 		<BasicScript />
-		<style is:global>
-			/* Improve Page speed */
-			/* https://css-tricks.com/almanac/properties/c/content-visibility/ */
-			img {
-				content-visibility: auto;
-			}
-		</style>
 	</body>
 </html>
 

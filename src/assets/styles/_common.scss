@@ -228,6 +228,7 @@ img,
     min-height: 100%;
     pointer-events: none;
     user-select: none;
+    content-visibility: auto;
 
     &.img-h {
         height: 100%;
