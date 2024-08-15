@@ -27,7 +27,6 @@ const HeroScript = (props) => {
             .fromTo('.home__intro-companies', { yPercent: 0 }, { yPercent: window.innerWidth > 767 ? 20 : 0, duration: 1, ease: 'linear' }, "<.3")
             .to('.home__intro-bg-gradient', { display: 'none', duration: 0, ease: 'linear' });
 
-
         // let tlShowHeader = gsap.timeline({
         //     scrollTrigger: {
         //         trigger: '.home__hero-greating-wrap',

@@ -104,10 +104,10 @@ const HistoryListing = (props) => {
         <>
             <div class="about__history-body-inner" data-border-glow data-glow-option='{"color": "rgba(255, 255, 255, 1)", "glow": 10, "magnetic": 20, "inset": "-1px", "opacity": ".8"}'>
                 <div class="container grid">
-                    <div ref={historiesRef} class="swiper about__history-listing">
-                        <div class="swiper-wrapper">
+                    <div ref={historiesRef} class="about__history-listing">
+                        <div class="about__history-listing-wrapper">
                             {props.data.map((item, idx) => (
-                                <div class={`swiper-slide about__history-item${activeIndex() === idx ? ' active' : ''}`}>
+                                <div class={`about__history-item${activeIndex() === idx ? ' active' : ''}`}>
                                     <span class="line"></span>
                                     <div class="about__history-item-content">
                                         <div class="about__history-item-position">

@@ -4,6 +4,7 @@ let lenis;
 
 function initLenis(options = {}) {
     lenis = new Lenis({
+        infinite: true,
         content: window.innerWidth > 767 ? document.documentElement : document.querySelector('.wrapper'),
         wrapper: window.innerWidth > 767 ? document.documentElement : document.querySelector('.wrapper'),
         ...options
@@ -44,7 +45,7 @@ function applyOnScroll(scrollPos) {
 }
 
 function reInitLenisScroll(_lenis) {
-    _lenis.on('scroll', function(inst) {
+    _lenis.on('scroll', function (inst) {
         let scrollPos = inst.scroll;
         if (!ticking) {
             requestAnimationFrame(() => {

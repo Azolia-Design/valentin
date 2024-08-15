@@ -23,19 +23,19 @@ const FooterScript = () => {
 
         tl.fromTo(splitedText.words, { autoAlpha: 0 }, { autoAlpha: 1, duration: 5.5, stagger: .4, ease: 'linear' })
 
-        let tlInfinite = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.home__hero-clone-wrap',
-                start: 'top+=30% top',
-                end: 'bottom bottom',
-                scrub: true
-            }
-        })
+        // let tlInfinite = gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: '.home__hero-clone-wrap',
+        //         start: 'top+=30% top',
+        //         end: 'bottom bottom',
+        //         scrub: true
+        //     }
+        // })
 
-        tlInfinite.to('.home__hero-clone-wrap', { autoAlpha: 1, ease: 'linear' })
+        // tlInfinite.to('.home__hero-clone-wrap', { autoAlpha: 1, ease: 'linear' })
         onCleanup(() => {
             tl.kill();
-            tlInfinite.kill();
+            // tlInfinite.kill();
             if (splitedText.isSplit) splitedText.revert();
         });
     })

@@ -8,6 +8,7 @@ const { data } = Astro.props;
 const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
 ---
 <div class="home__hero-clone-wrap">
+    <div class="home__hero-clone-empty-block"></div>
     <section class="home__hero-clone">
         <div class="home__hero-clone-main">
             <div class="container grid calc-h">
@@ -73,13 +74,16 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMai
     .home__hero-clone-wrap {
         position: sticky;
         bottom: 0;
-        z-index: 1;
-        opacity: 0;
+        // z-index: 100;
+        // opacity: 0;
     }
     .home__hero-clone {
         position: relative;
 
         display: grid;
+        &-empty-block {
+            height: 100vh;
+        }
         // z-index: 3;
         &-main,
         &-bg {
