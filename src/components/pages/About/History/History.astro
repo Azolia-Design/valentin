@@ -345,7 +345,8 @@ const data = [
                 align-self: end;
                 grid-column: 1/-2;
                 grid-row: 1/2;
-                @include size(7.2rem);
+                width: 7.2rem !important;
+                height: 7.2rem !important;
                 opacity: 0.3;
                 pointer-events: none;
                 transition: opacity .4s ease-in-out;
@@ -353,7 +354,8 @@ const data = [
                     pointer-events: auto;
                 }
                 @include sm {
-                    @include size(5.4rem);
+                    width: 5.4rem !important;
+                    height: 5.4rem !important;
                 }
                 &:hover {
                     .ic {
