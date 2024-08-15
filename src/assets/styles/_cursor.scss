@@ -83,6 +83,21 @@
             background-color: rgba(255, 61, 0, 0.05);
         }
     }
+    &.-mag-small {
+        &:before {
+            transform:scale(1.2);
+            background-color: rgba(255, 61, 0, 0.0);
+            border: 1px solid var(--cl-dm-border);
+        }
+    }
+    &.-close {
+        &:before {
+            border-radius: .2rem;
+            transform:scale(.9);
+            background-color: rgba(255, 61, 0, 0.0);
+            border: 1px solid var(--cl-dm-border);
+        }
+    }
     &.-nav {
         &:before {
             backdrop-filter: blur(.2rem);

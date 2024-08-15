@@ -2,18 +2,24 @@ import { createSignal, For, onCleanup, onMount } from "solid-js";
 import { lerp, cvUnit, inView } from "~/utils/number";
 import Swiper from 'swiper';
 import gsap from 'gsap';
-import { createGlow } from "~/components/core/cursor";
+import { createGlow, getCursor } from "~/components/core/cursor";
 import { initScrollTrigger } from "~/components/core/scrollTrigger";
+import useOutsideAlerter from "~/components/hooks/useClickOutside";
+import { getLenis } from "~/components/core/lenis";
 
 const HistoryListing = (props) => {
-    let historiesRef;
-    const [activeIndex, setActiveIndex] = createSignal(-1);
+    let historiesRef, popupRef;
+    const [activeIndex, setActiveIndex] = createSignal(0);
+    const [isPopupOpen, setIsPopupOpen] = createSignal(false);
+
     onMount(() => {
         if (!historiesRef) return;
         initScrollTrigger();
-        // let swiperEl = new Swiper(historiesRef, {
-        //     slidesPerView: 3,
-        // })
+
+        useOutsideAlerter(popupRef, () => {
+            setIsPopupOpen(false);
+            getLenis().start();
+        });
 
         let itemWidth = document.querySelector('.about__history-item').offsetWidth;
         let distance = (itemWidth * props.data.length) - historiesRef.offsetWidth;
@@ -22,17 +28,20 @@ const HistoryListing = (props) => {
         gsap.set('.sc-about__history', { display: 'flex', flexDirection: 'column-reverse' });
         gsap.set('.about__history', { position: 'static' });
 
+        let tl;
         requestAnimationFrame(() => {
-            let tl = gsap.timeline({
+            tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.about__history',
                     start: `bottom-=${cvUnit(100, 'rem')} bottom-=${window.innerWidth > 991 ? 0 : 10 }%`,
                     end: `bottom-=${cvUnit(100, 'rem')} top`,
                     scrub: 1.2,
                     onUpdate: (self) => {
-                        let idx = Math.floor(self.progress * props.data.length)
-                        if (activeIndex() !== idx) {
-                            setActiveIndex(idx === props.data.length ? idx - 1 : idx)
+                        if (window.innerWidth <= 991) {
+                            let idx = Math.floor(self.progress * props.data.length)
+                            if (activeIndex() !== idx) {
+                                setActiveIndex(idx === props.data.length ? idx - 1 : idx)
+                            }
                         }
                     }
                 }
@@ -47,7 +56,7 @@ const HistoryListing = (props) => {
 
         createGlow();
 
-        let border = document.querySelector('.about__history-body .border-inner');
+        let border = document.querySelector('.about__history-body-inner .border-inner');
 
         const gGetter = (property) => (el) => gsap.getProperty(el, property);
         const gSetter = (property, unit = '') => (el) => gsap.quickSetter(el, property, unit);
@@ -57,15 +66,16 @@ const HistoryListing = (props) => {
         const xSetter = gSetter('x', 'px');
         const ySetter = gSetter('y', 'px');
 
-        const maxXMove = document.querySelector('.about__history-body').offsetWidth / 2;
-        const maxYMove = document.querySelector('.about__history-body').offsetHeight / 2;
+        const maxXMove = document.querySelector('.about__history-body-inner').offsetWidth / 2;
+        const maxYMove = document.querySelector('.about__history-body-inner').offsetHeight / 2;
 
+        let reqID;
         const borderMove = () => {
             let targetPos = {
                 x: xGetter('.mf-cursor'),
                 y: yGetter('.mf-cursor')
             };
-            let rect = document.querySelector('.about__history-body').getBoundingClientRect();
+            let rect = document.querySelector('.about__history-body-inner').getBoundingClientRect();
 
             const runBorder = () => {
                 let xMove = targetPos.x - (rect.left + maxXMove);
@@ -77,48 +87,127 @@ const HistoryListing = (props) => {
                 xSetter(border)(lerp(xGetter(border), limitBorderXMove, .55));
                 ySetter(border)(lerp(yGetter(border), limitBorderYMove, .55));
             }
-            if (inView(document.querySelector('.about__history-body'))) {
+            if (inView(document.querySelector('.about__history-body-inner'))) {
                 runBorder();
             }
-            requestAnimationFrame(borderMove);
+            reqID = requestAnimationFrame(borderMove);
         }
-        requestAnimationFrame(borderMove);
+        reqID = requestAnimationFrame(borderMove);
+
+        onCleanup(() => {
+            cancelAnimationFrame(reqID);
+            tl.kill();
+        })
     })
     return (
-        <div ref={historiesRef} class="swiper about__history-listing">
-            <div class="swiper-wrapper">
-                {props.data.reverse().map((item, idx) => (
-                    <div class={`swiper-slide about__history-item${activeIndex() === idx ? ' active' : ''}`}>
-                        <span class="line"></span>
-                        <div class="about__history-item-content">
-                            <div class="about__history-item-position">
-                                <p class="fs-24 fw-med">{item.position.title}</p>
-                                <p class="cl-txt-desc">{item.position.type}</p>
-                            </div>
-                            <div class="about__history-item-company">
-                                <p class="fw-med">{item.company.name}</p>
-                                <p class="cl-txt-desc">{item.company.location}</p>
-                            </div>
-                            <div class="about__history-item-period">
-                                <div>
-                                    <p class="cl-txt-desc">From</p>
-                                    <p class="fs-20 fw-med">{item.period.from}</p>
+        <>
+            <div class="about__history-body-inner" data-border-glow data-glow-option='{"color": "rgba(255, 255, 255, 1)", "glow": 10, "magnetic": 20, "inset": "-1px", "opacity": ".8"}'>
+                <div class="container grid">
+                    <div ref={historiesRef} class="swiper about__history-listing">
+                        <div class="swiper-wrapper">
+                            {props.data.map((item, idx) => (
+                                <div class={`swiper-slide about__history-item${activeIndex() === idx ? ' active' : ''}`}>
+                                    <span class="line"></span>
+                                    <div class="about__history-item-content">
+                                        <div class="about__history-item-position">
+                                            <p class="fs-24 fw-med">{item.position.title}</p>
+                                            <p class="cl-txt-desc">{item.position.type}</p>
+                                        </div>
+                                        <div class="about__history-item-company">
+                                            <p class="fw-med">{item.company.name}</p>
+                                            <p class="cl-txt-desc">{item.company.location}</p>
+                                        </div>
+                                        <div class="about__history-item-period">
+                                            <div>
+                                                <p class="cl-txt-desc">From</p>
+                                                <p class="fs-20 fw-med">{item.period.from}</p>
+                                            </div>
+                                            <div>
+                                                <p class="cl-txt-desc">To</p>
+                                                <p class="fs-20 fw-med">{item.period.to}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-circle arrow-hover about__history-item-act" data-magnetic data-cursor-stick data-cursor='-mag-small'
+                                        onClick={() => {
+                                            setIsPopupOpen(true);
+                                            setActiveIndex(idx);
+                                            getLenis().stop();
+                                            getCursor().removeState('-mag-small');
+                                        }}
+                                    >
+                                        {props.arrows}
+                                        <svg class="btn-circle-svg" width="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="50" cy="50" r="49" stroke="white" stroke-opacity=".1" stroke-width="2"/>
+                                        </svg>
+                                    </button>
+                                    <ul class="ruler-x">
+                                        <For each={new Array(13)}>
+                                            {(dash) => <li></li>}
+                                        </For>
+                                    </ul>
                                 </div>
-                                <div>
-                                    <p class="cl-txt-desc">To</p>
-                                    <p class="fs-20 fw-med">{item.period.to}</p>
-                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div class="border-outer"><div class="border-inner"><div class="glow-el glow-nor"></div></div></div>
+            </div>
+            <div class={`about__history-popup${isPopupOpen() ? ' active' : ''}`}>
+                <div className="container">
+                    <div class="about__history-popup-inner" ref={popupRef}>
+                        <div
+                            class="about__history-popup-close"
+                            data-cursor-stick
+                            data-cursor='-close'
+                            onClick={() => {
+                                setIsPopupOpen(false);
+                                getLenis().start();
+                                getCursor().removeState('-close');
+                            }}>
+                            <span class="about__history-popup-close-line">
+                                <span></span>
+                            </span>
+                            <span class="about__history-popup-close-line">
+                                <span></span>
+                            </span>
+                        </div>
+                        <div class="about__history-popup-head">
+                            <div class="about__history-popup-head-inner">
+                                <p class="fs-24 fw-med cl-txt-title">{props.data[activeIndex()].position.title}</p>
+                                <p class="cl-txt-desc">{props.data[activeIndex()].company.name} • {props.data[activeIndex()].position.type}</p>
+                            </div>
+                            <div class="about__history-popup-head-logo">
+                                <img src={props.data[activeIndex()].company.logo.src} class="img img-h" alt="company logo" />
                             </div>
                         </div>
-                        <ul class="ruler-x">
-                            <For each={new Array(13)}>
-                                {(dash) => <li></li>}
-                            </For>
-                        </ul>
+                        <div class="line"></div>
+                        <div class="richtext-global about__history-popup-body" data-lenis-prevent>
+                            <p>Online Bank in South Africa and Phillipines.</p>
+                            <ul>
+                                <li>Achieved 2.3 million customers in 14 months making it one of the world’s fastest-growing digital banks. ( GoTyme )</li>
+                                <li>3rd most active finance app in the Phillipines, according to data.ai ( GoTyme )</li>
+                                <li>Adding 150,000 customers a month ( TymeBank )</li>
+                            </ul>
+                            <ul>
+                                <li>Led SME product design leading to a 30% growth in its SME lending portfolio in 2023.</li>
+                                <li>In charge of Investment products ( Crypto, US Stocks )</li>
+                                <li>Reduce time to market and design delivery by introducing more agile design process.
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>Lead and successfully shipped multiple features ( POS, Lotto, Virtual Card, SME, Origination etc.)</li>
+                                <li>Led UX testings and validation of design for GoTyme and Tyme Bank</li>
+                                <li>Designed TymeX brand strategy our B2B brand</li>
+                            </ul>
+                            <ul>
+                                <li>Reach 100% promotion rate for my team using decentralized command, extreme ownership and mentorship.</li>
+                            </ul>
+                        </div>
                     </div>
-                ))}
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 
