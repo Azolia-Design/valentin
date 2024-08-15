@@ -148,8 +148,10 @@ const pathname = new URL(Astro.request.url).pathname;
                     top: .6em !important;
                 }
                 &:hover {
+                    @include md-up {
+                        margin-left: 1rem;
+                    }
                     @include tColor(title, dm);
-                    margin-left: 1rem;
                 }
                 &.active {
                     @include tColor(title, dm);
