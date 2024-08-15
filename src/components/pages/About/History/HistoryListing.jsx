@@ -133,7 +133,7 @@ const HistoryListing = (props) => {
                                             setIsPopupOpen(true);
                                             setActiveIndex(idx);
                                             getLenis().stop();
-                                            getCursor().removeState('-mag-small');
+                                            window.innerWidth > 991 && getCursor().removeState('-mag-small');
                                         }}
                                     >
                                         {props.arrows}
@@ -163,7 +163,7 @@ const HistoryListing = (props) => {
                             onClick={() => {
                                 setIsPopupOpen(false);
                                 getLenis().start();
-                                getCursor().removeState('-close');
+                                window.innerWidth > 991 && getCursor().removeState('-close');
                             }}>
                             <span class="about__history-popup-close-line">
                                 <span></span>
@@ -174,7 +174,7 @@ const HistoryListing = (props) => {
                         </div>
                         <div class="about__history-popup-head">
                             <div class="about__history-popup-head-inner">
-                                <p class="fs-24 fw-med cl-txt-title">{props.data[activeIndex()].position.title}</p>
+                                <p class="fs-24 fw-med cl-txt-title about__history-popup-head-position">{props.data[activeIndex()].position.title}</p>
                                 <p class="cl-txt-desc">{props.data[activeIndex()].company.name} • {props.data[activeIndex()].position.type}</p>
                             </div>
                             <div class="about__history-popup-head-logo">

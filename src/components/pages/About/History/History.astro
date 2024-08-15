@@ -303,14 +303,20 @@ const data = [
 
             padding-bottom: 10rem;
             transition: color .4s ease-in-out;
+            @include md {
+                width: calc(100% / 2);
+            }
             @include sm {
                 width: 100%;
             }
             &.active {
                 @include md {
+                    @include tColor(title, dm);
                     .about__history-item-act {
                         opacity: 1;
-                        pointer-events: auto;
+                        .ic {
+                            color: var(--cl-orange);
+                        }
                     }
                 }
             }
@@ -342,6 +348,12 @@ const data = [
                 opacity: 0.3;
                 pointer-events: none;
                 transition: opacity .4s ease-in-out;
+                @include md {
+                    pointer-events: auto;
+                }
+                @include sm {
+                    @include size(5.4rem);
+                }
                 &:hover {
                     .ic {
                         width: 2rem;
@@ -351,6 +363,9 @@ const data = [
                 .ic {
                     width: 2rem;
                     color: var(--cl-dm-subtitle);
+                    @include sm {
+                        width: 1.6rem;
+                    }
                 }
                 .btn-circle-svg {
                     display: none;
@@ -437,12 +452,19 @@ const data = [
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.35s ease-out .2s;
+            @include sm {
+                height: 100svh;
+                max-height: 100svh;
+            }
             .container {
                 height: 100%;
                 display: flex;
                 align-items: end;
                 justify-content: end;
                 padding-bottom: var(--container-padding);
+                @include sm {
+                    padding-bottom: 0;
+                }
             }
             &.active {
                 opacity: 1;
@@ -462,12 +484,21 @@ const data = [
                 width: 65rem;
                 transition: transform .4s ease-in-out;
                 transform: translateY(1.5rem);
+                @include sm {
+                    max-height: 80svh;
+                    padding: 6svh 3.2rem;
+                    margin-inline: calc(var(--container-padding) * -1);
+                }
             }
             &-head {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 padding-block: .7rem 1.4rem;
+                @include sm {
+                    flex-direction: column;
+                    align-items: start;
+                }
                 &-inner {
                     display: flex;
                     flex-direction: column;
@@ -476,12 +507,17 @@ const data = [
                 &-logo {
                     height: 4rem;
                     opacity: .3;
+                    @include sm {
+                        display: none;
+                    }
+                }
+                &-position {
                 }
             }
             &-body {
                 flex: 1;
                 padding-block: 3.2rem;
-                margin-block: -.1rem;
+                margin-block: -.1rem -2.5rem;
                 padding-right: 1.2rem;
                 overflow-y: auto;
                 mask-image: linear-gradient(transparent, #fff 3.2rem,#fff calc(100% - 3.2rem), transparent);
@@ -572,7 +608,9 @@ const data = [
                     height: 1px;
                     background-color: #fff;
                     transition: background 1.1s cubic-bezier(.19,1,.22,1);
-
+                    @include sm {
+                        width: 50%;
+                    }
                     span {
                         position: absolute;
                         overflow: hidden;
