@@ -1,5 +1,6 @@
 ---
 import { getImage } from 'astro:assets';
+import SlideText from '~/components/common/SlideText';
 
 import TextBlurFading from '~/components/common/TextBlurFading';
 
@@ -14,29 +15,32 @@ const { socials, whatapps } = Astro.props;
         <div class="container">
             <div class="about__cta-head grid">
                 <p class="fs-24 about__cta-head-label">(What do I bring you?)</p>
-                <h4 class="heading h4 cl-txt-sub about__cta-head-content">
-                    <TextBlurFading
-                        triggerOpts = {{
-                            trigger: '.about__cta-head-content',
-                            start: 'top bottom-=15%',
-                            end: 'bottom center+=5%'
-                        }}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                        Deep Understanding of
+                <h4 class="heading h4 about__cta-head-content">
+                    <span>
+                        <span class="cl-txt-desc">Deep Understanding of</span>
                         <br/>
-                        trading and finacial products
-                    </TextBlurFading>
-                    <TextBlurFading
-                        triggerOpts = {{
-                            trigger: '.about__cta-head-content',
-                            start: 'top bottom-=15%',
-                            end: 'bottom center+=5%'
-                        }}
-                        client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
-                        Strong Experience
+                        <span class="cl-txt-sub">
+                            <SlideText
+                                data={[
+                                    "trading and finacial products",
+                                    "retail and institutional client",
+                                    "brand and positioning",
+                                    "business"]}
+                                client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                        </span>
+                    </span>
+                    <span>
+                        <span class="cl-txt-desc">Strong Experience</span>
                         <br/>
-                        working directly with engineers
-                    </TextBlurFading>
+                        <span class="cl-txt-sub">
+                            <SlideText
+                                data={[
+                                    "working directly with engineers",
+                                    "working directly with C-Suite",
+                                    "business development"]}
+                                client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                        </span>
+                    </span>
                 </h4>
             </div>
             <div class="about__cta-body grid">

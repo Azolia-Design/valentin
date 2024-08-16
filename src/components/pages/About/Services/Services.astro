@@ -2,6 +2,7 @@
 import Image from '~/components/common/Image.astro';
 import TextTransClip from '~/components/common/TextTransClip';
 import ServicesScript  from './script';
+import SlideText from '~/components/common/SlideText';
 const services = [
     { name: 'Web Design', desc: 'Lorem ipsum dolor sit amet consectetur. Libero dignissim nunc massa placerat euismod volutpat. Amet vel donec a urna faucibus.' },
     { name: 'Brand Design & Strategy', desc: 'Lorem ipsum dolor sit amet consectetur. Libero dignissim nunc massa placerat euismod volutpat. Amet vel donec a urna faucibus.' },
@@ -15,14 +16,18 @@ const services = [
             <h2 class="fix-font about__service-title grid">
                 <span class="upper heading h2 fw-bold about__service-title-txt">What I can</span>
                 <span class="upper heading h2 fw-bold about__service-title-txt">help for your</span>
-                <span class="upper heading h2 fw-bold cl-txt-title about__service-title-txt">business</span>
+                <span class="upper heading h2 fw-bold cl-txt-title about__service-title-txt">
+                    <SlideText data={["Product", "Business"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                </span>
                 <span class="fs-20 cl-txt-desc fw-reg about__service-title-label">(Services)</span>
             </h2>
             <h2 class="fix-font about__service-title mod-mb grid">
                 <span class="upper heading h2 fw-bold about__service-title-txt">What</span>
                 <span class="upper heading h2 fw-bold about__service-title-txt">I can help</span>
                 <span class="upper heading h2 fw-bold about__service-title-txt">for your</span>
-                <span class="upper heading h2 fw-bold cl-txt-title about__service-title-txt">business</span>
+                <span class="upper heading h2 fw-bold cl-txt-title about__service-title-txt">
+                    <SlideText data={["Product", "Business"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                </span>
                 <span class="fs-20 cl-txt-desc fw-reg about__service-title-label">(Services)</span>
             </h2>
             <div class="about__service-listing">

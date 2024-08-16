@@ -8,6 +8,7 @@ import HeroScript from './script';
 import DeepMap from '~/assets/images/hero-real-deepmap.jpg';
 import HeroMain from '~/assets/images/hero-real.jpg';
 import Background2D from './Background2D';
+import SlideText from '~/components/common/SlideText';
 
 const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
 const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
@@ -53,7 +54,9 @@ const { data } = Astro.props;
                     <h1 class="heading h1 fw-bold fix-font upper home__hero-title">
                         <span class="home__hero-title-txt">Design</span>
                         <span class="home__hero-title-txt">for financial</span>
-                        <div class="cl-txt-orange home__hero-title-txt mod-slide"><span>Product</span><span>Business</span></div>
+                        <div class="cl-txt-orange home__hero-title-txt">
+                            <SlideText data={["Product", "Business"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                        </div>
                     </h1>
                     <span class="upper home__hero-scrolldown">(Scroll down)</span>
                 </div>

@@ -1,3 +1,4 @@
+import SlideText from '~/components/common/SlideText';
 import TextTransClip from '~/components/common/TextTransClip';
 import { cvUnit } from '~/utils/number';
 
@@ -17,7 +18,9 @@ const HistoryHead = (props) => {
                 <span class="heading h2 fw-bold about__history-title-txt">I have</span>
                 <span class="heading h2 fw-bold cl-txt-orange about__history-title-txt">8 years</span>
                 <span class="heading h2 fw-bold about__history-title-txt">of Experience</span>
-                <span class="heading h2 fw-bold about__history-title-txt">in <span class="cl-txt-title">fintech</span></span>
+                <span class="heading h2 fw-bold about__history-title-txt">in <span class="cl-txt-title inline-block">
+                    <SlideText data={["Fintech", "Web3", "Banking", "Crypto"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                </span></span>
                 <span class="heading h2 fw-bold about__history-title-txt">field</span>
             </h2>
             <h2 class="upper fix-font about__history-title mod-mb grid">

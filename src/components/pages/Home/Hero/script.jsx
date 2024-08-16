@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import { onMount, onCleanup } from 'solid-js';
+import SplitType from 'split-type';
 import { initScrollTrigger } from '~/components/core/scrollTrigger';
 import { cvUnit } from '~/utils/number';
 
@@ -26,6 +27,38 @@ const HeroScript = (props) => {
             // .fromTo('.home__intro-bg-gradient', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1, ease: 'linear' }, '-=1')
             .fromTo('.home__intro-companies', { yPercent: 0 }, { yPercent: window.innerWidth > 767 ? 20 : 0, duration: 1, ease: 'linear' }, "<.3")
             .to('.home__intro-bg-gradient', { display: 'none', duration: 0, ease: 'linear' });
+
+        // let allSplitText = [];
+
+        // document.querySelectorAll('.home__hero-title .grid-1-1 span').forEach((text, idx) => {
+        //     let splittext = new SplitType(text, { types: 'lines, words', lineClass: 'split-line' });
+        //     gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
+        //     allSplitText.push(splittext);
+        // })
+
+        // allSplitText.forEach((text, idx) => {
+        //     let dur = 1;
+        //     let ease = 'power2.inOut'
+        //     let tlSplit = gsap.timeline({
+        //         repeat: -1,
+        //     });
+        //     if (idx == allSplitText.length - 1) {
+        //         tlSplit
+        //             .set(allSplitText[idx].words, { yPercent: 0, autoAlpha: 1, willChange: 'transform, opacity' })
+        //             .to(allSplitText[idx].words, { yPercent: 100, autoAlpha: 1, duration: dur, ease: ease }, "<=0")
+        //             .to(allSplitText[idx].words, { duration: dur * (idx) - (1 * dur)})
+
+        //             .set(allSplitText[idx].words, { yPercent: -100, autoAlpha: 1, willChange: 'transform, opacity' })
+        //             .to(allSplitText[idx].words, { yPercent: 0, autoAlpha: 1, duration: dur, ease: ease })
+        //     } else {
+        //         tlSplit
+        //             .set(allSplitText[idx].words, { yPercent: -100, autoAlpha: 1, willChange: 'transform, opacity' })
+        //             .to(allSplitText[idx].words, { duration: dur * idx}, "<=0")
+        //             .to(allSplitText[idx].words, { yPercent: 0, autoAlpha: 1, duration: dur, ease: ease })
+        //             .to(allSplitText[idx].words, { yPercent: 100, autoAlpha: 1, duration: dur, ease: ease })
+        //             .to(allSplitText[idx].words, { duration: (allSplitText.length - 2 - idx) * dur})
+        //     }
+        // })
 
         // let tlShowHeader = gsap.timeline({
         //     scrollTrigger: {

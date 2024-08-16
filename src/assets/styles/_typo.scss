@@ -116,10 +116,10 @@ html {
     --lh-h2: 1em;
 
     --fs-h3: 8rem;
-    --lh-h3: 1em;
+    --lh-h3: 1.2em;
 
     --fs-h4: 4.4rem;
-    --lh-h4: 1em;
+    --lh-h4: 1.2em;
 
     --fs-h5: 3.2rem;
     --lh-h5: 1.1em;
@@ -441,6 +441,7 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
 .split-line {
     contain: paint;
     will-change: transform;
+    margin-block: -.1em;
 }
 .split-line-blur {
     will-change: transform;
