@@ -68,10 +68,16 @@ const ProjectListing = (props) => {
             }
         }
 
-        window.addEventListener('wheel', indexOnWheel);
+        if (window.innerWidth > 991) {
+            window.addEventListener('wheel', indexOnWheel);
+        }
+
         onCleanup(() => {
             elements.forEach(({ selector }) => SplitType.revert(selector));
-            window.removeEventListener('wheel', indexOnWheel);
+
+            if (window.innerWidth > 991) {
+                window.removeEventListener('wheel', indexOnWheel);
+            }
         });
     })
 
