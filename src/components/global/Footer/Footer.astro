@@ -253,6 +253,18 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 display: flex;
                 justify-content: center;
             }
+            &-img {
+                position: relative;
+                &.ver-light {
+                    z-index: 3;
+                }
+                &.ver-mid {
+                    z-index: 2;
+                }
+                &.ver-dark {
+                    z-index: 1;
+                }
+            }
             &-inner {
                 @include md {
                     width: 40rem;

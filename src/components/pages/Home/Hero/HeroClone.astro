@@ -4,9 +4,11 @@ import Arrows from '~/components/common/Arrows.astro';
 import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
 import HeroMain from '~/assets/images/home-hero-trans.png';
+import HeroMainBG from '~/assets/images/home-hero-bg.jpg';
 import SlideText from '~/components/common/SlideText';
 const { data } = Astro.props;
 const HeroMainImg = await getImage({src: HeroMain, format: 'png', width: HeroMain.width})
+const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: HeroMainBG.width})
 ---
 <div class="home__hero-clone-wrap">
     <section class="home__hero-clone">
@@ -52,7 +54,7 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'png', width: HeroMai
                 </div>
             </div>
         </div>
-        <div class="home__hero-clone-bg">
+        <div class="home__hero-clone-bg grid-1-1">
             <div class="home__hero-clone-bg-main">
                 <Image
                     src={HeroMainImg.src}
@@ -63,10 +65,21 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'png', width: HeroMai
                     layout="cover"
                     loading="eager"
                     decoding="async"
-                    class="img img-fill"
+                    class="img img-fill home__hero-clone-bg-main"
                 />
                 <div class="home__hero-clone-gradient-mb"></div>
             </div>
+            <Image
+                src={HeroMainBGImg.src}
+                widths={[400, 768, 1024, 2040]}
+                width={1728}
+                height={1050}
+                alt={'a man'}
+                layout="cover"
+                loading="eager"
+                decoding="async"
+                class="img img-fill home__hero-clone-bg-main-under"
+            />
         </div>
     </section>
 </div>
@@ -105,6 +118,7 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'png', width: HeroMai
             &-main {
                 position: sticky;
                 top: 0;
+                z-index: 3;
                 width: 100%;
                 height: 100vh;
                 will-change: scale;
@@ -115,6 +129,10 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'png', width: HeroMai
                     // transform-origin: 18vw 25vh;
                     transform-origin: center 16%;
                     object-position: center top !important;
+                }
+                &-under {
+                    opacity: 0;
+                    visibility: hidden;
                 }
             }
         }
