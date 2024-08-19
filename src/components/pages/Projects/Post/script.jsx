@@ -30,11 +30,16 @@ const PostScript = () => {
             .to('.post__hero-cover', { scale: 1.4,  autoAlpha: .5, duration: 1, ease: 'none' }, 0)
 
         const scrollToContent = () => getLenis().scrollTo(document.getElementById('post-content'));
-        document.querySelector('.post__hero').addEventListener('click', scrollToContent);
+
+        if (window.innerWidth > 991) {
+            document.querySelector('.post__hero').addEventListener('click', scrollToContent);
+        }
 
         onCleanup(() => {
             tl.kill();
-            document.querySelector('.post__hero').removeEventListener('click', scrollToContent);
+            if (window.innerWidth > 991) {
+                document.querySelector('.post__hero').removeEventListener('click', scrollToContent);
+            }
         });
     })
 
