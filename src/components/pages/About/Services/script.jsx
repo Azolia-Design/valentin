@@ -13,11 +13,34 @@ const ServicesScript = () => {
             scrollTrigger: {
                 trigger: '.about__daily',
                 start: 'top bottom',
-                end: 'top top',
+                end: 'bottom bottom',
                 scrub: true
             }
         })
-        tl.from('.about__daily-img-inner', { yPercent: window.innerWidth > 767 ? -20 : -10, duration: 1, ease: 'linear' });
+        tl
+        .fromTo('.about__daily-img-inner',
+            { yPercent: -20 },
+            { yPercent: 0, duration: 1, ease: 'linear' }
+        )
+        .fromTo('.about__daily-content',
+            { yPercent: 20 },
+            { yPercent: 0, duration: 1, ease: 'linear' }
+        , 0);
+
+        let tlOverlap = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.about__daily',
+                start: `bottom-=200px bottom`,
+                end: `bottom top`,
+                scrub: true
+            }
+        })
+
+        tlOverlap
+            .to('.about__daily-img img', { scale: .8, transformOrigin: 'bottom', duration: 1, ease: 'linear' })
+            .to('.about__daily-img', { scale: 1.4, transformOrigin: 'bottom', duration: 1, ease: 'linear' }, 0)
+            .to('.about__daily', { autoAlpha: 0, duration: 1, ease: 'linear' }, 0)
+            .to('.about__daily-content', { yPercent: -30, duration: 1, ease: 'linear' }, 0)
 
         const serviceItems = document.querySelectorAll('.about__service-item');
         const handleToggle = (e) => {

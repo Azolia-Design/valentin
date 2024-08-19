@@ -5,10 +5,9 @@ declare global {
     }
 }
 ---
-<script src="https://cdnwf.bear.plus/Greensock/DrawSVG.js" type="text/javascript"></script>
-<script src="https://cdnwf.bear.plus/Greensock/CustomEase.js" type="text/javascript"></script>
+<script src="https://cdnwf.bear.plus/Greensock/DrawSVG.js" type="text/javascript" async></script>
 <script>
-    import { initLenis, getLenis, applyOnScroll, reInitLenisScroll } from "~/components/core/lenis";
+    import { initLenis, getLenis, applyOnScroll } from "~/components/core/lenis";
     import { initMouseFollower, getCursor } from '~/components/core/cursor';
     import { initSwup, getSwup } from '~/components/core/swup';
     import initButton from "~/components/core/button";
@@ -20,7 +19,6 @@ declare global {
     let isProjectPage = window.location.pathname === '/projects' || checkIsPostPage(window.location.pathname);
 
     if (!getLenis()) {
-        console.log("zo")
         initLenis({ infinite: !isProjectPage });
     }
 

@@ -3,13 +3,12 @@ import { Icon } from 'astro-icon/components';
 import Arrows from '~/components/common/Arrows.astro';
 import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
-import HeroMain from '~/assets/images/hero-real.jpg';
+import HeroMain from '~/assets/images/home-hero-trans.png';
 import SlideText from '~/components/common/SlideText';
 const { data } = Astro.props;
-const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
+const HeroMainImg = await getImage({src: HeroMain, format: 'png', width: HeroMain.width})
 ---
 <div class="home__hero-clone-wrap">
-    <div class="home__hero-clone-empty-block"></div>
     <section class="home__hero-clone">
         <div class="home__hero-clone-main">
             <div class="container grid calc-h">
@@ -75,18 +74,12 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMai
 <style lang="scss">
     @use '~/assets/styles/mixins' as *;
     .home__hero-clone-wrap {
-        position: sticky;
-        bottom: 0;
-        // z-index: 100;
-        // opacity: 0;
+        align-self: end;
     }
     .home__hero-clone {
         position: relative;
 
         display: grid;
-        &-empty-block {
-            height: 100vh;
-        }
         // z-index: 3;
         &-main,
         &-bg {
@@ -95,6 +88,7 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMai
         &-main {
             position: relative;
             z-index: 2;
+            opacity: 0;
 
             @include size(100%, 100vh);
             @include sm {
@@ -186,7 +180,7 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMai
                 margin-bottom: 2rem;
             }
         }
-        &-greating {
+    &-greating {
             line-height: 3.52rem;
             @include sm {
                 line-height: 3.04rem;

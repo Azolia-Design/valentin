@@ -1,11 +1,11 @@
 import { onCleanup, onMount } from "solid-js";
 import gsap from 'gsap';
 import SplitType from "split-type";
+import { easeInOutQuint } from "~/utils/easing";
 
 function SlideText(props) {
     let slideRef;
     onMount(() => {
-        gsap.registerPlugin(CustomEase)
 
         if (!slideRef) return;
         slideRef.querySelectorAll('div').forEach((text, idx) => {
@@ -14,7 +14,8 @@ function SlideText(props) {
             gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
 
             let dur = 3;
-            let ease = CustomEase.create("cubic-bezier", "0.65, 0, 0.35, 1");
+            let ease = gsap.parseEase(easeInOutQuint);
+
             let yPercent = { in: 100, out: -100 }
             let tl = gsap.timeline({ repeat: -1 });
 

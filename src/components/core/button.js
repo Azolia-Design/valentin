@@ -1,9 +1,7 @@
 import gsap from 'gsap';
-// import '~/vendors/Greensock/DrawSVG';
+import { easeInOutQuint } from '~/utils/easing';
 
 const initButton = (state) => {
-    gsap.registerPlugin(DrawSVGPlugin, CustomEase)
-
     if (state === 'render') {
         document.querySelectorAll('.btn-circle').forEach(function (btn) {
             let onAnimate = false;
@@ -36,7 +34,7 @@ const initButton = (state) => {
                     })
                 }
             })
-            tl.fromTo(svg, { drawSVG: "100% 100%" }, { duration: 1, ease: CustomEase.create("cubic-bezier", ".64,.14,0,1"), drawSVG: "100% 0%" })
+            tl.fromTo(svg, { drawSVG: "100% 100%" }, { duration: 1, ease: gsap.parseEase(easeInOutQuint), drawSVG: "100% 0%" })
         })
 
         document.querySelectorAll("[data-magnetic]").forEach(function (el) {

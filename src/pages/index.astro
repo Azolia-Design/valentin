@@ -22,14 +22,28 @@ const { data } = await getEntry('pages', 'home');
 	</div>
 	<Project/>
 	<Testimonial/>
-	<Footer {...footerData} />
-	<HeroClone data={data.hero}/>
+	<div class="home-footer-hero">
+		<div class="home-footer-hero-empty-block"></div>
+		<div class="home-footer-hero-wrap grid-1-1">
+			<Footer {...footerData} />
+			<HeroClone data={data.hero}/>
+		</div>
+	</div>
 </Layout>
 
-<style>
+<style lang="scss">
 	.home-hero-intro-wrap {
 		position: relative;
 		z-index: 4;
 		background-color: var(--cl-dm-bg);
+	}
+	.home-footer-hero {
+		&-wrap {
+			position: sticky;
+			bottom: 0;
+		}
+		&-empty-block {
+            height: 400vh;
+        }
 	}
 </style>
