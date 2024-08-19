@@ -88,7 +88,7 @@ const services = [
         background-color: var(--cl-dm-bg);
         &-title {
             position: relative;
-            margin-bottom: 8rem;
+            margin-block: -1rem 7rem;
             &.mod-mb {
                 display: none;
                 @include sm {
@@ -119,10 +119,11 @@ const services = [
             &-txt {
                 line-height: .835em;
                 grid-column: 4/-1;
+                padding-block: 1rem;
                 @include md {
                     grid-column: 3/-1;
-
                     @include text(dis2);
+                    padding-block: .6rem;
                 }
                 @include sm {
                     grid-column: 1/-1;
@@ -130,6 +131,9 @@ const services = [
                 }
                 &:nth-child(1) {
                     grid-row: 1/2;
+                }
+                &:nth-child(3) {
+                    margin-block: .1em;
                 }
                 &:nth-child(3),
                 &:nth-child(4) {

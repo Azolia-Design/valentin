@@ -377,6 +377,13 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
 }
 .upper {
     text-transform: uppercase;
+    .heading.h1,
+    .heading.h2,
+    &.heading.h1,
+    &.heading.h2 {
+        vertical-align: middle;
+        line-height: .72em;
+    }
 }
 
 //Icon
@@ -442,6 +449,9 @@ $txtSizes: 10, 12, 14, 16, 18, 20, 24, 36, 180;
     contain: paint;
     will-change: transform;
     margin-block: -.1em;
+    &.unset-margin {
+        margin-block: 0;
+    }
 }
 .split-line-blur {
     will-change: transform;

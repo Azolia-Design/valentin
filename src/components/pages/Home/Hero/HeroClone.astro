@@ -4,6 +4,7 @@ import Arrows from '~/components/common/Arrows.astro';
 import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
 import HeroMain from '~/assets/images/hero-real.jpg';
+import SlideText from '~/components/common/SlideText';
 const { data } = Astro.props;
 const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
 ---
@@ -41,11 +42,13 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMai
                         <p class="home__hero-clone-greating">Hi there! this is</p>
                         <p class="heading h5 home__hero-clone-name"><span class="fw-med cl-txt-title">Valentine</span> <span class="cl-txt-desc">Cheval</span></p>
                     </div>
-                    <h1 class="heading h1 fw-bold fix-font upper home__hero-clone-title">
-                        <span class="home__hero-clone-title-txt">Design</span>
-                        <span class="home__hero-clone-title-txt">for financial </span>
-                        <br/> <div class="cl-txt-orange home__hero-clone-title-txt mod-slide"><span>Product</span><span>Business</span></div>
-                    </h1>
+                    <div class="heading h1 fw-bold fix-font upper home__hero-clone-title">
+                        <div class="home__hero-clone-title-txt">Design</div>
+                        <div class="home__hero-clone-title-txt">for financial </div>
+                        <div class="cl-txt-orange home__hero-title-txt">
+                            <SlideText data={["Product", "Business"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                        </div>
+                    </div>
                     <span class="upper home__hero-scrolldown">(Scroll down)</span>
                 </div>
             </div>
@@ -180,7 +183,7 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMai
         &-greating-wrap {
             margin-bottom: 3.4rem;
             @include sm {
-                margin-bottom: .3rem;
+                margin-bottom: 2rem;
             }
         }
         &-greating {
@@ -210,36 +213,22 @@ const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMai
             @include tColor(title, dm);
             line-height: .835em;
 
-            margin-bottom: 5rem;
+            margin-block: -1.1rem 4.6rem;
             max-width: 135rem;
             @include md {
                 @include text(dis1);
-                line-height: 0.835em;
             }
             @include sm {
                 @include text(h1);
                 margin-bottom: 0rem;
             }
             &-txt {
-                // display: inline-block;
-                &.mod-slide {
-                    position: relative;
-                    display: grid;
-                    overflow: hidden;
-                    @keyframes slide-text {
-                        0% { transform: translateY(100%); opacity: 0 }
-                        50% { transform: translateY(0); opacity: 1 }
-                        100% { transform: translateY(-100%); opacity: 0 }
-                    }
-                    span {
-                        --anim-dur: 4s;
-                        grid-area: 1/1/2/2;
-                        // animation: slide-text var(--anim-dur) cubic-bezier(.74, .06, .4, .92) infinite;
-                        &:nth-child(2) {
-                            transform: translateY(100%);
-                            // animation-delay: calc((var(--anim-dur)/2) * -1);
-                        }
-                    }
+                padding-block: 1.1rem;
+                @include md {
+                    padding-block: .6rem;
+                }
+                &:last-child{
+                    margin-block: .1em;
                 }
             }
         }

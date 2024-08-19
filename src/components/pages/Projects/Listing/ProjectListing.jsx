@@ -41,12 +41,12 @@ const ProjectListing = (props) => {
 
                 if (text.querySelectorAll('p').length > 0) {
                     text.querySelectorAll('p').forEach((paragraph) => {
-                        let splittext = new SplitType(paragraph, { types: 'lines, words', lineClass: 'split-line' });
-                        gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity'});
+                        let splittext = new SplitType(paragraph, { types: 'lines, words', lineClass: 'split-line unset-margin' });
+                        gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
                         subSplitText.push(splittext);
                     });
                 } else {
-                    let splittext = new SplitType(text, { types: 'lines, words', lineClass: 'split-line' });
+                    let splittext = new SplitType(text, { types: 'lines, words', lineClass: 'split-line unset-margin' });
                     gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
                     subSplitText.push(splittext);
                 }
@@ -60,7 +60,19 @@ const ProjectListing = (props) => {
         onChangeIndex(0);
         document.querySelector('.projects__listing-main').classList.remove('animating');
 
-        onCleanup(() => elements.forEach(({ selector }) => SplitType.revert(selector)));
+        const indexOnWheel = (e) => {
+            if (e.deltaY > 0 || e.deltaX > 0) {
+                onChangeIndex(-1)
+            } else if (e.deltaY < 0 || e.deltaX < 0) {
+                onChangeIndex(1)
+            }
+        }
+
+        window.addEventListener('wheel', indexOnWheel);
+        onCleanup(() => {
+            elements.forEach(({ selector }) => SplitType.revert(selector));
+            window.removeEventListener('wheel', indexOnWheel);
+        });
     })
 
     const transitionDOM = (attr) => document.querySelector(`.project__transition [data-project-${attr}]`)
@@ -107,7 +119,6 @@ const ProjectListing = (props) => {
                         window.innerWidth <= 991 ? 72 : 100, window.innerHeight), x: 0, y: 0, filter: 'brightness(1) grayscale(0%)'
                 }, "<=0")
             .to('.project__transition', { autoAlpha: 0, ease: 'linear', duration: 0.4 })
-
 
         if (window.innerWidth > 991) {
             tl
@@ -376,10 +387,10 @@ const ProjectListing = (props) => {
                     <div class="fs-20 fw-med projects__position-year">©</div>
                 </div>
             </div>
-            <div class="projects__navigation">
+            {/* <div class="projects__navigation">
                 <div class="projects__navigation-area prev" onClick={() => onChangeIndex(-1)} data-cursor="-nav" data-cursor-img={props.arrowsIC.prev.src}></div>
                 <div class="projects__navigation-area next" onClick={() => onChangeIndex(1)} data-cursor="-nav" data-cursor-img={props.arrowsIC.next.src}></div>
-            </div>
+            </div> */}
         </div>
     )
 }

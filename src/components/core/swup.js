@@ -58,7 +58,6 @@ function resetTransition(url) {
 }
 
 function initSwup() {
-    console.log("Swuper")
     swup = new Swup({
         containers: ['main'],
         plugins: [
@@ -79,7 +78,7 @@ function initSwup() {
         resetTransition(visit.to.url);
 
         let isProjectPage = visit.to.url === '/projects' || checkIsPostPage(visit.to.url);
-        reInitLenisScroll(getLenis({ infinite: isProjectPage ? false : true }));
+        reInitLenisScroll(getLenis({ infinite: !isProjectPage }));
 
         forceScrollTop();
         if (window.innerWidth > 991) {

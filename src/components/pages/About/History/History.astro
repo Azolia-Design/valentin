@@ -4,6 +4,9 @@ import HistoryScript  from './script';
 import HistoryListing from './HistoryListing';
 import HistoryHead from './HistoryHead';
 import { findImage } from "~/utils/images";
+import { getImage } from "astro:assets";
+import Close from "~/icons/close.svg";
+
 const data = [
     {
         position: { title: 'Lead Product Designer',  type: 'Contract' },
@@ -31,6 +34,8 @@ const data = [
         period: { from: 'May, 2015', to: 'Present' }
     }
 ]
+
+const closeIc = await getImage({ src: Close, format: "svg" });
 ---
 <section class="sc-about__history">
     <div class="stick-block"></div>
@@ -55,7 +60,7 @@ const data = [
             </div>
         </div>
         <div class="about__history-body">
-            <HistoryListing data={data.reverse()} client:visible={{ rootMargin: "100% 0% 100% 0%" }}>
+            <HistoryListing data={data.reverse()} client:visible={{ rootMargin: "100% 0% 100% 0%" }} closeIc={closeIc.src}>
                 <Arrows slot='arrows'/>
             </HistoryListing>
         </div>
@@ -111,6 +116,7 @@ const data = [
             position: relative;
             grid-column: 1/-1;
             grid-row: 1/2;
+            margin-block: -1rem;
             &.mod-mb {
                 display: none;
                 @include sm {
@@ -127,10 +133,10 @@ const data = [
                 grid-row: 1/2;
             }
             &-txt {
-                line-height: .835em;
+                padding-block: 1rem;
                 @include md {
                     @include text(dis2);
-                    line-height: .9em;
+                    padding-block: .6rem;
                 }
                 @include sm {
                     @include text(h2);
@@ -327,7 +333,6 @@ const data = [
                     @include tColor(title, dm);
                     .about__history-item-act {
                         opacity: 1;
-                        pointer-events: auto;
                     }
                 }
             }
@@ -348,11 +353,7 @@ const data = [
                 grid-row: 1/2;
                 @include size(7.2rem);
                 opacity: 0.3;
-                pointer-events: none;
                 transition: opacity .4s ease-in-out;
-                @include md {
-                    pointer-events: auto;
-                }
                 @include sm {
                     @include size(5.4rem);
                 }
@@ -464,6 +465,7 @@ const data = [
                 align-items: end;
                 justify-content: end;
                 padding-bottom: var(--container-padding);
+                pointer-events: none;
                 @include sm {
                     padding-bottom: 0;
                 }
@@ -474,15 +476,16 @@ const data = [
                 transition: opacity 0.35s ease-out;
                 .about__history-popup-inner {
                     transform: translateY(0);
+                    pointer-events: auto;
                 }
             }
             &-inner {
                 height: auto;
-                max-height: 62vh;
+                max-height: calc(100vh - 20rem);
                 display: flex;
                 flex-direction: column;
                 background-color: #0C0D10;
-                padding: 4rem 6rem 6rem;
+                padding: 2.4rem 2.8rem 2.4rem 4rem;
                 width: 65rem;
                 transition: transform .4s ease-in-out;
                 transform: translateY(1.5rem);
@@ -571,6 +574,10 @@ const data = [
                 cursor: pointer;
                 opacity: .3;
                 transition: opacity 1.1s cubic-bezier(.19,1,.22,1), background 1.1s cubic-bezier(.19,1,.22,1);
+                display: none;
+                @include sm {
+                    display: flex;
+                }
                 &:hover {
                     background-color: rgba(255, 255, 255, 0.05);
                     backdrop-filter: blur(.5rem);
@@ -645,6 +652,12 @@ const data = [
                         transform: rotate(-45deg);
                     }
                 }
+            }
+            &-overlay {
+                position: absolute;
+                z-index: 1;
+                inset: 0;
+                @include size(100%);
             }
         }
     }

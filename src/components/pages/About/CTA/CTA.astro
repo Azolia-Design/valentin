@@ -16,10 +16,9 @@ const { socials, whatapps } = Astro.props;
             <div class="about__cta-head grid">
                 <p class="fs-24 about__cta-head-label">(What do I bring you?)</p>
                 <h4 class="heading h4 about__cta-head-content">
-                    <span>
-                        <span class="cl-txt-desc">Deep Understanding of</span>
-                        <br/>
-                        <span class="cl-txt-sub">
+                    <div>
+                        <div class="cl-txt-desc about__cta-head-content-txt">Deep Understanding of</div>
+                        <div class="cl-txt-sub about__cta-head-content-txt">
                             <SlideText
                                 data={[
                                     "trading and finacial products",
@@ -27,20 +26,19 @@ const { socials, whatapps } = Astro.props;
                                     "brand and positioning",
                                     "business"]}
                                 client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
-                        </span>
-                    </span>
-                    <span>
-                        <span class="cl-txt-desc">Strong Experience</span>
-                        <br/>
-                        <span class="cl-txt-sub">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="cl-txt-desc about__cta-head-content-txt">Strong Experience</div>
+                        <div class="cl-txt-sub about__cta-head-content-txt">
                             <SlideText
                                 data={[
                                     "working directly with engineers",
                                     "working directly with C-Suite",
                                     "business development"]}
                                 client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
-                        </span>
-                    </span>
+                        </div>
+                    </div>
                 </h4>
             </div>
             <div class="about__cta-body grid">
@@ -126,7 +124,11 @@ const { socials, whatapps } = Astro.props;
                 display: flex;
                 flex-direction: column;
                 gap: 6.2rem 0;
-                margin-top: -.15em;
+                line-height: 1.1em;
+                margin-block: -.2rem;
+                &-txt {
+                    padding-block: .2rem;
+                }
                 @include md {
                     grid-column: 3/-1;
                     gap: 4.4rem 0;
@@ -134,8 +136,8 @@ const { socials, whatapps } = Astro.props;
                 }
                 @include sm {
                     grid-column: 1/-1;
-                    gap: 3.2em 0;
-                    @include text(h6);
+                    gap: 3.2rem 0;
+                    @include text(h5);
                 }
             }
         }

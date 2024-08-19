@@ -92,8 +92,8 @@ let currentYear = new Date().getFullYear() % 100;
             padding-bottom: 6rem;
         }
         &-title {
-            margin-bottom: 12rem;
             position: relative;
+            margin-block: -1rem 11rem;
             // gap: 1rem 0;
             @include md {
                 margin-bottom: 10.05svh;
@@ -102,10 +102,10 @@ let currentYear = new Date().getFullYear() % 100;
                 margin-bottom: 0;
             }
             &-txt {
-                line-height: .835em;
+                padding-block: 1rem;
                 @include md {
                     @include text(dis1);
-                    line-height: .835em;
+                    padding-block: .6rem;
                 }
                 @include sm {
                     @include text(h1);
@@ -139,6 +139,10 @@ let currentYear = new Date().getFullYear() % 100;
                 grid-column: 13/16;
                 display: flex;
                 flex-direction: column;
+                line-height: .72em;
+                gap: 1.6rem 0;
+                align-self: end;
+                margin-bottom: 1rem;
                 @include md {
                     grid-column: 12/13;
                     justify-self: end;

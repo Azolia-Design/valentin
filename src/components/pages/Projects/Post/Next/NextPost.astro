@@ -146,7 +146,7 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
             line-height: .835em;
             @include md {
                 @include text(dis1);
-                line-height: .835em;
+                line-height: .835em !important;
                 bottom: 5.7svh;
             }
             @include sm {

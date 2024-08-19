@@ -15,10 +15,10 @@ const HistoryListing = (props) => {
         if (!historiesRef) return;
         initScrollTrigger();
 
-        useOutsideAlerter(popupRef, () => {
-            setIsPopupOpen(false);
-            getLenis().start();
-        });
+        // useOutsideAlerter(popupRef, () => {
+        //     setIsPopupOpen(false);
+        //     getLenis().start();
+        // });
 
         let itemWidth = document.querySelector('.about__history-item').offsetWidth;
         let distance = (itemWidth * props.data.length) - historiesRef.offsetWidth;
@@ -154,16 +154,21 @@ const HistoryListing = (props) => {
                 <div class="border-outer"><div class="border-inner"><div class="glow-el glow-nor"></div></div></div>
             </div>
             <div class={`about__history-popup${isPopupOpen() ? ' active' : ''}`}>
+                <div class="about__history-popup-overlay"
+                    data-cursor="-stroke"
+                    onClick={() => {
+                        setIsPopupOpen(false);
+                        getLenis().start();
+                        window.innerWidth > 991 && getCursor().removeState('-media');
+                    }}
+                    data-cursor-img={props.closeIc}></div>
                 <div className="container">
                     <div class="about__history-popup-inner" ref={popupRef}>
                         <div
                             class="about__history-popup-close"
-                            data-cursor-stick
-                            data-cursor='-close'
                             onClick={() => {
                                 setIsPopupOpen(false);
                                 getLenis().start();
-                                window.innerWidth > 991 && getCursor().removeState('-close');
                             }}>
                             <span class="about__history-popup-close-line">
                                 <span></span>

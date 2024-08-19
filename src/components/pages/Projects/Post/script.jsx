@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import { onMount, onCleanup } from 'solid-js';
+import { getLenis } from '~/components/core/lenis';
 import { initScrollTrigger } from '~/components/core/scrollTrigger';
 
 const PostScript = () => {
@@ -28,7 +29,13 @@ const PostScript = () => {
             .to('.post__hero-cover img', { scale: .8, duration: 1, ease: 'none' }, 0)
             .to('.post__hero-cover', { scale: 1.4,  autoAlpha: .5, duration: 1, ease: 'none' }, 0)
 
-        onCleanup(() => tl.kill());
+        const scrollToContent = () => getLenis().scrollTo(document.getElementById('post-content'));
+        document.querySelector('.post__hero').addEventListener('click', scrollToContent);
+
+        onCleanup(() => {
+            tl.kill();
+            document.querySelector('.post__hero').removeEventListener('click', scrollToContent);
+        });
     })
 
     return <div ref={scriptRef} class="divScript"></div>

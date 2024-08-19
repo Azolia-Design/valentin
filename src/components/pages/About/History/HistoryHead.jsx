@@ -27,7 +27,9 @@ const HistoryHead = (props) => {
                 <span class="heading h2 fw-bold about__history-title-txt">I have</span>
                 <span class="heading h2 fw-bold about__history-title-txt"><span class="cl-txt-orange">8 years</span> of</span>
                 <span class="heading h2 fw-bold about__history-title-txt">Experience</span>
-                <span class="heading h2 fw-bold about__history-title-txt">in <span class="cl-txt-title">fintech</span></span>
+                <span class="heading h2 fw-bold about__history-title-txt">in <span class="cl-txt-title inline-block">
+                    <SlideText data={["Fintech", "Web3", "Banking", "Crypto"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                </span></span>
                 <span class="heading h2 fw-bold about__history-title-txt">field</span>
             </h2>
         </>

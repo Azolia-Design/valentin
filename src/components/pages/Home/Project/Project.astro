@@ -152,9 +152,8 @@ const projects = [
             }
         }
         &-title {
-            margin-bottom: 16rem;
             position: relative;
-            // gap: 1rem 0;
+            margin-block: -1rem 15rem;
             @include md {
                 margin-bottom: 8rem;
             }
@@ -173,10 +172,10 @@ const projects = [
                 }
             }
             &-txt {
-                line-height: .835em;
+                padding-block: 1rem;
                 @include md {
                     @include text(dis2);
-                    line-height: 0.835em;
+                    padding-block: .6rem;
                 }
                 @include sm {
                     @include text(h2);

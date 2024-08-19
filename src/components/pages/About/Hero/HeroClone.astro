@@ -6,19 +6,11 @@ let currentYear = new Date().getFullYear() % 100;
     <div class="about__hero">
         <div class="container">
             <h1 class="upper about__hero-title grid">
-                <span class="heading h1 fw-bold about__hero-title-txt">
-                    Valentine
-                </span>
-                <span class="heading h1 cl-txt-orange fw-bold about__hero-title-txt">
-                    Cheval<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span>
-                </span>
+                <span class="heading h1 fw-bold about__hero-title-txt">Valentine</span>
+                <span class="heading h1 cl-txt-orange fw-bold about__hero-title-txt">Cheval<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span></span>
                 <span class="heading h3 fw-semi upper about__hero-title-year">
-                    <span class="cl-txt-disable">
-                        93
-                    </span>
-                    <span class="cl-txt-title">
-                        {currentYear}
-                    </span>
+                    <span class="cl-txt-disable">93</span>
+                    <span class="cl-txt-title">{currentYear}</span>
                 </spa>
             </h1>
             <div class="about__hero-info grid">
@@ -103,8 +95,8 @@ let currentYear = new Date().getFullYear() % 100;
             padding-bottom: 6rem;
         }
         &-title {
-            margin-bottom: 12rem;
             position: relative;
+            margin-block: -1rem 11rem;
             @include md {
                 margin-bottom: 10.05svh;
             }
@@ -112,10 +104,10 @@ let currentYear = new Date().getFullYear() % 100;
                 margin-bottom: 0;
             }
             &-txt {
-                line-height: .835em;
+                padding-block: 1rem;
                 @include md {
                     @include text(dis1);
-                    line-height: .835em;
+                    padding-block: .6rem;
                 }
                 @include sm {
                     @include text(h1);
@@ -149,6 +141,10 @@ let currentYear = new Date().getFullYear() % 100;
                 grid-column: 13/16;
                 display: flex;
                 flex-direction: column;
+                line-height: .72em;
+                gap: 1.6rem 0;
+                align-self: end;
+                margin-bottom: 1rem;
                 @include md {
                     grid-column: 12/13;
                     justify-self: end;
