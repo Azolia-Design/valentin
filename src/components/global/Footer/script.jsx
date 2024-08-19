@@ -49,25 +49,27 @@ const FooterScript = () => {
             .to('.footer__title', { autoAlpha: 0, duration: 0 }, "<=0.1")
             .to('.footer__bg', { autoAlpha: 0, duration: .3, ease: 'linear' }, '<=0')
             .to('.footer', { background: 'rgba(255, 255, 255, 0)', duration: 0 }, "<=0")
-            .from('.home__hero-clone-bg-main img', { filter: 'blur(4px)', scale: .6, duration: 4, transformOrigin: '20% 85%' }, "<=0")
+            .from('.home__hero-clone-bg', { filter: 'blur(4px)', scale: .6, duration: 4, transformOrigin: '20% 85%' }, "<=0")
             .to('.footer__main-image', { filter: 'blur(12px)', duration: 1 }, "<=0")
             .to('.footer__main-image', { autoAlpha: 0, duration: .8 }, "<=2.2")
 
         let tlInfiniteText = gsap.timeline({
             scrollTrigger: {
-                trigger: '.home__hero-clone',
-                start: `bottom-=${cvUnit(100, 'vh')}px bottom`,
+                trigger: '.home-footer-hero',
+                start: `bottom-=${cvUnit(120, 'vh')}px bottom`,
                 end: 'bottom bottom',
                 scrub: true
             }
         })
 
         tlInfiniteText.to('.home__hero-clone-main', { autoAlpha: 1, duration: 1 })
-            .to('.home__hero-clone-bg-main-under', { autoAlpha: 1, duration: .5 });
+            .to('.home__hero-clone-bg-main-under', { autoAlpha: 1, duration: 1 }, "<=.8")
+            .to('.home__hero-clone-bg-main-trans', { autoAlpha: 0, duration: 1 }, "<=0.8")
 
         onCleanup(() => {
             tl.kill();
-            // tlInfinite.kill();
+            tlInfiniteImg.kill();
+            tlInfiniteText.kill();
             if (splitedText.isSplit) splitedText.revert();
         });
     })

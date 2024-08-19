@@ -3,11 +3,11 @@ import { Icon } from 'astro-icon/components';
 import Arrows from '~/components/common/Arrows.astro';
 import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
-import HeroMain from '~/assets/images/home-hero-trans.png';
-import HeroMainBG from '~/assets/images/home-hero-bg.jpg';
+import HeroMain from '~/assets/images/home-hero-trans.jpg';
+import HeroMainBG from '~/assets/images/home-hero-full.jpg';
 import SlideText from '~/components/common/SlideText';
 const { data } = Astro.props;
-const HeroMainImg = await getImage({src: HeroMain, format: 'png', width: HeroMain.width})
+const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
 const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: HeroMainBG.width})
 ---
 <div class="home__hero-clone-wrap">
@@ -65,7 +65,7 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                     layout="cover"
                     loading="eager"
                     decoding="async"
-                    class="img img-fill home__hero-clone-bg-main"
+                    class="img img-fill home__hero-clone-bg-main-trans"
                 />
                 <div class="home__hero-clone-gradient-mb"></div>
             </div>
@@ -93,6 +93,12 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
         position: relative;
 
         display: grid;
+
+        perspective: 300;
+        -moz-perspective: 300;
+        -webkit-perspective: 300;
+        -o-perspective: 300;
+        -ms-perspective: 300;
         // z-index: 3;
         &-main,
         &-bg {
@@ -115,10 +121,10 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
             position: relative;
             contain: paint;
             z-index: 1;
+            will-change: transform, filter;
             &-main {
                 position: sticky;
                 top: 0;
-                z-index: 3;
                 width: 100%;
                 height: 100vh;
                 will-change: scale;
