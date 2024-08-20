@@ -19,15 +19,27 @@ declare global {
     let isProjectPage = window.location.pathname === '/projects' || checkIsPostPage(window.location.pathname);
 
     if (!getLenis()) {
-        initLenis({ infinite: !isProjectPage });
+        if (window.innerWidth > 991) {
+            initLenis({ infinite: !isProjectPage });
+        }
+        else {
+            initLenis();
+        }
     }
 
     applyOnScroll(window.scrollY);
 
     const initPage = () => {
-        getLenis({ infinite: !isProjectPage }).scrollTo("top", {
-            duration: .001
-        });
+        if (window.innerWidth > 991) {
+            getLenis({ infinite: !isProjectPage }).scrollTo("top", {
+                duration: .001
+            });
+        }
+        else {
+            getLenis().scrollTo("top", {
+                duration: .001
+            });
+        }
         onLoad();
     }
     const onLoad = () =>{

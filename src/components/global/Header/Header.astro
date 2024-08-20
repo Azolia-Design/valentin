@@ -23,23 +23,25 @@ const pathname = new URL(Astro.request.url).pathname;
         <div class="header__socials">
             <p class="cl-txt-title">Socials</p>
             {socials.map((el) =>
-                <Fragment>/<a href={el.href} class="header__social">{el.text}</a></Fragment>)}
+                <Fragment>/<a href={el.href}
+                    data-cursor="-hidden"
+                    data-cursor-stick
+                    target="_blank"
+                    class="txt-link hover-un header__social">{el.text}</a></Fragment>)}
         </div>
         <div class="header__menu">
             {links.map((el, i) =>
                 <Fragment>
                     <a
                         href={el.href}
-                        class={`header__menu-link${pathname === el.href ? ' active': ''}`}
-                        data-cursor="-link"
-                        data-cursor-stick={`.header__menu-link-stick.${el.text}`}
+                        class={`txt-link hover-un header__menu-link${pathname === el.href ? ' active': ''}`}
+                        data-cursor="-hidden"
+                        data-cursor-stick
                         >
-                        <div id="sticker" class={`header__menu-link-stick ${el.text}`}></div>
                         {el.text}
                     </a><span class="splash">{i < (links.length) - 1 && '/'}</span></Fragment>)}
         </div>
-        <a href="" class="txt-link cl-txt-title header__act" data-cursor-stick=".header__act-stick" data-cursor='-link'>
-            <div id="sticker" class="header__act-stick"></div>
+        <a href="" class="txt-link cl-txt-title header__act" data-cursor-stick data-cursor='-hidden'>
             {actions.text}
         </a>
         <button class="fs-16 cl-txt-title fw-med header__toggle">
@@ -122,7 +124,7 @@ const pathname = new URL(Astro.request.url).pathname;
             transition: color .4s ease-in-out;
             &.active,
             &:hover {
-                @include tColor(title, dm);
+                color: var(--cl-orange);
                 // pointer-events: none;
             }
         }
@@ -138,20 +140,10 @@ const pathname = new URL(Astro.request.url).pathname;
             @include sm {
                 display: none;
             }
-            .splash {
-                transition: transform .4s ease-in-out;
-            }
             &-link {
-                transition: color .4s ease-in-out, margin .4s ease-in-out;
-                &-stick {
-                    left: -.1rem !important;
-                    top: .6em !important;
-                }
+                transition: color .4s ease-in-out;
                 &:hover {
-                    @include md-up {
-                        margin-left: 1rem;
-                    }
-                    @include tColor(title, dm);
+                    color: var(--cl-orange);
                 }
                 &.active {
                     @include tColor(title, dm);
@@ -162,6 +154,7 @@ const pathname = new URL(Astro.request.url).pathname;
         &__act {
             justify-self: end;
             margin-left: -2rem;
+            transition: color .4s ease-in-out;
             &:hover {
                 @media (hover:hover) {
                     color: var(--cl-orange);

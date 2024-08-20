@@ -4,7 +4,7 @@ let lenis;
 
 function initLenis(options = {}) {
     lenis = new Lenis({
-        infinite: true,
+        infinite: window.innerWidth > 991 ? true : false,
         content: window.innerWidth > 767 ? document.documentElement : document.querySelector('.wrapper'),
         wrapper: window.innerWidth > 767 ? document.documentElement : document.querySelector('.wrapper'),
         ...options

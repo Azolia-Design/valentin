@@ -78,7 +78,10 @@ function initSwup() {
         resetTransition(visit.to.url);
 
         let isProjectPage = visit.to.url === '/projects' || checkIsPostPage(visit.to.url);
-        reInitLenisScroll(getLenis({ infinite: !isProjectPage }));
+
+        if (window.innerWidth > 991) {
+            reInitLenisScroll(getLenis({ infinite: !isProjectPage }));
+        }
 
         forceScrollTop();
         if (window.innerWidth > 991) {

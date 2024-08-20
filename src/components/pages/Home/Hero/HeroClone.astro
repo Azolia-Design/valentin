@@ -109,6 +109,9 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
     .home__hero-clone-wrap {
         position: relative;
         align-self: end;
+        @include md {
+            display: none;
+        }
     }
     .home__hero-clone {
         position: relative;
