@@ -10,7 +10,6 @@ const FooterScript = () => {
     let allSplitText = [];
     const elements = [
         { selector: '.home__hero-clone-scope li' },
-        // { selector: '.home__hero-clone-scope-cta .txt-link' },
         { selector: '.home__hero-clone-greating'},
         { selector: '.home__hero-clone-name' },
         { selector: '.home__hero-scrolldown' },
@@ -55,7 +54,7 @@ const FooterScript = () => {
             .to(['.footer__link', '.footer__label'], { autoAlpha: 0, duration: .4, stagger: .01, ease: 'power2.in' }, "<=0")
             .to('.footer__main-image', { scale: 3.5, xPercent: 50, duration: 4, transformOrigin: 'left 40%'  }, "<=0")
             .to('.footer__cta', { autoAlpha: 0, duration: .5, ease: 'linear' }, "<=0")
-            .to('.footer__marquee-wrap', { autoAlpha: 0, duration: .5, ease: 'power2.in' }, "<=0.1")
+            .to('.footer__marquee-wrap', { autoAlpha: 0, filter: 'brightness(.3)', duration: .5, ease: 'power2.in' }, "<=0.1")
             .to('.footer__main-image-img.ver-mid', { autoAlpha: 0, duration: .5, ease: 'linear' }, "<=.35")
             .to('.footer__title', { autoAlpha: 0, duration: 0 }, "<=0.1")
             .to('.footer__bg', { autoAlpha: 0, duration: .3, ease: 'linear' }, '<=0')
