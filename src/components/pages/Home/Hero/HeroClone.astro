@@ -65,21 +65,23 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                     layout="cover"
                     loading="eager"
                     decoding="async"
-                    class="img img-fill home__hero-clone-bg-main-trans"
+                    class="img img-fill"
                 />
                 <div class="home__hero-clone-gradient-mb"></div>
             </div>
-            <Image
-                src={HeroMainBGImg.src}
-                widths={[400, 768, 1024, 2040]}
-                width={1728}
-                height={1050}
-                alt={'a man'}
-                layout="cover"
-                loading="eager"
-                decoding="async"
-                class="img img-fill home__hero-clone-bg-main-under"
-            />
+            <div class="home__hero-clone-bg-under">
+                <Image
+                    src={HeroMainBGImg.src}
+                    widths={[400, 768, 1024, 2040]}
+                    width={1728}
+                    height={1050}
+                    alt={'a man'}
+                    layout="cover"
+                    loading="eager"
+                    decoding="async"
+                    class="img img-fill"
+                />
+            </div>
         </div>
     </section>
 </div>
@@ -93,12 +95,11 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
         position: relative;
 
         display: grid;
-
-        perspective: 300;
-        -moz-perspective: 300;
-        -webkit-perspective: 300;
-        -o-perspective: 300;
-        -ms-perspective: 300;
+        perspective: 1300;
+        -moz-perspective: 1300;
+        -webkit-perspective: 1300;
+        -o-perspective: 1300;
+        -ms-perspective: 1300;
         // z-index: 3;
         &-main,
         &-bg {
@@ -121,13 +122,10 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
             position: relative;
             contain: paint;
             z-index: 1;
-            will-change: transform, filter;
+            transform-style: preserve-3d;
             &-main {
-                position: sticky;
-                top: 0;
                 width: 100%;
                 height: 100vh;
-                will-change: scale;
                 @include sm {
                     height: 100svh;
                 }
@@ -136,9 +134,20 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                     transform-origin: center 16%;
                     object-position: center top !important;
                 }
-                &-under {
-                    opacity: 0;
-                    visibility: hidden;
+
+            }
+            &-under {
+                opacity: 0;
+                visibility: hidden;
+                width: 100%;
+                height: 100vh;
+                @include sm {
+                    height: 100svh;
+                }
+                img {
+                    // transform-origin: 18vw 25vh;
+                    transform-origin: center 16%;
+                    object-position: center top !important;
                 }
             }
         }
