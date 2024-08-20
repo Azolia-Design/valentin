@@ -16,7 +16,7 @@ function SlideText(props) {
             let dur = 3;
             let ease = gsap.parseEase(easeInOutQuint);
 
-            let yPercent = { in: 100, out: -100 }
+            let yPercent = { in: -100, out: 100 }
             let tl = gsap.timeline({ repeat: -1 });
 
             if (idx === props.data.length - 1) {

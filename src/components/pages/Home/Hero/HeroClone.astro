@@ -6,10 +6,14 @@ import Image from '~/components/common/Image.astro';
 import HeroMain from '~/assets/images/home-hero-trans.jpg';
 import HeroMainBG from '~/assets/images/home-hero-full-blur.jpg';
 import SlideText from '~/components/common/SlideText';
+import Background2D from './Background2D';
+import DeepMap from '~/assets/images/hero-real-deepmap.jpg';
 
 const { data } = Astro.props;
 const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
 const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: HeroMainBG.width})
+const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.width})
+
 ---
 <div class="home__hero-clone-wrap">
     <section class="home__hero-clone">
@@ -17,12 +21,16 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
             <div class="container grid calc-h">
                 <div class="home__hero-clone-scope-wrap">
                     <ul class="home__hero-clone-scope">
+                        <span class="line"></span>
                         {data.scopes.map((el) => <li>{el}</li>)}
+                        <span class="line"></span>
                     </ul>
-                    <a href="#" class="arrow-hover home__hero-clone-scope-cta">
-                        <span class="txt-link">How can I help?</span>
-                        <Arrows class="ic-20"/>
-                    </a>
+                    <div class="home__hero-clone-scope-cta-wrap split-line unset-margin">
+                        <a href="#" class="arrow-hover home__hero-clone-scope-cta" data-cursor="-link" data-cursor-stick=".home-clone-cta-stick">
+                            <span class="txt-link"><div id="sticker" class="home-clone-cta-stick"></div>How can I help?</span>
+                            <Arrows class="ic-20"/>
+                        </a>
+                    </div>
                 </div>
                 <div class="home__hero-clone-intro-wrap">
                     <p class="home__hero-clone-intro">{data.subtitle}</p>
@@ -47,8 +55,10 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                     <div class="heading h1 fw-bold fix-font upper home__hero-clone-title">
                         <div class="home__hero-clone-title-txt">Design</div>
                         <div class="home__hero-clone-title-txt">for financial </div>
-                        <div class="cl-txt-orange home__hero-clone-title-txt">
-                            Product
+                        <div class="cl-txt-orange home__hero-clone-title-slide split-line unset-margin">
+                            <div class="home__hero-clone-title-slide-inner">
+                                <SlideText data={["Product", "Business"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                            </div>
                         </div>
                     </div>
                     <span class="upper home__hero-scrolldown">(Scroll down)</span>
@@ -82,6 +92,13 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                     decoding="async"
                     class="img img-fill"
                 />
+                <Background2D
+                    original={HeroMainBGImg.src}
+                    depth={DeepMapImg.src}
+                    horizontalThreshold={150}
+                    verticalThreshold={66.66}
+                    client:media="(min-width: 992px)"
+                    client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
             </div>
         </div>
     </section>
@@ -90,6 +107,7 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
 <style lang="scss">
     @use '~/assets/styles/mixins' as *;
     .home__hero-clone-wrap {
+        position: relative;
         align-self: end;
     }
     .home__hero-clone {
@@ -158,6 +176,7 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
             align-self: center;
 
             margin-bottom: 10vh;
+
             @include md {
                 margin-bottom: 5vh;
                 grid-column: 8/13;
@@ -177,8 +196,18 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
 
             padding-block: 3.2rem;
             margin-bottom: 3.2rem;
+            position: relative;
+            .line {
+                position: absolute;
+                width: 100%;
+                &:first-child {
+                    top: 0;
+                }
+                &:last-child {
+                    bottom: 0;
+                }
+            }
 
-            border-block: 1px solid rgba(255, 255, 255, 0.10);
             @include md {
                 flex-wrap: wrap;
                 flex-direction: row;
@@ -198,12 +227,18 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                width: 100%;
 
                 @include tColor(title, dm);
                 @include sm {
                     padding-top: 2.4rem;
                     border-top: 1px solid var(--cl-dm-border);
                     flex: 1;
+                }
+                &:hover {
+                    @media (hover:hover) {
+                        color: var(--cl-orange);
+                    }
                 }
             }
         }
@@ -255,9 +290,9 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                 @include md {
                     padding-block: .6rem;
                 }
-                // &:last-child{
-                //     margin-block: .1em;
-                // }
+            }
+            &-slide {
+                padding-block: calc(1.1rem + .1em);
             }
         }
 

@@ -10,12 +10,12 @@ const FooterScript = () => {
     let allSplitText = [];
     const elements = [
         { selector: '.home__hero-clone-scope li' },
-        { selector: '.home__hero-clone-scope-cta' },
-        { selector: '.home__hero-clone-greating' },
-        { selector: '.home__hero-clone-greating' },
+        // { selector: '.home__hero-clone-scope-cta .txt-link' },
+        { selector: '.home__hero-clone-greating'},
         { selector: '.home__hero-clone-name' },
-        { selector: '.home__hero-clone-title-txt' },
-        { selector: '.home__hero-clone-intro' }
+        { selector: '.home__hero-scrolldown' },
+        { selector: '.home__hero-clone-title-txt', options: { stagger: 0.04 } },
+        { selector: '.home__hero-clone-intro'}
     ]
 
     onMount(() => {
@@ -64,25 +64,25 @@ const FooterScript = () => {
             .to('.footer__main-image', { filter: 'blur(12px)', duration: 1 }, "<=0")
             .to('.footer__main-image', { autoAlpha: 0, duration: .8 }, "<=2.2")
 
-        // elements.forEach((el) => {
-        //     let subSplitText = [];
+        elements.forEach((el) => {
+            let subSplitText = [];
 
-        //     let currSelector = document.querySelectorAll(el.selector);
-        //     if (currSelector.length > 0) {
-        //         currSelector.forEach((text, idx) => {
-        //             let splittext = new SplitType(text, { types: 'lines, words', lineClass: 'split-line unset-margin' });
-        //             gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
-        //             subSplitText.push(splittext);
-        //         })
-        //     }
-        //     else {
-        //         let splittext = new SplitType(currSelector, { types: 'lines, words', lineClass: 'split-line' });
-        //         gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
-        //         subSplitText.push(splittext);
-        //     }
+            let currSelector = document.querySelectorAll(el.selector);
+            if (currSelector.length > 0) {
+                currSelector.forEach((text, idx) => {
+                    let splittext = new SplitType(text, { types: 'lines, words', lineClass: 'split-line unset-margin' });
+                    gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
+                    subSplitText.push(splittext);
+                })
+            }
+            else {
+                let splittext = new SplitType(currSelector, { types: 'lines, words', lineClass: 'split-line unset-margin' });
+                gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
+                subSplitText.push(splittext);
+            }
 
-        //     allSplitText.push(subSplitText); // Push to the sub-array
-        // })
+            allSplitText.push(subSplitText); // Push to the sub-array
+        })
 
         let tlInfiniteText = gsap.timeline({
             scrollTrigger: {
@@ -92,25 +92,34 @@ const FooterScript = () => {
                 scrub: true,
                 snap: {
                     snapTo: 1,
+                    duration: 5
                 }
             }
         })
 
         tlInfiniteText
-            // .to('.home__hero-clone-main', { autoAlpha: 1, duration: 1 })
+            .to('.home__hero-clone-main', { autoAlpha: 1, duration: 1 })
             .to('.home__hero-clone-bg-under', { autoAlpha: 1, duration: 1 }, "<=.8")
             .to('.home__hero-clone-bg-main', { autoAlpha: 0, duration: 1 }, "<=.8")
+            .to('.home__hero-clone-wrap', { zIndex: 3, duration: 0 })
 
-        // allSplitText.forEach(el => {
-        //     if (el.length > 0) {
-        //         el.forEach((splitChild) => {
-        //             tlInfiniteText.fromTo(splitChild.words, { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' }, "<=0")
-        //         })
-        //     }
-        //     else {
-        //         tlInfiniteText.fromTo(el.words, { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' }, "<=0")
-        //     }
-        // });
+        allSplitText.forEach(el => {
+            if (el.length > 0) {
+                el.forEach((splitChild, idx) => {
+                    tlInfiniteText.fromTo(splitChild.words, { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, stagger: .016, delay: idx * .1, ease: 'power2.inOut', ...el.options }, "<=0")
+                })
+            }
+            else {
+                tlInfiniteText.fromTo(el.words, { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: .016, duration: 1.5, ease: 'power2.inOut', ...el.options }, "<=0")
+            }
+        });
+
+        tlInfiniteText
+            .fromTo('.home__hero-clone-title-slide-inner', { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' }, "<=0")
+            .fromTo('.home__hero-clone-scope-cta', { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' }, "<=0")
+            .fromTo('.home__hero-clone-award', { autoAlpha: 0, scale: .6 }, { autoAlpha: 1, scale: 1, duration: 1, stagger: .1 }, "<=0")
+            .from('.home__hero-clone .line', { scaleX: 0, transformOrigin: 'left', duration: .8, stagger: .1 }, "<=0.1")
+            .to('.home__hero-clone-main', { duration: .5 })
 
 
         onCleanup(() => {
