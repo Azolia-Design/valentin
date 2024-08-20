@@ -34,7 +34,9 @@ const HeroScript = (props) => {
             scrollTrigger: {
                 trigger: '.home__hero-main',
                 start: 'top-=10px top',
-                markers: true
+                markers: true,
+                toggleActions:"restart complete reverse reset play",
+                invalidateOnRefresh: true
             }
         })
 

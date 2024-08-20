@@ -6,7 +6,10 @@ function initLenis(options = {}) {
     lenis = new Lenis({
         infinite: true,
         syncTouch: true,
+        smooth: true,
+        smoothTouch: true,
         touchInertiaMultiplier: 5,
+        touchMultiplier: 2,
         content: window.innerWidth > 767 ? document.documentElement : document.querySelector('.wrapper'),
         wrapper: window.innerWidth > 767 ? document.documentElement : document.querySelector('.wrapper'),
         ...options
