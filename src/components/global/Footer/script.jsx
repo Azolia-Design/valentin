@@ -7,6 +7,17 @@ import { cvUnit } from '~/utils/number';
 const FooterScript = () => {
     let scriptRef;
 
+    let allSplitText = [];
+    const elements = [
+        { selector: '.home__hero-clone-scope li' },
+        { selector: '.home__hero-clone-scope-cta' },
+        { selector: '.home__hero-clone-greating' },
+        { selector: '.home__hero-clone-greating' },
+        { selector: '.home__hero-clone-name' },
+        { selector: '.home__hero-clone-title-txt' },
+        { selector: '.home__hero-clone-intro' }
+    ]
+
     onMount(() => {
         if (!scriptRef) return;
 
@@ -53,21 +64,54 @@ const FooterScript = () => {
             .to('.footer__main-image', { filter: 'blur(12px)', duration: 1 }, "<=0")
             .to('.footer__main-image', { autoAlpha: 0, duration: .8 }, "<=2.2")
 
+        // elements.forEach((el) => {
+        //     let subSplitText = [];
 
+        //     let currSelector = document.querySelectorAll(el.selector);
+        //     if (currSelector.length > 0) {
+        //         currSelector.forEach((text, idx) => {
+        //             let splittext = new SplitType(text, { types: 'lines, words', lineClass: 'split-line unset-margin' });
+        //             gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
+        //             subSplitText.push(splittext);
+        //         })
+        //     }
+        //     else {
+        //         let splittext = new SplitType(currSelector, { types: 'lines, words', lineClass: 'split-line' });
+        //         gsap.set(splittext.words, { autoAlpha: 0, willChange: 'transform, opacity' });
+        //         subSplitText.push(splittext);
+        //     }
+
+        //     allSplitText.push(subSplitText); // Push to the sub-array
+        // })
 
         let tlInfiniteText = gsap.timeline({
             scrollTrigger: {
                 trigger: '.home-footer-hero',
-                start: `bottom-=${cvUnit(100, 'vh')}px bottom`,
+                start: `bottom-=${cvUnit(200, 'vh')}px bottom`,
                 end: 'bottom bottom',
-                scrub: true
+                scrub: true,
+                snap: {
+                    snapTo: 1,
+                }
             }
         })
 
         tlInfiniteText
-            .to('.home__hero-clone-main', { autoAlpha: 1, duration: 1 })
+            // .to('.home__hero-clone-main', { autoAlpha: 1, duration: 1 })
             .to('.home__hero-clone-bg-under', { autoAlpha: 1, duration: 1 }, "<=.8")
-            .to('.home__hero-clone-bg-main', { autoAlpha: 0, duration: 1 }, "<=0.8")
+            .to('.home__hero-clone-bg-main', { autoAlpha: 0, duration: 1 }, "<=.8")
+
+        // allSplitText.forEach(el => {
+        //     if (el.length > 0) {
+        //         el.forEach((splitChild) => {
+        //             tlInfiniteText.fromTo(splitChild.words, { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' }, "<=0")
+        //         })
+        //     }
+        //     else {
+        //         tlInfiniteText.fromTo(el.words, { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' }, "<=0")
+        //     }
+        // });
+
 
         onCleanup(() => {
             tl.kill();

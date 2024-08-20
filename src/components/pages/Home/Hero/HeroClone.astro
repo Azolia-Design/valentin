@@ -4,8 +4,9 @@ import Arrows from '~/components/common/Arrows.astro';
 import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
 import HeroMain from '~/assets/images/home-hero-trans.jpg';
-import HeroMainBG from '~/assets/images/home-hero-full.jpg';
+import HeroMainBG from '~/assets/images/home-hero-full-blur.jpg';
 import SlideText from '~/components/common/SlideText';
+
 const { data } = Astro.props;
 const HeroMainImg = await getImage({src: HeroMain, format: 'jpg', width: HeroMain.width})
 const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: HeroMainBG.width})
@@ -46,8 +47,8 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                     <div class="heading h1 fw-bold fix-font upper home__hero-clone-title">
                         <div class="home__hero-clone-title-txt">Design</div>
                         <div class="home__hero-clone-title-txt">for financial </div>
-                        <div class="cl-txt-orange home__hero-title-txt">
-                            <SlideText data={["Product", "Business"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
+                        <div class="cl-txt-orange home__hero-clone-title-txt">
+                            Product
                         </div>
                     </div>
                     <span class="upper home__hero-scrolldown">(Scroll down)</span>
@@ -254,9 +255,9 @@ const HeroMainBGImg = await getImage({src: HeroMainBG, format: 'jpg', width: Her
                 @include md {
                     padding-block: .6rem;
                 }
-                &:last-child{
-                    margin-block: .1em;
-                }
+                // &:last-child{
+                //     margin-block: .1em;
+                // }
             }
         }
 

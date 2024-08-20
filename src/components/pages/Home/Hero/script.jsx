@@ -26,8 +26,22 @@ const HeroScript = (props) => {
             // .fromTo(['.home__hero-clone-wrap', '.home__hero-bg-main-inner'], { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: 'linear' }, '>.5')
             // .fromTo('.home__intro-bg-gradient', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1, ease: 'linear' }, '-=1')
             .fromTo('.home__intro-companies', { yPercent: 0 }, { yPercent: window.innerWidth > 767 ? 20 : 0, duration: 1, ease: 'linear' }, "<.3")
-            .to('.home__intro-bg-gradient', { display: 'none', duration: 0, ease: 'linear' });
+            .to('.home__intro-bg-gradient', { display: 'none', duration: 0, ease: 'linear' })
+            .to('.home__hero-bg-main-inner.placeholder', { autoAlpha: 1, duration: 0, ease: 'linear' });
 
+
+        let tlShow = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.home__hero-main',
+                start: 'top-=10px top',
+                markers: true
+            }
+        })
+
+        let title = new SplitType(document.querySelectorAll('.home__hero-title-txt'), { types: 'lines, words', lineClass: 'split-line unset-margin' })
+
+        gsap.set(title.words, { autoAlpha: 0, yPercent: 80, duration: 0 });
+        tlShow.to(title.words, { duration: .6, autoAlpha: 1, stagger: .04, yPercent: 0 })
         // let allSplitText = [];
 
         // document.querySelectorAll('.home__hero-title .grid-1-1 span').forEach((text, idx) => {
