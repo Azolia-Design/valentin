@@ -30,17 +30,9 @@ declare global {
     applyOnScroll(window.scrollY);
 
     const initPage = () => {
-        if (window.innerWidth > 991) {
-            getLenis({ infinite: !isProjectPage }).scrollTo("top", {
-                duration: .001
-            });
-            reInitLenisScroll(getLenis());
-        }
-        else {
-            getLenis().scrollTo("top", {
-                duration: .001
-            });
-        }
+        getLenis().scrollTo("top", {
+            duration: .001
+        });
         reInitLenisScroll(getLenis());
         onLoad();
     }

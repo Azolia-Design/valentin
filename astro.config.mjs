@@ -7,14 +7,11 @@ import swup from '@swup/astro';
 import mdx from '@astrojs/mdx';
 
 import { defineConfig, squooshImageService } from 'astro/config';
-import keystatic from '@keystatic/astro';
 import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
-import vercel from '@astrojs/vercel/serverless';
-
 
 // https://astro.build/config
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -24,12 +21,7 @@ const whenExternalScripts = (items = []) =>
     hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
-    output: 'hybrid',
-    adapter: vercel({
-        webAnalytics: {
-            enabled: true,
-        },
-    }),
+    output: 'static',
     devToolbar: {
         enabled: false
     },
@@ -40,7 +32,6 @@ export default defineConfig({
     integrations: [
         react({ jsxRuntime: 'classic' }),
         markdoc(),
-        ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()]),
         solid({ devtools: true }),
         swup({
             theme: false,
@@ -57,7 +48,7 @@ export default defineConfig({
             })
         ),
         compress({
-            // CSS: true,
+            CSS: true,
             HTML: {
                 'html-minifier-terser': {
                     removeAttributeQuotes: false,

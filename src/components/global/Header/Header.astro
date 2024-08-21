@@ -16,10 +16,10 @@ const pathname = new URL(Astro.request.url).pathname;
         <div></div>
     </div>
     <div class="container grid">
-        <div class="header__logo">
+        <a href="/" class="header__logo">
             <p class="header__greating">Good morning!</p>
-            <h2 class="heading h5 header__name"><span class="fw-med cl-txt-title">Valentine</span> <span class="cl-txt-desc">Cheval</span></h2>
-        </div>
+            <h2 class="heading h5 fw-med header__name"><span class="cl-txt-title">Valentine</span> <span>Cheval</span></h2>
+        </a>
         <div class="header__socials">
             <p class="cl-txt-title">Socials</p>
             {socials.map((el) =>

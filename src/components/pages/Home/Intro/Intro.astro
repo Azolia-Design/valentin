@@ -16,7 +16,10 @@ import bitmex from '~/icons/company/bitmex.svg';
 import birthdayResearch from '~/icons/company/birthday-research.svg';
 import babylons from '~/icons/company/babylons.svg';
 import diag from '~/icons/company/diag.svg';
-
+import RedDot from '~/icons/red-dot.svg?raw';
+import UXDesign from '~/icons/uxdesign.svg?raw';
+import DFA from '~/icons/dfa.svg?raw';
+import Asterisk from '~/icons/asterisk.svg?raw'
 
 const { data } = Astro.props;
 const companies = [
@@ -31,11 +34,11 @@ const companies = [
     await getImage({ src:diag ,format: 'svg'})
 ]
 const awards = [
-    { name: "Red Dot Design award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'red-dot' },
-    { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' },
-    { name: "Design for Asia award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'dfa' },
-    { name: "Creative Pool", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'red-dot' },
-    { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' }
+    { name: "Red Dot Design award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: RedDot },
+    { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: UXDesign },
+    { name: "Design for Asia award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: DFA },
+    { name: "Creative Pool", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: RedDot },
+    { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: UXDesign }
 ]
 const itemLength = awards.length;
 
@@ -86,7 +89,7 @@ const itemLength = awards.length;
                     </TextBlurFading>
                 </div>
                 <a href="#" class="btn btn-circle arrow-hover home__intro-btn" data-cursor="-hidden" data-cursor-stick>
-                    <Arrows/>
+                    <Arrows type="long" size={3.2}/>
                     <svg class="btn-circle-svg" width="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="50" cy="50" r="49" stroke="white" stroke-opacity=".1" stroke-width="2"/>
                     </svg>
@@ -126,11 +129,11 @@ const itemLength = awards.length;
                                     <p class="cl-txt-disable home__intro-award-category">{award.category}</p>
                                 </div>
                                 <div class="home__intro-award-logo-mb">
-                                    <Icon name={award.logo} />
+                                    <Fragment set:html={award.logo}/>
                                 </div>
                             </div>
                             <div class="home__intro-award-logo">
-                                <Icon name={award.logo} />
+                                <Fragment set:html={award.logo}/>
                             </div>
                         )}
                     </div>
@@ -147,7 +150,7 @@ const itemLength = awards.length;
                                     8 years of experience
                                 </h3>
                                 <div class="ic ic-32">
-                                    <Icon name="asterisk"  />
+                                    <Fragment set:html={Asterisk} />
                                 </div>
                             </div>
                             <div class="home__intro-service-marquee-item">
@@ -155,7 +158,7 @@ const itemLength = awards.length;
                                     senior designer
                                 </h3>
                                 <div class="ic ic-32">
-                                    <Icon name="asterisk"  />
+                                    <Fragment set:html={Asterisk} />
                                 </div>
                             </div>
                             <div class="home__intro-service-marquee-item">
@@ -163,7 +166,7 @@ const itemLength = awards.length;
                                     Over 100 customers
                                 </h3>
                                 <div class="ic ic-32">
-                                    <Icon name="asterisk"  />
+                                    <Fragment set:html={Asterisk} />
                                 </div>
                             </div>
                         </div>
@@ -177,7 +180,7 @@ const itemLength = awards.length;
                                     Product Design
                                 </h3>
                                 <div class="ic ic-32">
-                                    <Icon name="asterisk"  />
+                                    <Fragment set:html={Asterisk} />
                                 </div>
                             </div>
                             <div class="home__intro-service-marquee-item">
@@ -185,7 +188,7 @@ const itemLength = awards.length;
                                     Brand design & Strategy
                                 </h3>
                                 <div class="ic ic-32">
-                                    <Icon name="asterisk"  />
+                                    <Fragment set:html={Asterisk} />
                                 </div>
                             </div>
                             <div class="home__intro-service-marquee-item">
@@ -193,7 +196,7 @@ const itemLength = awards.length;
                                     Visual design
                                 </h3>
                                 <div class="ic ic-32">
-                                    <Icon name="asterisk"  />
+                                    <Fragment set:html={Asterisk} />
                                 </div>
                             </div>
                         </div>
@@ -264,9 +267,6 @@ const itemLength = awards.length;
         }
         &-btn {
             @include size(10rem);
-            .ic {
-                width: 2.4rem;
-            }
         }
         &-portrait {
             display: grid;
@@ -518,17 +518,13 @@ const itemLength = awards.length;
                 left: -12rem;
 
                 color: var(--cl-orange);
-                @include size(auto, 12rem);
+                @include size(12rem);
 
                 opacity: 0;
                 transform: translate(-100%, -50%) scale(1.1);
                 will-change: transform, opacity;
 
                 transition: opacity 0.4s ease-in-out, transform .4s ease-in-out;
-                svg {
-                    height: 100% !important;
-                    width: auto !important;
-                }
                 @include md {
                     display: none;
                 }
@@ -537,7 +533,7 @@ const itemLength = awards.length;
                     @include md {
                         display: block;
                         color: var(--cl-orange);
-                        @include size(7.4rem);
+                        @include size(5rem);
                     }
                 }
             }
@@ -647,6 +643,7 @@ const itemLength = awards.length;
                         transform: rotate(9.139deg);
                         transform-origin: center;
                         z-index: 3;
+                        box-shadow: 0px 0px 2rem 0px rgba(255, 61, 0, 0.55);
                         &:hover {
                             .home__intro-service-marquee-wrap.black {
                                 filter: blur(.7rem);
@@ -661,6 +658,7 @@ const itemLength = awards.length;
                         transform-origin: center;
                         filter: blur(.7rem);
                         z-index: 2;
+                        box-shadow: 0px 0px 2rem 0px rgba(0, 0, 0, 0.55);
                         &:hover {
                             filter: blur(0);
                             @include tColor(title, dm);

@@ -1,17 +1,18 @@
 ---
-import { Icon } from "astro-icon/components";
-const { class: className } = Astro.props;
-
+import Icon from '~/icons/arrow.svg?raw';
+import IconLong from '~/icons/arrow-long.svg?raw';
+const { class: className, type = 'default', size = 1.6 } = Astro.props;
 ---
 <div class:list={["ic-arr-wrap", className]}>
     <div class="arr-main ic">
-        <Icon name="arrow" />
+        {type !== 'default' ? <Fragment set:html={IconLong} /> : <Fragment set:html={Icon} />}
+
     </div>
     <div class="arr-clone ic">
-        <Icon name="arrow" />
+        {type !== 'default' ?  <Fragment set:html={IconLong} /> : <Fragment set:html={Icon} />}
     </div>
 </div>
-<style lang="scss" is:global>
+<style lang="scss" is:global define:vars={{ size }}>
     @use '~/assets/styles/mixins' as *;
     .ic-arr-wrap {
         display: grid;
@@ -23,7 +24,8 @@ const { class: className } = Astro.props;
     .arr-clone {
         transition: transform .6s cubic-bezier(.4,0,.1,1);
         grid-area: 1/1/2/2;
-        width: 1.6rem;
+        @include size(calc(var(--size) * 1rem));
+
         @include sm {
             width: 1.4rem;
         }

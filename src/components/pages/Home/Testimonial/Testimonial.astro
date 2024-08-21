@@ -1,7 +1,6 @@
 ---
 import { getImage } from 'astro:assets';
 import Image from "~/components/common/Image.astro";
-import TextTransClip from '~/components/common/TextTransClip';
 import Testimonials from './Testimonials';
 import Plus from "~/icons/plus.svg";
 
@@ -23,7 +22,7 @@ const itemLength = testimonials.length;
                 <span class="heading h2 fw-bold home__testi-title-txt">What</span>
                 <span class="heading h2 fw-bold home__testi-title-txt">people say</span>
                 <span class="heading h2 fw-bold home__testi-title-txt">About<span class="cl-txt-title"> me</span></span>
-                <span class="fs-20 cl-txt-desc fw-reg upper home__testi-title-label">(Testimonials)</span>
+                <span class="fs-20 fw-reg upper home__testi-title-label">(Testimonials)</span>
                 <div class="swiper home__testi-title-slide">
                     <div class="swiper-wrapper home__testi-title-imgs">
                         <div class="swiper-slide home__testi-title-img">
@@ -98,6 +97,7 @@ const itemLength = testimonials.length;
             &-label {
                 grid-column: 1/3;
                 grid-row: 1/2;
+                margin-top: 1.1rem;
                 @include md {
                     @include text(16);
                 }
@@ -226,11 +226,7 @@ const itemLength = testimonials.length;
         }
         &-item {
             position: relative;
-            padding-block: calc(6.4rem * var(--scale-factor)) calc(7.6rem * var(--scale-factor));
             pointer-events: auto;
-            @include md {
-                padding-block: calc(4.8rem * var(--scale-factor)) calc(4.8rem * var(--scale-factor));
-            }
             @include sm {
                 padding-block: 4rem 6rem;
                 flex: none;
@@ -246,6 +242,15 @@ const itemLength = testimonials.length;
             &-content,
             &-image {
                 grid-area: 1/1/2/2;
+            }
+            &-content {
+                padding-block: calc(6.4rem * var(--scale-factor)) calc(7.6rem * var(--scale-factor));
+                @include md {
+                    padding-block: calc(4.8rem * var(--scale-factor)) calc(4.8rem * var(--scale-factor));
+                }
+                @include sm {
+                    padding-block: 0;
+                }
             }
             &-order {
                 grid-area: 1/1/2/2;

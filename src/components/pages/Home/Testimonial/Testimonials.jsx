@@ -10,6 +10,11 @@ function TestimonialItem(props) {
         if (itemRef.querySelector('.home__testi-item-feedback.fully').scrollHeight !== itemRef.querySelector('.home__testi-item-feedback.shorten').offsetHeight) {
             itemRef.querySelector('.home__testi-item-toggle').classList.add('enable');
         }
+        else {
+            document.querySelectorAll('.home__testi-item')[props.index].setAttribute('is-fully', true);
+            document.querySelectorAll('.home__testi-item')[props.index].removeAttribute('data-cursor');
+            document.querySelectorAll('.home__testi-item')[props.index].removeAttribute('data-cursor-img');
+        }
 
         let animationTrigger = (height) => ({ height: height, duration: .4, onComplete() { props.wrap.classList.remove('animating') } })
 
@@ -35,7 +40,7 @@ function TestimonialItem(props) {
         );
     }, [props.isOpen])
     return (
-        <div ref={itemRef} class="home__testi-item-content grid">
+        <div ref={itemRef} class={`home__testi-item-content grid${props.isOpen ? ' active' : ''}`}>
             <span class='line'></span>
             <p class="heading h4 cl-txt-disable fw-thin home__testi-item-order">{(props.index + 1).toString().padStart(2, '0')}.</p>
             <div class="home__testi-item-info">
@@ -158,7 +163,7 @@ function Testimonials(props) {
             </div>
             <div class="home__testi-listing-inner-wrapper" data-swiper="wrapper">
                 {props.data.map((el, idx) => (
-                    <div class="home__testi-item"
+                    <div
                         data-cursor="-stroke"
                         data-cursor-img={props.plusIc}
                         class={`home__testi-item ${activeIndex() === idx ? 'active' : ''}`}
@@ -175,6 +180,7 @@ function Testimonials(props) {
 
                             if (window.innerWidth > 991) {
                                 document.querySelectorAll('.home__testi-item').forEach((el, i) => {
+                                    if (el.getAttribute('is-fully')) return;
                                     if (i === idx) {
                                         if (e.target.classList.contains('active')) {
                                             el.removeAttribute('data-cursor');
@@ -185,6 +191,7 @@ function Testimonials(props) {
                                             })
                                         }
                                         else {
+
                                             el.setAttribute('data-cursor', '-stroke');
                                             el.setAttribute('data-cursor-img', props.plusIc);
                                             requestAnimationFrame(() => {

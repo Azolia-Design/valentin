@@ -46,10 +46,10 @@ function applyOnScroll(scrollPos) {
 
 function reInitLenisScroll(_lenis) {
     _lenis.on('scroll', function (inst) {
+        // console.log(inst.velocity)
         let scrollPos = inst.scroll;
         if (!ticking) {
             requestAnimationFrame(() => {
-                console.log(scrollPos)
                 applyOnScroll(scrollPos);
             });
             ticking = true;

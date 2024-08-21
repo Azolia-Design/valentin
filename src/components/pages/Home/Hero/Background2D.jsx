@@ -151,7 +151,7 @@ class Sketch {
 
     start(images) {
         let that = this;
-        let gl = that.gl;a
+        let gl = that.gl;
 
         this.imageAspect = images[0].naturalHeight/images[0].naturalWidth;
         for (var i = 0; i < images.length; i++) {

@@ -422,7 +422,7 @@ const ProjectListing = (props) => {
                     </For>
                 </div>
                 <a href='/projects' class="cl-txt-orange arrow-hover home__project-link" data-cursor-stick=".home-project-stick" data-cursor="-link">
-                    <span class="txt-link fs-20 cl-txt-orange" >
+                    <span class="txt-link hover-un fs-20 cl-txt-orange" >
                         <div id="sticker" class="home-project-stick"></div>
                         All projects
                     </span>
