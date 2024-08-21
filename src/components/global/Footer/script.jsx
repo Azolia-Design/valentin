@@ -12,7 +12,7 @@ const FooterScript = () => {
         { selector: '.home__hero-clone-scope li' },
         { selector: '.home__hero-clone-greating'},
         { selector: '.home__hero-clone-name' },
-        { selector: '.home__hero-scrolldown' },
+        { selector: '.home__hero-clone-scrolldown' },
         { selector: '.home__hero-clone-title-txt', options: { stagger: 0.04 } },
         { selector: '.home__hero-clone-intro'}
     ]
@@ -88,11 +88,7 @@ const FooterScript = () => {
                 trigger: '.home-footer-hero',
                 start: `bottom-=${cvUnit(200, 'vh')}px bottom`,
                 end: 'bottom bottom',
-                scrub: true,
-                snap: {
-                    snapTo: 1,
-                    duration: 5
-                }
+                scrub: true
             }
         })
 
@@ -116,7 +112,7 @@ const FooterScript = () => {
         tlInfiniteText
             .fromTo('.home__hero-clone-title-slide-inner', { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' }, "<=0")
             .fromTo('.home__hero-clone-scope-cta', { yPercent: 70, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' }, "<=0")
-            .fromTo('.home__hero-clone-award', { autoAlpha: 0, scale: .6 }, { autoAlpha: 1, scale: 1, duration: 1, stagger: .1 }, "<=0")
+            .fromTo('.home__hero-clone-award', { autoAlpha: 0, scale: .6 }, { autoAlpha: .5, scale: 1, duration: 1, stagger: .1 }, "<=0")
             .from('.home__hero-clone .line', { scaleX: 0, transformOrigin: 'left', duration: .8, stagger: .1 }, "<=0.1")
             .to('.home__hero-clone-main', { duration: .5 })
 

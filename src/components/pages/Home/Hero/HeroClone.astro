@@ -64,7 +64,7 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
                             </div>
                         </div>
                     </div>
-                    <span class="upper home__hero-scrolldown">(Scroll down)</span>
+                    <span class="upper home__hero-clone-scrolldown">(Scroll down)</span>
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
     </section>
 </div>
 
-<style lang="scss">
+<style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
     .home__hero-clone-wrap {
         position: relative;
@@ -378,8 +378,8 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
             height: 4.4rem;
             width: auto;
             svg {
-                width: auto !important;
                 height: 100% !important;
+                width: auto !important;
             }
             opacity: .5;
             transition: opacity .4s cubic-bezier(.74, .06, .4, .92);
