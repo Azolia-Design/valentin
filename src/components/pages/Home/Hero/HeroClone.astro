@@ -1,10 +1,13 @@
 ---
-import { Icon } from 'astro-icon/components';
-import Arrows from '~/components/common/Arrows.astro';
 import { getImage } from 'astro:assets';
 import Image from '~/components/common/Image.astro';
+import Arrows from '~/components/common/Arrows.astro';
 import HeroMain from '~/assets/images/home-hero-trans.jpg';
 import HeroMainBG from '~/assets/images/home-hero-full-blur.jpg';
+import RedDot from '~/icons/red-dot.svg?raw';
+import UXDesign from '~/icons/uxdesign.svg?raw';
+import DFA from '~/icons/dfa.svg?raw';
+
 import SlideText from '~/components/common/SlideText';
 import Background2D from './Background2D';
 import DeepMap from '~/assets/images/hero-real-deepmap.jpg';
@@ -33,17 +36,17 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
                     </div>
                 </div>
                 <div class="home__hero-clone-intro-wrap">
-                    <p class="home__hero-clone-intro">{data.subtitle}</p>
+                    <p class="cl-txt-sub home__hero-clone-intro">{data.subtitle}</p>
                     <span class="line"></span>
                     <div class="home__hero-clone-awards">
                         <div class="ic home__hero-clone-award">
-                            <Icon name="red-dot" />
+                            <Fragment set:html={RedDot}/>
                         </div>
                         <div class="ic home__hero-clone-award">
-                            <Icon name="uxdesign" />
+                            <Fragment set:html={UXDesign}/>
                         </div>
                         <div class="ic home__hero-clone-award">
-                            <Icon name="dfa" />
+                            <Fragment set:html={DFA}/>
                         </div>
                     </div>
                 </div>
@@ -195,9 +198,9 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
         &-scope {
             display: flex;
             flex-direction: column;
-            gap: 1.6rem 0;
+            gap: .7rem 0;
 
-            padding-block: 3.2rem;
+            padding-block: 2.7rem;
             margin-bottom: 3.2rem;
             position: relative;
             .line {
@@ -233,6 +236,12 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
                 width: 100%;
 
                 @include tColor(title, dm);
+                transition: color 0.4s ease-in-out;
+                pointer-events: none;
+
+                .txt-link {
+                    pointer-events: auto;
+                }
                 @include sm {
                     padding-top: 2.4rem;
                     border-top: 1px solid var(--cl-dm-border);
@@ -248,6 +257,7 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
 
         &-greating-wrap {
             margin-bottom: 3.4rem;
+            pointer-events: none;
             @include sm {
                 margin-bottom: 2rem;
             }
@@ -364,8 +374,15 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
                     transform: scale(1.1);
                 }
             }
-            @include size(4.4rem);
+            color: var(--cl-white);
+            height: 4.4rem;
+            width: auto;
+            svg {
+                width: auto !important;
+                height: 100% !important;
+            }
             opacity: .5;
+            transition: opacity .4s cubic-bezier(.74, .06, .4, .92);
             @include sm {
                 grid-area: 1/1/2/2;
                 width: 100%;
@@ -380,6 +397,9 @@ const DeepMapImg = await getImage({src: DeepMap, format: 'webp', width: DeepMap.
                 &:nth-child(3) {
                     animation-delay: 4s;
                 }
+            }
+            &:hover {
+                opacity: 1;
             }
         }
         &-scrolldown {

@@ -41,9 +41,11 @@ const pathname = new URL(Astro.request.url).pathname;
                         {el.text}
                     </a><span class="splash">{i < (links.length) - 1 && '/'}</span></Fragment>)}
         </div>
-        <a href="" class="txt-link cl-txt-title header__act" data-cursor-stick data-cursor='-hidden'>
+        <a href="" class="txt-link cl-txt-title header__act" data-cursor-stick=".header__act-stick" data-cursor='-link'>
+            <div id="sticker" class="header__act-stick"></div>
             {actions.text}
         </a>
+
         <button class="fs-16 cl-txt-title fw-med header__toggle">
             <span class="current">Menu</span>
             <span>Close</span>

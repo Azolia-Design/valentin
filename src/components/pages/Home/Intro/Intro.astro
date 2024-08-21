@@ -6,18 +6,29 @@ import TextBlurFading from '~/components/common/TextBlurFading';
 import Marquee from '~/components/common/Marquee';
 import IntroScript  from './script';
 import BreakMultipleLine from '~/components/common/BreakMultipleLine.astro';
+import { getImage } from 'astro:assets';
+import liquid from '~/icons/company/liquid.svg';
+import gotyme from '~/icons/company/gotyme-bank.svg';
+import europeanCommission from '~/icons/company/european-commission.svg';
+import bitcoin from '~/icons/company/bitcoin.svg';
+import defichan from '~/icons/company/defichan.svg';
+import bitmex from '~/icons/company/bitmex.svg';
+import birthdayResearch from '~/icons/company/birthday-research.svg';
+import babylons from '~/icons/company/babylons.svg';
+import diag from '~/icons/company/diag.svg';
+
 
 const { data } = Astro.props;
 const companies = [
-    "liquid",
-    "gotyme-bank",
-    "european-commission",
-    "bitcoin",
-    "defichan",
-    "bitmex",
-    "birthday-research",
-    "babylons",
-    "diag"
+    await getImage({ src: liquid, format: 'svg'}),
+    await getImage({ src:  gotyme, format: 'svg'}),
+    await getImage({ src:  europeanCommission, format: 'svg'}),
+    await getImage({ src: bitcoin, format: 'svg'}),
+    await getImage({ src: defichan, format: 'svg'}),
+    await getImage({ src: bitmex, format: 'svg'}),
+    await getImage({ src:  birthdayResearch, format: 'svg'}),
+    await getImage({ src: babylons, format: 'svg'}),
+    await getImage({ src:diag ,format: 'svg'})
 ]
 const awards = [
     { name: "Red Dot Design award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'red-dot' },
@@ -27,6 +38,7 @@ const awards = [
     { name: "UX Design Award", year: "2022", category: "Bitcoin and Crypto DeFi Wallet", logo: 'ux-design' }
 ]
 const itemLength = awards.length;
+
 ---
 <div class="home__intro-wrap">
     <section class="home__intro">
@@ -36,9 +48,22 @@ const itemLength = awards.length;
                 <h4 class="heading h5 cl-txt-title home__intro-companies-title">I've helped <br/>over 100 companies including</h4>
                 <div class="home__intro-companies-listing">
                     {companies.map((ic) =>
-                        <div class="home__intro-company">
+                        <div
+                            class="home__intro-company"
+                            data-cursor-stick
+                            data-cursor="-hidden"
+                            >
                             <div class="ic home__intro-company-ic">
-                                <Icon name=`company/${ic}` />
+                                <Image
+                                    src={ic.src}
+                                    widths={[400, 768, 1024, 2040]}
+                                    width={148}
+                                    alt={'company logo'}
+                                    layout="cover"
+                                    decoding="sync"
+                                    loading="lazy"
+                                    class="img img-fill"
+                                />
                             </div>
                         </div>
                     )}
@@ -60,7 +85,7 @@ const itemLength = awards.length;
                             <BreakMultipleLine text={data.title}/>
                     </TextBlurFading>
                 </div>
-                <a href="#" class="btn btn-circle arrow-hover home__intro-btn" data-cursor="-mag" data-cursor-stick>
+                <a href="#" class="btn btn-circle arrow-hover home__intro-btn" data-cursor="-hidden" data-cursor-stick>
                     <Arrows/>
                     <svg class="btn-circle-svg" width="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="50" cy="50" r="49" stroke="white" stroke-opacity=".1" stroke-width="2"/>
@@ -700,24 +725,33 @@ const itemLength = awards.length;
             left: 0;
             pointer-events: none;
 
-            backdrop-filter: blur(6.7rem);
-            -webkit-backdrop-filter: blur(6.7rem);
-
-            mask-image: linear-gradient(
+            background: linear-gradient(
                 rgba(0, 5, 15, 0),
                 rgba(0, 5, 15, 0.5) 10%,
                 rgba(0, 5, 15, 0.8) 20%,
-                rgba(0, 5, 15, 1) 40%,
+                rgba(0, 5, 15, 1) 60%,
                 rgb(0, 5, 15)
             );
 
-            -webkit-mask-image: linear-gradient(
-                rgba(0, 5, 15, 0),
-                rgba(0, 5, 15, 0.5) 10%,
-                rgba(0, 5, 15, 0.8) 20%,
-                rgba(0, 5, 15, 1) 40%,
-                rgb(0, 5, 15)
-            );
+            // backdrop-filter: blur(6.7rem);
+            // -webkit-backdrop-filter: blur(6.7rem);
+
+
+            // mask-image: linear-gradient(
+            //     rgba(0, 5, 15, 0),
+            //     rgba(0, 5, 15, 0.5) 10%,
+            //     rgba(0, 5, 15, 0.8) 20%,
+            //     rgba(0, 5, 15, 1) 40%,
+            //     rgb(0, 5, 15)
+            // );
+
+            // -webkit-mask-image: linear-gradient(
+            //     rgba(0, 5, 15, 0),
+            //     rgba(0, 5, 15, 0.5) 10%,
+            //     rgba(0, 5, 15, 0.8) 20%,
+            //     rgba(0, 5, 15, 1) 40%,
+            //     rgb(0, 5, 15)
+            // );
         }
     }
 </style>

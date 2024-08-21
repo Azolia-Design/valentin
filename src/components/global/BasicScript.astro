@@ -7,7 +7,7 @@ declare global {
 ---
 <script src="https://cdnwf.bear.plus/Greensock/DrawSVG.js" type="text/javascript" async></script>
 <script>
-    import { initLenis, getLenis, applyOnScroll } from "~/components/core/lenis";
+    import { initLenis, getLenis, applyOnScroll, reInitLenisScroll } from "~/components/core/lenis";
     import { initMouseFollower, getCursor } from '~/components/core/cursor';
     import { initSwup, getSwup } from '~/components/core/swup';
     import initButton from "~/components/core/button";
@@ -34,12 +34,14 @@ declare global {
             getLenis({ infinite: !isProjectPage }).scrollTo("top", {
                 duration: .001
             });
+            reInitLenisScroll(getLenis());
         }
         else {
             getLenis().scrollTo("top", {
                 duration: .001
             });
         }
+        reInitLenisScroll(getLenis());
         onLoad();
     }
     const onLoad = () =>{
