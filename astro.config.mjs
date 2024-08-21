@@ -6,7 +6,7 @@ import solid from '@astrojs/solid-js';
 import swup from '@swup/astro';
 import mdx from '@astrojs/mdx';
 
-import { defineConfig, squooshImageService } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
 import partytown from '@astrojs/partytown';
@@ -54,16 +54,16 @@ export default defineConfig({
                     removeAttributeQuotes: false,
                 },
             },
-            Image: false,
+            Image: true,
             JavaScript: true,
             SVG: false,
             Logger: 1,
         })
     ],
-    image: {
-        service: squooshImageService(),
-        domains: ['cdn.pixabay.com'],
-    },
+    // image: {
+    //     service: squooshImageService(),
+    //     domains: ['cdn.pixabay.com'],
+    // },
     vite: {
         resolve: {
             alias: {
