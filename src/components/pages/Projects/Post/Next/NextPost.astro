@@ -47,6 +47,7 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
 <style lang="scss" is:global>
     @use '~/assets/styles/mixins' as *;
     .sc__next-post {
+        background-color: var(--cl-dm-bg);
         &.default {
             position: relative;
         }
@@ -103,7 +104,7 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
                     &-inner {
                         transition: none;
                         @include md-up {
-                            filter: brightness(10%);
+                            opacity: .1;
                             transform: scale(1.2);
                         }
                         @include md {
@@ -143,7 +144,7 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
             z-index: 3;
             left: var(--container-padding);
             bottom: 7.6vh;
-            line-height: .835em;
+            line-height: .835em !important;
             @include md {
                 @include text(dis1);
                 line-height: .835em !important;
@@ -171,9 +172,9 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                transition: transform 1.2s cubic-bezier(0.23, 1, 0.320, 1);
+                transition: opacity .4s ease-in-out, transform 1s cubic-bezier(0.39, 0.575, 0.565, 1);
                 transform-origin: center top;
-                filter: brightness(30%);
+                opacity: .3;
                 @include md {
                     height: 72svh;
                 }
@@ -183,11 +184,10 @@ let nextPost = Astro.props.post ? await getNextPost(Astro.props.post) : undefine
                 img {
                     height: auto;
                     object-position: top center !important;
-                    transition: filter .4s ease-in-out;
                 }
                 &:hover {
                     @include md-up {
-                        filter: brightness(10%);
+                        opacity: .1;
                         transform: scale(1.2);
                     }
                 }

@@ -3,7 +3,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
 
 import { getCursor, initMouseFollower } from './cursor';
-import { applyOnScroll, getLenis, reInitLenisScroll } from './lenis';
+import { applyOnScroll, getLenis, initLenis, reInitLenisScroll } from './lenis';
 
 import SwupJsPlugin from '@swup/js-plugin';
 import SwupRouteNamePlugin from '@swup/route-name-plugin';
@@ -80,7 +80,8 @@ function initSwup() {
         let isProjectPage = visit.to.url === '/projects' || checkIsPostPage(visit.to.url);
 
         if (window.innerWidth > 991) {
-            reInitLenisScroll(getLenis({ infinite: !isProjectPage }));
+            let lenis = initLenis({ infinite: !isProjectPage });
+            reInitLenisScroll(lenis, isProjectPage);
         }
 
         forceScrollTop();

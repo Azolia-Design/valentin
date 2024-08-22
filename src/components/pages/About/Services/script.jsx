@@ -13,24 +13,24 @@ const ServicesScript = () => {
             scrollTrigger: {
                 trigger: '.about__daily',
                 start: 'top bottom',
-                end: 'bottom bottom',
-                scrub: true
+                end: 'bottom+=300px bottom',
+                scrub: true,
             }
         })
         tl
         .fromTo('.about__daily-img-inner',
             { yPercent: -20 },
-            { yPercent: 0, duration: 1, ease: 'linear' }
+            { yPercent: 5, duration: 1, ease: 'linear' }
         )
-        .fromTo('.about__daily-content',
-            { yPercent: 20 },
-            { yPercent: 0, duration: 1, ease: 'linear' }
-        , 0);
+        // .fromTo('.about__daily-content',
+        //     { yPercent: 20 },
+        //     { yPercent: 0, duration: 1, ease: 'linear' }
+        // , 0);
 
         let tlOverlap = gsap.timeline({
             scrollTrigger: {
                 trigger: '.about__daily',
-                start: `bottom-=200px bottom`,
+                start: `bottom bottom`,
                 end: `bottom top`,
                 scrub: true
             }

@@ -56,7 +56,9 @@ const { data } = Astro.props;
                     </div>
                     <h1 class="heading h1 fw-bold fix-font upper home__hero-title">
                         <div class="home__hero-title-txt">Design</div>
-                        <div class="home__hero-title-txt">for financial</div>
+                        <div class="home__hero-title-txt hidden-mb">for financial</div>
+                        <div class="home__hero-title-txt only-mb">for</div>
+                        <div class="home__hero-title-txt only-mb">financial</div>
                         <div class="cl-txt-orange home__hero-title-txt">
                             <SlideText data={["Product", "Business"]} client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
                         </div>
@@ -277,11 +279,25 @@ const { data } = Astro.props;
             }
             &-txt {
                 padding-block: 1.1rem;
+                &.only-mb {
+                    display: none;
+                    @include sm {
+                        display: inline-block;
+                    }
+                }
+                &.hidden-mb {
+                    @include sm {
+                        display: none;
+                    }
+                }
                 @include md {
                     padding-block: .6rem;
                 }
                 &:last-child{
                     padding-block: calc(.1em + 1.1rem);
+                    @include sm {
+                        padding-block: calc(.1em + .6rem);
+                    }
                 }
             }
         }
