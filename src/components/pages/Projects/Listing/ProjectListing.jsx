@@ -268,7 +268,7 @@ const ProjectListing = (props) => {
                 <div class="projects__listing-main grid" >
                     <div class="project__name">
                         <div class="grid-1-1">
-                            {props.data.map(({ title }, idx) => <h2 className={`heading h3 fw-semi cl-txt-title upper project__name-txt${idx === index().curr ? ' active' : ''}`} innerHTML={title}></h2>)}
+                            {props.data.map(({ title }, idx) => <h2 lang='de' className={`heading h3 fw-semi cl-txt-title upper project__name-txt${idx === index().curr ? ' active' : ''}`} innerHTML={title}></h2>)}
                         </div>
                     </div>
                     <div class="project__desc">

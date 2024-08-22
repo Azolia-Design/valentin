@@ -3,8 +3,6 @@ import Lenis from 'lenis';
 let lenis;
 
 function initLenis(options = {}) {
-    console.log("init")
-    console.log(options);
     lenis = new Lenis({
         infinite: window.innerWidth > 991 ? true : false,
         content: window.innerWidth > 767 ? document.documentElement : document.querySelector('.wrapper'),
@@ -20,6 +18,7 @@ function initLenis(options = {}) {
     requestAnimationFrame(raf);
 
     lenis.stop();
+
     return lenis;
 }
 
@@ -50,7 +49,6 @@ function applyOnScroll(scrollPos) {
 }
 
 function reInitLenisScroll(_lenis, isProjectPage) {
-    console.log("reinitreinit")
     _lenis.on('scroll', function (inst) {
         // console.log(inst.velocity)
         let scrollPos = inst.scroll;
