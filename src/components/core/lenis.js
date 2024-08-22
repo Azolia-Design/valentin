@@ -16,6 +16,10 @@ function initLenis(options = {}) {
     }
 
     requestAnimationFrame(raf);
+
+    lenis.stop();
+
+    return lenis;
 }
 
 function getLenis(options = {}) {
@@ -44,7 +48,7 @@ function applyOnScroll(scrollPos) {
     headerOnScroll(scrollPos);
 }
 
-function reInitLenisScroll(_lenis) {
+function reInitLenisScroll(_lenis, isProjectPage) {
     _lenis.on('scroll', function (inst) {
         // console.log(inst.velocity)
         let scrollPos = inst.scroll;
@@ -54,6 +58,14 @@ function reInitLenisScroll(_lenis) {
             });
             ticking = true;
         }
+    })
+
+    setTimeout(() => {
+        _lenis.start();
+    }, isProjectPage ? 800 : 0);
+
+    _lenis.scrollTo("top", {
+        duration: .001,
     })
 }
 

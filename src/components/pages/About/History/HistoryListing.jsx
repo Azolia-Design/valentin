@@ -23,7 +23,7 @@ const HistoryListing = (props) => {
         let itemWidth = document.querySelector('.about__history-item').offsetWidth;
         let distance = (itemWidth * props.data.length) - historiesRef.offsetWidth;
 
-        gsap.set('stick-block', { height: distance * 2 });
+        gsap.set('stick-block', { height: distance * 2.5 });
         gsap.set('.sc-about__history', { display: 'flex', flexDirection: 'column-reverse' });
         gsap.set('.about__history', { position: 'static' });
 
@@ -102,12 +102,12 @@ const HistoryListing = (props) => {
     return (
         <>
             <div class="about__history-body-inner" data-border-glow data-glow-option='{"color": "rgba(255, 255, 255, 1)", "glow": 10, "magnetic": 20, "inset": "-1px", "opacity": ".8"}'>
+                <span class="line"></span>
                 <div class="container grid">
                     <div ref={historiesRef} class="about__history-listing">
                         <div class="about__history-listing-wrapper">
                             {props.data.map((item, idx) => (
                                 <div class={`about__history-item${activeIndex() === idx ? ' active' : ''}`}>
-                                    <span class="line"></span>
                                     <div class="about__history-item-content">
                                         <div class="about__history-item-position">
                                             <p class="fs-24 fw-med">{item.position.title}</p>

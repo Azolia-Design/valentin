@@ -19,7 +19,7 @@ const { post } = Astro.props;
 const image = (await findImage(post.image)) as ImageMetadata | undefined;
 const metadata = merge(
     {
-        title: post.title,
+        title: post.pageTitle || post.title,
         description: post.excerpt,
         robots: {
             // index: blogPostRobots?.index,

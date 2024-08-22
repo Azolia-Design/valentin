@@ -10,6 +10,7 @@ const IntroScript = () => {
     onMount(() => {
         if (!scriptRef) return;
         initScrollTrigger();
+        console.log("run")
 
         const GRID_COL = window.innerWidth <= 991 ? window.innerWidth <= 767 ? 1 : 3 : 5;
         let emptySpace = (document.querySelector('.container-col').offsetWidth + cvUnit(20, 'rem')) * GRID_COL
@@ -21,9 +22,10 @@ const IntroScript = () => {
                 trigger: '.about__intro-vision-content',
                 start: `top bottom-=${window.innerWidth > 991 ? 10 : 40}%`,
                 end: 'bottom center+=10%',
-                scrub: true
+                scrub: true,
             }
         });
+
         tl
             .fromTo(text.words, { autoAlpha: .15, yPercent: 5 }, {stagger:.4, autoAlpha: 1, yPercent: 0,  duration: 5.5, ease: 'back.out(2.0)' }, 0)
             .to(text.words, {keyframes: {

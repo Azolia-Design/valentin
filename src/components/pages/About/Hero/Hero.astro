@@ -8,7 +8,7 @@ let currentYear = new Date().getFullYear() % 100;
         <div class="container">
             <h1 class="upper about__hero-title grid">
                 <span class="heading h1 fw-bold about__hero-title-txt">Valentine</span>
-                <span class="heading h1 cl-txt-orange fw-bold about__hero-title-txt">Cheval<span class="heading h3 fw-semi cl-txt-title ver-align-top"> ®</span></span>
+                <span class="heading h1 cl-txt-orange fw-bold about__hero-title-txt">Cheval<span class="heading h3 fw-semi cl-txt-title copyright"> ®</span></span>
                 <span class="heading h3 fw-semi upper about__hero-title-year">
                     <span class="cl-txt-disable">93</span>
                     <span class="cl-txt-title">{currentYear}</span>
@@ -103,6 +103,7 @@ let currentYear = new Date().getFullYear() % 100;
             }
             &-txt {
                 padding-block: 1rem;
+                position: relative;
                 @include md {
                     @include text(dis1);
                     padding-block: .6rem;
@@ -130,9 +131,13 @@ let currentYear = new Date().getFullYear() % 100;
                     @include sm {
                         grid-column: 1/-1;
                         justify-self: end;
-                        margin-right: 2rem;
+                        margin-right: 3rem;
                         margin-bottom: 5rem;
                     }
+                }
+                .copyright {
+                    position: absolute;
+                    top: -.1em;
                 }
             }
             &-year {
@@ -148,10 +153,11 @@ let currentYear = new Date().getFullYear() % 100;
                     justify-self: end;
                 }
                 @include sm {
+                    gap: 0;
                     grid-column: 1/2;
                     @include text(h4);
                     justify-self: start;
-                    margin-bottom: -100%;
+                    margin-bottom: -70%;
                 }
             }
         }

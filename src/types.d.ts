@@ -19,6 +19,9 @@ export interface Post {
   year?: number;
 
   /**  */
+  pageTitle: string;
+
+  /**  */
   title: string;
   /** Optional summary of post content. */
   excerpt?: string;

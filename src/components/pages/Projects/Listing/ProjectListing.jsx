@@ -60,24 +60,8 @@ const ProjectListing = (props) => {
         onChangeIndex(0);
         document.querySelector('.projects__listing-main').classList.remove('animating');
 
-        const indexOnWheel = (e) => {
-            if (e.deltaY > 0 || e.deltaX > 0) {
-                onChangeIndex(-1)
-            } else if (e.deltaY < 0 || e.deltaX < 0) {
-                onChangeIndex(1)
-            }
-        }
-
-        if (window.innerWidth > 991) {
-            window.addEventListener('wheel', indexOnWheel);
-        }
-
         onCleanup(() => {
             elements.forEach(({ selector }) => SplitType.revert(selector));
-
-            if (window.innerWidth > 991) {
-                window.removeEventListener('wheel', indexOnWheel);
-            }
         });
     })
 
@@ -97,9 +81,7 @@ const ProjectListing = (props) => {
             return { from, to };
         }
         let tl = gsap.timeline({
-            defaults: { ease: 'expo.inOut', duration: 1.2 },
-            onStart() { getLenis().stop() },
-            onComplete() { getLenis().start() }
+            defaults: { ease: 'expo.inOut', duration: 1.2 }
         })
 
         tl
@@ -268,13 +250,25 @@ const ProjectListing = (props) => {
         setIndex({ curr: nextValue, prev: index().curr });
     }
 
+    const indexOnWheel = (e) => {
+        if (window.innerWidth <= 991) return;
+
+        if (e.deltaY > 0 || e.deltaX > 0) {
+            onChangeIndex(-1)
+        } else if (e.deltaY < 0 || e.deltaX < 0) {
+            onChangeIndex(1)
+        }
+    }
+
     return (
-        <div class="projects__sticky" ref={projectsRef}>
+        <div class="projects__sticky"
+            onWheel={indexOnWheel}
+            ref={projectsRef}>
             <div class="container">
                 <div class="projects__listing-main grid" >
                     <div class="project__name">
                         <div class="grid-1-1">
-                            {props.data.map(({ title }, idx) => <h2 className={`heading h3 fw-semi cl-txt-title upper project__name-txt${idx === index().curr ? ' active' : ''}`} innerHTML={title}></h2>)}
+                            {props.data.map(({ title }, idx) => <h2 lang='de' className={`heading h3 fw-semi cl-txt-title upper project__name-txt${idx === index().curr ? ' active' : ''}`} innerHTML={title}></h2>)}
                         </div>
                     </div>
                     <div class="project__desc">

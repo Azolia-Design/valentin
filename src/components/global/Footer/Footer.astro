@@ -139,6 +139,9 @@ const { id = 'footer', socials, whatapps } = Astro.props;
         // }
         > .container {
             margin-top: auto;
+            @include md {
+                grid-template-rows: auto 1fr auto;
+            }
         }
         &__bg {
             position: absolute;
@@ -189,6 +192,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             border-top: 1px solid var(--cl-lm-border);
             @include md {
                 padding-top: 2.4rem;
+                grid-column: 1/3;
             }
             @include sm {
                 grid-column: 1/-1;
@@ -220,7 +224,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             mix-blend-mode: overlay;
             color: rgba(1, 3, 1, 0.8);
             @include md {
-                grid-column: 8/-1;
+                grid-column: 9/-1;
             }
             @include sm {
                 grid-row: 1/2;
@@ -239,12 +243,13 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             margin-bottom: -1px;
             height: 87.4rem;
             will-change: transform, filter;
+            pointer-events: none;
             @include md {
-                grid-column: 3/8;
+                grid-column: 3/12;
 
-                margin-top: -3.6rem;
-                margin-right: -5rem;
-                margin-left: 2rem;
+                margin-top: 7.8rem;
+                margin-inline: 0;
+                margin-left: -15rem;
             }
             @include sm {
                 grid-column: 1/-1;
@@ -252,7 +257,10 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 margin-inline: calc(var(--container-padding) * -1);
                 overflow: hidden;
                 display: flex;
+                margin-top: -3.2rem;
                 justify-content: center;
+                height: 65rem;
+                margin-bottom: -12rem;
             }
             &-img {
                 position: relative;
@@ -261,16 +269,19 @@ const { id = 'footer', socials, whatapps } = Astro.props;
                 }
                 &.ver-mid {
                     z-index: 2;
+                    @include md {
+                        display: none;
+                    }
                 }
                 &.ver-dark {
                     z-index: 1;
+                    @include md {
+                        display: none;
+                    }
                 }
             }
             &-inner {
-                @include md {
-                    width: 40rem;
-                    aspect-ratio: .8;
-                }
+                height: 100%;
                 img {
                     object-position: top !important;
                 }
@@ -280,6 +291,7 @@ const { id = 'footer', socials, whatapps } = Astro.props;
             padding: 0 2rem;
             transition: color .4s ease-in-out;
             @include md {
+                padding: 0 1rem;
                 @include text(dis2);
             }
             @include sm {

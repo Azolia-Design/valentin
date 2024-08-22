@@ -44,7 +44,7 @@ const closeIc = await getImage({ src: Close, format: "svg" });
         <div class="about__history-head">
             <div class="container grid">
                 <HistoryHead client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
-                <span class="fs-20 cl-txt-desc fw-reg about__history-label">(History)</span>
+                <span class="fs-24 fw-reg about__history-label">(History)</span>
                 <div class="about__history-sub cl-txt-desc sub-1">
                     <span class="line"></span>
                     <p>With many years of experience in designing digital products in the fintech sector, I have a deep understanding of user needs and a knack for innovative creativity.</p>
@@ -111,7 +111,7 @@ const closeIc = await getImage({ src: Close, format: "svg" });
             }
             @include sm {
                 grid-column: 1/-1;
-                margin-top: .35em;
+                margin-top: -.4em;
             }
         }
         &-title {
@@ -253,12 +253,14 @@ const closeIc = await getImage({ src: Close, format: "svg" });
             display: flex;
             align-items: center;
             column-gap: .6rem;
+            margin-bottom: -1em;
             @include md {
                 grid-row: 2/3;
             }
             @include sm {
                 grid-row: 1/2;
                 grid-column: 1/-1;
+                margin-bottom: -.5em;
                 .fs-20 {
                     @include text(16);
                 }
@@ -271,12 +273,19 @@ const closeIc = await getImage({ src: Close, format: "svg" });
                 user-select: none;
                 -webkit-mask: linear-gradient(90deg, transparent, white var(--widthMask), white calc(100% - var(--widthMask)), transparent);
                 mask: linear-gradient(90deg, transparent, white var(--widthMask), white calc(100% - var(--widthMask)), transparent);
+                position: relative;
                 @include md {
                 --widthMask: 10rem;
                 }
                 @include sm {
                     --widthMask: 5rem;
                     margin-left: calc(var(--container-padding) * -1);
+                }
+                .line {
+                    position: absolute;
+                    bottom: 0;
+                    // width: calc(100% + var(--grid-gap));
+                    width: 100%;
                 }
             }
         }
@@ -338,13 +347,16 @@ const closeIc = await getImage({ src: Close, format: "svg" });
                     }
                 }
             }
+            &:first-child {
+                border: none;
+            }
             &:last-child {
                 .border-outer {
                     padding-right: calc(var(--border-width) / 2.5 * -1);
                 }
                 @include sm {
-                    border-style: none solid none solid;
-                    border-width: 0 1px 0 1px;
+                    // border-style: none solid none solid;
+                    // border-width: 0 1px 0 1px;
                 }
             }
 
@@ -399,12 +411,6 @@ const closeIc = await getImage({ src: Close, format: "svg" });
                         }
                     }
                 }
-            }
-            .line {
-                position: absolute;
-                bottom: 0;
-                // width: calc(100% + var(--grid-gap));
-                width: 100%;
             }
             &-content {
                 grid-column: 2/4;

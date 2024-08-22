@@ -35,7 +35,7 @@ function Content(props) {
                 { top: rect.top, height: rect.height },
                 { top: 0, height: window.innerHeight }, "<=0")
             .fromTo('.sc__next-post.fake .next__post-img-inner',
-                { filter: `brightness(${window.innerWidth > 991 ? 10 : 30}%)`, scale: window.innerWidth > 991 ? 1.2 : 1 }, { filter: 'brightness(80%)', scale: 1 }
+                { opacity: window.innerWidth > 991 ? .1 : .3, scale: window.innerWidth > 991 ? 1.2 : 1 }, { opacity: .8, scale: 1 }
                 , "<=0")
             .fromTo(title.from,
                 { y: 0 }, { y: -(title.from.getBoundingClientRect().top - title.to.getBoundingClientRect().top) }

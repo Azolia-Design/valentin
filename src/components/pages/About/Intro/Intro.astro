@@ -5,24 +5,24 @@ import IntroScript  from './script';
     <IntroScript client:visible={{ rootMargin: "100% 0% 100% 0%" }}/>
     <div class="about__intro">
         <div class="container grid">
-            <p class="fs-24 about__intro-label">(Vision)</p>
+            <p class="fs-24 fw-reg about__intro-label">(Vision)</p>
             <div class="heading h4 cl-txt-title about__intro-vision-content">
                 <span class="line"></span>
                 <div class="about__intro-vision-content-txt">
-                    <p class="about__intro-vision-empty">|</p>As a designer and Rotarian, I believe in service above self. I believe being a designer is being a servant, in the most noble sense of the term; it’s dedicating yourself to finding the right balance between user needs and business goals. I follow Design Thinking principles: metrics used to iterate fast and verify hypothesis. I believe in constant testing and fail fast, learn fast principles.
+                    <p class="about__intro-vision-empty">|</p>As a designer and Rotarian, I believe in service above self. I believe being a designer is being a servant, in the most noble sense of the term; it's dedicating yourself to finding the right balance between user needs and business goals. I follow Design Thinking principles: metrics used to iterate fast and verify hypothesis. I believe in constant testing and fail fast, learn fast principles.
                 </div>
                 <span class="line"></span>
             </div>
         </div>
         <div class="container grid">
-            <p class="fs-24 about__intro-label">(I work with)</p>
+            <p class="fs-24 fw-reg about__intro-label">(I work with)</p>
             <div class="about__intro-passion">
                 <h3 class="heading h5 cl-txt-sub fw-med about__intro-passion-title">I have a strong passion for highly complex financial products</h3>
                 <span class="line"></span>
                 <div class="about__intro-passion-sub">
                     <p>I'm fascinated by their intricate details and the strategic thinking required to use them effectively. This drives me to stay updated on the latest developments in the financial industry.
                         <br/><br/>
-                        <span class="cl-txt-disable">
+                        <span class="fw-med cl-txt-disable">
                             if you are not a financial service.<br/>Sorry, I will not work for you.
                         </span>
                     </p>
@@ -30,13 +30,13 @@ import IntroScript  from './script';
             </div>
             <div class="fw-med about__intro-passion-listing">
                 <div class="about__intro-passion-circle">
-                    <p class="fs-24 cl-txt-title about__intro-passion-circle-txt">Fintech</p>
+                    <p class="fs-24 fw-med cl-txt-title about__intro-passion-circle-txt">Fintech</p>
                 </div>
                 <div class="about__intro-passion-circle">
-                    <p class="fs-24 cl-txt-title about__intro-passion-circle-txt">Blockchain</p>
+                    <p class="fs-24 fw-med cl-txt-title about__intro-passion-circle-txt">Blockchain</p>
                 </div>
                 <div class="about__intro-passion-circle">
-                    <p class="fs-24 cl-txt-title about__intro-passion-circle-txt">Web3</p>
+                    <p class="fs-24 fw-med cl-txt-title about__intro-passion-circle-txt">Web3</p>
                 </div>
             </div>
         </div>
@@ -60,7 +60,8 @@ import IntroScript  from './script';
             }
             @include sm {
                 grid-area: 1/1/2/-1;
-                margin-top: .25em;
+                margin-top: 0;
+                padding-top: 3.2rem;
             }
         }
         &-vision {
@@ -145,6 +146,8 @@ import IntroScript  from './script';
                     content: 'VC';
                     @include text(h5);
                     color: var(--cl-orange);
+                    font-family: 'Matter SQ Med', sans-serif;
+                    font-weight: 500;
 
                     position: absolute;
                     top: 50%;
@@ -167,16 +170,30 @@ import IntroScript  from './script';
                 justify-content: center;
                 align-items: center;
                 transform-origin: center calc(var(--circle-size) - (var(--circle-gap) / 2));
+
                 @keyframes cir-rotate {
                     to { transform: rotate(360deg) }
                 }
                 &:before {
+                    --d: 4deg; /* distance between dashes */
+                    --n: 55;   /* number of dashes */
+                    --c: var(--cl-dm-disable); /* color of dashes */
+                    --b:2px;
+
                     content: '';
                     position: absolute;
                     inset: 0;
-                    border: 2px dotted var(--cl-dm-disable);
                     border-radius: 50%;
-                    // animation: cir-rotate 20s linear 0s infinite;
+                    background:
+                        repeating-conic-gradient(
+                            var(--c)    0 calc(360deg/var(--n) - var(--d)),
+                            transparent 0 calc(360deg/var(--n)));
+                    -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - var(--b)),#fff calc(100% - var(--b) + 1px));
+                            mask:radial-gradient(farthest-side,transparent calc(100% - var(--b)),#fff calc(100% - var(--b) + 1px));
+                    animation: cir-rotate 20s linear 0s infinite;
+                    @include md {
+                        --n: 45;
+                    }
                 }
                 &-txt {
                     @include md {
